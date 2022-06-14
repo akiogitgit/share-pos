@@ -1,0 +1,30 @@
+{
+  "plugins": ["unused-imports"],
+  // extendsは上から適応されるため順番に注意
+  // prettierは最後に書く
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:import/warnings",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+
+  "ignorePatterns": ["*.config.js"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  }
+}
