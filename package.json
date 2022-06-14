@@ -19,6 +19,11 @@
     "@types/react-dom": "18.0.5",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
-    "typescript": "4.7.3"
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "typescript": "4.7.3",
+    "windicss-webpack-plugin": "^1.7.3"
   }
 }
