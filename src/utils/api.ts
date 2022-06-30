@@ -88,3 +88,19 @@ export const deleteApi = async <Data>(
   params?: any,
   headers?: Record<string, string>,
 ) => fetchApi<undefined>(url, 'DELETE', params, headers)
+
+export const loginPost = async <Data>(params: any) => {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/sign_in`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    })
+    return res
+  } catch (error) {
+    if (error instanceof HttpError) {
+      throw error
+    }
+    console.error(error)
+  }
+}
