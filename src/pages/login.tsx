@@ -1,11 +1,14 @@
 import { NextPage } from 'next'
 import { useCallback, useState } from 'react'
+import { useGlobalSWR } from './../stores/useGlobalSWR'
 import { loginPost } from 'utils/api'
 
 const Login: NextPage = () => {
   // email: test1@test.com, test2@test.com, test3@test.com
   const [email, setEmail] = useState<string>('test1@test.com')
   const [password, setPassword] = useState<string>('password')
+
+  const { data, mutate } = useGlobalSWR('/auth/token')
 
   const onLogin = useCallback((params: any) => {
     loginPost(params).then((res) => {
