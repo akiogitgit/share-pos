@@ -41,15 +41,16 @@ export const useLogin = () => {
           return ['access-token', 'client', 'uid'].includes(value)
         }
 
+        // responseのheadersを取得
         for (let pair of res.headers.entries()) {
           if (isAuthInfoProp(pair[0])) {
             authInfo[pair[0]] = pair[1]
           }
         }
 
+        mutateToken(authInfo)
         set('authInfo', authInfo)
         console.log(authInfo)
-        mutateToken(authInfo)
       })
     },
     [mutateToken, set],

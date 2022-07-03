@@ -8,6 +8,7 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState<string>('password')
   const { login } = useLogin()
 
+  // form要素の時 async await が使用できない
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       login({ email, password })
