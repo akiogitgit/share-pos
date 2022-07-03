@@ -5,9 +5,9 @@ import { useCookies } from 'hooks/useCookies'
 
 const Home: NextPage = () => {
   const { data, error } = useGetApi('/posts')
-  const { cookies } = useCookies(['access-token'])
+  const { cookies } = useCookies('authInfo')
 
-  console.log(cookies['access-token'])
+  console.log(cookies.authInfo)
   return (
     <div>
       <h1 className='mt-0 mb-1 text-6xl  text-red-500'>share pos</h1>

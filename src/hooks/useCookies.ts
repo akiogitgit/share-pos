@@ -1,12 +1,7 @@
 import { useCookies as useCookiesOriginal } from 'react-cookie'
+import { AuthInfo } from 'types/authInfo'
 
-type Cookies = {
-  authInfo: {
-    'access-token': string
-    client: string
-    uid: string
-  }
-}
+type Cookies = AuthInfo
 
 export const useCookies = <
   Key extends keyof Cookies,

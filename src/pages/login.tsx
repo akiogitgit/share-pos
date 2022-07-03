@@ -11,7 +11,7 @@ const Login: NextPage = () => {
   // email: test1@test.com, test2@test.com, test3@test.com
   const [email, setEmail] = useState<string>('test1@test.com')
   const [password, setPassword] = useState<string>('password')
-  const { data: token, mutate: mutateToken } = useGlobalSWR('auth-info')
+  const { data: token, mutate: mutateToken } = useGlobalSWR('authInfo')
   const { cookies, set, remove } = useCookies('authInfo')
 
   const onLogin = useCallback(() => {

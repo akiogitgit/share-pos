@@ -1,9 +1,7 @@
 import useSWR from 'swr'
+import { AuthInfo } from 'types/authInfo'
 
-type GlobalState = {
-  // path: ステート管理する型
-  'auth-info': { 'access-token': string; client: string; uid: string }
-}
+type GlobalState = AuthInfo
 
 export const useGlobalSWR = <
   Path extends keyof GlobalState,
