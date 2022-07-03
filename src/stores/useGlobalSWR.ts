@@ -2,7 +2,7 @@ import useSWR from 'swr'
 
 type GlobalState = {
   // path: ステート管理する型
-  '/auth/token': string
+  'auth-info': { 'access-token': string; client: string; uid: string }
 }
 
 export const useGlobalSWR = <

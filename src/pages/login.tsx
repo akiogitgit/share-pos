@@ -1,45 +1,68 @@
 import { NextPage } from 'next'
+import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useGlobalSWR } from './../stores/useGlobalSWR'
+import { useCookies } from 'hooks/useCookies'
 import { loginPost } from 'utils/api'
+
+type Headers = 'access-token' | 'client'
 
 const Login: NextPage = () => {
   // email: test1@test.com, test2@test.com, test3@test.com
   const [email, setEmail] = useState<string>('test1@test.com')
   const [password, setPassword] = useState<string>('password')
+  const { data: token, mutate: mutateToken } = useGlobalSWR('auth-info')
+  const { cookies, set, remove } = useCookies('authInfo')
 
-  const { data, mutate } = useGlobalSWR('/auth/token')
+  const onLogin = useCallback(() => {
+    const params = {
+      email: email,
+      password: password,
+    }
 
-  const onLogin = useCallback((params: any) => {
     loginPost(params).then((res) => {
-      const headers = ['access-token', 'client', 'expiry', 'uid']
+      if (!res) {
+        return
+      }
+
+      let headers = { 'access-token': '', client: '', uid: '' }
+
+      const isAuthInfo = (
+        value: unknown,
+      ): value is 'access-token' | 'client' | 'uid' => {
+        if (value === 'access-token') {
+          return true
+        } else if (value === 'client') {
+          return true
+        } else if (value === 'uid') {
+          return true
+        }
+        return false
+      }
 
       for (let pair of res.headers.entries()) {
-        const index = headers.indexOf(pair[0])
-        if (index != -1) {
-          sessionStorage.setItem(headers[index], pair[1])
+        if (isAuthInfo(pair[0])) {
+          headers[pair[0]] = pair[1]
         }
-        console.log(pair[0] + ': ' + pair[1])
+        mutateToken(headers)
+        set('authInfo', headers)
       }
     })
-  }, [])
+  }, [email, password, mutateToken, set])
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      const params = {
-        email: email,
-        password: password,
-      }
-      onLogin(params)
-
+      onLogin()
       e.preventDefault()
     },
-    [onLogin, email, password],
+    [onLogin],
   )
 
   return (
     <>
       <div className='m-4'>
+        <Link href='/'>index</Link>
+
         <form onSubmit={onSubmit}>
           <div>
             <input
