@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import { AuthInfo } from 'types/authInfo'
 
-type GlobalState = AuthInfo
+type GlobalState = { authInfo: AuthInfo }
 
 export const useGlobalSWR = <
   Path extends keyof GlobalState,

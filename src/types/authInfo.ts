@@ -1,7 +1,5 @@
 export type AuthInfo = {
-  authInfo: {
-    'access-token': string
-    client: string
-    uid: string
-  }
+  'access-token': string
+  client: string
+  uid: string
 }

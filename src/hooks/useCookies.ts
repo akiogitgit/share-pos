@@ -1,7 +1,10 @@
 import { useCookies as useCookiesOriginal } from 'react-cookie'
 import { AuthInfo } from 'types/authInfo'
 
-type Cookies = AuthInfo
+type Cookies = {
+  authInfo: AuthInfo
+  name: string
+}
 
 export const useCookies = <
   Key extends keyof Cookies,
@@ -18,5 +21,5 @@ export const useCookies = <
   const remove = (key: Key) => {
     removeCookie(key)
   }
-  return { cookies, set, remove }
+  return { cookies, set, remove, setCookie }
 }

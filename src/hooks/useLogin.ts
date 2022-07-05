@@ -24,7 +24,7 @@ export const doLogin = async (params: any) => {
 
 export const useLogin = () => {
   const { mutate: mutateToken } = useGlobalSWR('authInfo')
-  const { set } = useCookies('authInfo')
+  const { set, setCookie } = useCookies('authInfo')
 
   const login = useCallback(
     async (params: { email: string; password: string }) => {
@@ -49,6 +49,7 @@ export const useLogin = () => {
         }
 
         mutateToken(authInfo)
+        // set('authInfo', { authInfo: authInfo })
         set('authInfo', authInfo)
         console.log(authInfo)
       })
