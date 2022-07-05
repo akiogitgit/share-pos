@@ -1,6 +1,6 @@
 import { isEmptyObj } from './isEmptyObj'
 
-const BASE_URL = 'https://share-pos.herokuapp.com'
+export const BASE_URL = 'https://share-pos.herokuapp.com/api/v1'
 
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
