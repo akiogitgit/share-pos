@@ -28,5 +28,5 @@ export const useCookies = <
     },
     [removeCookie],
   )
-  return { cookies, set, remove, setCookie }
+  return { cookies, set, remove }
 }
