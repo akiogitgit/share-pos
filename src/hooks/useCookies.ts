@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useCookies as useCookiesOriginal } from 'react-cookie'
 import { AuthInfo } from 'types/authInfo'
 
@@ -14,12 +15,18 @@ export const useCookies = <
 ) => {
   const [cookies, setCookie, removeCookie] = useCookiesOriginal([key])
 
-  const set = (key: Key, value: Data) => {
-    setCookie(key, value)
-  }
+  const set = useCallback(
+    (key: Key, value: Data) => {
+      setCookie(key, value)
+    },
+    [setCookie],
+  )
 
-  const remove = (key: Key) => {
-    removeCookie(key)
-  }
+  const remove = useCallback(
+    (key: Key) => {
+      removeCookie(key)
+    },
+    [removeCookie],
+  )
   return { cookies, set, remove, setCookie }
 }
