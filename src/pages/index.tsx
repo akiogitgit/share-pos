@@ -12,6 +12,7 @@ const Home: NextPage = () => {
     <div>
       <h1 className='mt-0 mb-1 text-6xl  text-red-500'>share pos</h1>
       <div className='flex justify-end'>
+        <Link href='/create'>create</Link>
         <Link href='/login'>Login</Link>
       </div>
       <div>{JSON.stringify(data)}</div>

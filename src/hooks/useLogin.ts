@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
+import { useGlobalSWR } from '../stores/useGlobalSWR'
+import { BASE_URL, HttpError } from '../utils/api'
 import { useCookies } from './useCookies'
-import { useGlobalSWR } from 'stores/useGlobalSWR'
-import { BASE_URL, HttpError } from 'utils/api'
 
 export const doLogin = async (params: any) => {
   try {
