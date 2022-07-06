@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import PostForm from 'components/postForm'
 import { useGetApi } from 'hooks/useApi'
@@ -14,8 +15,8 @@ type Response = {
 
 const Create: NextPage = () => {
   const { data: authInfo } = useGlobalSWR('authInfo')
-  // messageも入ってる posts.data で取り出せる
   const { data: posts, mutate } = useGetApi('/posts')
+  const router = useRouter()
 
   // 型ガードのつもり
   const hasData = (value: any): value is { data: Posts } => {
@@ -51,12 +52,13 @@ const Create: NextPage = () => {
             console.log('res: ', res.data)
             const newPost = res.data
             mutate({ ...posts, newPost }, false)
+            router.push('/')
           }
         },
       )
       e.preventDefault()
     },
-    [authInfo, mutate, posts],
+    [authInfo, mutate, posts, router],
   )
   return (
     <>

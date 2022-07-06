@@ -42,7 +42,7 @@ const PostForm: FC<Props> = ({ onSubmit, post = posts }) => {
           type='text'
           value={comment}
           placeholder='comment'
-          // required
+          required
           onChange={(v) => setComment(v.target.value)}
           className='border-black outline-none border-b-2 p-2'
         />
@@ -52,7 +52,7 @@ const PostForm: FC<Props> = ({ onSubmit, post = posts }) => {
           type='text'
           value={url}
           placeholder='url'
-          // required
+          required
           onChange={(v) => setUrl(v.target.value)}
           className='border-black outline-none border-b-2 p-2'
         />
@@ -66,12 +66,12 @@ const PostForm: FC<Props> = ({ onSubmit, post = posts }) => {
           min='1'
           max='5'
           value={evaluation}
-          className='bg-black h-0.5 appearance-none hover:shadow-2xl'
+          className='bg-black h-0.5 appearance-none'
           onChange={(e) => setEvaluation(Number(e.target.value))}
         />
-        <span className='w- translate-x-[130px] translate-y-[-45px] block'>
+        <div className='rotate-[200deg] translate-y-[-100px] block'>
           {evaluation}
-        </span>
+        </div>
       </div>
 
       <div className='sm:w-[220px]'>
