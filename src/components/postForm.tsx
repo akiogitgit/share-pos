@@ -1,41 +1,23 @@
 import { FC, useState } from 'react'
-import { Posts } from '../types/post'
+import { PostCreateParams } from '../types/post'
 
 type Props = {
-  onSubmit: (
-    e: React.FormEvent<HTMLFormElement>,
-    // id: number, // update で使う
-    comment: string,
-    url: string,
-    evaluation: number,
-    published: boolean,
-  ) => void
-  post?: Posts // ?で、必須でなくなる!,  createだと要らないから
+  onSubmit: (params: PostCreateParams) => void
 }
 
-// default props
-const posts: Posts = {
-  id: 0,
-  comment: '',
-  url: '',
-  published: false,
-  evaluation: 1,
-  user_id: 0,
-  created_at: '',
-  updated_at: '',
-}
-
-// create の時は、post無いから default であげる
-const PostForm: FC<Props> = ({ onSubmit, post = posts }) => {
-  const [comment, setComment] = useState(post.comment)
-  const [url, setUrl] = useState(post.url)
-  const [evaluation, setEvaluation] = useState(post.evaluation)
-  const [published, setPublished] = useState(post.published)
+export const PostForm: FC<Props> = ({ onSubmit }) => {
+  const [comment, setComment] = useState('')
+  const [url, setUrl] = useState('')
+  const [evaluation, setEvaluation] = useState(1)
+  const [published, setPublished] = useState(false)
 
   return (
     <form
       className='bg-white p-4'
-      onSubmit={(e) => onSubmit(e, comment, url, evaluation, published)}
+      onSubmit={(e) => {
+        onSubmit({ comment, url, evaluation, published })
+        e.preventDefault()
+      }}
     >
       <div>
         <input
@@ -108,5 +90,3 @@ const PostForm: FC<Props> = ({ onSubmit, post = posts }) => {
     </form>
   )
 }
-
-export default PostForm
