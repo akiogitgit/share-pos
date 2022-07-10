@@ -21,6 +21,7 @@ const Login: NextPage = () => {
     <>
       <div className='m-4'>
         <Link href='/'>index</Link>
+        <h1>Login</h1>
 
         <form onSubmit={onSubmit}>
           <div>
@@ -35,7 +36,7 @@ const Login: NextPage = () => {
           </div>
           <div>
             <input
-              type='text'
+              type='password'
               value={password}
               placeholder='password'
               required
