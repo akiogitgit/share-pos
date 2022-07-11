@@ -8,3 +8,14 @@ export type SignUpFormParams = {
 }
 
 export type SignUpRequestParams = Omit<SignUpFormParams, 'passwordConfirmation'>
+
+export type SignUpResponseParams = {
+  allow_password_change: boolean
+  created_at: string
+  email: string
+  id: number
+  provider: string
+  uid: string
+  updated_at: string
+  username: string
+}

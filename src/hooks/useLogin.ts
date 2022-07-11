@@ -50,7 +50,7 @@ export const useLogin = () => {
 
         mutateAuthInfo(authInfo)
         set('authInfo', authInfo)
-        console.log(authInfo)
+        console.log('ログインに成功しました', authInfo)
       })
     },
     [mutateAuthInfo, set],

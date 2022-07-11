@@ -3,3 +3,8 @@ export type AuthInfo = {
   client: string
   uid: string
 }
+
+export type LoginRequestParams = {
+  email: string
+  password: string
+}

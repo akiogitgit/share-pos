@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { AuthInfo } from 'types/authInfo'
+import { AuthInfo } from 'types/user/authInfo'
 
 type GlobalState = { authInfo: AuthInfo }
 

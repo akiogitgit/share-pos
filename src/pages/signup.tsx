@@ -1,7 +1,10 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
-import { SignUpFormParams } from 'types/user/form'
+import { useLogin } from 'hooks/useLogin'
+import { LoginRequestParams } from 'types/user/authInfo'
+import { SignUpFormParams, SignUpResponseParams } from 'types/user/form'
+import { HttpError, postApi } from 'utils/api'
 
 const SignUp: NextPage = () => {
   const [signUpFormParams, setSignUpFormParams] = useState<SignUpFormParams>({
@@ -10,6 +13,7 @@ const SignUp: NextPage = () => {
     password: '',
     passwordConfirmation: '',
   })
+  const { login } = useLogin()
   // const [username, setUsername] = useState('')
   // const [email, setEmail] = useState('')
   // const [password, setPassword] = useState('')
@@ -31,8 +35,37 @@ const SignUp: NextPage = () => {
     })
   }
 
+  const doSignUp = async (params: any) => {
+    try {
+      const res = await postApi<SignUpResponseParams>('/auth', params)
+      if (!res) {
+        throw new HttpError(res)
+      }
+      return res as SignUpResponseParams
+    } catch (e) {
+      console.log(HttpError)
+    }
+  }
+
+  const signUp = useCallback(async () => {
+    await doSignUp(signUpFormParams).then((res) => {
+      if (!res) {
+        return
+      }
+      console.log('ユーザー作成に成功しました', res)
+    })
+    // ユーザー作成に成功したら、そのままログイン
+    const loginParams: LoginRequestParams = {
+      email: signUpFormParams.email,
+      password: signUpFormParams.password,
+    }
+    login(loginParams)
+  }, [login, signUpFormParams])
+
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
+      // passwordの二重チェックする
+      signUp()
       // try {
       //   const res = await postApi<PostResponse>('/posts', params, authInfo)
       //   if (res.data) {
@@ -76,7 +109,7 @@ const SignUp: NextPage = () => {
             type='text'
             value={signUpFormParams?.email}
             // value={email}
-            placeholder='email'
+            placeholder='email' // ○○@○○.○○  のフォーマットでないとダメ
             required
             name='email'
             // onChange={(e) => setEmail(e.target.value)}

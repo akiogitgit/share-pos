@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useCookies as useCookiesOriginal } from 'react-cookie'
-import { AuthInfo } from 'types/authInfo'
+import { AuthInfo } from 'types/user/authInfo'
 
 type Cookies = {
   authInfo: AuthInfo
