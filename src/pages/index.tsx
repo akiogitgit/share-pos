@@ -11,9 +11,10 @@ const Home: NextPage = () => {
   return (
     <div>
       <h1 className='mt-0 mb-1 text-6xl  text-red-500'>share pos</h1>
-      <div className='flex justify-end'>
+      <div className='flex gap-2 justify-end'>
         <Link href='/create'>create</Link>
         <Link href='/login'>Login</Link>
+        <Link href='/signup'>signup</Link>
       </div>
       <div>{JSON.stringify(data)}</div>
       {error && <div>{JSON.stringify(error)}</div>}

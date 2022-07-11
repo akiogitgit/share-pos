@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 
-import { PostForm } from 'components/PostForm'
+import { PostForm } from 'components/postForm'
 import { useGetApi } from 'hooks/useApi'
 import { useGlobalSWR } from 'stores/useGlobalSWR'
 import { PostCreateParams, PostResponse } from 'types/post'
