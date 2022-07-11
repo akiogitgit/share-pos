@@ -77,14 +77,13 @@ export const useSignUp = () => {
     async (signUpFormParams: SignUpFormParams) => {
       const { passwordConfirmation: _, ...signUpRequest } = signUpFormParams
 
-      // ユーザー作成
+      // ユーザー作成に成功したら、そのままログイン
       const res = await doSignUp(signUpRequest)
       if (!res) {
         return
       }
       console.log('ユーザー作成に成功しました', res)
 
-      // ユーザー作成に成功したら、そのままログイン
       const {
         username: _u,
         passwordConfirmation: _p,
