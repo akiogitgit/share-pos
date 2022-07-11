@@ -2,8 +2,7 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useLogin } from 'hooks/useLogin'
-import { LoginRequestParams } from 'types/user/authInfo'
-import { SignUpFormParams, SignUpResponseParams } from 'types/user/form'
+import { SignUpFormParams, SignUpRequest } from 'types/user/form'
 import { HttpError, postApi } from 'utils/api'
 
 const SignUp: NextPage = () => {
@@ -24,33 +23,34 @@ const SignUp: NextPage = () => {
     })
   }
 
-  const doSignUp = async (params: any) => {
+  const doSignUp = async (params: SignUpRequest) => {
     try {
-      const res = await postApi<SignUpResponseParams>('/auth', params)
-      if (!res) {
-        throw new HttpError(res)
-      }
-      return res as SignUpResponseParams
+      const res = await postApi('/auth', params)
+      return res
     } catch (e) {
-      console.log(HttpError)
+      if (e instanceof HttpError) {
+        console.log(HttpError)
+      }
     }
   }
 
-  // signUpして聖子したときLoginする
   const signUp = useCallback(
     async (signUpFormParams: SignUpFormParams) => {
-      //signUpFormParams から signUpRequestParams にして渡すつもりだったけど、要らないんじゃないかと
-      await doSignUp(signUpFormParams).then((res) => {
-        if (!res) {
-          return
-        }
-        console.log('ユーザー作成に成功しました', res)
-      })
-      // ユーザー作成に成功したら、そのままログイン
-      const loginParams: LoginRequestParams = {
-        email: signUpFormParams.email,
-        password: signUpFormParams.password,
+      const { passwordConfirmation: _, ...signUpRequest } = signUpFormParams
+
+      const res = await doSignUp(signUpRequest)
+      if (!res) {
+        return
       }
+      console.log('ユーザー作成に成功しました', res)
+
+      // ユーザー作成に成功したら、そのままログイン
+      const {
+        username: _u,
+        passwordConfirmation: _p,
+        ...loginParams
+      } = signUpFormParams
+
       login(loginParams)
     },
     [login],
@@ -67,7 +67,6 @@ const SignUp: NextPage = () => {
       }
       signUp(signUpFormParams)
       // マイページに移動する
-      console.log(signUpFormParams)
     },
     [signUp, signUpFormParams],
   )
