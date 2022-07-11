@@ -14,18 +14,7 @@ const SignUp: NextPage = () => {
     passwordConfirmation: '',
   })
   const { login } = useLogin()
-  // const [username, setUsername] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  // useEffect(() => {
-  //   setSignUpFormParams({
-  //     username: '',
-  //     email: '',
-  //     password: '',
-  //     passwordConfirmation: '',
-  //   })
-  // }, [])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpFormParams((state) => {
       return {
@@ -47,42 +36,40 @@ const SignUp: NextPage = () => {
     }
   }
 
-  const signUp = useCallback(async () => {
-    await doSignUp(signUpFormParams).then((res) => {
-      if (!res) {
-        return
+  // signUpして聖子したときLoginする
+  const signUp = useCallback(
+    async (signUpFormParams: SignUpFormParams) => {
+      //signUpFormParams から signUpRequestParams にして渡すつもりだったけど、要らないんじゃないかと
+      await doSignUp(signUpFormParams).then((res) => {
+        if (!res) {
+          return
+        }
+        console.log('ユーザー作成に成功しました', res)
+      })
+      // ユーザー作成に成功したら、そのままログイン
+      const loginParams: LoginRequestParams = {
+        email: signUpFormParams.email,
+        password: signUpFormParams.password,
       }
-      console.log('ユーザー作成に成功しました', res)
-    })
-    // ユーザー作成に成功したら、そのままログイン
-    const loginParams: LoginRequestParams = {
-      email: signUpFormParams.email,
-      password: signUpFormParams.password,
-    }
-    login(loginParams)
-  }, [login, signUpFormParams])
+      login(loginParams)
+    },
+    [login],
+  )
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      // passwordの二重チェックする
-      signUp()
-      // try {
-      //   const res = await postApi<PostResponse>('/posts', params, authInfo)
-      //   if (res.data) {
-      //     console.log('res: ', res.data)
-      //     const newPost = res.data
-      //     mutate({ ...posts, newPost }, false)
-      //     router.push('/')
-      //   }
-      // } catch (e) {
-      //   if (e instanceof HttpError) {
-      //     console.error(e)
-      //   }
-      // }
-      console.log(signUpFormParams)
       e.preventDefault()
+
+      // passwordの二重チェックする
+      if (signUpFormParams.password != signUpFormParams.passwordConfirmation) {
+        console.log('パスワードと確認用パスワードが一致しません。')
+        return
+      }
+      signUp(signUpFormParams)
+      // マイページに移動する
+      console.log(signUpFormParams)
     },
-    [signUpFormParams],
+    [signUp, signUpFormParams],
   )
 
   return (
@@ -95,24 +82,20 @@ const SignUp: NextPage = () => {
           <input
             type='text'
             value={signUpFormParams?.username}
-            // value={username}
             placeholder='username'
             required
             name='username'
-            // onChange={(e) => setUsername(e.target.value)}
             onChange={(e) => handleChange(e)}
             className='border-black outline-none border-b-2 p-2'
           />
         </div>
         <div>
           <input
-            type='text'
+            type='email'
             value={signUpFormParams?.email}
-            // value={email}
-            placeholder='email' // ○○@○○.○○  のフォーマットでないとダメ
+            placeholder='email'
             required
             name='email'
-            // onChange={(e) => setEmail(e.target.value)}
             onChange={(e) => handleChange(e)}
             className='border-black outline-none border-b-2 p-2'
           />
@@ -121,11 +104,10 @@ const SignUp: NextPage = () => {
           <input
             type='password'
             value={signUpFormParams?.password}
-            // value={password}
             placeholder='password'
             required
+            minLength={6}
             name='password'
-            // onChange={(e) => setPassword(e.target.value)}
             onChange={(e) => handleChange(e)}
             className='border-black outline-none border-b-2 p-2'
           />
@@ -134,11 +116,10 @@ const SignUp: NextPage = () => {
           <input
             type='password'
             value={signUpFormParams?.passwordConfirmation}
-            // value={passwordConfirmation}
             placeholder='確認用パスワード'
             required
+            minLength={6}
             name='passwordConfirmation'
-            // onChange={(e) => setPasswordConfirmation(e.target.value)}
             onChange={(e) => handleChange(e)}
             className='border-black outline-none border-b-2 p-2'
           />
