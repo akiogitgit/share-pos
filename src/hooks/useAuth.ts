@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { useGlobalSWR } from '../stores/useGlobalSWR'
-import { BASE_URL, HttpError } from '../utils/api'
+import { BASE_URL, HttpError, postApi } from '../utils/api'
 import { useCookies } from './useCookies'
+import { SignUpFormParams, SignUpRequest } from 'types/user/form'
 
 export const doLogin = async (params: any) => {
   try {
@@ -19,6 +20,17 @@ export const doLogin = async (params: any) => {
       throw error
     }
     console.error(error)
+  }
+}
+
+export const doSignUp = async (params: SignUpRequest) => {
+  try {
+    const res = await postApi('/auth', params)
+    return res
+  } catch (e) {
+    if (e instanceof HttpError) {
+      console.log(HttpError)
+    }
   }
 }
 
@@ -55,6 +67,33 @@ export const useLogin = () => {
     },
     [mutateAuthInfo, set],
   )
-
   return { login }
+}
+
+export const useSignUp = () => {
+  const { login } = useLogin()
+
+  const signUp = useCallback(
+    async (signUpFormParams: SignUpFormParams) => {
+      const { passwordConfirmation: _, ...signUpRequest } = signUpFormParams
+
+      // ユーザー作成
+      const res = await doSignUp(signUpRequest)
+      if (!res) {
+        return
+      }
+      console.log('ユーザー作成に成功しました', res)
+
+      // ユーザー作成に成功したら、そのままログイン
+      const {
+        username: _u,
+        passwordConfirmation: _p,
+        ...loginParams
+      } = signUpFormParams
+
+      login(loginParams)
+    },
+    [login],
+  )
+  return { signUp }
 }

@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
-import { useLogin } from '../hooks/useLogin'
+import { useLogin } from '../hooks/useAuth'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('test1@test.com')

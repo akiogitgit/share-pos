@@ -1,9 +1,8 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
-import { useLogin } from 'hooks/useLogin'
-import { SignUpFormParams, SignUpRequest } from 'types/user/form'
-import { HttpError, postApi } from 'utils/api'
+import { useSignUp } from 'hooks/useAuth'
+import { SignUpFormParams } from 'types/user/form'
 
 const SignUp: NextPage = () => {
   const [signUpFormParams, setSignUpFormParams] = useState<SignUpFormParams>({
@@ -12,7 +11,7 @@ const SignUp: NextPage = () => {
     password: '',
     passwordConfirmation: '',
   })
-  const { login } = useLogin()
+  const { signUp } = useSignUp()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpFormParams((state) => {
@@ -22,39 +21,6 @@ const SignUp: NextPage = () => {
       }
     })
   }
-
-  const doSignUp = async (params: SignUpRequest) => {
-    try {
-      const res = await postApi('/auth', params)
-      return res
-    } catch (e) {
-      if (e instanceof HttpError) {
-        console.log(HttpError)
-      }
-    }
-  }
-
-  const signUp = useCallback(
-    async (signUpFormParams: SignUpFormParams) => {
-      const { passwordConfirmation: _, ...signUpRequest } = signUpFormParams
-
-      const res = await doSignUp(signUpRequest)
-      if (!res) {
-        return
-      }
-      console.log('ユーザー作成に成功しました', res)
-
-      // ユーザー作成に成功したら、そのままログイン
-      const {
-        username: _u,
-        passwordConfirmation: _p,
-        ...loginParams
-      } = signUpFormParams
-
-      login(loginParams)
-    },
-    [login],
-  )
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
