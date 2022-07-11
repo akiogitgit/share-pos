@@ -14,7 +14,10 @@ const SignUp: NextPage = () => {
         console.log('パスワードと確認用パスワードが一致しません。')
         return
       }
-      signUp(params)
+
+      // 確認用パスワードは除いてsignUp渡す
+      const { passwordConfirmation: _, ...signUpRequest } = params
+      signUp(signUpRequest)
       // マイページに移動する
     },
     [signUp],
