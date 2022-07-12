@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
+import { Layout } from 'components/Layout'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'hooks/useCookies'
 
@@ -9,16 +9,10 @@ const Home: NextPage = () => {
 
   console.log(cookies.authInfo)
   return (
-    <div>
-      <h1 className='mt-0 mb-1 text-6xl  text-red-500'>share pos</h1>
-      <div className='flex gap-2 justify-end'>
-        <Link href='/create'>create</Link>
-        <Link href='/login'>Login</Link>
-        <Link href='/signup'>signup</Link>
-      </div>
+    <Layout title='SharePos トップページ'>
       <div>{JSON.stringify(data)}</div>
       {error && <div>{JSON.stringify(error)}</div>}
-    </div>
+    </Layout>
   )
 }
 

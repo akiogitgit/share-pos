@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
-import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useLogin } from '../hooks/useAuth'
+import { Layout } from 'components/Layout'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('test1@test.com')
@@ -18,9 +18,8 @@ const Login: NextPage = () => {
   )
 
   return (
-    <>
+    <Layout title='SharePos ログインページ'>
       <div className='m-4'>
-        <Link href='/'>index</Link>
         <h1>Login</h1>
 
         <form onSubmit={onSubmit}>
@@ -52,7 +51,7 @@ const Login: NextPage = () => {
           </button>
         </form>
       </div>
-    </>
+    </Layout>
   )
 }
 

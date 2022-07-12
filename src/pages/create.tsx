@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 
-import { PostForm } from 'components/postForm'
+import { Layout } from 'components/Layout'
+import { PostForm } from 'components/PostForm'
 import { useGetApi } from 'hooks/useApi'
 import { useGlobalSWR } from 'stores/useGlobalSWR'
 import { PostCreateParams, PostResponse } from 'types/post'
@@ -32,10 +32,11 @@ const Create: NextPage = () => {
     },
     [authInfo, mutate, posts, router],
   )
+
   return (
-    <>
+    <Layout title='SharePos 記事投稿ページ'>
       <div>
-        <Link href='/'>index</Link>
+        <h1>Post Create</h1>
         <PostForm onSubmit={onSubmit} />
         {/* <div>
           {posts &&
@@ -51,7 +52,7 @@ const Create: NextPage = () => {
         </div>
         <div>{JSON.stringify(posts)}</div> */}
       </div>
-    </>
+    </Layout>
   )
 }
 
