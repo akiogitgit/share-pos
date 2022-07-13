@@ -25,7 +25,7 @@ const SignUp: NextPage = () => {
 
   return (
     <Layout title='SharePos ユーザー作成ページ'>
-      <div className='m-4'>
+      <div>
         <h1>Sign Up</h1>
         <SignUpForm onSubmit={onSubmit} />
       </div>

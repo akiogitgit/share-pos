@@ -1,12 +1,27 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useRequireLogin } from 'hooks/useRequireLogin'
+import { useGlobalSWR } from 'stores/useGlobalSWR'
 
 type Props = {
   title: string
 }
 
 export const Header: FC<Props> = ({ title }) => {
+  const { data: authInfo } = useGlobalSWR('authInfo')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // 自動ログインや、ログインしていない時の画面遷移の処理
+  useRequireLogin()
+
+  useEffect(() => {
+    if (authInfo) {
+      setIsLoggedIn(true)
+    }
+  }, [authInfo])
+  console.log({ isLoggedIn })
+
   return (
     <>
       <Head>
@@ -19,22 +34,27 @@ export const Header: FC<Props> = ({ title }) => {
               SharePos
             </div>
           </Link>
-          <div className='gap-2 hidden justify-end sm:flex'>
+          <div className='flex gap-2 justify-end'>
             <Link href='/create'>
               <div className='cursor-pointer duration-300 hover:(underline) '>
                 create
               </div>
             </Link>
-            <Link href='/login'>
-              <div className='cursor-pointer duration-300 hover:(underline) '>
-                Login
+
+            {!isLoggedIn && (
+              <div className='flex gap-2'>
+                <Link href='/login'>
+                  <div className='cursor-pointer duration-300 hover:(underline) '>
+                    Login
+                  </div>
+                </Link>
+                <Link href='/signup'>
+                  <div className='cursor-pointer duration-300 hover:(underline) '>
+                    signup
+                  </div>
+                </Link>
               </div>
-            </Link>
-            <Link href='/signup'>
-              <div className='cursor-pointer duration-300 hover:(underline) '>
-                signup
-              </div>
-            </Link>
+            )}
           </div>
         </nav>
       </header>

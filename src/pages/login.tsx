@@ -19,7 +19,7 @@ const Login: NextPage = () => {
 
   return (
     <Layout title='SharePos ログインページ'>
-      <div className='m-4'>
+      <div>
         <h1>Login</h1>
 
         <form onSubmit={onSubmit}>
