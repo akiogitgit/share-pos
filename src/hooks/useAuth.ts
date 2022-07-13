@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useGlobalSWR } from '../stores/useGlobalSWR'
+import { useGlobalState } from '../stores/useGlobalState'
 import { BASE_URL, HttpError, postApi } from '../utils/api'
 import { useCookies } from './useCookies'
 import { SignUpRequest } from 'types/user/form'
@@ -35,7 +35,7 @@ export const doSignUp = async (params: SignUpRequest) => {
 }
 
 export const useLogin = () => {
-  const { mutate: mutateAuthInfo } = useGlobalSWR('authInfo')
+  const [_, setAuthInfo] = useGlobalState('/authInfo')
   const { set } = useCookies('authInfo')
 
   const login = useCallback(
@@ -60,12 +60,12 @@ export const useLogin = () => {
           }
         }
 
-        mutateAuthInfo(authInfo)
+        setAuthInfo(authInfo)
         set('authInfo', authInfo)
         console.log('ログインに成功しました', authInfo)
       })
     },
-    [mutateAuthInfo, set],
+    [setAuthInfo, set],
   )
   return { login }
 }

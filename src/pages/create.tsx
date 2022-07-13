@@ -5,13 +5,13 @@ import { useCallback } from 'react'
 
 import { PostForm } from 'components/postForm'
 import { useGetApi } from 'hooks/useApi'
-import { useGlobalSWR } from 'stores/useGlobalSWR'
+import { useGlobalState } from 'stores/useGlobalState'
 import { PostCreateParams, PostResponse } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
 const Create: NextPage = () => {
   const router = useRouter()
-  const { data: authInfo } = useGlobalSWR('authInfo')
+  const [authInfo] = useGlobalState('/authInfo')
   const { data: posts, mutate } = useGetApi('/posts')
 
   const onSubmit = useCallback(
