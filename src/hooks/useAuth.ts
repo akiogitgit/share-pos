@@ -44,13 +44,13 @@ export const useLogin = () => {
         if (!res) {
           return
         }
-        let authInfo = { 'access-token': '', client: '', uid: '' }
+        let authInfo = { 'access-token': '', client: '', uid: '', expiry: '' }
 
         // 型ガード関数
         const isAuthInfoProp = (
           value: string,
-        ): value is 'access-token' | 'client' | 'uid' => {
-          return ['access-token', 'client', 'uid'].includes(value)
+        ): value is 'access-token' | 'client' | 'uid' | 'expiry' => {
+          return ['access-token', 'client', 'uid', 'expiry'].includes(value)
         }
 
         // responseのheadersを取得

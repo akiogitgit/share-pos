@@ -13,7 +13,6 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
   return (
     <form
-      className='bg-white p-4'
       onSubmit={(e) => {
         onSubmit({ comment, url, evaluation, published })
         e.preventDefault()
