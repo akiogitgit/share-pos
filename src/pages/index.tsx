@@ -7,7 +7,6 @@ const Home: NextPage = () => {
   const { data, error } = useGetApi('/posts')
   const { cookies } = useCookies('authInfo')
 
-  console.log(cookies.authInfo)
   return (
     <Layout title='SharePos トップページ'>
       <div>{JSON.stringify(data)}</div>

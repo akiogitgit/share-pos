@@ -1,26 +1,16 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { FC, useEffect, useState } from 'react'
-import { useRequireLogin } from 'hooks/useRequireLogin'
-import { useGlobalSWR } from 'stores/useGlobalSWR'
+import { FC } from 'react'
+import { useIsLoggedIn } from 'hooks/useIsLoggedIn'
+import { useSetAuthInfo } from 'hooks/useRequireLogin'
 
 type Props = {
   title: string
 }
 
 export const Header: FC<Props> = ({ title }) => {
-  const { data: authInfo } = useGlobalSWR('authInfo')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  // 自動ログインや、ログインしていない時の画面遷移の処理
-  useRequireLogin()
-
-  useEffect(() => {
-    if (authInfo) {
-      setIsLoggedIn(true)
-    }
-  }, [authInfo])
-  console.log({ isLoggedIn })
+  const isLoggedIn = useIsLoggedIn()
+  useSetAuthInfo()
 
   return (
     <>
