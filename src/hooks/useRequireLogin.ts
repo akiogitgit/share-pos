@@ -3,8 +3,8 @@ import { useCallback, useEffect } from 'react'
 import { useCookies } from './useCookies'
 import { useGlobalSWR } from 'stores/useGlobalSWR'
 
-// CookieのTokenが友好の時に、authInfoをセットする
-export const useSetAuthInfo = () => {
+// CookieのTokenが有効の時に、authInfoをセットする
+export const useAutoLogin = () => {
   const { cookies, remove } = useCookies('authInfo')
   const { data: authInfo, mutate } = useGlobalSWR('authInfo')
 

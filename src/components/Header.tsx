@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { FC } from 'react'
 import { useIsLoggedIn } from 'hooks/useIsLoggedIn'
-import { useSetAuthInfo } from 'hooks/useRequireLogin'
+import { useAutoLogin } from 'hooks/useRequireLogin'
 
 type Props = {
   title: string
@@ -10,7 +10,7 @@ type Props = {
 
 export const Header: FC<Props> = ({ title }) => {
   const isLoggedIn = useIsLoggedIn()
-  useSetAuthInfo()
+  useAutoLogin()
 
   return (
     <>
