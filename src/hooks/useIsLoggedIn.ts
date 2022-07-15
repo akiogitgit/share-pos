@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useCookies } from './useCookies'
 import { useGlobalSWR } from 'stores/useGlobalSWR'
 
 export const useIsLoggedIn = (): boolean => {
-  const { data: authInfo } = useGlobalSWR('authInfo')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { cookies } = useCookies('authInfo')
+  const { data, mutate } = useGlobalSWR('isLoggedIn')
 
   useEffect(() => {
-    if (authInfo) {
-      setIsLoggedIn(true)
+    if (cookies.authInfo && !data) {
+      mutate(true)
+      console.log('isLoggedIn!')
     }
-  }, [authInfo])
+  }, [cookies.authInfo, data, mutate])
 
-  return isLoggedIn
+  return data ?? false
 }

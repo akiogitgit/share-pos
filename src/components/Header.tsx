@@ -9,8 +9,11 @@ type Props = {
 }
 
 export const Header: FC<Props> = ({ title }) => {
-  const isLoggedIn = useIsLoggedIn()
+  // ここでcookie切れたら消す
   useAutoLogin()
+  // cookieあれば true 返す
+  const isLoggedIn = useIsLoggedIn()
+  // const isLoggedIn = false
 
   return (
     <>
