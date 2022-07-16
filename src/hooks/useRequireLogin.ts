@@ -3,7 +3,6 @@ import { useCallback, useEffect } from 'react'
 import { useCookies } from './useCookies'
 import { useIsLoggedIn } from './useIsLoggedIn'
 
-// CookieのTokenが有効の時に、authInfoをセットする
 export const useAutoLogin = () => {
   const { cookies, remove } = useCookies('authInfo')
   const isLoggedin = useIsLoggedIn()
