@@ -5,14 +5,14 @@ import { useCallback } from 'react'
 import { Layout } from 'components/Layout'
 import { PostForm } from 'components/PostForm'
 import { useGetApi } from 'hooks/useApi'
+import { useCookies } from 'hooks/useCookies'
 import { useRequireLogin } from 'hooks/useRequireLogin'
-import { useGlobalSWR } from 'stores/useGlobalSWR'
 import { PostCreateParams, PostResponse } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
 const Create: NextPage = () => {
   const router = useRouter()
-  const { data: authInfo } = useGlobalSWR('authInfo')
+  const { cookies } = useCookies('authInfo')
   const { data: posts, mutate } = useGetApi('/posts')
 
   // ログインしていないとログインページに飛ぶ
@@ -21,7 +21,11 @@ const Create: NextPage = () => {
   const onSubmit = useCallback(
     async (params: PostCreateParams) => {
       try {
-        const res = await postApi<PostResponse>('/posts', params, authInfo)
+        const res = await postApi<PostResponse>(
+          '/posts',
+          params,
+          cookies.authInfo,
+        )
         if (res.data) {
           console.log('res: ', res.data)
           const newPost = res.data
@@ -34,7 +38,7 @@ const Create: NextPage = () => {
         }
       }
     },
-    [authInfo, mutate, posts, router],
+    [cookies.authInfo, mutate, posts, router],
   )
 
   return (

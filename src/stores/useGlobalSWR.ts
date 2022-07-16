@@ -1,8 +1,6 @@
 import useSWR from 'swr'
-import { AuthInfo } from 'types/user/authInfo'
 
 type GlobalState = {
-  authInfo: AuthInfo
   isLoggedIn: boolean
 }
 
