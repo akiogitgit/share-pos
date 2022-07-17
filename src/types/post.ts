@@ -1,5 +1,3 @@
-import { Res } from './response'
-
 export type Post = {
   id: number
   comment: string
@@ -10,8 +8,6 @@ export type Post = {
   createdAt: string
   updatedAt: string
 }
-
-export type PostResponse = Res<Post>
 
 export type PostCreateParams = {
   comment: string

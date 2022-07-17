@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Head from 'next/head'
 import { useCallback } from 'react'
 import { Layout } from 'components/Layout'
 import { SignUpForm } from 'components/SignUpForm'
@@ -24,12 +25,17 @@ const SignUp: NextPage = () => {
   )
 
   return (
-    <Layout title='SharePos ユーザー作成ページ'>
-      <div>
-        <h1>Sign Up</h1>
-        <SignUpForm onSubmit={onSubmit} />
-      </div>
-    </Layout>
+    <>
+      <Head>
+        <title>SharePos 新規登録ページ</title>
+      </Head>
+      <Layout>
+        <div>
+          <h1>Sign Up</h1>
+          <SignUpForm onSubmit={onSubmit} />
+        </div>
+      </Layout>
+    </>
   )
 }
 

@@ -3,13 +3,12 @@ import { Header } from './Header'
 
 type Props = {
   children: ReactNode
-  title: string
 }
 
-export const Layout: FC<Props> = ({ children, title }) => {
+export const Layout: FC<Props> = ({ children }) => {
   return (
     <div className='min-h-full'>
-      <Header title={title} />
+      <Header />
       <div className='mx-4 mt-25 overflow-hidden'>
         <div className='mx-auto bg-red-100 max-w-600px p-4 break-words'>
           {children}

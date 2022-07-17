@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 
@@ -7,29 +8,24 @@ import { PostForm } from 'components/PostForm'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'hooks/useCookies'
 import { useRequireLogin } from 'hooks/useRequireLogin'
-import { PostCreateParams, PostResponse } from 'types/post'
+import { Post, PostCreateParams } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
 const Create: NextPage = () => {
+  useRequireLogin()
+
   const router = useRouter()
   const { cookies } = useCookies('authInfo')
-  const { data: posts, mutate } = useGetApi('/posts')
-
-  // ログインしていないとログインページに飛ぶ
-  useRequireLogin()
+  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   const onSubmit = useCallback(
     async (params: PostCreateParams) => {
       try {
-        const res = await postApi<PostResponse>(
-          '/posts',
-          params,
-          cookies.authInfo,
-        )
-        if (res.data) {
-          console.log('res: ', res.data)
-          const newPost = res.data
-          mutate({ ...posts, newPost }, false)
+        const res = await postApi<Post>('/posts', params, cookies.authInfo)
+        if (res && posts) {
+          console.log('res: ', res)
+          const newPost = res
+          mutate([...posts, newPost], false)
           router.push('/')
         }
       } catch (e) {
@@ -42,13 +38,17 @@ const Create: NextPage = () => {
   )
 
   return (
-    <Layout title='SharePos 記事投稿ページ'>
-      <div>
-        <h1>Post Create</h1>
-        <PostForm onSubmit={onSubmit} />
-        {/* <div>
-          {posts &&
-            posts.data
+    <>
+      <Head>
+        <title>SharePos 記事投稿ページ</title>
+      </Head>
+      <Layout>
+        <div>
+          <h1>Post Create</h1>
+          <PostForm onSubmit={onSubmit} />
+          {/* <div>
+          {posts?.length &&
+            posts
               .map((_, i, a) => a[a.length - 1 - i])
               .map((v, i) => (
                 <ul key={i} className='mt-3'>
@@ -59,8 +59,9 @@ const Create: NextPage = () => {
               ))}
         </div>
         <div>{JSON.stringify(posts)}</div> */}
-      </div>
-    </Layout>
+        </div>
+      </Layout>
+    </>
   )
 }
 

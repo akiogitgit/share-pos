@@ -1,25 +1,14 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import { FC } from 'react'
+import { useCookies } from 'hooks/useCookies'
 import { useIsLoggedIn } from 'hooks/useIsLoggedIn'
-import { useAutoLogin } from 'hooks/useRequireLogin'
 
-type Props = {
-  title: string
-}
-
-export const Header: FC<Props> = ({ title }) => {
-  // ここでcookie切れたら消す
-  useAutoLogin()
-  // cookieあれば true 返す
+export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
-  // const isLoggedIn = false
+  const { remove } = useCookies('authInfo')
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
       <header className='bg-red-100 shadow-md w-full top-0 shadow-red-100 fixed'>
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
@@ -34,7 +23,16 @@ export const Header: FC<Props> = ({ title }) => {
               </div>
             </Link>
 
-            {!isLoggedIn && (
+            {isLoggedIn ? (
+              <div>
+                <div
+                  onClick={() => remove('authInfo')}
+                  className='cursor-pointer duration-300 hover:(underline) '
+                >
+                  Logout
+                </div>
+              </div>
+            ) : (
               <div className='flex gap-2'>
                 <Link href='/login'>
                   <div className='cursor-pointer duration-300 hover:(underline) '>

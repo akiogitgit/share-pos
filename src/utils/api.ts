@@ -1,5 +1,6 @@
 import { isEmptyObj } from './isEmptyObj'
 import { toCamelCaseObj } from './toCamelCaseObj'
+import { Res } from 'types/response'
 
 export const BASE_URL = 'https://share-pos.herokuapp.com/api/v1'
 
@@ -42,7 +43,7 @@ export const fetchApi = async <T>(
     requestHeaders['Content-Type'] = 'application/json'
   }
 
-  let result: object | undefined
+  let result: Res<object> | undefined
   try {
     const res = await fetch(encodeURI(`${BASE_URL}${requestUrl}`), {
       method,
@@ -63,7 +64,7 @@ export const fetchApi = async <T>(
     console.error(error)
   }
 
-  return (result ? toCamelCaseObj(result) : result) as unknown as T
+  return (result ? toCamelCaseObj(result.data) : result) as unknown as T
 }
 
 export const getApi = async <Data>(
