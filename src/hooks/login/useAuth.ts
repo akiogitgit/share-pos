@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
-import { BASE_URL, HttpError, postApi } from '../utils/api'
-import { useCookies } from './useCookies'
+import { BASE_URL, HttpError, postApi } from '../../utils/api'
+import { useCookies } from '../useCookies'
 import { SignUpRequest } from 'types/user/form'
 
 export const doLogin = async (params: any) => {

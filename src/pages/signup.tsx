@@ -3,22 +3,29 @@ import Head from 'next/head'
 import { useCallback } from 'react'
 import { Layout } from 'components/Layout'
 import { SignUpForm } from 'components/SignUpForm'
-import { useSignUp } from 'hooks/useAuth'
+import { useSignUp } from 'hooks/login/useAuth'
 import { SignUpFormParams } from 'types/user/form'
+import { HttpError } from 'utils/api'
 
 const SignUp: NextPage = () => {
   const { signUp } = useSignUp()
 
   const onSubmit = useCallback(
     async (params: SignUpFormParams) => {
-      if (params.password != params.passwordConfirmation) {
+      if (params.password !== params.passwordConfirmation) {
         console.log('パスワードと確認用パスワードが一致しません。')
         return
       }
 
       // 確認用パスワードは除いてsignUp渡す
       const { passwordConfirmation: _, ...signUpRequest } = params
-      signUp(signUpRequest)
+      try {
+        await signUp(signUpRequest)
+      } catch (error) {
+        if (error instanceof HttpError) {
+          console.error(error)
+        }
+      }
       // マイページに移動する
     },
     [signUp],

@@ -10,12 +10,12 @@ export class HttpError extends Error {
   url: string
   status: number
   message: string
-  constructor(response: Response) {
+  constructor(response: Response, resJson?: Res<any>) {
     super()
     this.name = 'HttpError'
     this.url = response.url
     this.status = response.status
-    this.message = response.statusText
+    this.message = resJson?.message || ''
   }
 }
 
@@ -54,7 +54,8 @@ export const fetchApi = async <T>(
     })
 
     if (!res.ok) {
-      throw new HttpError(res)
+      const json = (await res.json()) as Res<any>
+      throw new HttpError(res, json)
     }
     result = await res.json()
   } catch (error) {

@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback, useState } from 'react'
-import { useLogin } from '../hooks/useAuth'
+import { useLogin } from '../hooks/login/useAuth'
 import { Layout } from 'components/Layout'
 import { HttpError } from 'utils/api'
 
@@ -10,7 +10,6 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState<string>('password')
   const { login } = useLogin()
 
-  // form要素の時 async await が使用できない
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -19,7 +18,7 @@ const Login: NextPage = () => {
         await login({ email, password })
       } catch (error) {
         if (error instanceof HttpError) {
-          console.error(error)
+          console.error(error.message)
         }
       }
     },

@@ -5,9 +5,9 @@ import { useCallback } from 'react'
 
 import { Layout } from 'components/Layout'
 import { PostForm } from 'components/PostForm'
+import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'hooks/useCookies'
-import { useRequireLogin } from 'hooks/useRequireLogin'
 import { Post, PostCreateParams } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
@@ -21,16 +21,15 @@ const Create: NextPage = () => {
   const onSubmit = useCallback(
     async (params: PostCreateParams) => {
       try {
-        const res = await postApi<Post>('/posts', params, cookies.authInfo)
-        if (res && posts) {
-          console.log('res: ', res)
-          const newPost = res
-          mutate([...posts, newPost], false)
+        const newPost = await postApi<Post>('/posts', params, cookies.authInfo)
+        if (newPost && posts) {
+          console.log('newPost: ', newPost)
           router.push('/')
+          mutate([...posts, newPost], false)
         }
       } catch (e) {
         if (e instanceof HttpError) {
-          console.error(e)
+          console.error(e.message)
         }
       }
     },

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useCookies } from './useCookies'
+import { useCookies } from 'hooks/useCookies'
 import { useGlobalSWR } from 'stores/useGlobalSWR'
 
 export const useObserveAuthInfoExpired = () => {

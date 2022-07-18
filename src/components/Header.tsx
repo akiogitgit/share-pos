@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { FC } from 'react'
+import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 import { useCookies } from 'hooks/useCookies'
-import { useIsLoggedIn } from 'hooks/useIsLoggedIn'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
