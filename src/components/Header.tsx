@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { FC } from 'react'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
-import { useCookies } from 'hooks/useCookies'
+import { useLogOut } from 'hooks/login/useLogOut'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
-  const { remove } = useCookies('authInfo')
+  const logOut = useLogOut()
 
   return (
     <>
@@ -26,10 +26,10 @@ export const Header: FC = () => {
             {isLoggedIn ? (
               <div>
                 <div
-                  onClick={() => remove('authInfo')}
+                  onClick={logOut}
                   className='cursor-pointer duration-300 hover:(underline) '
                 >
-                  Logout
+                  LogOut
                 </div>
               </div>
             ) : (
