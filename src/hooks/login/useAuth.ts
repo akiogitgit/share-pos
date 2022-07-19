@@ -99,3 +99,8 @@ export const useSignUp = () => {
   )
   return { signUp }
 }
+
+export const useLogOut = () => {
+  const { remove } = useCookies('authInfo')
+  return { logOut: () => remove('authInfo') }
+}

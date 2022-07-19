@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { FC } from 'react'
+import { useLogOut } from 'hooks/login/useAuth'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
-import { useLogOut } from 'hooks/login/useLogOut'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
-  const logOut = useLogOut()
+  const { logOut } = useLogOut()
 
   return (
     <>
