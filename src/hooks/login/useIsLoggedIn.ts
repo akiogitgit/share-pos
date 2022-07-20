@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useLogOut } from './useAuth'
 import { useCookies } from 'hooks/useCookies'
-import { useGlobalSWR } from 'stores/useGlobalSWR'
+import { useGlobalState } from 'stores/useGlobalState'
 
 export const useObserveAuthInfoExpired = () => {
   const { cookies } = useCookies('authInfo')
@@ -18,16 +18,16 @@ export const useObserveAuthInfoExpired = () => {
 
 export const useIsLoggedIn = (): boolean => {
   const { cookies } = useCookies('authInfo')
-  const { data, mutate } = useGlobalSWR('isLoggedIn')
+  const [isLoggedIn, setIsLoggedIn] = useGlobalState('isLoggedIn')
 
   useEffect(() => {
     if (cookies.authInfo) {
-      mutate(true)
+      setIsLoggedIn(true)
     } else {
-      mutate(false)
+      setIsLoggedIn(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.authInfo])
 
-  return data ?? false
+  return isLoggedIn ?? false
 }
