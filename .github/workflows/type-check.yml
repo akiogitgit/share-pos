@@ -3,5 +3,5 @@ jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - run: 'test'
+      - run: echo "test"
       - uses: actions/checkout@v2
