@@ -3,25 +3,6 @@ import { BASE_URL, HttpError, postApi } from '../../utils/api'
 import { useCookies } from '../useCookies'
 import { SignUpRequest } from 'types/user/form'
 
-export const doLogin = async (params: any) => {
-  try {
-    const res = await fetch(`${BASE_URL}/auth/sign_in`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    })
-    if (!res.ok) {
-      throw new HttpError(res)
-    }
-    return res as Response
-  } catch (error) {
-    if (error instanceof HttpError) {
-      throw error
-    }
-    console.error(error)
-  }
-}
-
 export const useLogin = () => {
   const { set } = useCookies('authInfo')
 
