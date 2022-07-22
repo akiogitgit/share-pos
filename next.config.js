@@ -8,7 +8,7 @@ module.exports = {
     return config
   },
   images: {
-    domains: ['localhost'],
+    domains: ['qiita-user-contents.imgix.net', 'cdn.sstatic.net'],
     // domains: ['*'],
     // domains: ['placeimg.com'],
     // domains: ['assets.acme.com'],
