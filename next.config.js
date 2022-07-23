@@ -8,7 +8,7 @@ module.exports = {
     return config
   },
   images: {
-    // qiita, zenn 以外は cdn.
+    // qiita, zenn 以外は res.cloudinary.com
     domains: ['res.cloudinary.com', 'qiita-user-contents.imgix.net'],
   },
 }

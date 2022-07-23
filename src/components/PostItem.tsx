@@ -17,20 +17,26 @@ export const PostItem: FC<Props> = ({ post }) => {
           {post.url}
         </a>
       </Link>
-      {/* <img src={post.metaInfo.image} alt='' /> */}
 
       <br></br>
       {post.metaInfo.image.substring(8, 18) === 'qiita-user' ||
       post.metaInfo.image.substring(8, 22) === 'res.cloudinary' ? (
         // {/* next.config.js で増やしていく */}
-        <Image src={post.metaInfo.image} alt='' width={100} height={100} />
+        <Image
+          src={post.metaInfo.image}
+          alt=''
+          width={300}
+          height={100}
+          objectFit='contain'
+        />
       ) : (
         // {/* Qiita, Zenn以外はこれで表示出来る */}
         <Image
           src={`https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`}
           alt=''
-          width={100}
+          width={300}
           height={100}
+          objectFit='contain'
         />
       )}
       <div className='flex'>
@@ -39,6 +45,7 @@ export const PostItem: FC<Props> = ({ post }) => {
         ))}
       </div>
       <li>{post.createdAt}</li>
+      <li>{post.user.username}</li>
     </ul>
   )
 }
