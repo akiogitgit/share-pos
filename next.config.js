@@ -8,9 +8,7 @@ module.exports = {
     return config
   },
   images: {
-    domains: ['qiita-user-contents.imgix.net', 'cdn.sstatic.net'],
-    // domains: ['*'],
-    // domains: ['placeimg.com'],
-    // domains: ['assets.acme.com'],
+    // qiita, zenn 以外は cdn.
+    domains: ['res.cloudinary.com', 'qiita-user-contents.imgix.net'],
   },
 }

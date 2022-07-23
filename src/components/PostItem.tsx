@@ -8,7 +8,6 @@ type Props = {
 }
 
 export const PostItem: FC<Props> = ({ post }) => {
-  console.log(post)
   return (
     <ul className='bg-white rounded-xl my-2 p-4'>
       <li>{post.id}</li>
@@ -18,9 +17,27 @@ export const PostItem: FC<Props> = ({ post }) => {
           {post.url}
         </a>
       </Link>
-      <img src={post.metaInfo.image} alt='' />
-      <Image src={post.metaInfo.image} alt='' width={100} height={100} />
-      <li>{post.evaluation}</li>
+      {/* <img src={post.metaInfo.image} alt='' /> */}
+
+      <br></br>
+      {post.metaInfo.image.substring(8, 18) === 'qiita-user' ||
+      post.metaInfo.image.substring(8, 22) === 'res.cloudinary' ? (
+        // {/* next.config.js で増やしていく */}
+        <Image src={post.metaInfo.image} alt='' width={100} height={100} />
+      ) : (
+        // {/* Qiita, Zenn以外はこれで表示出来る */}
+        <Image
+          src={`https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`}
+          alt=''
+          width={100}
+          height={100}
+        />
+      )}
+      <div className='flex'>
+        {[...Array(post.evaluation)].map((v, i) => (
+          <div key={i}>☆</div>
+        ))}
+      </div>
       <li>{post.createdAt}</li>
     </ul>
   )
