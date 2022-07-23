@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { PostCreateParams } from '../types/post'
+import { PostCreateParams } from 'types/post'
 
 type Props = {
   onSubmit: (params: PostCreateParams) => void
