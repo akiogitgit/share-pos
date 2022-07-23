@@ -65,7 +65,7 @@ export const fetchApi = async <T>(
     console.error(error)
   }
 
-  return (result ? toCamelCaseObj(result.data) : result) as unknown as T
+  return (result ? toCamelCaseObj(result).data : result) as unknown as T
 }
 
 export const getApi = async <Data>(

@@ -11,7 +11,7 @@ export const toCamelCase = (str: string) => {
 }
 
 // objectのプロパティをスネークケースからキャメルケースに変換する関数
-export const toCamelCaseObj = (_obj: object) => {
+export const toCamelCaseObj = (_obj: Record<any, any>) => {
   const obj = { ..._obj } as Record<string, any>
   const result: Record<string, Record<string, any> | []> = {}
 
