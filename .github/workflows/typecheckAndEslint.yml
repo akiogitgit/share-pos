@@ -1,0 +1,15 @@
+on: [push]
+name: type-check and eslint
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "test"
+      - uses: actions/checkout@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+
+      - run: yarn install
+      - run: yarn type-check
+      - run: yarn lint

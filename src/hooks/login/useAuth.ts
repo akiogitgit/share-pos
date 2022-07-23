@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
-import { BASE_URL, HttpError, postApi } from '../../utils/api'
-import { useCookies } from '../useCookies'
+import { useCookies } from 'stores/useCookies'
 import { SignUpRequest } from 'types/user/form'
+import { BASE_URL, HttpError, postApi } from 'utils/api'
 
 export const useLogin = () => {
   const { set } = useCookies('authInfo')

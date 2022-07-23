@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useLogOut } from './useAuth'
-import { useCookies } from 'hooks/useCookies'
+import { useCookies } from 'stores/useCookies'
 import { useGlobalState } from 'stores/useGlobalState'
 
 export const useObserveAuthInfoExpired = () => {

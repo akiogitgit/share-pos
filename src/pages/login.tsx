@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { useLogin } from '../hooks/login/useAuth'
-import { Layout } from 'components/Layout'
+import { Layout } from 'components/shared/Layout'
 import { HttpError } from 'utils/api'
 
 const Login: NextPage = () => {
