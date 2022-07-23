@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Layout } from 'components/shared/Layout'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'hooks/useCookies'
+import { useCookies } from 'stores/useCookies'
 
 const Home: NextPage = () => {
   const { data, error } = useGetApi('/posts')

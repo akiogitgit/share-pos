@@ -6,7 +6,7 @@ import { PostForm } from 'components/post/PostForm'
 import { Layout } from 'components/shared/Layout'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'hooks/useCookies'
+import { useCookies } from 'stores/useCookies'
 import { Post, PostCreateParams } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
