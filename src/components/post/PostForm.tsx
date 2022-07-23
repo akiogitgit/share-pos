@@ -39,7 +39,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
         />
       </div>
       <div className='mt-10 sm:w-[220px]'>
-        <label>重要度　</label>
+        <label>オススメ度</label>
         <input
           type='range'
           id='volume'
