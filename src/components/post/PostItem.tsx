@@ -9,43 +9,53 @@ type Props = {
 
 export const PostItem: FC<Props> = ({ post }) => {
   return (
-    <ul className='bg-white rounded-xl my-2 p-4'>
-      <li>{post.id}</li>
-      <li>{post.comment}</li>
-      <Link href={post.url}>
-        <a target='_blank' className='text-blue-500'>
-          {post.url}
-        </a>
-      </Link>
+    <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:h-350px sm:w-291px'>
+      <div className='font-bold text-20px'>{post.user.username}</div>
+      <div className='h-50px mt-1 overflow-hidden'>{post.comment}</div>
+      {/* <div className='w-80vw sm:w-full'> */}
+      <div className='duration-300 hover:opacity-70'>
+        {post.metaInfo && post.metaInfo.image && (
+          <Link href={post.url}>
+            <a target='_blank'>
+              <div className='flex text-blue-600 justify-end'>
+                ページを開く🔗
+              </div>
+              {/* <div className='w-80vw sm:w-full'> */}
+              {/* <div className='w-80vw w-max-80vw  sm:w-full'> */}
+              <div>
+                <div className='flex rounded-10px h-42vw max-h-225px overflow-hidden items-center sm:h-135px'>
+                  {/* <div className='flex rounded-10px h-43vw w-80vw overflow-hidden items-center sm:h-135px sm:w-256px'> */}
+                  {/* <div className='flex rounded-10px h-43vw overflow-hidden items-center sm:h-135px'> */}
 
-      <br></br>
-      {post.metaInfo.image.substring(8, 18) === 'qiita-user' ||
-      post.metaInfo.image.substring(8, 22) === 'res.cloudinary' ? (
-        // {/* next.config.js で増やしていく */}
-        <Image
-          src={post.metaInfo.image}
-          alt=''
-          width={300}
-          height={100}
-          objectFit='contain'
-        />
-      ) : (
-        // {/* Qiita, Zenn以外はこれで表示出来る */}
-        <Image
-          src={`https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`}
-          alt=''
-          width={300}
-          height={100}
-          objectFit='contain'
-        />
-      )}
+                  <Image
+                    src={
+                      post.metaInfo.image.substring(8, 18) === 'qiita-user' ||
+                      post.metaInfo.image.substring(8, 22) ===
+                        'res.cloudinary' ||
+                      post.metaInfo.image.substring(0, 21) ===
+                        'data:image/png;base64'
+                        ? post.metaInfo.image
+                        : `https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`
+                    }
+                    alt=''
+                    className='rounded-10px transform duration-300 hover:scale-110'
+                    width={430}
+                    height={2260}
+                    objectFit='contain'
+                  />
+                </div>
+              </div>
+            </a>
+          </Link>
+        )}
+      </div>
+
       <div className='flex'>
         {[...Array(post.evaluation)].map((v, i) => (
           <div key={i}>☆</div>
         ))}
       </div>
-      <li>{post.createdAt}</li>
-      <li>{post.user.username}</li>
-    </ul>
+      <div className='flex justify-end'>{post.createdAt.substring(0, 10)}</div>
+    </div>
   )
 }
