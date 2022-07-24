@@ -11,7 +11,9 @@ export const PostItem: FC<Props> = ({ post }) => {
   return (
     <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:h-350px sm:w-291px'>
       <div className='font-bold text-20px'>{post.user.username}</div>
-      <div className='h-50px mt-1 overflow-hidden'>{post.comment}</div>
+      <div className='h-50px mt-1 overflow-hidden whitespace-pre-wrap'>
+        {post.comment}
+      </div>
 
       <div className='duration-300 hover:opacity-70'>
         <Link href={post.url}>
