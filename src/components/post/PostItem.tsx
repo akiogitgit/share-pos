@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { FC, useCallback, useState } from 'react'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
-import { deleteApi } from 'utils/api'
+import { deleteApi, postApi } from 'utils/api'
 
 type Props = {
   post: Post
@@ -14,10 +14,20 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   // コメント全表示ボタン
   const [isOpenComment, setIsOpenComment] = useState(false)
+  // 投稿の編集 commentだけでなく、オブジェクトでやるかも
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(post.comment)
 
   const { cookies } = useCookies('authInfo')
+
+  // params は postParams でまとめるかも urlは変える予定ない
+  const updatePost = useCallback(async (id: number, comment: string) => {
+    try {
+      const res = await postApi(`/posts/${id}`)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [])
 
   const deletePost = useCallback(
     async (id: number) => {
@@ -34,7 +44,7 @@ export const PostItem: FC<Props> = ({ post }) => {
     <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
-        {/* ・・・のボタン */}
+        {/* ・・・の投稿メニューボタン */}
         <div
           className='cursor-pointer text-23px duration-100 hover:opacity-50'
           onClick={() => setIsOpenMenu(!isOpenMenu)}
@@ -69,6 +79,8 @@ export const PostItem: FC<Props> = ({ post }) => {
           </div>
         </div>
       )}
+
+      {/* details メニューのパターン */}
       {/* <details className='relative'>
           <summary className='cursor-pointer list-none text-23px duration-100 hover:opacity-50'>
             ・・・
@@ -83,26 +95,27 @@ export const PostItem: FC<Props> = ({ post }) => {
           </div>
         </details> */}
 
+      {/* 編集中ならtextarea それ以外は comment表示 */}
       {isEdit ? (
         <form>
           <div className='leading-1.4rem relative'>
-            <div className='py-6 px-2 invisible whitespace-pre-wrap break-words'>
+            <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
               {comment}
             </div>
             <textarea
-              className='h-full outline-none border-2 border-red-500 rounded-10px w-full p-2 top-0 left-0 scroll-bar absolute'
+              className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 scroll-bar absolute'
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
           </div>
           <div className='flex mt-4 gap-3 justify-end'>
             <button
-              className='border border-red-500 rounded-10px py-1 px-2 text-red-500 duration-300 hover:(bg-red-500 text-white rounded-none) '
+              className='border border-gray-500 py-1 px-2 text-gray-500 duration-300 hover:(bg-gray-500 text-white rounded-10px) '
               onClick={() => setIsEdit(false)}
             >
               キャンセル
             </button>
-            <button className='border border-red-500 rounded-10px py-1 px-2 text-red-500 duration-300 hover:(bg-red-500 text-white rounded-none) '>
+            <button className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '>
               更新
             </button>
           </div>
@@ -125,15 +138,9 @@ export const PostItem: FC<Props> = ({ post }) => {
         }
       `}</style>
 
-      {/* <div className='h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap'>
-        <style jsx>{`
-          .scroll-bar::-webkit-scrollbar {
-            display: none;
-          }
-        `}</style>
-        {post.comment}
-      </div> */}
-
+      {/* 画像ないなら No image */}
+      {/* 画像がQiita, Zenn, Instagram ならそのまま表示 */}
+      {/* 上が違うなら、res.cloudinaryのfetchで表示 */}
       <div>
         <Link href={post.url}>
           <a target='_blank'>
