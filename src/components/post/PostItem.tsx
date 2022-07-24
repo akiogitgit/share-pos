@@ -50,7 +50,7 @@ export const PostItem: FC<Props> = ({ post }) => {
           ></div>
           <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px transform w-150px z-11 translate-x-230px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '>
             <div
-              className='px-4 pt-2 hover:bg-red-500'
+              className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
               onClick={() => {
                 setIsEdit(true)
                 setIsOpenMenu(false)
@@ -58,12 +58,14 @@ export const PostItem: FC<Props> = ({ post }) => {
             >
               投稿を編集する
             </div>
-            <div className='px-4 pt-2 hover:bg-red-500'>
+            <div className='px-4 pt-2 hover:bg-red-300'>
               投稿を
               <span className='font-bold text-red-500 text-18px'>削除</span>
               する
             </div>
-            <div className='py-2 px-4 hover:bg-red-500'>フォルダに追加</div>
+            <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
+              フォルダに追加
+            </div>
           </div>
         </div>
       )}
@@ -84,7 +86,7 @@ export const PostItem: FC<Props> = ({ post }) => {
       {isEdit ? (
         <form>
           <div className='leading-1.4rem relative'>
-            <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
+            <div className='py-6 px-2 invisible whitespace-pre-wrap break-words'>
               {comment}
             </div>
             <textarea
@@ -95,12 +97,14 @@ export const PostItem: FC<Props> = ({ post }) => {
           </div>
           <div className='flex mt-4 gap-3 justify-end'>
             <button
-              className='border border-red-500'
+              className='border border-red-500 rounded-10px py-1 px-2 text-red-500 duration-300 hover:(bg-red-500 text-white rounded-none) '
               onClick={() => setIsEdit(false)}
             >
               キャンセル
             </button>
-            <button className='border border-red-500'>更新</button>
+            <button className='border border-red-500 rounded-10px py-1 px-2 text-red-500 duration-300 hover:(bg-red-500 text-white rounded-none) '>
+              更新
+            </button>
           </div>
         </form>
       ) : (
