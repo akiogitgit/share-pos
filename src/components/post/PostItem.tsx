@@ -8,12 +8,16 @@ type Props = {
 }
 
 export const PostItem: FC<Props> = ({ post }) => {
+  // ・・・のボタン
   const [isOpenMenu, setIsOpenMenu] = useState(false)
+  // コメント全表示ボタン
+  const [isOpenComment, setIsOpenComment] = useState(false)
 
   return (
-    <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:h-350px sm:w-291px'>
+    <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
+        {/* ・・・のボタン */}
         <div
           className='cursor-pointer text-23px duration-100 hover:opacity-50'
           onClick={() => setIsOpenMenu(!isOpenMenu)}
@@ -51,10 +55,29 @@ export const PostItem: FC<Props> = ({ post }) => {
             <div className='py-2 px-4 hover:bg-red-500'>フォルダに追加</div>
           </div>
         </details> */}
-      {/* <div className='h-70px mt-3 overflow-hidden whitespace-pre-wrap'> */}
-      <div className='h-70px mt-3 overflow-y-scroll whitespace-pre-wrap'>
+
+      <div
+        onClick={() => setIsOpenComment(!isOpenComment)}
+        className={`${
+          !isOpenComment && 'h-70px'
+        } min-h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap`}
+      >
+        <style jsx>{`
+          .scroll-bar::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
         {post.comment}
       </div>
+
+      {/* <div className='h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap'>
+        <style jsx>{`
+          .scroll-bar::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+        {post.comment}
+      </div> */}
 
       <div>
         <Link href={post.url}>
