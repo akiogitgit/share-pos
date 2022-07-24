@@ -1,7 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
+import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { deleteApi } from 'utils/api'
 
 type Props = {
   post: Post
@@ -12,6 +14,21 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   // コメント全表示ボタン
   const [isOpenComment, setIsOpenComment] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
+  const [comment, setComment] = useState(post.comment)
+
+  const { cookies } = useCookies('authInfo')
+
+  const deletePost = useCallback(
+    async (id: number) => {
+      try {
+        const res = await deleteApi(`posts/${id}`, {}, cookies.authInfo)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [cookies.authInfo],
+  )
 
   return (
     <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
@@ -31,8 +48,16 @@ export const PostItem: FC<Props> = ({ post }) => {
             onClick={() => setIsOpenMenu(false)}
             className='h-100vh opacity-25 top-0 left-0 w-100vw z-10 fixed'
           ></div>
-          <div className='border cursor-pointer bg-red-100 border-red-600 transform w-150px z-11 translate-x-220px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '>
-            <div className='px-4 pt-2 hover:bg-red-500'>投稿を編集する</div>
+          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px transform w-150px z-11 translate-x-230px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '>
+            <div
+              className='px-4 pt-2 hover:bg-red-500'
+              onClick={() => {
+                setIsEdit(true)
+                setIsOpenMenu(false)
+              }}
+            >
+              投稿を編集する
+            </div>
             <div className='px-4 pt-2 hover:bg-red-500'>
               投稿を
               <span className='font-bold text-red-500 text-18px'>削除</span>
@@ -56,19 +81,45 @@ export const PostItem: FC<Props> = ({ post }) => {
           </div>
         </details> */}
 
-      <div
-        onClick={() => setIsOpenComment(!isOpenComment)}
-        className={`${
-          !isOpenComment && 'h-70px'
-        } min-h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap`}
-      >
-        <style jsx>{`
-          .scroll-bar::-webkit-scrollbar {
-            display: none;
-          }
-        `}</style>
-        {post.comment}
-      </div>
+      {isEdit ? (
+        <form>
+          <div className='leading-1.4rem relative'>
+            <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
+              {comment}
+            </div>
+            <textarea
+              className='h-full outline-none border-2 border-red-500 rounded-10px w-full p-2 top-0 left-0 scroll-bar absolute'
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
+          <div className='flex mt-4 gap-3 justify-end'>
+            <button
+              className='border border-red-500'
+              onClick={() => setIsEdit(false)}
+            >
+              キャンセル
+            </button>
+            <button className='border border-red-500'>更新</button>
+          </div>
+        </form>
+      ) : (
+        <div
+          onClick={() => setIsOpenComment(!isOpenComment)}
+          className={`${
+            !isOpenComment && 'h-70px'
+          } min-h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap`}
+        >
+          {post.comment}
+        </div>
+      )}
+
+      {/* スクロールバーを消す */}
+      <style jsx>{`
+        .scroll-bar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
 
       {/* <div className='h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap'>
         <style jsx>{`
