@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { FC, useCallback, useState } from 'react'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
-import { deleteApi } from 'utils/api'
 
 type Props = {
   post: Post
@@ -18,6 +17,10 @@ export const PostItem: FC<Props> = ({ post }) => {
 
   const { cookies } = useCookies('authInfo')
 
+  const pickDomainFromURL = useCallback((url: string) => {
+    return url.split('//')[1].split('/')[0]
+  }, [])
+
   // params は postParams でまとめるかも urlは変える予定ない
   // const updatePost = useCallback(async (id: number, comment: string) => {
   //   try {
@@ -27,16 +30,16 @@ export const PostItem: FC<Props> = ({ post }) => {
   //   }
   // }, [])
 
-  const deletePost = useCallback(
-    async (id: number) => {
-      try {
-        const res = await deleteApi(`posts/${id}`, {}, cookies.authInfo)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    [cookies.authInfo],
-  )
+  // const deletePost = useCallback(
+  //   async (id: number) => {
+  //     try {
+  //       const res = await deleteApi(`posts/${id}`, {}, cookies.authInfo)
+  //     } catch (e) {
+  //       console.error(e)
+  //     }
+  //   },
+  //   [cookies.authInfo],
+  // )
 
   return (
     <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
@@ -109,9 +112,16 @@ export const PostItem: FC<Props> = ({ post }) => {
           onClick={() => setIsOpenComment(!isOpenComment)}
           className={`${
             !isOpenComment && 'h-70px'
-          } min-h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap`}
+          } min-h-70px mt-3 scroll-bar overflow-y-scroll whitespace-pre-wrap group relative`}
         >
           {post.comment}
+          <div
+            className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute invisible ${
+              !isOpenComment && 'group-hover:visible'
+            }`}
+          >
+            もっとみる
+          </div>
         </div>
       )}
 
@@ -125,11 +135,20 @@ export const PostItem: FC<Props> = ({ post }) => {
       {/* 画像ないなら No image */}
       {/* 画像がQiita, Zenn, Instagram ならそのまま表示 */}
       {/* 上が違うなら、res.cloudinaryのfetchで表示 */}
-      <div>
+      <article className='border-2 rounded-10px mt-2 p-2 duration-300 group hover:bg-gray-100 '>
         <Link href={post.url}>
           <a target='_blank'>
-            <div className='flex text-blue-600 justify-end'>ページを開く🔗</div>
-            <div className='flex rounded-10px h-42vw max-h-225px overflow-hidden items-center sm:h-135px'>
+            <div className='h-45px overflow-hidden group-hover:underline'>
+              <>
+                {post.metaInfo && typeof post.metaInfo.image === 'string' ? (
+                  post.metaInfo.title
+                ) : (
+                  <div className='flex justify-end'>ページを開く🔗</div>
+                )}
+              </>
+            </div>
+            {/* <div className='flex rounded-10px h-42vw max-h-225px overflow-hidden items-center sm:h-135px'> */}
+            <div className='flex rounded-10px h-42vw mt-3.5 max-h-215px overflow-hidden items-center sm:h-126px'>
               {post.metaInfo && typeof post.metaInfo.image === 'string' ? (
                 <Image
                   src={
@@ -141,20 +160,21 @@ export const PostItem: FC<Props> = ({ post }) => {
                       : `https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`
                   }
                   alt=''
-                  className='rounded-10px transform duration-300 hover:scale-105'
+                  className='rounded-10px transform duration-300 group-hover:scale-105'
                   width={430}
                   height={2260}
                   objectFit='contain'
                 />
               ) : (
-                <div className='flex h-full bg-gray-300 rounded-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center hover:scale-110'>
+                <div className='flex h-full bg-gray-300 rounded-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
                   No image
                 </div>
               )}
             </div>
+            <p>{pickDomainFromURL(post.url)}</p>
           </a>
         </Link>
-      </div>
+      </article>
 
       <div className='flex'>
         {[...Array(post.evaluation)].map((v, i) => (
