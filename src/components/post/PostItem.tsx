@@ -3,16 +3,14 @@ import Link from 'next/link'
 import { FC, useCallback, useState } from 'react'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
-import { deleteApi, postApi } from 'utils/api'
+import { deleteApi } from 'utils/api'
 
 type Props = {
   post: Post
 }
 
 export const PostItem: FC<Props> = ({ post }) => {
-  // ・・・のボタン
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  // コメント全表示ボタン
   const [isOpenComment, setIsOpenComment] = useState(false)
   // 投稿の編集 commentだけでなく、オブジェクトでやるかも
   const [isEdit, setIsEdit] = useState(false)
@@ -21,13 +19,13 @@ export const PostItem: FC<Props> = ({ post }) => {
   const { cookies } = useCookies('authInfo')
 
   // params は postParams でまとめるかも urlは変える予定ない
-  const updatePost = useCallback(async (id: number, comment: string) => {
-    try {
-      const res = await postApi(`/posts/${id}`)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [])
+  // const updatePost = useCallback(async (id: number, comment: string) => {
+  //   try {
+  //     const res = await postApi(`/posts/${id}`)
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [])
 
   const deletePost = useCallback(
     async (id: number) => {
@@ -44,13 +42,13 @@ export const PostItem: FC<Props> = ({ post }) => {
     <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
-        {/* ・・・の投稿メニューボタン */}
-        <div
+        {/* 投稿メニューボタン */}
+        <button
           className='cursor-pointer text-23px duration-100 hover:opacity-50'
           onClick={() => setIsOpenMenu(!isOpenMenu)}
         >
           ・・・
-        </div>
+        </button>
       </div>
       {isOpenMenu && (
         <div>
@@ -80,22 +78,8 @@ export const PostItem: FC<Props> = ({ post }) => {
         </div>
       )}
 
-      {/* details メニューのパターン */}
-      {/* <details className='relative'>
-          <summary className='cursor-pointer list-none text-23px duration-100 hover:opacity-50'>
-            ・・・
-          </summary>
-          <div className='border bg-red-100 border-red-600 transform w-150px translate-x-[-160px] translate-y-[-20px] absolute'>
-            <div className='px-4 pt-2 hover:bg-red-500'>投稿を編集する</div>
-            <div className='px-4 pt-2 hover:bg-red-500'>
-              投稿を
-              <span className='font-bold text-red-500 text-18px'>削除</span>する
-            </div>
-            <div className='py-2 px-4 hover:bg-red-500'>フォルダに追加</div>
-          </div>
-        </details> */}
-
-      {/* 編集中ならtextarea それ以外は comment表示 */}
+      {/* 編集中ならtextarea それ以外は コメント表示 */}
+      {/* コメントは、overflow-scrollで、クリックで全文表示 */}
       {isEdit ? (
         <form>
           <div className='leading-1.4rem relative'>
