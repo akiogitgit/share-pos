@@ -1,6 +1,9 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback, useState } from 'react'
+import { AiOutlineMail } from 'react-icons/ai'
+import { RiLockPasswordLine } from 'react-icons/ri'
+
 import { useLogin } from '../hooks/login/useAuth'
 import { Layout } from 'components/shared/Layout'
 import { HttpError } from 'utils/api'
@@ -36,7 +39,7 @@ const Login: NextPage = () => {
             <h1 className='text-center text-lg'>ログイン</h1>
 
             <form onSubmit={onSubmit} className='mt-4'>
-              <div>
+              <div className='relative'>
                 <label htmlFor='email' className='font-bold text-sm block '>
                   Eメール
                 </label>
@@ -49,8 +52,9 @@ const Login: NextPage = () => {
                   onChange={(v) => setEmail(v.target.value)}
                   className='border outline-none p-2'
                 />
+                <AiOutlineMail className='top-33px left-165px absolute' />
               </div>
-              <div className='mt-4'>
+              <div className='mt-4 relative'>
                 <label htmlFor='password' className='font-bold text-sm block'>
                   パスワード
                 </label>
@@ -61,8 +65,9 @@ const Login: NextPage = () => {
                   placeholder='password'
                   required
                   onChange={(v) => setPassword(v.target.value)}
-                  className='border outline-none p-2'
+                  className='border outline-none w-full p-2'
                 />
+                <RiLockPasswordLine className='top-33px left-165px absolute' />
               </div>
               <button
                 type='submit'
