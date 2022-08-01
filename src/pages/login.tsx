@@ -31,37 +31,47 @@ const Login: NextPage = () => {
         <title>SharePos ログインページ</title>
       </Head>
       <Layout>
-        <div>
-          <h1>Login</h1>
+        <div className='flex flex-col items-center justify-center'>
+          <div>
+            <h1 className='text-center text-lg'>ログイン</h1>
 
-          <form onSubmit={onSubmit}>
-            <div>
-              <input
-                type='text'
-                value={email}
-                placeholder='email'
-                required
-                onChange={(v) => setEmail(v.target.value)}
-                className='border-black outline-none border-b-2 p-2'
-              />
-            </div>
-            <div>
-              <input
-                type='password'
-                value={password}
-                placeholder='password'
-                required
-                onChange={(v) => setPassword(v.target.value)}
-                className='border-black outline-none border-b-2 p-2'
-              />
-            </div>
-            <button
-              type='submit'
-              className='font-serif bg-blue-500 border-2 border-blue-500 mt-3 text-white p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-blue-500) '
-            >
-              Login
-            </button>
-          </form>
+            <form onSubmit={onSubmit} className='mt-4'>
+              <div>
+                <label htmlFor='email' className='font-bold text-sm block '>
+                  Eメール
+                </label>
+                <input
+                  id='email'
+                  type='text'
+                  value={email}
+                  placeholder='email'
+                  required
+                  onChange={(v) => setEmail(v.target.value)}
+                  className='border outline-none p-2'
+                />
+              </div>
+              <div className='mt-4'>
+                <label htmlFor='password' className='font-bold text-sm block'>
+                  パスワード
+                </label>
+                <input
+                  id='password'
+                  type='password'
+                  value={password}
+                  placeholder='password'
+                  required
+                  onChange={(v) => setPassword(v.target.value)}
+                  className='border outline-none p-2'
+                />
+              </div>
+              <button
+                type='submit'
+                className='bg-blue-500 border-2 border-blue-500 mt-3 text-white w-full p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-blue-500) '
+              >
+                ログイン
+              </button>
+            </form>
+          </div>
         </div>
       </Layout>
     </>
