@@ -38,8 +38,10 @@ const SignUp: NextPage = () => {
       </Head>
       <Layout>
         <div>
-          <h1>Sign Up</h1>
-          <SignUpForm onSubmit={onSubmit} />
+          <h1 className='text-center text-lg'>新規登録</h1>
+          <div className='mt-4'>
+            <SignUpForm onSubmit={onSubmit} />
+          </div>
         </div>
       </Layout>
     </>
