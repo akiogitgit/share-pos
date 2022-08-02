@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { deleteApi } from 'utils/api'
 
 type Props = {
   post: Post
@@ -17,6 +19,7 @@ export const PostItem: FC<Props> = ({ post }) => {
   const commentRef = useRef<HTMLDivElement>(null!)
   const [commentElm, setCommentElm] = useState<HTMLDivElement>(null!)
   const { cookies } = useCookies('authInfo')
+  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   // params は postParams でまとめるかも urlは変える予定ない
   // const updatePost = useCallback(async (id: number, comment: string) => {
@@ -27,23 +30,34 @@ export const PostItem: FC<Props> = ({ post }) => {
   //   }
   // }, [])
 
-  // const deletePost = useCallback(
-  //   async (id: number) => {
-  //     try {
-  //       const res = await deleteApi(`posts/${id}`, {}, cookies.authInfo)
-  //     } catch (e) {
-  //       console.error(e)
-  //     }
-  //   },
-  //   [cookies.authInfo],
-  // )
+  const deletePost = useCallback(
+    async (id: number) => {
+      try {
+        const res = await deleteApi(
+          `/posts/${String(id)}`,
+          undefined,
+          cookies.authInfo,
+        )
+        if (!posts) {
+          return
+        }
+        const newPosts = posts.filter((v) => v.id !== post.id)
+        mutate(newPosts, false)
+
+        console.log(res)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [cookies.authInfo, mutate, post.id, posts],
+  )
 
   const pickDomainFromURL = useCallback((url: string) => {
     return url.split('//')[1].split('/')[0]
   }, [])
 
   // ドメインによって、表示するURLを変える
-  const supportedDomains = useCallback((imageURL: string) => {
+  const determineUrlByDomain = useCallback((imageURL: string) => {
     return ['qiita-user', 'res.cloudinary', 'data:image/png;base64'].some((v) =>
       imageURL.includes(v),
     )
@@ -51,14 +65,20 @@ export const PostItem: FC<Props> = ({ post }) => {
       : `https://res.cloudinary.com/demo/image/fetch/${imageURL}`
   }, [])
 
+  // 要素の高さを取得
   useEffect(() => {
     setCommentElm(commentRef.current)
   }, [commentRef])
 
-  const showSeeMore =
-    commentElm &&
-    commentElm.getBoundingClientRect().height > 80 &&
-    !isOpenComment
+  const hasElment3MoreThanLines = useMemo(
+    () => commentElm && commentElm.getBoundingClientRect().height > 80,
+    [commentElm],
+  )
+
+  const showSeeMore = useMemo(
+    () => hasElment3MoreThanLines && !isOpenComment,
+    [hasElment3MoreThanLines, isOpenComment],
+  )
 
   return (
     <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
@@ -88,7 +108,10 @@ export const PostItem: FC<Props> = ({ post }) => {
             >
               投稿を編集する
             </div>
-            <div className='px-4 pt-2 hover:bg-red-300'>
+            <div
+              className='px-4 pt-2 hover:bg-red-300'
+              onClick={() => deletePost(post.id)}
+            >
               投稿を
               <span className='font-bold text-red-500 text-18px'>削除</span>
               する
@@ -101,7 +124,6 @@ export const PostItem: FC<Props> = ({ post }) => {
       )}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
-      {/* コメントは、overflow-scrollで、クリックで全文表示 */}
       {isEdit ? (
         <form>
           <div className='leading-1.4rem relative'>
@@ -109,7 +131,7 @@ export const PostItem: FC<Props> = ({ post }) => {
               {comment}
             </div>
             <textarea
-              className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 scroll-bar absolute'
+              className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 absolute'
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
@@ -128,12 +150,13 @@ export const PostItem: FC<Props> = ({ post }) => {
         </form>
       ) : (
         <div
-          onClick={() => setIsOpenComment(!isOpenComment)}
+          onClick={() =>
+            hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
+          }
           className={`${
             !isOpenComment && 'h-70px'
           } mt-3 overflow-hidden whitespace-pre-wrap group relative`}
         >
-          {/* <span ref={ref} className='h-auto'> */}
           <div ref={commentRef} className='h-auto'>
             {post.comment}
           </div>
@@ -149,59 +172,14 @@ export const PostItem: FC<Props> = ({ post }) => {
         </div>
       )}
 
-      {/* スクロールバーを消す */}
-      <style jsx>{`
-        .scroll-bar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-
-      {/* 画像ないなら No image */}
-      {/* 画像がQiita, Zenn, Instagram ならそのまま表示 */}
-      {/* 上が違うなら、res.cloudinaryのfetchで表示 */}
-      {/* <article className='border-2 rounded-10px mt-2 p-2 duration-300 group hover:bg-gray-100 '>
-        <Link href={post.url}>
-          <a target='_blank'>
-            <div className='h-45px overflow-hidden group-hover:underline'>
-              {typeof post.metaInfo.image === 'string' ? (
-                post.metaInfo.title
-              ) : (
-                <div className='flex justify-end'>ページを開く🔗</div>
-              )}
-            </div>
-            // <div className='flex rounded-10px h-42vw max-h-225px overflow-hidden items-center sm:h-135px'>
-            <div className='flex rounded-10px h-42vw mt-3.5 max-h-215px overflow-hidden items-center sm:h-126px'>
-              {typeof post.metaInfo.image === 'string' ? (
-                <Image
-                  src={supportedDomains(post.metaInfo.image)}
-                  alt=''
-                  className='rounded-10px transform duration-300 group-hover:scale-105'
-                  width={430}
-                  height={2260}
-                  objectFit='contain'
-                />
-              ) : (
-                <div className='flex h-full bg-gray-300 rounded-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
-                  No image
-                </div>
-              )}
-            </div>
-
-            <p className='text-13px text-gray-600'>
-              {pickDomainFromURL(post.url)}
-            </p>
-          </a>
-        </Link>
-      </article>  */}
-
       <article className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
         <Link href={post.url}>
           <a target='_blank'>
             {/* // <div className='flex rounded-10px h-42vw max-h-225px overflow-hidden items-center sm:h-135px'> */}
             <div className='flex rounded-t-10px h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
-              {typeof post.metaInfo.image === 'string' ? (
+              {post.metaInfo.image ? (
                 <Image
-                  src={supportedDomains(post.metaInfo.image)}
+                  src={determineUrlByDomain(post.metaInfo.image)}
                   alt=''
                   className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-105'
                   width={430}
@@ -219,11 +197,7 @@ export const PostItem: FC<Props> = ({ post }) => {
                 {pickDomainFromURL(post.url)}
               </p>
               <div className='h-37px mt-2 text-sm overflow-hidden group-hover:underline'>
-                {typeof post.metaInfo.image === 'string' ? (
-                  post.metaInfo.title
-                ) : (
-                  <div className='flex justify-end'>ページを開く🔗</div>
-                )}
+                {post.metaInfo.title}
               </div>
             </div>
           </a>
