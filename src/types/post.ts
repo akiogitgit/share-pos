@@ -11,7 +11,7 @@ export type Post = {
     username: string
   }
   metaInfo: {
-    image: string
+    image: string | undefined
     title: string
   }
 }

@@ -41,11 +41,9 @@ const Create: NextPage = () => {
         <title>SharePos 記事投稿ページ</title>
       </Head>
       <Layout>
-        <div>
-          <h1 className='text-center text-lg'>記事投稿</h1>
-          <div className='mt-4'>
-            <PostForm onSubmit={onSubmit} />
-          </div>
+        <h1 className='text-center text-lg'>記事投稿</h1>
+        <div className='mt-4'>
+          <PostForm onSubmit={onSubmit} />
         </div>
       </Layout>
     </>

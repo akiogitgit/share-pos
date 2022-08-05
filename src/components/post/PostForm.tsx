@@ -15,6 +15,12 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
+      <style jsx>{`
+        .scroll-bar-none::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+
       <form
         onSubmit={(e) => {
           onSubmit({ comment, url, evaluation, published })
@@ -25,14 +31,17 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
-          <input
-            type='text'
-            value={comment}
-            placeholder='オススメ！'
-            required
-            onChange={(v) => setComment(v.target.value)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
-          />
+
+          <div className='min-h-[50px] leading-1.4rem relative'>
+            <div className='py-3 px-2 invisible whitespace-pre-wrap break-words'>
+              {comment}
+            </div>
+            <textarea
+              className='border h-full outline-none w-full p-2 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
           <BiCommentDetail className='top-33px left-165px absolute' />
         </div>
         <div className='mt-2 relative'>
