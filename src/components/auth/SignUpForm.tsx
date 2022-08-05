@@ -103,7 +103,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
         </div>
         <button
           type='submit'
-          className='border bg-blue-500 border-blue-500 mt-3 text-white w-full p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-blue-500) '
+          className='border bg-blue-500 border-blue-500 mt-4 text-white w-full p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-blue-500) '
         >
           ユーザー作成
         </button>

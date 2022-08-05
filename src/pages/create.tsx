@@ -42,21 +42,10 @@ const Create: NextPage = () => {
       </Head>
       <Layout>
         <div>
-          <h1>Post Create</h1>
-          <PostForm onSubmit={onSubmit} />
-          {/* <div>
-            {posts?.length &&
-              posts
-                .map((_, i, a) => a[a.length - 1 - i])
-                .map((v, i) => (
-                  <ul key={i} className='mt-3'>
-                    <li>{v.comment}</li>
-                    <li>{v.url}</li>
-                    <li>{v.comment}</li>
-                  </ul>
-                ))}
+          <h1 className='text-center text-lg'>記事投稿</h1>
+          <div className='mt-4'>
+            <PostForm onSubmit={onSubmit} />
           </div>
-          <div>{JSON.stringify(posts)}</div> */}
         </div>
       </Layout>
     </>
