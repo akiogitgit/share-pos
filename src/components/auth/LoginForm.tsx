@@ -1,26 +1,21 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { FC, useState } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
+import { LoginRequestParams } from 'types/user/authInfo'
 
 type Props = {
-  email: string
-  setEmail: Dispatch<SetStateAction<string>>
-  password: string
-  setPassword: Dispatch<SetStateAction<string>>
-  onSubmit: () => void
+  onSubmit: (params: LoginRequestParams) => void
 }
-export const LoginForm: FC<Props> = ({
-  email,
-  onSubmit,
-  setEmail,
-  password,
-  setPassword,
-}) => {
+
+export const LoginForm: FC<Props> = ({ onSubmit }) => {
+  const [email, setEmail] = useState<string>('test1@test.com')
+  const [password, setPassword] = useState<string>('password')
+
   return (
     <div className='flex flex-col items-center justify-center'>
       <form
         onSubmit={(e) => {
-          onSubmit()
+          onSubmit({ email, password })
           e.preventDefault()
         }}
         className='mt-4'
