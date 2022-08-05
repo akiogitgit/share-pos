@@ -32,7 +32,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           e.preventDefault()
         }}
       >
-        <div className='relative'>
+        <div className='max-w-300px w-80vw relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
             ユーザー名
           </label>
@@ -43,9 +43,9 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             name='username'
             onChange={(e) => onChange(e)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <AiOutlineUser className='top-33px left-165px absolute' />
+          <AiOutlineUser className='top-33px left-260px absolute' />
         </div>
         <div className='mt-2 relative'>
           <label htmlFor='email' className='font-bold text-sm block '>
@@ -59,9 +59,9 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             name='email'
             onChange={(e) => onChange(e)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <AiOutlineMail className='top-33px left-165px absolute' />
+          <AiOutlineMail className='top-33px left-260px absolute' />
         </div>
         <div className='mt-2 relative'>
           <label htmlFor='password' className='font-bold text-sm block '>
@@ -76,9 +76,9 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             minLength={6}
             name='password'
             onChange={(e) => onChange(e)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiLockPasswordLine className='top-33px left-165px absolute' />
+          <RiLockPasswordLine className='top-33px left-260px absolute' />
         </div>
         <div className='mt-2 relative'>
           <label
@@ -96,9 +96,9 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             minLength={6}
             name='passwordConfirmation'
             onChange={(e) => onChange(e)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiLockPasswordLine className='top-33px left-165px absolute' />
+          <RiLockPasswordLine className='top-33px left-260px absolute' />
         </div>
         <button
           type='submit'

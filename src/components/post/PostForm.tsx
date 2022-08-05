@@ -40,7 +40,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           e.preventDefault()
         }}
       >
-        <div className='relative'>
+        <div className='max-w-300px w-80vw relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
@@ -56,7 +56,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
               onChange={(e) => onChange(e)}
             />
           </div>
-          <BiCommentDetail className='top-33px left-165px absolute' />
+          <BiCommentDetail className='top-33px left-260px absolute' />
         </div>
         <div className='mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
@@ -69,9 +69,9 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
             required
             name='url'
             onChange={(e) => onChange(e)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiArticleLine className='top-33px left-165px absolute' />
+          <RiArticleLine className='top-33px left-260px absolute' />
         </div>
         <div className='h-80px mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
@@ -83,11 +83,11 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
             min='1'
             max='5'
             value={postCreateParams.evaluation}
-            className='bg-black h-0.5 mt-10 appearance-none'
+            className='bg-black h-0.5 mt-10 w-full appearance-none'
             name='evaluation'
             onChange={(e) => onChange(e)}
           />
-          <div className='transform translate-y-[-40px] translate-x-65px block'>
+          <div className='transform translate-y-[-40px] translate-x-150px block'>
             {postCreateParams.evaluation}
           </div>
         </div>

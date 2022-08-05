@@ -20,7 +20,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
         }}
         className='mt-4'
       >
-        <div className='relative'>
+        <div className='max-w-300px w-80vw relative'>
           <label htmlFor='email' className='font-bold text-sm block '>
             Eメール
           </label>
@@ -31,11 +31,11 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             placeholder='email'
             required
             onChange={(v) => setEmail(v.target.value)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <AiOutlineMail className='top-33px left-165px absolute' />
+          <AiOutlineMail className='top-33px left-260px absolute' />
         </div>
-        <div className='mt-2 relative'>
+        <div className='mt-2 relative '>
           <label htmlFor='password' className='font-bold text-sm block'>
             パスワード
           </label>
@@ -46,9 +46,9 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             placeholder='password'
             required
             onChange={(v) => setPassword(v.target.value)}
-            className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiLockPasswordLine className='top-33px left-165px absolute' />
+          <RiLockPasswordLine className='top-33px left-260px absolute' />
         </div>
         <button
           type='submit'
