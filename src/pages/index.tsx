@@ -28,10 +28,6 @@ const Home: NextPage = () => {
           evaluation={stars}
           onClick={(newStar) => setStars(newStar)}
         />
-        <div className='sm:(flex flex-wrap justify-around) '>
-          {posts.length &&
-            posts.map((post, i) => <PostItem post={post} key={i} />)}
-        </div>
         {posts.length && (
           <PostItemList>
             {posts.map((post, i) => (
