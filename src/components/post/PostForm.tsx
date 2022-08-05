@@ -19,13 +19,12 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
       }}
     >
       <div>
-        <input
-          type='text'
+        <textarea
           value={comment}
           placeholder='comment'
           required
           onChange={(v) => setComment(v.target.value)}
-          className='border-black outline-none border-b-2 p-2'
+          className='border-black outline-none border-b-2 p-2 w-300px'
         />
       </div>
       <div>

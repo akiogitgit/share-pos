@@ -9,7 +9,7 @@ export const Header: FC = () => {
 
   return (
     <>
-      <header className='bg-red-100 shadow-md w-full top-0 shadow-red-100 fixed'>
+      <header className='bg-white w-full py-2 top-0 z-10 fixed'>
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
             <div className='cursor-pointer mt-0 mb-1  text-6xl text-red-500'>

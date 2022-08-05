@@ -7,13 +7,11 @@ type Props = {
 
 export const Layout: FC<Props> = ({ children }) => {
   return (
-    <div className='min-h-full'>
+    <>
       <Header />
-      <div className='mx-4 mt-25 overflow-hidden'>
-        <div className='mx-auto bg-red-100 max-w-600px p-4 break-words'>
-          {children}
-        </div>
-      </div>
-    </div>
+      <main className='bg-red-100 min-h-100vh pt-25 overflow-hidden '>
+        <div className='mx-auto max-w-1000px px-2 break-words'>{children}</div>
+      </main>
+    </>
   )
 }

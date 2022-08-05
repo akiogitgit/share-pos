@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 import { PostItem } from 'components/post/PostItem'
+import { PostItemList } from 'components/post/PostItemList'
 import { PostStars } from 'components/post/PostStars'
 import { Layout } from 'components/shared/Layout'
 import { useGetApi } from 'hooks/useApi'
@@ -31,6 +32,13 @@ const Home: NextPage = () => {
           {posts.length &&
             posts.map((post, i) => <PostItem post={post} key={i} />)}
         </div>
+        {posts.length && (
+          <PostItemList>
+            {posts.map((post, i) => (
+              <PostItem post={post} key={i} />
+            ))}
+          </PostItemList>
+        )}
       </Layout>
     </>
   )
