@@ -33,11 +33,7 @@ export const PostItem: FC<Props> = ({ post }) => {
   const deletePost = useCallback(
     async (id: number) => {
       try {
-        const res = await deleteApi(
-          `/posts/${String(id)}`,
-          undefined,
-          cookies.authInfo,
-        )
+        const res = await deleteApi(`/posts/${id}`, undefined, cookies.authInfo)
         if (!posts) {
           return
         }
@@ -81,8 +77,8 @@ export const PostItem: FC<Props> = ({ post }) => {
   )
 
   return (
-    <div className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
-      <div className='flex justify-between'>
+    <article className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
+      <section className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         {/* 投稿メニューボタン */}
         <button
@@ -91,9 +87,9 @@ export const PostItem: FC<Props> = ({ post }) => {
         >
           ・・・
         </button>
-      </div>
+      </section>
       {isOpenMenu && (
-        <div>
+        <nav>
           <div
             onClick={() => setIsOpenMenu(false)}
             className='h-100vh opacity-25 top-0 left-0 w-100vw z-10 fixed'
@@ -120,59 +116,61 @@ export const PostItem: FC<Props> = ({ post }) => {
               フォルダに追加
             </div>
           </div>
-        </div>
+        </nav>
       )}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
-      {isEdit ? (
-        <form>
-          <div className='leading-1.4rem relative'>
-            <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
-              {comment}
+      <section>
+        {isEdit ? (
+          <form>
+            <div className='leading-1.4rem relative'>
+              <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
+                {comment}
+              </div>
+              <textarea
+                className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 absolute'
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
             </div>
-            <textarea
-              className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 absolute'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
-          <div className='flex mt-4 gap-3 justify-end'>
-            <button
-              className='border border-gray-500 py-1 px-2 text-gray-500 duration-300 hover:(bg-gray-500 text-white rounded-10px) '
-              onClick={() => setIsEdit(false)}
-            >
-              キャンセル
-            </button>
-            <button className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '>
-              更新
-            </button>
-          </div>
-        </form>
-      ) : (
-        <div
-          onClick={() =>
-            hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
-          }
-          className={`${
-            !isOpenComment && 'h-70px'
-          } mt-3 overflow-hidden whitespace-pre-wrap group relative`}
-        >
-          <div ref={commentRef} className='h-auto'>
-            {post.comment}
-          </div>
+            <div className='flex mt-4 gap-3 justify-end'>
+              <button
+                className='border border-gray-500 py-1 px-2 text-gray-500 duration-300 hover:(bg-gray-500 text-white rounded-10px) '
+                onClick={() => setIsEdit(false)}
+              >
+                キャンセル
+              </button>
+              <button className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '>
+                更新
+              </button>
+            </div>
+          </form>
+        ) : (
           <div
-            className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
-              showSeeMore
-                ? 'visible sm:invisible sm:group-hover:visible'
-                : 'invisible'
-            }`}
+            onClick={() =>
+              hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
+            }
+            className={`${
+              !isOpenComment && 'h-70px'
+            } mt-3 overflow-hidden whitespace-pre-wrap group relative`}
           >
-            もっとみる
+            <div ref={commentRef} className='h-auto'>
+              {post.comment}
+            </div>
+            <div
+              className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
+                showSeeMore
+                  ? 'visible sm:invisible sm:group-hover:visible'
+                  : 'invisible'
+              }`}
+            >
+              もっとみる
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </section>
 
-      <article className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
+      <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
         <Link href={post.url}>
           <a target='_blank'>
             {/* // <div className='flex rounded-10px h-42vw max-h-225px overflow-hidden items-center sm:h-135px'> */}
@@ -192,26 +190,26 @@ export const PostItem: FC<Props> = ({ post }) => {
                 </div>
               )}
             </div>
-            <div className='p-2'>
+            <figcaption className='p-2'>
               <p className='text-13px text-gray-500'>
                 {pickDomainFromURL(post.url)}
               </p>
               <div className='h-37px mt-2 text-sm overflow-hidden group-hover:underline'>
                 {post.metaInfo.title}
               </div>
-            </div>
+            </figcaption>
           </a>
         </Link>
-      </article>
+      </figure>
 
-      <div className='flex mt-1 items-center justify-between'>
+      <section className='flex mt-1 items-center justify-between'>
         <div className='flex'>
           {[...Array(post.evaluation)].map((v, i) => (
             <div key={i}>☆</div>
           ))}
         </div>
         <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
-      </div>
-    </div>
+      </section>
+    </article>
   )
 }
