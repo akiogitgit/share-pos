@@ -31,9 +31,9 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             placeholder='email'
             required
             onChange={(v) => setEmail(v.target.value)}
-            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <AiOutlineMail className='top-33px left-260px absolute' />
+          <AiOutlineMail className='top-33px left-270px absolute' />
         </div>
         <div className='mt-2 relative '>
           <label htmlFor='password' className='font-bold text-sm block'>
@@ -46,9 +46,9 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             placeholder='password'
             required
             onChange={(v) => setPassword(v.target.value)}
-            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiLockPasswordLine className='top-33px left-260px absolute' />
+          <RiLockPasswordLine className='top-33px left-270px absolute' />
         </div>
         <button
           type='submit'

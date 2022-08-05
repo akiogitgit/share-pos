@@ -51,12 +51,12 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
             </div>
             <textarea
               name='comment'
-              className='border h-full outline-none w-full p-2 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
+              className='border h-full outline-none w-full p-2 pr-9 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
               value={postCreateParams.comment}
               onChange={(e) => onChange(e)}
             />
           </div>
-          <BiCommentDetail className='top-33px left-260px absolute' />
+          <BiCommentDetail className='top-33px left-270px absolute' />
         </div>
         <div className='mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
@@ -69,9 +69,9 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
             required
             name='url'
             onChange={(e) => onChange(e)}
-            className='border outline-none w-full p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiArticleLine className='top-33px left-260px absolute' />
+          <RiArticleLine className='top-33px left-270px absolute' />
         </div>
         <div className='h-80px mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
