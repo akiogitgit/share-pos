@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 
 import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
@@ -15,14 +15,14 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
     passwordConfirmation: '',
   })
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpFormParams((state) => {
       return {
         ...state,
         [e.target.name]: e.target.value,
       }
     })
-  }
+  }, [])
 
   return (
     <div className='flex flex-col items-center justify-center'>

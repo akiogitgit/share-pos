@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { BiCommentDetail } from 'react-icons/bi'
 import { RiArticleLine } from 'react-icons/ri'
 import { PostCreateParams } from 'types/post'
@@ -15,16 +15,17 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
     published: false,
   })
 
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setPostCreateParams((state) => {
-      return {
-        ...state,
-        [e.target.name]: e.target.value,
-      }
-    })
-  }
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setPostCreateParams((state) => {
+        return {
+          ...state,
+          [e.target.name]: e.target.value,
+        }
+      })
+    },
+    [],
+  )
 
   return (
     <div className='flex flex-col items-center justify-center'>
