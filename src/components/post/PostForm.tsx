@@ -8,10 +8,23 @@ type Props = {
 }
 
 export const PostForm: FC<Props> = ({ onSubmit }) => {
-  const [comment, setComment] = useState('')
-  const [url, setUrl] = useState('')
-  const [evaluation, setEvaluation] = useState(1)
-  const [published, setPublished] = useState(false)
+  const [postCreateParams, setPostCreateParams] = useState<PostCreateParams>({
+    comment: '',
+    url: '',
+    evaluation: 1,
+    published: false,
+  })
+
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setPostCreateParams((state) => {
+      return {
+        ...state,
+        [e.target.name]: e.target.value,
+      }
+    })
+  }
 
   return (
     <div className='flex flex-col items-center justify-center'>
@@ -23,7 +36,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
       <form
         onSubmit={(e) => {
-          onSubmit({ comment, url, evaluation, published })
+          onSubmit(postCreateParams)
           e.preventDefault()
         }}
       >
@@ -34,12 +47,13 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
           <div className='min-h-[50px] leading-1.4rem relative'>
             <div className='py-3 px-2 invisible whitespace-pre-wrap break-words'>
-              {comment}
+              {postCreateParams.comment}
             </div>
             <textarea
+              name='comment'
               className='border h-full outline-none w-full p-2 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              value={postCreateParams.comment}
+              onChange={(e) => onChange(e)}
             />
           </div>
           <BiCommentDetail className='top-33px left-165px absolute' />
@@ -50,10 +64,11 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           </label>
           <input
             type='text'
-            value={url}
+            value={postCreateParams.url}
             placeholder='https://example.com'
             required
-            onChange={(v) => setUrl(v.target.value)}
+            name='url'
+            onChange={(e) => onChange(e)}
             className='border outline-none p-2 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiArticleLine className='top-33px left-165px absolute' />
@@ -64,16 +79,16 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           </label>
           <input
             type='range'
-            id='volume'
-            name='volume'
+            id='evaluation'
             min='1'
             max='5'
-            value={evaluation}
+            value={postCreateParams.evaluation}
             className='bg-black h-0.5 mt-10 appearance-none'
-            onChange={(e) => setEvaluation(Number(e.target.value))}
+            name='evaluation'
+            onChange={(e) => onChange(e)}
           />
           <div className='transform translate-y-[-40px] translate-x-65px block'>
-            {evaluation}
+            {postCreateParams.evaluation}
           </div>
         </div>
 
@@ -84,7 +99,14 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           <div>
             <div
               className='rounded-full cursor-pointer bg-blue-600 h-28px mt-2 text-white w-90px relative inline-block'
-              onClick={() => setPublished(!published)}
+              onClick={() =>
+                setPostCreateParams((state) => {
+                  return {
+                    ...state,
+                    published: !postCreateParams.published,
+                  }
+                })
+              }
             >
               <div className=' font-bold text-white text-md transform top-[2px] left-[5px] absolute'>
                 公開
@@ -94,7 +116,9 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
               </div>
               <div
                 className={`bg-white h-20px rounded-full top-4px ${
-                  published ? 'left-3px w-38px' : 'left-40px w-46px'
+                  postCreateParams.published
+                    ? 'left-40px w-46px'
+                    : 'left-3px w-38px'
                 } duration-150 absolute`}
               ></div>
             </div>
@@ -102,7 +126,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
         </div>
         <button
           type='submit'
-          className='border bg-blue-500 border-blue-500 mt-4 text-white w-full p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-blue-500) '
+          className='border bg-blue-500 border-blue-500 mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-blue-500) '
         >
           作成
         </button>
