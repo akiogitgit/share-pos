@@ -54,6 +54,6 @@ export const useSignUp = () => {
 }
 
 export const useLogOut = () => {
-  const { remove } = useCookies('authInfo')
-  return { logOut: () => remove('authInfo') }
+  const { remove } = useCookies('token')
+  return { logOut: () => remove('token') }
 }

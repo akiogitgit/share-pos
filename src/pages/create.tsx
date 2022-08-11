@@ -14,25 +14,32 @@ const Create: NextPage = () => {
   useRequireLogin()
 
   const router = useRouter()
-  const { cookies } = useCookies('authInfo')
+  const { cookies } = useCookies('token')
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   const onSubmit = useCallback(
     async (params: PostCreateParams) => {
       try {
-        const newPost = await postApi<Post>('/posts', params, cookies.authInfo)
-        if (newPost && posts) {
-          console.log('newPost: ', newPost)
-          router.push('/')
-          mutate([...posts, newPost], false)
+        const header = { Authorization: `Token ${cookies.token}` }
+        const newPost = await postApi<Post>('/posts', params, header)
+        if (!newPost) {
+          return
         }
+        console.log('投稿の作成に成功 ', newPost)
+
+        if (posts) {
+          mutate([...posts, newPost], false)
+        } else {
+          mutate([newPost], false)
+        }
+        router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
           console.error(e.message)
         }
       }
     },
-    [cookies.authInfo, mutate, posts, router],
+    [cookies.token, mutate, posts, router],
   )
 
   return (
