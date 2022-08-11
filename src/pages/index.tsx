@@ -14,9 +14,6 @@ const Home: NextPage = () => {
   const { cookies } = useCookies('authInfo')
   // deleteApi('/posts/destroy_all', undefined, cookies.authInfo)
   const [stars, setStars] = useState(1)
-  if (!posts) {
-    return <div>Loading...</div>
-  }
 
   return (
     <>
@@ -28,7 +25,7 @@ const Home: NextPage = () => {
           evaluation={stars}
           onClick={(newStar) => setStars(newStar)}
         />
-        {posts.length && (
+        {posts && posts.length && (
           <PostItemList>
             {posts.map((post, i) => (
               <PostItem post={post} key={i} />

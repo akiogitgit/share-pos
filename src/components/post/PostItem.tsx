@@ -4,7 +4,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
-import { deleteApi } from 'utils/api'
+import { deleteApi, putApi } from 'utils/api'
 
 type Props = {
   post: Post
@@ -17,18 +17,37 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(post.comment)
   const commentRef = useRef<HTMLDivElement>(null!)
-  const [commentElm, setCommentElm] = useState<HTMLDivElement>(null!)
+  const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
   const { cookies } = useCookies('authInfo')
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   // params は postParams でまとめるかも urlは変える予定ない
-  // const updatePost = useCallback(async (id: number, comment: string) => {
-  //   try {
-  //     const res = await postApi(`/posts/${id}`)
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [])
+  const updatePost = useCallback(
+    async (id: number, comment: string) => {
+      try {
+        const params = { post: { comment } }
+        const res = await putApi<Post>(`/posts/${id}`, params, cookies.authInfo)
+        if (!res || !posts) {
+          return
+        }
+        // if (res && posts) {
+        let newPosts = posts
+        const index = posts.indexOf(post)
+        if (index === -1) {
+          return
+        }
+        newPosts[index] = res
+        mutate(newPosts, false)
+        setIsEdit(false)
+        console.log(res)
+        console.log({ newPosts })
+        console.log({ index })
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [cookies.authInfo, mutate, post, posts],
+  )
 
   const deletePost = useCallback(
     async (id: number) => {
@@ -63,12 +82,12 @@ export const PostItem: FC<Props> = ({ post }) => {
 
   // 要素の高さを取得
   useEffect(() => {
-    setCommentElm(commentRef.current)
+    setCommentElment(commentRef.current)
   }, [commentRef])
 
   const hasElment3MoreThanLines = useMemo(
-    () => commentElm && commentElm.getBoundingClientRect().height > 80,
-    [commentElm],
+    () => commentElment && commentElment.getBoundingClientRect().height > 80,
+    [commentElment],
   )
 
   const showSeeMore = useMemo(
@@ -121,7 +140,12 @@ export const PostItem: FC<Props> = ({ post }) => {
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       {isEdit ? (
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            updatePost(post.id, comment)
+          }}
+        >
           <div className='leading-1.4rem relative'>
             <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
               {comment}
@@ -139,7 +163,10 @@ export const PostItem: FC<Props> = ({ post }) => {
             >
               キャンセル
             </button>
-            <button className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '>
+            <button
+              type='submit'
+              className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '
+            >
               更新
             </button>
           </div>
