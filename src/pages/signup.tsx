@@ -18,9 +18,9 @@ const SignUp: NextPage = () => {
       }
 
       // 確認用パスワードは除いてsignUp渡す
-      const { passwordConfirmation: _, ...signUpRequest } = params
+      // const { passwordConfirmation: _, ...signUpRequest } = params
       try {
-        await signUp(signUpRequest)
+        await signUp(params)
       } catch (error) {
         if (error instanceof HttpError) {
           console.error(error)

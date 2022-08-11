@@ -4,6 +4,7 @@ import { AuthInfo } from 'types/user/authInfo'
 
 type Cookies = {
   authInfo: AuthInfo
+  token: string
 }
 
 export const useCookies = <

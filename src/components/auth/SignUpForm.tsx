@@ -3,6 +3,7 @@ import { FC, useCallback, useState } from 'react'
 import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { SignUpFormParams } from 'types/user/form'
+
 type Props = {
   onSubmit: (params: SignUpFormParams) => void
 }
