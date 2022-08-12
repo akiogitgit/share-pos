@@ -4,9 +4,9 @@ import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { PostForm } from 'components/post/PostForm'
 import { Layout } from 'components/shared/Layout'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'stores/useCookies'
 import { Post, PostCreateParams } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
@@ -14,15 +14,15 @@ const Create: NextPage = () => {
   useRequireLogin()
 
   const router = useRouter()
-  const { cookies } = useCookies('authInfo')
+  const authHeaderParams = useAuthHeaderParams()
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   const onSubmit = useCallback(
     async (params: PostCreateParams) => {
       try {
-        const newPost = await postApi<Post>('/posts', params, cookies.authInfo)
+        const newPost = await postApi<Post>('/posts', params, authHeaderParams)
         if (newPost && posts) {
-          console.log('newPost: ', newPost)
+          console.log('投稿の作成に成功 ', newPost)
           router.push('/')
           mutate([...posts, newPost], false)
         }
@@ -32,7 +32,7 @@ const Create: NextPage = () => {
         }
       }
     },
-    [cookies.authInfo, mutate, posts, router],
+    [authHeaderParams, mutate, posts, router],
   )
 
   return (

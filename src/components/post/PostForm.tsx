@@ -8,7 +8,7 @@ type Props = {
 }
 
 export const PostForm: FC<Props> = ({ onSubmit }) => {
-  const [postCreateParams, setPostCreateParams] = useState<PostCreateParams>({
+  const [formParams, setFormParams] = useState<PostCreateParams>({
     comment: '',
     url: '',
     evaluation: 1,
@@ -17,7 +17,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setPostCreateParams((state) => {
+      setFormParams((state) => {
         return {
           ...state,
           [e.target.name]: e.target.value,
@@ -37,7 +37,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
       <form
         onSubmit={(e) => {
-          onSubmit(postCreateParams)
+          onSubmit(formParams)
           e.preventDefault()
         }}
       >
@@ -48,12 +48,12 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
 
           <div className='min-h-[50px] leading-1.4rem relative'>
             <div className='py-3 px-2 invisible whitespace-pre-wrap break-words'>
-              {postCreateParams.comment}
+              {formParams.comment}
             </div>
             <textarea
               name='comment'
               className='border h-full outline-none w-full p-2 pr-9 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
-              value={postCreateParams.comment}
+              value={formParams.comment}
               onChange={(e) => onChange(e)}
             />
           </div>
@@ -65,7 +65,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           </label>
           <input
             type='text'
-            value={postCreateParams.url}
+            value={formParams.url}
             placeholder='https://example.com'
             required
             name='url'
@@ -83,13 +83,13 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
             id='evaluation'
             min='1'
             max='5'
-            value={postCreateParams.evaluation}
+            value={formParams.evaluation}
             className='bg-black h-0.5 mt-10 w-full appearance-none'
             name='evaluation'
             onChange={(e) => onChange(e)}
           />
           <div className='transform translate-y-[-40px] translate-x-150px block'>
-            {postCreateParams.evaluation}
+            {formParams.evaluation}
           </div>
         </div>
 
@@ -99,12 +99,14 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           </label>
           <div>
             <div
-              className='rounded-full cursor-pointer bg-blue-600 h-28px mt-2 text-white w-90px relative inline-block'
+              className={`rounded-full cursor-pointer ${
+                formParams.published ? 'bg-red-600' : 'bg-blue-600'
+              } h-28px mt-2 text-white w-90px relative inline-block`}
               onClick={() =>
-                setPostCreateParams((state) => {
+                setFormParams((state) => {
                   return {
                     ...state,
-                    published: !postCreateParams.published,
+                    published: !formParams.published,
                   }
                 })
               }
@@ -117,9 +119,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
               </div>
               <div
                 className={`bg-white h-20px rounded-full top-4px ${
-                  postCreateParams.published
-                    ? 'left-40px w-46px'
-                    : 'left-3px w-38px'
+                  formParams.published ? 'left-40px w-46px' : 'left-3px w-38px'
                 } duration-150 absolute`}
               ></div>
             </div>

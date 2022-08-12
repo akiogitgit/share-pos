@@ -5,7 +5,7 @@ import { useCallback } from 'react'
 import { useLogin } from '../hooks/login/useAuth'
 import { LoginForm } from 'components/auth/LoginForm'
 import { Layout } from 'components/shared/Layout'
-import { LoginRequestParams } from 'types/user/authInfo'
+import { LoginRequestParams } from 'types/user/auth'
 import { HttpError } from 'utils/api'
 
 const Login: NextPage = () => {

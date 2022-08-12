@@ -5,14 +5,17 @@ import { PostItem } from 'components/post/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { PostStars } from 'components/post/PostStars'
 import { Layout } from 'components/shared/Layout'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { deleteApi } from 'utils/api'
 
 const Home: NextPage = () => {
   const { data: posts, error } = useGetApi<Post[]>('/posts')
-  const { cookies } = useCookies('authInfo')
-  // deleteApi('/posts/destroy_all', undefined, cookies.authInfo)
+  const authHeaderParams = useAuthHeaderParams()
+  if (false) {
+    deleteApi('/posts/delete_all', undefined, authHeaderParams)
+  }
   const [stars, setStars] = useState(1)
 
   return (

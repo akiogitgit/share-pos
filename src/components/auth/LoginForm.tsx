@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { LoginRequestParams } from 'types/user/authInfo'
+import { LoginRequestParams } from 'types/user/auth'
 
 type Props = {
   onSubmit: (params: LoginRequestParams) => void

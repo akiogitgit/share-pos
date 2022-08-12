@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
 import { deleteApi, putApi } from 'utils/api'
 
@@ -17,42 +17,38 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(post.comment)
   const commentRef = useRef<HTMLDivElement>(null!)
-  const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
-  const { cookies } = useCookies('authInfo')
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
+  const authHeaderParams = useAuthHeaderParams()
+  const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
 
   // params は postParams でまとめるかも urlは変える予定ない
   const updatePost = useCallback(
     async (id: number, comment: string) => {
       try {
         const params = { post: { comment } }
-        const res = await putApi<Post>(`/posts/${id}`, params, cookies.authInfo)
+        const res = await putApi<Post>(`/posts/${id}`, params, authHeaderParams)
         if (!res || !posts) {
           return
         }
-        // if (res && posts) {
-        let newPosts = posts
-        const index = posts.indexOf(post)
-        if (index === -1) {
-          return
-        }
-        newPosts[index] = res
+        const newPosts = posts.map((post) => {
+          if (post.id === res.id) {
+            return res
+          }
+          return post
+        })
         mutate(newPosts, false)
         setIsEdit(false)
-        console.log(res)
-        console.log({ newPosts })
-        console.log({ index })
       } catch (e) {
         console.error(e)
       }
     },
-    [cookies.authInfo, mutate, post, posts],
+    [authHeaderParams, mutate, posts],
   )
 
   const deletePost = useCallback(
     async (id: number) => {
       try {
-        const res = await deleteApi(`/posts/${id}`, undefined, cookies.authInfo)
+        const res = await deleteApi(`/posts/${id}`, undefined, authHeaderParams)
         if (!posts) {
           return
         }
@@ -64,7 +60,7 @@ export const PostItem: FC<Props> = ({ post }) => {
         console.error(e)
       }
     },
-    [cookies.authInfo, mutate, post.id, posts],
+    [authHeaderParams, mutate, post.id, posts],
   )
 
   const pickDomainFromURL = useCallback((url: string) => {
