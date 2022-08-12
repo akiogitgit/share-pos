@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useCookies } from 'stores/useCookies'
-import { LoginRequestParams, SignUpRequestParams } from 'types/user/authInfo'
+import { LoginRequestParams, SignUpRequestParams } from 'types/user/auth'
 import { User } from 'types/user/user'
 import { HttpError, postApi } from 'utils/api'
 
@@ -8,9 +8,9 @@ export const useLogin = () => {
   const { set } = useCookies('token')
 
   const login = useCallback(
-    async (loginRequestParams: LoginRequestParams) => {
+    async (params: LoginRequestParams) => {
       try {
-        const res = await postApi<User>('/auth/login', loginRequestParams)
+        const res = await postApi<User>('/auth/login', params)
         if (!res) {
           return
         }
@@ -19,7 +19,7 @@ export const useLogin = () => {
         set('token', res.token)
       } catch (e) {
         if (e instanceof HttpError) {
-          console.log(HttpError)
+          console.log(e)
         }
       }
     },
@@ -32,10 +32,10 @@ export const useSignUp = () => {
   const { set } = useCookies('token')
 
   const signUp = useCallback(
-    async (signUpRequestParams: SignUpRequestParams) => {
+    async (params: SignUpRequestParams) => {
       // ユーザー作成に成功したら、そのままログイン
       try {
-        const res = await postApi<User>('/auth/sign_up', signUpRequestParams)
+        const res = await postApi<User>('/auth/sign_up', params)
         if (!res) {
           return
         }
@@ -44,7 +44,7 @@ export const useSignUp = () => {
         set('token', res.token)
       } catch (e) {
         if (e instanceof HttpError) {
-          console.log(HttpError)
+          console.log(e)
         }
       }
     },

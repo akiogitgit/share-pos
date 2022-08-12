@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { SignUpForm } from 'components/auth/SignUpForm'
 import { Layout } from 'components/shared/Layout'
 import { useSignUp } from 'hooks/login/useAuth'
-import { SignUpRequestParams } from 'types/user/authInfo'
+import { SignUpRequestParams } from 'types/user/auth'
 import { HttpError } from 'utils/api'
 
 const SignUp: NextPage = () => {
