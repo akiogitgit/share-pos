@@ -2,13 +2,14 @@ import { FC, useCallback, useState } from 'react'
 
 import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { SignUpFormParams } from 'types/user/form'
+import { SignUpRequestParams } from 'types/user/auth'
+
 type Props = {
-  onSubmit: (params: SignUpFormParams) => void
+  onSubmit: (params: SignUpRequestParams) => void
 }
 
 export const SignUpForm: FC<Props> = ({ onSubmit }) => {
-  const [signUpFormParams, setSignUpFormParams] = useState<SignUpFormParams>({
+  const [formParams, setFormParams] = useState<SignUpRequestParams>({
     username: '',
     email: '',
     password: '',
@@ -16,7 +17,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
   })
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSignUpFormParams((state) => {
+    setFormParams((state) => {
       return {
         ...state,
         [e.target.name]: e.target.value,
@@ -28,7 +29,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
     <div className='flex flex-col items-center justify-center'>
       <form
         onSubmit={(e) => {
-          onSubmit(signUpFormParams)
+          onSubmit(formParams)
           e.preventDefault()
         }}
       >
@@ -38,7 +39,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           </label>
           <input
             type='text'
-            value={signUpFormParams.username}
+            value={formParams.username}
             placeholder='username'
             required
             name='username'
@@ -54,7 +55,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           <input
             type='email'
             id='email'
-            value={signUpFormParams.email}
+            value={formParams.email}
             placeholder='email'
             required
             name='email'
@@ -70,7 +71,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           <input
             type='password'
             id='password'
-            value={signUpFormParams.password}
+            value={formParams.password}
             placeholder='password'
             required
             minLength={6}
@@ -90,7 +91,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           <input
             type='password'
             id='passwordConfirmation'
-            value={signUpFormParams.passwordConfirmation}
+            value={formParams.passwordConfirmation}
             placeholder='確認用パスワード'
             required
             minLength={6}
