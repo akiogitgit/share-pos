@@ -4,9 +4,9 @@ import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { PostForm } from 'components/post/PostForm'
 import { Layout } from 'components/shared/Layout'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'stores/useCookies'
 import { Post, PostCreateParams } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
@@ -14,32 +14,25 @@ const Create: NextPage = () => {
   useRequireLogin()
 
   const router = useRouter()
-  const { cookies } = useCookies('token')
+  const authHeaderParams = useAuthHeaderParams()
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   const onSubmit = useCallback(
     async (params: PostCreateParams) => {
       try {
-        const header = { Authorization: `Token ${cookies.token}` }
-        const newPost = await postApi<Post>('/posts', params, header)
-        if (!newPost) {
-          return
-        }
-        console.log('投稿の作成に成功 ', newPost)
-
-        if (posts) {
+        const newPost = await postApi<Post>('/posts', params, authHeaderParams)
+        if (newPost && posts) {
+          console.log('投稿の作成に成功 ', newPost)
+          router.push('/')
           mutate([...posts, newPost], false)
-        } else {
-          mutate([newPost], false)
         }
-        router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
           console.error(e.message)
         }
       }
     },
-    [cookies.token, mutate, posts, router],
+    [authHeaderParams, mutate, posts, router],
   )
 
   return (

@@ -1,16 +1,16 @@
 import { useCallback } from 'react'
 import { useCookies } from 'stores/useCookies'
-import { User } from 'types/user/authInfo'
-import { SignUpRequest } from 'types/user/form'
+import { LoginRequestParams, SignUpRequestParams } from 'types/user/authInfo'
+import { User } from 'types/user/user'
 import { HttpError, postApi } from 'utils/api'
 
 export const useLogin = () => {
   const { set } = useCookies('token')
 
   const login = useCallback(
-    async (params: { email: string; password: string }) => {
+    async (loginRequestParams: LoginRequestParams) => {
       try {
-        const res = await postApi<User>('/auth/login', params)
+        const res = await postApi<User>('/auth/login', loginRequestParams)
         if (!res) {
           return
         }
@@ -32,10 +32,10 @@ export const useSignUp = () => {
   const { set } = useCookies('token')
 
   const signUp = useCallback(
-    async (signUpRequest: SignUpRequest) => {
+    async (signUpRequestParams: SignUpRequestParams) => {
       // ユーザー作成に成功したら、そのままログイン
       try {
-        const res = await postApi<User>('/auth/sign_up', signUpRequest)
+        const res = await postApi<User>('/auth/sign_up', signUpRequestParams)
         if (!res) {
           return
         }
@@ -56,4 +56,9 @@ export const useSignUp = () => {
 export const useLogOut = () => {
   const { remove } = useCookies('token')
   return { logOut: () => remove('token') }
+}
+
+export const useAuthHeaderParams = () => {
+  const { cookies } = useCookies('token')
+  return { Authorization: `Token ${cookies.token}` }
 }

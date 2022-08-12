@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
 import { deleteApi } from 'utils/api'
 
@@ -18,10 +18,11 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [comment, setComment] = useState(post.comment)
   const commentRef = useRef<HTMLDivElement>(null!)
   const [commentElm, setCommentElm] = useState<HTMLDivElement>(null!)
-  const { cookies } = useCookies('authInfo')
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
-  // params は postParams でまとめるかも urlは変える予定ない
+  const authHeaderParams = useAuthHeaderParams()
+
+  // コメント、公開・非公開、★を変える
   // const updatePost = useCallback(async (id: number, comment: string) => {
   //   try {
   //     const res = await postApi(`/posts/${id}`)
@@ -33,7 +34,7 @@ export const PostItem: FC<Props> = ({ post }) => {
   const deletePost = useCallback(
     async (id: number) => {
       try {
-        const res = await deleteApi(`/posts/${id}`, undefined, cookies.authInfo)
+        const res = await deleteApi(`/posts/${id}`, undefined, authHeaderParams)
         if (!posts) {
           return
         }
@@ -45,7 +46,7 @@ export const PostItem: FC<Props> = ({ post }) => {
         console.error(e)
       }
     },
-    [cookies.authInfo, mutate, post.id, posts],
+    [authHeaderParams, mutate, post.id, posts],
   )
 
   const pickDomainFromURL = useCallback((url: string) => {

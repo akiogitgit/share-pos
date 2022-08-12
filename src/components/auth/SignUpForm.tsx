@@ -2,19 +2,21 @@ import { FC, useCallback, useState } from 'react'
 
 import { AiOutlineMail, AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { SignUpFormParams } from 'types/user/form'
+import { SignUpRequestParams } from 'types/user/authInfo'
 
 type Props = {
-  onSubmit: (params: SignUpFormParams) => void
+  onSubmit: (params: SignUpRequestParams) => void
 }
 
 export const SignUpForm: FC<Props> = ({ onSubmit }) => {
-  const [signUpFormParams, setSignUpFormParams] = useState<SignUpFormParams>({
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-  })
+  const [signUpFormParams, setSignUpFormParams] = useState<SignUpRequestParams>(
+    {
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+    },
+  )
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpFormParams((state) => {
