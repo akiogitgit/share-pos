@@ -99,7 +99,9 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           </label>
           <div>
             <div
-              className='rounded-full cursor-pointer bg-blue-600 h-28px mt-2 text-white w-90px relative inline-block'
+              className={`rounded-full cursor-pointer ${
+                postCreateParams.published ? 'bg-red-600' : 'bg-blue-600'
+              } h-28px mt-2 text-white w-90px relative inline-block`}
               onClick={() =>
                 setPostCreateParams((state) => {
                   return {
