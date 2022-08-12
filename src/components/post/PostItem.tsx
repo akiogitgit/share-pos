@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { PostForm } from './PostForm'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
-import { Post } from 'types/post'
+import { Post, PostCreateParams } from 'types/post'
 import { deleteApi, putApi } from 'utils/api'
 
 type Props = {
@@ -17,6 +18,13 @@ export const PostItem: FC<Props> = ({ post }) => {
   // 投稿の編集 commentだけでなく、オブジェクトでやるかも
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(post.comment)
+
+  const [formParams, setFormParams] = useState<PostCreateParams>({
+    comment: '',
+    url: '',
+    evaluation: 1,
+    published: false,
+  })
   const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
   const commentRef = useRef<HTMLDivElement>(null!)
 
@@ -47,6 +55,7 @@ export const PostItem: FC<Props> = ({ post }) => {
     },
     [authHeaderParams, mutate, posts],
   )
+  const updatePost2 = (params: PostCreateParams) => {}
 
   const deletePost = useCallback(
     async (id: number) => {
@@ -112,7 +121,6 @@ export const PostItem: FC<Props> = ({ post }) => {
             onClick={() => setIsOpenMenu(false)}
             className='h-100vh top-0 left-0 w-100vw z-10 fixed'
           ></div>
-          {/* <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px transform w-150px z-11 translate-x-230px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '> */}
           <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-150px z-11 absolute'>
             {cookies.userInfo?.id === post.userId && (
               <>
@@ -143,61 +151,36 @@ export const PostItem: FC<Props> = ({ post }) => {
       )}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
-      {isEdit ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            updatePost(post.id, comment)
-          }}
-        >
-          <div className='leading-1.4rem relative'>
-            <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
-              {comment}
-            </div>
-            <textarea
-              className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 absolute'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
-          <div className='flex mt-4 gap-3 justify-end'>
-            <button
-              className='border border-gray-500 py-1 px-2 text-gray-500 duration-300 hover:(bg-gray-500 text-white rounded-10px) '
-              onClick={() => setIsEdit(false)}
-            >
-              キャンセル
-            </button>
-            <button
-              type='submit'
-              className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '
-            >
-              更新
-            </button>
-          </div>
-        </form>
-      ) : (
-        <div
-          onClick={() =>
-            hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
-          }
-          className={`${
-            !isOpenComment && 'h-70px'
-          } mt-3 overflow-hidden whitespace-pre-wrap group relative`}
-        >
-          <div ref={commentRef} className='h-auto'>
-            {post.comment}
-          </div>
+      <div className='mt-3'>
+        {isEdit ? (
+          <PostForm
+            onSubmit={updatePost2}
+            className='max-w-420px w-80vw sm:w-255px'
+          />
+        ) : (
           <div
-            className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
-              showSeeMore
-                ? 'visible sm:invisible sm:group-hover:visible'
-                : 'invisible'
-            }`}
+            onClick={() =>
+              hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
+            }
+            className={`${
+              !isOpenComment && 'h-70px'
+            } overflow-hidden whitespace-pre-wrap group relative`}
           >
-            もっとみる
+            <div ref={commentRef} className='h-auto'>
+              {post.comment}
+            </div>
+            <div
+              className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
+                showSeeMore
+                  ? 'visible sm:invisible sm:group-hover:visible'
+                  : 'invisible'
+              }`}
+            >
+              もっとみる
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
         <Link href={post.url}>

@@ -5,9 +5,10 @@ import { PostCreateParams } from 'types/post'
 
 type Props = {
   onSubmit: (params: PostCreateParams) => void
+  className?: string
 }
 
-export const PostForm: FC<Props> = ({ onSubmit }) => {
+export const PostForm: FC<Props> = ({ onSubmit, className }) => {
   const [formParams, setFormParams] = useState<PostCreateParams>({
     comment: '',
     url: '',
@@ -41,7 +42,8 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           e.preventDefault()
         }}
       >
-        <div className='max-w-300px w-80vw relative'>
+        {/* <div className='max-w-300px w-80vw relative'> */}
+        <div className={`${className || 'max-w-300px w-80vw'} relative`}>
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
