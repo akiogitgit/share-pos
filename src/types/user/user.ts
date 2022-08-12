@@ -2,7 +2,7 @@
 export type User = {
   email: string
   createdAt: string
-  id: string
+  id: number
   token: string
   updatedAt: string
   username: string
