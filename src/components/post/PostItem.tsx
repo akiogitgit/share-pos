@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
+import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
 import { deleteApi, putApi } from 'utils/api'
 
@@ -16,10 +17,12 @@ export const PostItem: FC<Props> = ({ post }) => {
   // 投稿の編集 commentだけでなく、オブジェクトでやるかも
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(post.comment)
+  const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
   const commentRef = useRef<HTMLDivElement>(null!)
+
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
   const authHeaderParams = useAuthHeaderParams()
-  const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
+  const { cookies } = useCookies('userInfo')
 
   // params は postParams でまとめるかも urlは変える予定ない
   const updatePost = useCallback(
@@ -104,29 +107,34 @@ export const PostItem: FC<Props> = ({ post }) => {
         </button>
       </div>
       {isOpenMenu && (
-        <div>
+        <div className='flex relative justify-end'>
           <div
             onClick={() => setIsOpenMenu(false)}
-            className='h-100vh opacity-25 top-0 left-0 w-100vw z-10 fixed'
+            className='h-100vh top-0 left-0 w-100vw z-10 fixed'
           ></div>
-          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px transform w-150px z-11 translate-x-230px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '>
-            <div
-              className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
-              onClick={() => {
-                setIsEdit(true)
-                setIsOpenMenu(false)
-              }}
-            >
-              投稿を編集する
-            </div>
-            <div
-              className='px-4 pt-2 hover:bg-red-300'
-              onClick={() => deletePost(post.id)}
-            >
-              投稿を
-              <span className='font-bold text-red-500 text-18px'>削除</span>
-              する
-            </div>
+          {/* <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px transform w-150px z-11 translate-x-230px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '> */}
+          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-150px z-11 absolute'>
+            {cookies.userInfo?.id === post.userId && (
+              <>
+                <div
+                  className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
+                  onClick={() => {
+                    setIsEdit(true)
+                    setIsOpenMenu(false)
+                  }}
+                >
+                  投稿を編集する
+                </div>
+                <div
+                  className='px-4 pt-2 hover:bg-red-300'
+                  onClick={() => deletePost(post.id)}
+                >
+                  投稿を
+                  <span className='font-bold text-red-500 text-18px'>削除</span>
+                  する
+                </div>
+              </>
+            )}
             <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
               フォルダに追加
             </div>

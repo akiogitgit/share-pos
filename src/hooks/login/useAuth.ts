@@ -56,8 +56,13 @@ export const useSignUp = () => {
 }
 
 export const useLogOut = () => {
-  const { remove } = useCookies('token')
-  return { logOut: () => remove('token') }
+  const { remove } = useCookies(['token', 'userInfo'])
+  return {
+    logOut: () => {
+      remove('token')
+      remove('userInfo')
+    },
+  }
 }
 
 export const useAuthHeaderParams = () => {
