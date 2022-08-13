@@ -2,11 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { PostForm } from './PostForm'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
-import { useGetApi } from 'hooks/useApi'
+import { usePostApi } from 'hooks/post/usePostApi'
 import { useCookies } from 'stores/useCookies'
-import { Post, PostRequestParams } from 'types/post'
-import { deleteApi, putApi } from 'utils/api'
+import { Post } from 'types/post'
 
 type Props = {
   post: Post
@@ -18,60 +16,10 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
   const commentRef = useRef<HTMLDivElement>(null!)
-
-  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
-  const authHeaderParams = useAuthHeaderParams()
   const { cookies } = useCookies('userInfo')
+  const { updatePost, deletePost } = usePostApi(post, setIsEdit)
 
-  // params は postParams でまとめるかも urlは変える予定ない
-  const updatePost = useCallback(
-    async (params: PostRequestParams) => {
-      try {
-        const res = await putApi<Post>(
-          `/posts/${post.id}`,
-          params,
-          authHeaderParams,
-        )
-
-        if (!res || !posts) {
-          return
-        }
-
-        const newPosts = posts.map((post) => {
-          if (post.id === res.id) {
-            return res
-          }
-          return post
-        })
-
-        mutate(newPosts, false)
-        setIsEdit(false)
-        console.log('投稿の修正に成功しました。 ', params)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    [authHeaderParams, mutate, post.id, posts],
-  )
-
-  const deletePost = useCallback(
-    async (id: number) => {
-      try {
-        const res = await deleteApi(`/posts/${id}`, undefined, authHeaderParams)
-        if (!posts) {
-          return
-        }
-        const newPosts = posts.filter((v) => v.id !== post.id)
-        mutate(newPosts, false)
-
-        console.log(res)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    [authHeaderParams, mutate, post.id, posts],
-  )
-
+  // utils?
   const pickDomainFromURL = useCallback((url: string) => {
     return url.split('//')[1].split('/')[0]
   }, [])
@@ -90,6 +38,7 @@ export const PostItem: FC<Props> = ({ post }) => {
     setCommentElment(commentRef.current)
   }, [commentRef])
 
+  // カスタムフック？
   const hasElment3MoreThanLines = useMemo(
     () => commentElment && commentElment.getBoundingClientRect().height > 80,
     [commentElment],
@@ -132,7 +81,10 @@ export const PostItem: FC<Props> = ({ post }) => {
                 </div>
                 <div
                   className='px-4 pt-2 hover:bg-red-300'
-                  onClick={() => deletePost(post.id)}
+                  onClick={() => {
+                    deletePost()
+                    setIsOpenMenu(false)
+                  }}
                 >
                   投稿を
                   <span className='font-bold text-red-500 text-18px'>削除</span>

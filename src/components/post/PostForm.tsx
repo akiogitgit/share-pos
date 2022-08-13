@@ -3,9 +3,10 @@ import { BiCommentDetail } from 'react-icons/bi'
 import { RiArticleLine } from 'react-icons/ri'
 import { PostRequestParams } from 'types/post'
 
+// Props多すぎ？
 type Props = {
   onSubmit: (params: PostRequestParams) => void
-  className?: string
+  className?: string // widthを fullにするかどうか
   formParamsProps?: PostRequestParams
   submitButtonText?: string
 }
@@ -62,7 +63,7 @@ export const PostForm: FC<Props> = ({
             </div>
             <div className='h-0 px-2 invisible'>
               {/* commentが横いっぱいにない時、横幅がfullになる */}
-              anpan good oishi aaa bbb anpan good oishi aaa bbb anpan
+              anpan good umai aaa bbb anpan good umai aaa bbb anpan
             </div>
             <textarea
               name='comment'
