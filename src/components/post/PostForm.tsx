@@ -1,19 +1,29 @@
 import { FC, useCallback, useState } from 'react'
 import { BiCommentDetail } from 'react-icons/bi'
 import { RiArticleLine } from 'react-icons/ri'
-import { PostCreateParams } from 'types/post'
+import { PostRequestParams } from 'types/post'
 
+// Props多すぎ？
 type Props = {
-  onSubmit: (params: PostCreateParams) => void
+  onSubmit: (params: PostRequestParams) => void
+  className?: string // widthを fullにするかどうか
+  formParamsProps?: PostRequestParams
+  submitButtonText?: string
 }
 
-export const PostForm: FC<Props> = ({ onSubmit }) => {
-  const [formParams, setFormParams] = useState<PostCreateParams>({
+export const PostForm: FC<Props> = ({
+  onSubmit,
+  className = 'max-w-300px w-80vw',
+  formParamsProps = {
     comment: '',
     url: '',
     evaluation: 1,
     published: false,
-  })
+  },
+  submitButtonText = '作成',
+}) => {
+  const [formParams, setFormParams] =
+    useState<PostRequestParams>(formParamsProps)
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,8 +50,9 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           onSubmit(formParams)
           e.preventDefault()
         }}
+        className={`${className}  min-w-90% relative`}
       >
-        <div className='max-w-300px w-80vw relative'>
+        <div>
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
@@ -54,10 +65,12 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
               name='comment'
               className='border h-full outline-none w-full p-2 pr-9 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
               value={formParams.comment}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
             />
           </div>
-          <BiCommentDetail className='top-33px left-270px absolute' />
+          <div className='flex justify-end'>
+            <BiCommentDetail className='top-33px right-10px absolute' />
+          </div>
         </div>
         <div className='mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
@@ -69,10 +82,13 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
             placeholder='https://example.com'
             required
             name='url'
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
             className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiArticleLine className='top-33px left-270px absolute' />
+
+          <div className='flex justify-end'>
+            <RiArticleLine className='top-33px right-10px absolute' />
+          </div>
         </div>
         <div className='h-80px mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
@@ -129,7 +145,7 @@ export const PostForm: FC<Props> = ({ onSubmit }) => {
           type='submit'
           className='border bg-blue-500 border-blue-500 mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-blue-500) '
         >
-          作成
+          {submitButtonText}
         </button>
       </form>
     </div>

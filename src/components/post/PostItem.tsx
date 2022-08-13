@@ -1,10 +1,10 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
-import { useGetApi } from 'hooks/useApi'
+import { FC, useMemo, useState } from 'react'
+import { PostForm } from './PostForm'
+import { PostLinkCard } from './PostLinkCard'
+import { useUpdatePost, useDeletePost } from 'hooks/usePost'
+import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
-import { deleteApi } from 'utils/api'
+import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
@@ -13,68 +13,19 @@ type Props = {
 export const PostItem: FC<Props> = ({ post }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
-  // 投稿の編集 commentだけでなく、オブジェクトでやるかも
   const [isEdit, setIsEdit] = useState(false)
-  const [comment, setComment] = useState(post.comment)
-  const commentRef = useRef<HTMLDivElement>(null!)
-  const [commentElm, setCommentElm] = useState<HTMLDivElement>(null!)
-  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
+  const { cookies } = useCookies('userInfo')
 
-  const authHeaderParams = useAuthHeaderParams()
-
-  // コメント、公開・非公開、★を変える
-  // const updatePost = useCallback(async (id: number, comment: string) => {
-  //   try {
-  //     const res = await postApi(`/posts/${id}`)
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [])
-
-  const deletePost = useCallback(
-    async (id: number) => {
-      try {
-        const res = await deleteApi(`/posts/${id}`, undefined, authHeaderParams)
-        if (!posts) {
-          return
-        }
-        const newPosts = posts.filter((v) => v.id !== post.id)
-        mutate(newPosts, false)
-
-        console.log(res)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    [authHeaderParams, mutate, post.id, posts],
-  )
-
-  const pickDomainFromURL = useCallback((url: string) => {
-    return url.split('//')[1].split('/')[0]
-  }, [])
-
-  // ドメインによって、表示するURLを変える
-  const determineUrlByDomain = useCallback((imageURL: string) => {
-    return ['qiita-user', 'res.cloudinary', 'data:image/png;base64'].some((v) =>
-      imageURL.includes(v),
-    )
-      ? imageURL
-      : `https://res.cloudinary.com/demo/image/fetch/${imageURL}`
-  }, [])
+  const { updatePost } = useUpdatePost(post)
+  const { deletePost } = useDeletePost(post)
+  const { ref, height } = useElementSize()
 
   // 要素の高さを取得
-  useEffect(() => {
-    setCommentElm(commentRef.current)
-  }, [commentRef])
-
-  const hasElment3MoreThanLines = useMemo(
-    () => commentElm && commentElm.getBoundingClientRect().height > 80,
-    [commentElm],
-  )
+  const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
 
   const showSeeMore = useMemo(
-    () => hasElment3MoreThanLines && !isOpenComment,
-    [hasElment3MoreThanLines, isOpenComment],
+    () => hasElementMoreThan3Lines && !isOpenComment,
+    [hasElementMoreThan3Lines, isOpenComment],
   )
 
   return (
@@ -82,36 +33,55 @@ export const PostItem: FC<Props> = ({ post }) => {
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         {/* 投稿メニューボタン */}
-        <button
-          className='cursor-pointer text-23px duration-100 hover:opacity-50'
-          onClick={() => setIsOpenMenu(!isOpenMenu)}
-        >
-          ・・・
-        </button>
+        {!isEdit && (
+          <button
+            className='cursor-pointer text-23px duration-100 hover:opacity-50'
+            onClick={() => setIsOpenMenu(!isOpenMenu)}
+          >
+            ・・・
+          </button>
+        )}
       </div>
       {isOpenMenu && (
-        <div>
+        <div className='flex relative justify-end'>
           <div
             onClick={() => setIsOpenMenu(false)}
-            className='h-100vh opacity-25 top-0 left-0 w-100vw z-10 fixed'
+            className='h-100vh top-0 left-0 w-100vw z-10 fixed'
           ></div>
-          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px transform w-150px z-11 translate-x-230px translate-y-[-20px] absolute sm:(translate-x-60px translate-y-[-20px]) '>
+          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-150px z-11 absolute'>
+            {cookies.userInfo?.id === post.userId && (
+              <>
+                <div
+                  className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
+                  onClick={() => {
+                    setIsEdit(true)
+                    setIsOpenMenu(false)
+                  }}
+                >
+                  投稿を編集する
+                </div>
+                <div
+                  className='px-4 pt-2 hover:bg-red-300'
+                  onClick={() => {
+                    deletePost()
+                    setIsOpenMenu(false)
+                  }}
+                >
+                  投稿を
+                  <span className='font-bold text-red-500 text-18px'>削除</span>
+                  する
+                </div>
+              </>
+            )}
             <div
-              className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
+              className='rounded-b-10px px-4 pt-2 hover:bg-red-300'
               onClick={() => {
-                setIsEdit(true)
+                navigator.clipboard.writeText(post.url)
+                alert('リンクをコピーしました')
                 setIsOpenMenu(false)
               }}
             >
-              投稿を編集する
-            </div>
-            <div
-              className='px-4 pt-2 hover:bg-red-300'
-              onClick={() => deletePost(post.id)}
-            >
-              投稿を
-              <span className='font-bold text-red-500 text-18px'>削除</span>
-              する
+              記事リンクをコピー
             </div>
             <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
               フォルダに追加
@@ -121,92 +91,65 @@ export const PostItem: FC<Props> = ({ post }) => {
       )}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
-      {isEdit ? (
-        <form>
-          <div className='leading-1.4rem relative'>
-            <div className='py-4 px-2 invisible whitespace-pre-wrap break-words'>
-              {comment}
-            </div>
-            <textarea
-              className='border h-full outline-none border-red-500 rounded-10px w-full p-2 top-0 left-0 absolute'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
+      <div className='mt-3'>
+        {isEdit ? (
+          <div>
+            <PostForm
+              key={post.id}
+              onSubmit={async (params) => {
+                await updatePost(params)
+                setIsEdit(false)
+              }}
+              // className='max-w-429px w-83vw sm:w-259px'
+              className='w-full'
+              formParamsProps={post}
+              submitButtonText='更新'
             />
-          </div>
-          <div className='flex mt-4 gap-3 justify-end'>
             <button
-              className='border border-gray-500 py-1 px-2 text-gray-500 duration-300 hover:(bg-gray-500 text-white rounded-10px) '
+              className='border bg-gray-500 border-gray-500 mt-2 text-white w-full py-1 duration-300 hover:(opacity-60) '
               onClick={() => setIsEdit(false)}
             >
               キャンセル
             </button>
-            <button className='border bg-red-500 border-red-500 text-white py-1 px-2 duration-300 hover:(bg-white text-red-500 rounded-10px) '>
-              更新
-            </button>
           </div>
-        </form>
-      ) : (
-        <div
-          onClick={() =>
-            hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
-          }
-          className={`${
-            !isOpenComment && 'h-70px'
-          } mt-3 overflow-hidden whitespace-pre-wrap group relative`}
-        >
-          <div ref={commentRef} className='h-auto'>
-            {post.comment}
-          </div>
-          <div
-            className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
-              showSeeMore
-                ? 'visible sm:invisible sm:group-hover:visible'
-                : 'invisible'
-            }`}
-          >
-            もっとみる
-          </div>
-        </div>
-      )}
-
-      <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
-        <Link href={post.url}>
-          <a target='_blank'>
-            <div className='flex rounded-t-10px h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
-              {post.metaInfo.image ? (
-                <Image
-                  src={determineUrlByDomain(post.metaInfo.image)}
-                  alt=''
-                  className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
-                  width={430}
-                  height={2000}
-                  objectFit='contain'
-                />
-              ) : (
-                <div className='flex h-full bg-gray-300 rounded-t-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
-                  No image
-                </div>
-              )}
-            </div>
-            <figcaption className='p-2'>
-              <p className='text-13px text-gray-500'>
-                {pickDomainFromURL(post.url)}
-              </p>
-              <div className='h-37px mt-2 text-sm overflow-hidden'>
-                {post.metaInfo.title}
+        ) : (
+          <>
+            <div
+              onClick={() =>
+                hasElementMoreThan3Lines && setIsOpenComment(!isOpenComment)
+              }
+              className={`${
+                !isOpenComment && 'h-70px'
+              } overflow-hidden whitespace-pre-wrap group relative`}
+            >
+              {/* <textarea className='m-2 ring w-100%' ref={ref}></textarea> */}
+              {/* <div className='h-auto'> */}
+              <div ref={ref} className='h-auto'>
+                {post.comment}
               </div>
-            </figcaption>
-          </a>
-        </Link>
-      </figure>
+              <div
+                className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
+                  showSeeMore
+                    ? 'visible sm:invisible sm:group-hover:visible'
+                    : 'invisible'
+                }`}
+              >
+                もっとみる
+              </div>
+            </div>
 
-      <div className='flex mt-1 items-center justify-between'>
-        <div className='flex'>
-          {[...Array(post.evaluation)].map((v, i) => (
-            <div key={i}>☆</div>
-          ))}
-        </div>
-        <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
+            <PostLinkCard post={post} />
+
+            <div className='flex mt-1 items-center justify-between'>
+              <div className='flex'>
+                {[...Array(post.evaluation)].map((v, i) => (
+                  <div key={i}>☆</div>
+                ))}
+              </div>
+              <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
+            </div>
+          </>
+        )}
       </div>
     </article>
   )

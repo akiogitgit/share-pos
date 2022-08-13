@@ -5,7 +5,7 @@ import { User } from 'types/user/user'
 import { HttpError, postApi } from 'utils/api'
 
 export const useLogin = () => {
-  const { set } = useCookies('token')
+  const { set } = useCookies(['token', 'userInfo'])
 
   const login = useCallback(
     async (params: LoginRequestParams) => {
@@ -14,9 +14,10 @@ export const useLogin = () => {
         if (!res) {
           return
         }
-        console.log('ログインに成功しました', res)
 
         set('token', res.token)
+        set('userInfo', { id: res.id, username: res.username })
+        console.log('ログインに成功しました', res)
       } catch (e) {
         if (e instanceof HttpError) {
           console.log(e)
@@ -29,7 +30,7 @@ export const useLogin = () => {
 }
 
 export const useSignUp = () => {
-  const { set } = useCookies('token')
+  const { set } = useCookies(['token', 'userInfo'])
 
   const signUp = useCallback(
     async (params: SignUpRequestParams) => {
@@ -42,6 +43,7 @@ export const useSignUp = () => {
         console.log('ユーザー作成に成功しました', res)
 
         set('token', res.token)
+        set('userInfo', { id: res.id, username: res.username })
       } catch (e) {
         if (e instanceof HttpError) {
           console.log(e)
@@ -54,8 +56,13 @@ export const useSignUp = () => {
 }
 
 export const useLogOut = () => {
-  const { remove } = useCookies('token')
-  return { logOut: () => remove('token') }
+  const { remove } = useCookies(['token', 'userInfo'])
+  return {
+    logOut: () => {
+      remove('token')
+      remove('userInfo')
+    },
+  }
 }
 
 export const useAuthHeaderParams = () => {
