@@ -17,14 +17,18 @@ export const Header: FC = () => {
             </div>
           </Link>
           <div className='flex gap-2 justify-end'>
-            <Link href='/create'>
-              <div className='cursor-pointer duration-300 hover:(underline) '>
-                create
-              </div>
-            </Link>
-
             {isLoggedIn ? (
-              <div>
+              <div className='flex gap-2 justify-end'>
+                <Link href='/create'>
+                  <div className='cursor-pointer duration-300 hover:(underline) '>
+                    create
+                  </div>
+                </Link>
+                <Link href='/myPage'>
+                  <div className='cursor-pointer duration-300 hover:(underline) '>
+                    myPage
+                  </div>
+                </Link>
                 <div
                   onClick={logOut}
                   className='cursor-pointer duration-300 hover:(underline) '
