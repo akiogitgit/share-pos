@@ -1,7 +1,6 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { PostForm } from './PostForm'
+import { PostLinkCard } from './PostLinkCard'
 import { usePostApi } from 'hooks/post/usePostApi'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
@@ -18,20 +17,6 @@ export const PostItem: FC<Props> = ({ post }) => {
   const commentRef = useRef<HTMLDivElement>(null!)
   const { cookies } = useCookies('userInfo')
   const { updatePost, deletePost } = usePostApi(post, setIsEdit)
-
-  // utils?
-  const pickDomainFromURL = useCallback((url: string) => {
-    return url.split('//')[1].split('/')[0]
-  }, [])
-
-  // ドメインによって、表示するURLを変える
-  const determineUrlByDomain = useCallback((imageURL: string) => {
-    return ['qiita-user', 'res.cloudinary', 'data:image/png;base64'].some((v) =>
-      imageURL.includes(v),
-    )
-      ? imageURL
-      : `https://res.cloudinary.com/demo/image/fetch/${imageURL}`
-  }, [])
 
   // 要素の高さを取得
   useEffect(() => {
@@ -117,7 +102,7 @@ export const PostItem: FC<Props> = ({ post }) => {
               key={post.id}
               onSubmit={updatePost}
               // className='max-w-429px w-83vw sm:w-259px'
-              className='w-full'
+              widthClassName='w-full'
               formParamsProps={post}
               submitButtonText='更新'
             />
@@ -129,73 +114,42 @@ export const PostItem: FC<Props> = ({ post }) => {
             </button>
           </div>
         ) : (
-          <div
-            onClick={() =>
-              hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
-            }
-            className={`${
-              !isOpenComment && 'h-70px'
-            } overflow-hidden whitespace-pre-wrap group relative`}
-          >
-            <div ref={commentRef} className='h-auto'>
-              {post.comment}
-            </div>
+          <>
             <div
-              className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
-                showSeeMore
-                  ? 'visible sm:invisible sm:group-hover:visible'
-                  : 'invisible'
-              }`}
+              onClick={() =>
+                hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
+              }
+              className={`${
+                !isOpenComment && 'h-70px'
+              } overflow-hidden whitespace-pre-wrap group relative`}
             >
-              もっとみる
+              <div ref={commentRef} className='h-auto'>
+                {post.comment}
+              </div>
+              <div
+                className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
+                  showSeeMore
+                    ? 'visible sm:invisible sm:group-hover:visible'
+                    : 'invisible'
+                }`}
+              >
+                もっとみる
+              </div>
             </div>
-          </div>
+
+            <PostLinkCard post={post} />
+
+            <div className='flex mt-1 items-center justify-between'>
+              <div className='flex'>
+                {[...Array(post.evaluation)].map((v, i) => (
+                  <div key={i}>☆</div>
+                ))}
+              </div>
+              <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
+            </div>
+          </>
         )}
       </div>
-
-      {!isEdit && (
-        <>
-          <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
-            <Link href={post.url}>
-              <a target='_blank'>
-                <div className='flex rounded-t-10px h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
-                  {post.metaInfo.image ? (
-                    <Image
-                      src={determineUrlByDomain(post.metaInfo.image)}
-                      alt=''
-                      className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
-                      width={430}
-                      height={2000}
-                      objectFit='contain'
-                    />
-                  ) : (
-                    <div className='flex h-full bg-gray-300 rounded-t-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
-                      No image
-                    </div>
-                  )}
-                </div>
-                <figcaption className='p-2'>
-                  <p className='text-13px text-gray-500'>
-                    {pickDomainFromURL(post.url)}
-                  </p>
-                  <div className='h-37px mt-2 text-sm overflow-hidden'>
-                    {post.metaInfo.title}
-                  </div>
-                </figcaption>
-              </a>
-            </Link>
-          </figure>
-
-          <div className='flex mt-1 items-center justify-between'>
-            <div className='flex'>
-              {[...Array(post.evaluation)].map((v, i) => (
-                <div key={i}>☆</div>
-              ))}
-            </div>
-            <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
-          </div>
-        </>
-      )}
     </article>
   )
 }

@@ -1,14 +1,16 @@
+import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction, useCallback } from 'react'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Post, PostRequestParams } from 'types/post'
-import { deleteApi, putApi } from 'utils/api'
+import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 type Props = {
   post: Post
 }
 
 // どうしても、ここでsetIsEditを受け取らなきゃだめ
+// update, delete もバラす？
 // カスタムフックのpropsのやり方
 export const usePostApi = (
   post: Post,
@@ -17,6 +19,27 @@ export const usePostApi = (
   // export const usePostApi:FC<Props>=(post) => {
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
   const authHeaderParams = useAuthHeaderParams()
+
+  const router = useRouter()
+
+  // usePostApiの引数が無理
+  const createPost = useCallback(
+    async (params: PostRequestParams) => {
+      try {
+        const newPost = await postApi<Post>('/posts', params, authHeaderParams)
+        if (newPost && posts) {
+          console.log('投稿の作成に成功 ', newPost)
+          router.push('/')
+          mutate([...posts, newPost], false)
+        }
+      } catch (e) {
+        if (e instanceof HttpError) {
+          console.error(e.message)
+        }
+      }
+    },
+    [authHeaderParams, mutate, posts, router],
+  )
 
   const updatePost = useCallback(
     async (params: PostRequestParams) => {
@@ -46,7 +69,6 @@ export const usePostApi = (
     [authHeaderParams, mutate, post.id, posts, setIsEdit],
   )
 
-  // updateが setIsEditするなら、こっちもやる？
   const deletePost = useCallback(async () => {
     try {
       const res = await deleteApi(
@@ -66,5 +88,5 @@ export const usePostApi = (
     }
   }, [authHeaderParams, mutate, post.id, posts])
 
-  return { updatePost, deletePost }
+  return { createPost, updatePost, deletePost }
 }

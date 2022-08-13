@@ -6,14 +6,14 @@ import { PostRequestParams } from 'types/post'
 // Props多すぎ？
 type Props = {
   onSubmit: (params: PostRequestParams) => void
-  className?: string // widthを fullにするかどうか
+  widthClassName?: string // widthを fullにするかどうか
   formParamsProps?: PostRequestParams
   submitButtonText?: string
 }
 
 export const PostForm: FC<Props> = ({
   onSubmit,
-  className,
+  widthClassName,
   formParamsProps = {
     comment: '',
     url: '',
@@ -52,7 +52,7 @@ export const PostForm: FC<Props> = ({
         }}
       >
         {/* <div className='max-w-300px w-80vw relative'> */}
-        <div className={`${className || 'max-w-300px w-80vw'} relative`}>
+        <div className={`${widthClassName || 'max-w-300px w-80vw'} relative`}>
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
@@ -76,7 +76,9 @@ export const PostForm: FC<Props> = ({
             <BiCommentDetail className='top-33px right-10px absolute' />
           </div>
         </div>
-        <div className={`${className || 'max-w-300px w-80vw'} mt-2 relative`}>
+        <div
+          className={`${widthClassName || 'max-w-300px w-80vw'} mt-2 relative`}
+        >
           {/* <div className='mt-2 relative'> */}
           <label htmlFor='username' className='font-bold text-sm block '>
             記事のURL
@@ -97,7 +99,7 @@ export const PostForm: FC<Props> = ({
         </div>
         <div
           className={`${
-            className || 'max-w-300px w-80vw'
+            widthClassName || 'max-w-300px w-80vw'
           } mt-2 relative h-80px`}
         >
           {/* <div className='h-80px mt-2 relative'> */}
