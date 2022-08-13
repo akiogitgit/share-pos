@@ -5,7 +5,7 @@ import { PostForm } from './PostForm'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
-import { Post, PostCreateParams } from 'types/post'
+import { Post, PostRequestParams } from 'types/post'
 import { deleteApi, putApi } from 'utils/api'
 
 type Props = {
@@ -15,16 +15,7 @@ type Props = {
 export const PostItem: FC<Props> = ({ post }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
-  // 投稿の編集 commentだけでなく、オブジェクトでやるかも
   const [isEdit, setIsEdit] = useState(false)
-  const [comment, setComment] = useState(post.comment)
-
-  const [formParams, setFormParams] = useState<PostCreateParams>({
-    comment: '',
-    url: '',
-    evaluation: 1,
-    published: false,
-  })
   const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
   const commentRef = useRef<HTMLDivElement>(null!)
 
@@ -34,28 +25,34 @@ export const PostItem: FC<Props> = ({ post }) => {
 
   // params は postParams でまとめるかも urlは変える予定ない
   const updatePost = useCallback(
-    async (id: number, comment: string) => {
+    async (params: PostRequestParams) => {
       try {
-        const params = { post: { comment } }
-        const res = await putApi<Post>(`/posts/${id}`, params, authHeaderParams)
+        const res = await putApi<Post>(
+          `/posts/${post.id}`,
+          params,
+          authHeaderParams,
+        )
+
         if (!res || !posts) {
           return
         }
+
         const newPosts = posts.map((post) => {
           if (post.id === res.id) {
             return res
           }
           return post
         })
+
         mutate(newPosts, false)
         setIsEdit(false)
+        console.log('投稿の修正に成功しました。 ', params)
       } catch (e) {
         console.error(e)
       }
     },
-    [authHeaderParams, mutate, posts],
+    [authHeaderParams, mutate, post.id, posts],
   )
-  const updatePost2 = (params: PostCreateParams) => {}
 
   const deletePost = useCallback(
     async (id: number) => {
@@ -143,6 +140,16 @@ export const PostItem: FC<Props> = ({ post }) => {
                 </div>
               </>
             )}
+            <div
+              className='rounded-b-10px px-4 pt-2 hover:bg-red-300'
+              onClick={() => {
+                navigator.clipboard.writeText(post.url)
+                alert('リンクをコピーしました')
+                setIsOpenMenu(false)
+              }}
+            >
+              リンクをコピー
+            </div>
             <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
               フォルダに追加
             </div>
@@ -153,10 +160,22 @@ export const PostItem: FC<Props> = ({ post }) => {
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
         {isEdit ? (
-          <PostForm
-            onSubmit={updatePost2}
-            className='max-w-420px w-80vw sm:w-255px'
-          />
+          <div>
+            <PostForm
+              key={post.id}
+              onSubmit={updatePost}
+              // className='max-w-429px w-83vw sm:w-259px'
+              className='w-full'
+              formParamsProps={post}
+              submitButtonText='更新'
+            />
+            <button
+              className='border bg-gray-500 border-gray-500 mt-2 text-white w-full py-1 duration-300 hover:(opacity-60) '
+              onClick={() => setIsEdit(false)}
+            >
+              キャンセル
+            </button>
+          </div>
         ) : (
           <div
             onClick={() =>
@@ -182,45 +201,49 @@ export const PostItem: FC<Props> = ({ post }) => {
         )}
       </div>
 
-      <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
-        <Link href={post.url}>
-          <a target='_blank'>
-            <div className='flex rounded-t-10px h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
-              {post.metaInfo.image ? (
-                <Image
-                  src={determineUrlByDomain(post.metaInfo.image)}
-                  alt=''
-                  className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
-                  width={430}
-                  height={2000}
-                  objectFit='contain'
-                />
-              ) : (
-                <div className='flex h-full bg-gray-300 rounded-t-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
-                  No image
+      {!isEdit && (
+        <>
+          <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
+            <Link href={post.url}>
+              <a target='_blank'>
+                <div className='flex rounded-t-10px h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
+                  {post.metaInfo.image ? (
+                    <Image
+                      src={determineUrlByDomain(post.metaInfo.image)}
+                      alt=''
+                      className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
+                      width={430}
+                      height={2000}
+                      objectFit='contain'
+                    />
+                  ) : (
+                    <div className='flex h-full bg-gray-300 rounded-t-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
+                      No image
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            <figcaption className='p-2'>
-              <p className='text-13px text-gray-500'>
-                {pickDomainFromURL(post.url)}
-              </p>
-              <div className='h-37px mt-2 text-sm overflow-hidden'>
-                {post.metaInfo.title}
-              </div>
-            </figcaption>
-          </a>
-        </Link>
-      </figure>
+                <figcaption className='p-2'>
+                  <p className='text-13px text-gray-500'>
+                    {pickDomainFromURL(post.url)}
+                  </p>
+                  <div className='h-37px mt-2 text-sm overflow-hidden'>
+                    {post.metaInfo.title}
+                  </div>
+                </figcaption>
+              </a>
+            </Link>
+          </figure>
 
-      <div className='flex mt-1 items-center justify-between'>
-        <div className='flex'>
-          {[...Array(post.evaluation)].map((v, i) => (
-            <div key={i}>☆</div>
-          ))}
-        </div>
-        <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
-      </div>
+          <div className='flex mt-1 items-center justify-between'>
+            <div className='flex'>
+              {[...Array(post.evaluation)].map((v, i) => (
+                <div key={i}>☆</div>
+              ))}
+            </div>
+            <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
+          </div>
+        </>
+      )}
     </article>
   )
 }

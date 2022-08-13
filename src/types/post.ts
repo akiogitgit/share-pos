@@ -16,7 +16,7 @@ export type Post = {
   }
 }
 
-export type PostCreateParams = {
+export type PostRequestParams = {
   comment: string
   url: string
   published: boolean

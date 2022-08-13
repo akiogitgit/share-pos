@@ -7,7 +7,7 @@ import { Layout } from 'components/shared/Layout'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { Post, PostCreateParams } from 'types/post'
+import { Post, PostRequestParams } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
 const Create: NextPage = () => {
@@ -18,7 +18,7 @@ const Create: NextPage = () => {
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
 
   const onSubmit = useCallback(
-    async (params: PostCreateParams) => {
+    async (params: PostRequestParams) => {
       try {
         const newPost = await postApi<Post>('/posts', params, authHeaderParams)
         if (newPost && posts) {
