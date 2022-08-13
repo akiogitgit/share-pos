@@ -38,7 +38,7 @@ export const PostForm: FC<Props> = ({
   )
 
   return (
-    <div className={`flex flex-col items-center justify-center`}>
+    <div className='flex flex-col items-center justify-center'>
       <style jsx>{`
         .scroll-bar-none::-webkit-scrollbar {
           display: none;
