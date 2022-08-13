@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { PostForm } from 'components/post/PostForm'
 import { Layout } from 'components/shared/Layout'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
-import { useCreatePost } from 'hooks/post/useCreatePost'
+import { useCreatePost } from 'hooks/usePost'
 
 const Create: NextPage = () => {
   useRequireLogin()

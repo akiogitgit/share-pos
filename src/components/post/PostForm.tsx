@@ -6,14 +6,14 @@ import { PostRequestParams } from 'types/post'
 // Props多すぎ？
 type Props = {
   onSubmit: (params: PostRequestParams) => void
-  widthClassName?: string // widthを fullにするかどうか
+  className?: string // widthを fullにするかどうか
   formParamsProps?: PostRequestParams
   submitButtonText?: string
 }
 
 export const PostForm: FC<Props> = ({
   onSubmit,
-  widthClassName,
+  className = 'max-w-300px w-80vw',
   formParamsProps = {
     comment: '',
     url: '',
@@ -38,7 +38,7 @@ export const PostForm: FC<Props> = ({
   )
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className={`flex flex-col items-center justify-center`}>
       <style jsx>{`
         .scroll-bar-none::-webkit-scrollbar {
           display: none;
@@ -50,9 +50,9 @@ export const PostForm: FC<Props> = ({
           onSubmit(formParams)
           e.preventDefault()
         }}
+        className={`${className}  min-w-90% relative`}
       >
-        {/* <div className='max-w-300px w-80vw relative'> */}
-        <div className={`${widthClassName || 'max-w-300px w-80vw'} relative`}>
+        <div>
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
@@ -61,25 +61,18 @@ export const PostForm: FC<Props> = ({
             <div className='py-3 px-2 invisible whitespace-pre-wrap break-words'>
               {formParams.comment}
             </div>
-            <div className='h-0 px-2 invisible'>
-              {/* commentが横いっぱいにない時、横幅がfullになる */}
-              anpan good umai aaa bbb anpan good umai aaa bbb anpan
-            </div>
             <textarea
               name='comment'
               className='border h-full outline-none w-full p-2 pr-9 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
               value={formParams.comment}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
             />
           </div>
           <div className='flex justify-end'>
             <BiCommentDetail className='top-33px right-10px absolute' />
           </div>
         </div>
-        <div
-          className={`${widthClassName || 'max-w-300px w-80vw'} mt-2 relative`}
-        >
-          {/* <div className='mt-2 relative'> */}
+        <div className='mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
             記事のURL
           </label>
@@ -89,7 +82,7 @@ export const PostForm: FC<Props> = ({
             placeholder='https://example.com'
             required
             name='url'
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
             className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
 
@@ -97,12 +90,7 @@ export const PostForm: FC<Props> = ({
             <RiArticleLine className='top-33px right-10px absolute' />
           </div>
         </div>
-        <div
-          className={`${
-            widthClassName || 'max-w-300px w-80vw'
-          } mt-2 relative h-80px`}
-        >
-          {/* <div className='h-80px mt-2 relative'> */}
+        <div className='h-80px mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
             オススメ度
           </label>

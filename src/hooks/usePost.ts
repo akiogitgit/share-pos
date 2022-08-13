@@ -1,28 +1,15 @@
 import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Post, PostRequestParams } from 'types/post'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
-type Props = {
-  post: Post
-}
-
-// どうしても、ここでsetIsEditを受け取らなきゃだめ
-// update, delete もバラす？
-// カスタムフックのpropsのやり方
-export const usePostApi = (
-  post: Post,
-  setIsEdit: Dispatch<SetStateAction<boolean>>,
-) => {
-  // export const usePostApi:FC<Props>=(post) => {
+export const useCreatePost = () => {
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
   const authHeaderParams = useAuthHeaderParams()
-
   const router = useRouter()
 
-  // usePostApiの引数が無理
   const createPost = useCallback(
     async (params: PostRequestParams) => {
       try {
@@ -40,6 +27,13 @@ export const usePostApi = (
     },
     [authHeaderParams, mutate, posts, router],
   )
+
+  return { createPost }
+}
+
+export const useUpdatePost = (post: Post) => {
+  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
+  const authHeaderParams = useAuthHeaderParams()
 
   const updatePost = useCallback(
     async (params: PostRequestParams) => {
@@ -60,14 +54,20 @@ export const usePostApi = (
         })
 
         mutate(newPosts, false)
-        setIsEdit(false) // どうしても、ここじゃなきゃ発火できない
         console.log('投稿の修正に成功しました。 ', params)
       } catch (e) {
         console.error(e)
       }
     },
-    [authHeaderParams, mutate, post.id, posts, setIsEdit],
+    [authHeaderParams, mutate, post.id, posts],
   )
+
+  return { updatePost }
+}
+
+export const useDeletePost = (post: Post) => {
+  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
+  const authHeaderParams = useAuthHeaderParams()
 
   const deletePost = useCallback(async () => {
     try {
@@ -88,5 +88,5 @@ export const usePostApi = (
     }
   }, [authHeaderParams, mutate, post.id, posts])
 
-  return { createPost, updatePost, deletePost }
+  return { deletePost }
 }

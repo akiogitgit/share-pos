@@ -1,9 +1,10 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { PostForm } from './PostForm'
 import { PostLinkCard } from './PostLinkCard'
-import { usePostApi } from 'hooks/post/usePostApi'
+import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
@@ -13,25 +14,18 @@ export const PostItem: FC<Props> = ({ post }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const [commentElment, setCommentElment] = useState<HTMLDivElement>(null!)
-  const commentRef = useRef<HTMLDivElement>(null!)
   const { cookies } = useCookies('userInfo')
-  const { updatePost, deletePost } = usePostApi(post, setIsEdit)
+
+  const { updatePost } = useUpdatePost(post)
+  const { deletePost } = useDeletePost(post)
+  const { ref, height, width } = useElementSize()
 
   // 要素の高さを取得
-  useEffect(() => {
-    setCommentElment(commentRef.current)
-  }, [commentRef])
-
-  // カスタムフック？
-  const hasElment3MoreThanLines = useMemo(
-    () => commentElment && commentElment.getBoundingClientRect().height > 80,
-    [commentElment],
-  )
+  const hasElement3MoreThanLines = useMemo(() => height > 80, [height])
 
   const showSeeMore = useMemo(
-    () => hasElment3MoreThanLines && !isOpenComment,
-    [hasElment3MoreThanLines, isOpenComment],
+    () => hasElement3MoreThanLines && !isOpenComment,
+    [hasElement3MoreThanLines, isOpenComment],
   )
 
   return (
@@ -100,9 +94,12 @@ export const PostItem: FC<Props> = ({ post }) => {
           <div>
             <PostForm
               key={post.id}
-              onSubmit={updatePost}
+              onSubmit={async (params) => {
+                await updatePost(params)
+                setIsEdit(false)
+              }}
               // className='max-w-429px w-83vw sm:w-259px'
-              widthClassName='w-full'
+              className='w-full'
               formParamsProps={post}
               submitButtonText='更新'
             />
@@ -117,13 +114,13 @@ export const PostItem: FC<Props> = ({ post }) => {
           <>
             <div
               onClick={() =>
-                hasElment3MoreThanLines && setIsOpenComment(!isOpenComment)
+                hasElement3MoreThanLines && setIsOpenComment(!isOpenComment)
               }
               className={`${
                 !isOpenComment && 'h-70px'
               } overflow-hidden whitespace-pre-wrap group relative`}
             >
-              <div ref={commentRef} className='h-auto'>
+              <div ref={ref} className='h-auto'>
                 {post.comment}
               </div>
               <div
