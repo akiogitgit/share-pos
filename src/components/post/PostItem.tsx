@@ -18,14 +18,14 @@ export const PostItem: FC<Props> = ({ post }) => {
 
   const { updatePost } = useUpdatePost(post)
   const { deletePost } = useDeletePost(post)
-  const { ref, height, width } = useElementSize()
+  const { ref, height } = useElementSize()
 
   // 要素の高さを取得
-  const hasElement3MoreThanLines = useMemo(() => height > 80, [height])
+  const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
 
   const showSeeMore = useMemo(
-    () => hasElement3MoreThanLines && !isOpenComment,
-    [hasElement3MoreThanLines, isOpenComment],
+    () => hasElementMoreThan3Lines && !isOpenComment,
+    [hasElementMoreThan3Lines, isOpenComment],
   )
 
   return (
@@ -33,12 +33,14 @@ export const PostItem: FC<Props> = ({ post }) => {
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         {/* 投稿メニューボタン */}
-        <button
-          className='cursor-pointer text-23px duration-100 hover:opacity-50'
-          onClick={() => setIsOpenMenu(!isOpenMenu)}
-        >
-          ・・・
-        </button>
+        {!isEdit && (
+          <button
+            className='cursor-pointer text-23px duration-100 hover:opacity-50'
+            onClick={() => setIsOpenMenu(!isOpenMenu)}
+          >
+            ・・・
+          </button>
+        )}
       </div>
       {isOpenMenu && (
         <div className='flex relative justify-end'>
@@ -79,7 +81,7 @@ export const PostItem: FC<Props> = ({ post }) => {
                 setIsOpenMenu(false)
               }}
             >
-              リンクをコピー
+              記事リンクをコピー
             </div>
             <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
               フォルダに追加
@@ -114,12 +116,14 @@ export const PostItem: FC<Props> = ({ post }) => {
           <>
             <div
               onClick={() =>
-                hasElement3MoreThanLines && setIsOpenComment(!isOpenComment)
+                hasElementMoreThan3Lines && setIsOpenComment(!isOpenComment)
               }
               className={`${
                 !isOpenComment && 'h-70px'
               } overflow-hidden whitespace-pre-wrap group relative`}
             >
+              {/* <textarea className='m-2 ring w-100%' ref={ref}></textarea> */}
+              {/* <div className='h-auto'> */}
               <div ref={ref} className='h-auto'>
                 {post.comment}
               </div>
