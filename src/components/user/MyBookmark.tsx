@@ -1,6 +1,9 @@
 import { FC, useCallback, useEffect, useState } from 'react'
+import { PostItem } from 'components/post/PostItem'
+import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
+import { Post } from 'types/post'
 import { deleteApi, postApi } from 'utils/api'
 
 type Bookmark = {
@@ -11,10 +14,17 @@ type Bookmark = {
   userId: number
 }
 
+type BookmarkPosts = {
+  id: number
+  name: string
+  posts: Post[]
+}
+
 export const MyBookmark: FC = () => {
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
   // 一番左のブックマークidを初期値で入れたい
+  const [selectedBookmark, setSelectedBookmark] = useState(0)
 
   const authHeaderParams = useAuthHeaderParams()
   const { data: bookmarks, mutate } = useGetApi<Bookmark[]>(
@@ -22,7 +32,12 @@ export const MyBookmark: FC = () => {
     undefined,
     authHeaderParams,
   )
-  const [selectedBookmark, setSelectedBookmark] = useState(0)
+  const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
+    `/folders/${selectedBookmark}`,
+    undefined,
+    authHeaderParams,
+  )
+  console.log(bookmarkPosts)
 
   // あんま使いたくない
   useEffect(() => {
@@ -168,18 +183,15 @@ export const MyBookmark: FC = () => {
         </div>
       )}
 
-      {/* <ul className='mt-4'>
-        {myPosts?.posts.length && (
+      <ul className='mt-4'>
+        {bookmarkPosts?.posts.length && (
           <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
-            {myPosts.posts.map(
-              (post, i) =>
-                selectedPublished === post.published && (
-                  <PostItem post={post} key={i} className='m-2' />
-                ),
-            )}
+            {bookmarkPosts.posts.map((post, i) => (
+              <PostItem post={post} key={i} className='m-2' />
+            ))}
           </PostItemList>
         )}
-      </ul> */}
+      </ul>
     </div>
   )
 }
