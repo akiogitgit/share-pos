@@ -28,7 +28,7 @@ const Home: NextPage = () => {
           evaluation={stars}
           onClick={(newStar) => setStars(newStar)}
         />
-        {posts && posts.length && (
+        {posts?.length && (
           <PostItemList className='flex flex-wrap mt-4 gap-3 justify-center'>
             {posts.map((post, i) => (
               <PostItem post={post} key={i} className='mb-1' />

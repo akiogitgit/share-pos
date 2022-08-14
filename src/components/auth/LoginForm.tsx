@@ -28,7 +28,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             id='email'
             type='text'
             value={email}
-            placeholder='email'
+            placeholder='example@example.com'
             required
             onChange={(v) => setEmail(v.target.value)}
             className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useCookies } from 'stores/useCookies'
 import { LoginRequestParams, SignUpRequestParams } from 'types/user/auth'
@@ -6,6 +7,7 @@ import { HttpError, postApi } from 'utils/api'
 
 export const useLogin = () => {
   const { set } = useCookies(['token', 'userInfo'])
+  const router = useRouter()
 
   const login = useCallback(
     async (params: LoginRequestParams) => {
@@ -18,19 +20,21 @@ export const useLogin = () => {
         set('token', res.token)
         set('userInfo', { id: res.id, username: res.username })
         console.log('ログインに成功しました', res)
+        router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
           console.log(e)
         }
       }
     },
-    [set],
+    [router, set],
   )
   return { login }
 }
 
 export const useSignUp = () => {
   const { set } = useCookies(['token', 'userInfo'])
+  const router = useRouter()
 
   const signUp = useCallback(
     async (params: SignUpRequestParams) => {
@@ -44,13 +48,14 @@ export const useSignUp = () => {
 
         set('token', res.token)
         set('userInfo', { id: res.id, username: res.username })
+        router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
           console.log(e)
         }
       }
     },
-    [set],
+    [router, set],
   )
   return { signUp }
 }
