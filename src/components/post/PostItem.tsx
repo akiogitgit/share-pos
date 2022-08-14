@@ -8,9 +8,10 @@ import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
+  className?: string
 }
 
-export const PostItem: FC<Props> = ({ post }) => {
+export const PostItem: FC<Props> = ({ post, className }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
@@ -29,7 +30,9 @@ export const PostItem: FC<Props> = ({ post }) => {
   )
 
   return (
-    <article className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
+    <article
+      className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
+    >
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         {/* 投稿メニューボタン */}
