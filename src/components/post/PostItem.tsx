@@ -1,6 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 import { PostForm } from './PostForm'
 import { PostLinkCard } from './PostLinkCard'
+import { BookmarkList } from 'components/user/BookmarkList'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
@@ -86,9 +87,16 @@ export const PostItem: FC<Props> = ({ post, className }) => {
             >
               記事リンクをコピー
             </div>
-            <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
-              フォルダに追加
-            </div>
+            {cookies.userInfo && (
+              <div className='rounded-b-10px group relative'>
+                <div className=' py-2 px-4 hover:bg-red-300'>
+                  ブックマークに追加
+                </div>
+                <div className='hidden group-hover:block'>
+                  <BookmarkList post={post} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

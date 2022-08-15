@@ -3,22 +3,8 @@ import { PostItem } from 'components/post/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { Post } from 'types/post'
+import { Bookmark, BookmarkPosts } from 'types/bookmark'
 import { deleteApi, postApi } from 'utils/api'
-
-type Bookmark = {
-  id: number
-  name: string
-  createdAt: string
-  updatedAt: string
-  userId: number
-}
-
-type BookmarkPosts = {
-  id: number
-  name: string
-  posts: Post[]
-}
 
 export const MyBookmark: FC = () => {
   const [isOpenInputField, setIsOpenInputField] = useState(false)
@@ -78,7 +64,7 @@ export const MyBookmark: FC = () => {
       <div className='ml-4 sm:ml-0'>
         <div className='flex justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
-          <div className='flex gap-3 items-center'>
+          <div>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
@@ -89,7 +75,7 @@ export const MyBookmark: FC = () => {
             >
               <input
                 type='text'
-                className='border outline-none border-red-500 rounded-10px h-40px px-2 duration-150'
+                className='border outline-none border-red-500 rounded-10px h-40px px-2 w-170px duration-150 sm:w-200px'
                 placeholder='ブックマーク名'
                 value={bookmarkName}
                 required
@@ -133,10 +119,7 @@ export const MyBookmark: FC = () => {
 
         <style jsx>{`
           .scroll-bar::-webkit-scrollbar {
-            display: none;
-          }
-          .scroll-bar:hover::-webkit-scrollbar {
-            display: block;
+            height: 0;
           }
 
           .scroll-bar:hover::-webkit-scrollbar {
@@ -145,7 +128,7 @@ export const MyBookmark: FC = () => {
           }
           .scroll-bar::-webkit-scrollbar-track {
             border-radius: 100px;
-            background-color: pink;
+            background-color: rgba(254, 226, 226, var(--tw-bg-opacity));
             height: 100px;
             transform: scale(0.5);
           }
@@ -156,15 +139,15 @@ export const MyBookmark: FC = () => {
         `}</style>
 
         {bookmarks?.length ? (
-          <div className='border-b flex border-gray-300 mt-5 w-full gap-3 overflow-x-scroll scroll-bar'>
+          <div className='flex h-50px mt-5 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
             {bookmarks.map((bookmark) => (
               <button
                 key={bookmark.id}
                 onClick={() => setSelectedBookmark(bookmark.id)}
-                className={`whitespace-nowrap ${
+                className={`whitespace-nowrap h-40px px-1 ${
                   selectedBookmark === bookmark.id
-                    ? 'font-bold border-b-2 border-red-500 text-red-500'
-                    : ' cursor-pointer'
+                    ? 'font-bold border-b-3 border-red-500 text-red-500'
+                    : 'text-gray-500 border-b-2'
                 }`}
               >
                 {bookmark.name}
@@ -172,24 +155,22 @@ export const MyBookmark: FC = () => {
             ))}
           </div>
         ) : (
-          ''
+          <div>
+            <h2>ブックマークがありません</h2>
+            <p>ブックマークを作成して記事を追加しよう！</p>
+          </div>
         )}
       </div>
 
-      {!bookmarks?.length && (
-        <div className='mt-50'>
-          <h2>ブックマークがありません</h2>
-          <p>ブックマークを作成して記事を追加しよう！</p>
-        </div>
-      )}
-
       <ul className='mt-4'>
-        {bookmarkPosts?.posts.length && (
+        {bookmarkPosts?.posts.length ? (
           <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
             {bookmarkPosts.posts.map((post, i) => (
               <PostItem post={post} key={i} className='m-2' />
             ))}
           </PostItemList>
+        ) : (
+          <h2 className='mt-20 text-center'>記事がありません</h2>
         )}
       </ul>
     </div>

@@ -1,19 +1,10 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
 import { Layout } from 'components/shared/Layout'
-import { MyBookmark } from 'components/user/MyBookmark'
+import { MyBookmark } from 'components/user/Bookmark'
 import { MyInfo } from 'components/user/MyInfo'
 import { MyPosts } from 'components/user/MyPosts'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
-import { Post } from 'types/post'
-
-type MyPosts = {
-  user: {
-    id: number
-    username: string
-  }
-  posts: Post[]
-}
 
 const MyPage: NextPage = () => {
   useRequireLogin()
@@ -41,11 +32,10 @@ const MyPage: NextPage = () => {
           ))}
         </nav>
 
+        {/* ブックマーク、右はみ出る */}
         <div className='mt-4 w-full'>
           {selectedMenu === 'ユーザー情報' && <MyInfo />}
-
           {selectedMenu === '投稿した記事' && <MyPosts />}
-
           {selectedMenu === 'ブックマーク' && <MyBookmark />}
         </div>
       </div>
