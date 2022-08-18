@@ -39,22 +39,36 @@ export const BookmarkList: FC<Props> = ({ post }) => {
 
   return (
     <>
-      <style jsx>{`
+      {/* <style jsx>{`
         html,
         body {
           overflow: hidden;
         }
+      `}</style> */}
+      <style jsx>{`
+        .scroll-bar-none::-webkit-scrollbar {
+          display: none;
+        }
       `}</style>
-      <div className='border bg-red-100 border-red-500 rounded-10px p-2 top-0 left-40px w-145px absolute hidden! group-hover:block'>
-        <div onClick={() => setIsOpenModal(true)}>
+      <div className='border bg-red-100 border-red-500 rounded-10px top-10px left-40px w-145px absolute group-hover:block'>
+        <div
+          onClick={() => setIsOpenModal(true)}
+          className='rounded-t-10px px-2 pt-2 hover:bg-red-300'
+        >
           ブックマークを作成+ モーダル出す
         </div>
-        {bookmarks?.length &&
-          bookmarks.map((bookmark) => (
-            <div key={bookmark.id} onClick={() => addBookmark(bookmark.id)}>
-              {bookmark.name}
-            </div>
-          ))}
+        <div className='max-h-303px overflow-y-scroll scroll-bar-none'>
+          {bookmarks?.length &&
+            bookmarks.map((bookmark) => (
+              <div
+                key={bookmark.id}
+                onClick={() => addBookmark(bookmark.id)}
+                className='px-2 hover:bg-red-300'
+              >
+                {bookmark.name}
+              </div>
+            ))}
+        </div>
       </div>
       {isOpenModal && (
         <>

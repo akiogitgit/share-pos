@@ -155,9 +155,16 @@ export const MyBookmark: FC = () => {
             ))}
           </div>
         ) : (
-          <div>
-            <h2>ブックマークがありません</h2>
+          <div className='mx-auto mt-20 w-300px'>
+            <p className='overflow-hidden'>
+              右の
+              <span className='font-bold bg-red-500 rounded-10px text-white px-1 text-30px'>
+                +
+              </span>
+              を押してブックマークを作成
+            </p>
             <p>ブックマークを作成して記事を追加しよう！</p>
+            <p>画像を貼って手順を分かりやすく表示</p>
           </div>
         )}
       </div>
