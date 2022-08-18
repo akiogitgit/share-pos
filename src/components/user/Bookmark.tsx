@@ -143,15 +143,20 @@ export const MyBookmark: FC = () => {
           // ブックマーク名一覧
           <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
             {bookmarks.map((bookmark) => (
-              <div key={bookmark.id} className='flex'>
+              <div
+                key={bookmark.id}
+                className={`whitespace-nowrap h-40px flex gap-1 ${
+                  selectedBookmark === bookmark.id
+                    ? 'border-b-3 border-red-500 text-red-500'
+                    : 'text-gray-500 border-b-2'
+                }`}
+              >
                 <BsFolder className='mt-3.5' />
 
                 <button
                   onClick={() => setSelectedBookmark(bookmark.id)}
-                  className={`whitespace-nowrap h-40px px-1 ${
-                    selectedBookmark === bookmark.id
-                      ? 'font-bold border-b-3 border-red-500 text-red-500'
-                      : 'text-gray-500 border-b-2'
+                  className={`${
+                    selectedBookmark === bookmark.id && 'font-bold'
                   }`}
                 >
                   {bookmark.name}
