@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react'
+import { BsFolder } from 'react-icons/bs'
 import { PostItem } from 'components/post/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
@@ -139,19 +140,23 @@ export const MyBookmark: FC = () => {
         `}</style>
 
         {bookmarks?.length ? (
-          <div className='flex h-50px mt-5 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
+          // ブックマーク名一覧
+          <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
             {bookmarks.map((bookmark) => (
-              <button
-                key={bookmark.id}
-                onClick={() => setSelectedBookmark(bookmark.id)}
-                className={`whitespace-nowrap h-40px px-1 ${
-                  selectedBookmark === bookmark.id
-                    ? 'font-bold border-b-3 border-red-500 text-red-500'
-                    : 'text-gray-500 border-b-2'
-                }`}
-              >
-                {bookmark.name}
-              </button>
+              <div key={bookmark.id} className='flex'>
+                <BsFolder className='mt-3.5' />
+
+                <button
+                  onClick={() => setSelectedBookmark(bookmark.id)}
+                  className={`whitespace-nowrap h-40px px-1 ${
+                    selectedBookmark === bookmark.id
+                      ? 'font-bold border-b-3 border-red-500 text-red-500'
+                      : 'text-gray-500 border-b-2'
+                  }`}
+                >
+                  {bookmark.name}
+                </button>
+              </div>
             ))}
           </div>
         ) : (

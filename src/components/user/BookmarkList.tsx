@@ -1,4 +1,5 @@
 import { FC, useCallback, useState } from 'react'
+import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Bookmark } from 'types/bookmark'
@@ -62,10 +63,15 @@ export const BookmarkList: FC<Props> = ({ post }) => {
             bookmarks.map((bookmark) => (
               <div
                 key={bookmark.id}
-                onClick={() => addBookmark(bookmark.id)}
-                className='px-2 hover:bg-red-300'
+                className='flex px-2 gap-1 items-center hover:bg-red-300'
               >
-                {bookmark.name}
+                <BsFolder />
+                <div
+                  onClick={() => addBookmark(bookmark.id)}
+                  // className='px-2 hover:bg-red-300'
+                >
+                  {bookmark.name}
+                </div>
               </div>
             ))}
         </div>

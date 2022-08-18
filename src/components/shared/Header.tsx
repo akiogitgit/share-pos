@@ -11,7 +11,7 @@ export const Header: FC = () => {
 
   return (
     <>
-      <header className='bg-white w-full py-2 top-0 z-10 fixed'>
+      <header className='bg-white w-full py-2 top-0 z-10000 fixed'>
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
             <h1 className='cursor-pointer mt-0 mb-1  text-6xl text-red-500'>
