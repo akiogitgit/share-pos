@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction, useCallback, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { Bookmark } from 'types/bookmark'
+import { Folder } from 'types/bookmark'
 import { Post } from 'types/post'
 import { HttpError, postApi } from 'utils/api'
 
@@ -11,10 +11,10 @@ type Props = {
   setIsOpenMenu: Dispatch<SetStateAction<boolean>>
 }
 
-export const BookmarkList: FC<Props> = ({ post, setIsOpenMenu }) => {
+export const MyFolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
   const authHeaderParams = useAuthHeaderParams()
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const { data: bookmarks, mutate } = useGetApi<Bookmark[]>(
+  const { data: bookmarks, mutate } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
@@ -36,7 +36,7 @@ export const BookmarkList: FC<Props> = ({ post, setIsOpenMenu }) => {
         }
       }
     },
-    [authHeaderParams, post.id],
+    [authHeaderParams, post.id, setIsOpenMenu],
   )
 
   return (

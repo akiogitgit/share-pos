@@ -1,10 +1,13 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
+import { TbBookmarkOff } from 'react-icons/tb'
+
 import { PostForm } from './PostForm'
 import { PostLinkCard } from './PostLinkCard'
-import { BookmarkList } from 'components/user/BookmarkList'
+import { MyFolderList } from 'components/user/MyFolderList'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { deleteApi, HttpError } from 'utils/api'
 import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
@@ -30,21 +33,38 @@ export const PostItem: FC<Props> = ({ post, className }) => {
     [hasElementMoreThan3Lines, isOpenComment],
   )
 
+  const removeBookmark = useCallback(async (id: number) => {
+    try {
+      const res = await deleteApi(`/folders/bookmarks/${id}`)
+      console.log(res)
+      // mutateするのは無理そう
+    } catch (e) {
+      if (e instanceof HttpError) {
+        console.error(e.message)
+      }
+    }
+  }, [])
+
   return (
     <article
       className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
     >
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
-        {/* 投稿メニューボタン */}
-        {!isEdit && (
-          <button
-            className='cursor-pointer text-23px duration-100 hover:opacity-50'
-            onClick={() => setIsOpenMenu(!isOpenMenu)}
-          >
-            ・・・
-          </button>
-        )}
+        <div className='flex'>
+          {post.bookmark && (
+            <TbBookmarkOff className='h-7 w-7' onClick={() => alert('book')} />
+          )}
+          {/* 投稿メニューボタン */}
+          {!isEdit && (
+            <button
+              className='cursor-pointer text-23px duration-100 hover:opacity-50'
+              onClick={() => setIsOpenMenu(!isOpenMenu)}
+            >
+              ・・・
+            </button>
+          )}
+        </div>
       </div>
       {isOpenMenu && (
         <div className='flex relative justify-end'>
@@ -93,7 +113,7 @@ export const PostItem: FC<Props> = ({ post, className }) => {
                   ブックマークに追加
                 </div>
                 <div className='hidden group-hover:block'>
-                  <BookmarkList post={post} setIsOpenMenu={setIsOpenMenu} />
+                  <MyFolderList post={post} setIsOpenMenu={setIsOpenMenu} />
                 </div>
               </div>
             )}

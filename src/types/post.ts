@@ -14,6 +14,9 @@ export type Post = {
     image: string | undefined
     title: string
   }
+  bookmark?: {
+    id: number
+  }
 }
 
 export type PostRequestParams = {

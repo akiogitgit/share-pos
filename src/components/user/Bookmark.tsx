@@ -4,7 +4,7 @@ import { PostItem } from 'components/post/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { Bookmark, BookmarkPosts } from 'types/bookmark'
+import { Folder, BookmarkPosts } from 'types/bookmark'
 import { deleteApi, postApi } from 'utils/api'
 
 export const MyBookmark: FC = () => {
@@ -14,7 +14,7 @@ export const MyBookmark: FC = () => {
   const [selectedBookmark, setSelectedBookmark] = useState(0)
 
   const authHeaderParams = useAuthHeaderParams()
-  const { data: bookmarks, mutate } = useGetApi<Bookmark[]>(
+  const { data: bookmarks, mutate } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
@@ -33,9 +33,9 @@ export const MyBookmark: FC = () => {
     }
   }, [bookmarks])
 
-  const createBookmark = useCallback(async () => {
+  const createFolder = useCallback(async () => {
     try {
-      const res = await postApi<Bookmark>(
+      const res = await postApi<Folder>(
         '/folders',
         { name: bookmarkName },
         authHeaderParams,
@@ -51,7 +51,7 @@ export const MyBookmark: FC = () => {
     }
   }, [authHeaderParams, bookmarkName, bookmarks, mutate])
 
-  const deleteBookmark = useCallback(async () => {
+  const deleteFolder = useCallback(async () => {
     try {
       const res = await deleteApi('/folders/3', {}, authHeaderParams)
       console.log(res)
@@ -69,7 +69,7 @@ export const MyBookmark: FC = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                createBookmark()
+                createFolder()
                 setBookmarkName('')
               }}
               className='flex gap-3 items-center'
