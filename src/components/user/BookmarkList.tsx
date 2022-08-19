@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useCallback, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
@@ -8,9 +8,10 @@ import { HttpError, postApi } from 'utils/api'
 
 type Props = {
   post: Post
+  setIsOpenMenu: Dispatch<SetStateAction<boolean>>
 }
 
-export const BookmarkList: FC<Props> = ({ post }) => {
+export const BookmarkList: FC<Props> = ({ post, setIsOpenMenu }) => {
   const authHeaderParams = useAuthHeaderParams()
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { data: bookmarks, mutate } = useGetApi<Bookmark[]>(
@@ -27,8 +28,8 @@ export const BookmarkList: FC<Props> = ({ post }) => {
           { folder_id: folderId, post_id: post.id },
           authHeaderParams,
         )
-
         console.log(res)
+        setIsOpenMenu(false)
       } catch (e) {
         if (e instanceof HttpError) {
           console.error(e.message)

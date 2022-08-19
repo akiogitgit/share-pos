@@ -93,7 +93,7 @@ export const PostItem: FC<Props> = ({ post, className }) => {
                   ブックマークに追加
                 </div>
                 <div className='hidden group-hover:block'>
-                  <BookmarkList post={post} />
+                  <BookmarkList post={post} setIsOpenMenu={setIsOpenMenu} />
                 </div>
               </div>
             )}
