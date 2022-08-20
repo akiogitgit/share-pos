@@ -55,14 +55,25 @@ export const BookmarkPostItem: FC<Props> = ({
         {},
         authHeaderParams,
       )
-      console.log(res)
-      // mutateするのは無理そう
+      if (!bookmarkPosts) {
+        return
+      }
+
+      const newBookmarkPosts = {
+        id: bookmarkPosts?.id,
+        name: bookmarkPosts?.name,
+        posts: bookmarkPosts?.posts.filter(
+          (v) => v.bookmark?.id !== post.bookmark?.id,
+        ),
+      }
+      postsMutate(newBookmarkPosts, false)
+      console.log('ブックマークを削除しました', res)
     } catch (e) {
       if (e instanceof HttpError) {
         console.error(e.message)
       }
     }
-  }, [authHeaderParams, post.bookmark?.id])
+  }, [authHeaderParams, bookmarkPosts, post.bookmark?.id, postsMutate])
 
   return (
     <article
