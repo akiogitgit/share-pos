@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
-import { PostItem } from 'components/post/PostItem'
+import { BookmarkPostItem } from './BookmarkPostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
@@ -11,7 +11,7 @@ export const MyBookmark: FC = () => {
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
   // 一番左のブックマークidを初期値で入れたい
-  const [selectedBookmark, setSelectedBookmark] = useState(0)
+  const [selectedFolder, setSelectedFolder] = useState(0)
 
   const authHeaderParams = useAuthHeaderParams()
   const { data: bookmarks, mutate } = useGetApi<Folder[]>(
@@ -20,16 +20,16 @@ export const MyBookmark: FC = () => {
     authHeaderParams,
   )
   const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
-    `/folders/${selectedBookmark}`,
+    `/folders/${selectedFolder}`,
     undefined,
     authHeaderParams,
   )
   console.log(bookmarkPosts)
 
-  // あんま使いたくない
+  // 自分の一番左のフォルダのPostsを取得   useEffect使いたくない
   useEffect(() => {
     if (bookmarks?.length) {
-      setSelectedBookmark(bookmarks[0].id)
+      setSelectedFolder(bookmarks[0].id)
     }
   }, [bookmarks])
 
@@ -146,7 +146,7 @@ export const MyBookmark: FC = () => {
               <div
                 key={bookmark.id}
                 className={`whitespace-nowrap h-40px flex gap-1 ${
-                  selectedBookmark === bookmark.id
+                  selectedFolder === bookmark.id
                     ? 'border-b-3 border-red-500 text-red-500'
                     : 'text-gray-500 border-b-2'
                 }`}
@@ -154,10 +154,8 @@ export const MyBookmark: FC = () => {
                 <BsFolder className='mt-3.5' />
 
                 <button
-                  onClick={() => setSelectedBookmark(bookmark.id)}
-                  className={`${
-                    selectedBookmark === bookmark.id && 'font-bold'
-                  }`}
+                  onClick={() => setSelectedFolder(bookmark.id)}
+                  className={`${selectedFolder === bookmark.id && 'font-bold'}`}
                 >
                   {bookmark.name}
                 </button>
@@ -183,7 +181,12 @@ export const MyBookmark: FC = () => {
         {bookmarkPosts?.posts.length ? (
           <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
             {bookmarkPosts.posts.map((post, i) => (
-              <PostItem post={post} key={i} className='m-2' />
+              <BookmarkPostItem
+                key={i}
+                className='m-2'
+                post={post}
+                selectedFolder={selectedFolder}
+              />
             ))}
           </PostItemList>
         ) : (

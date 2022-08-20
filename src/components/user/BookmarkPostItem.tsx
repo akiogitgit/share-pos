@@ -1,19 +1,29 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
+import { TbBookmarkOff } from 'react-icons/tb'
 
-import { PostForm } from './PostForm'
-import { PostLinkCard } from './PostLinkCard'
+import { PostForm } from 'components/post/PostForm'
+import { PostLinkCard } from 'components/post/PostLinkCard'
 import { MyFolderList } from 'components/user/MyFolderList'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
+import { useGetApi } from 'hooks/useApi'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
+import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
+import { deleteApi, HttpError } from 'utils/api'
 import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
   className?: string
+  selectedFolder: number
 }
 
-export const PostItem: FC<Props> = ({ post, className }) => {
+export const BookmarkPostItem: FC<Props> = ({
+  post,
+  className,
+  selectedFolder,
+}) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
@@ -23,6 +33,13 @@ export const PostItem: FC<Props> = ({ post, className }) => {
   const { deletePost } = useDeletePost(post)
   const { ref, height } = useElementSize()
 
+  const authHeaderParams = useAuthHeaderParams()
+  const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
+    `/folders/${selectedFolder}`,
+    undefined,
+    authHeaderParams,
+  )
+
   // 要素の高さを取得
   const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
 
@@ -31,21 +48,45 @@ export const PostItem: FC<Props> = ({ post, className }) => {
     [hasElementMoreThan3Lines, isOpenComment],
   )
 
+  const removeBookmark = useCallback(async () => {
+    try {
+      const res = await deleteApi(
+        `/folders/bookmarks/${post.bookmark?.id}`,
+        {},
+        authHeaderParams,
+      )
+      console.log(res)
+      // mutateするのは無理そう
+    } catch (e) {
+      if (e instanceof HttpError) {
+        console.error(e.message)
+      }
+    }
+  }, [authHeaderParams, post.bookmark?.id])
+
   return (
     <article
       className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
     >
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
-        {/* 投稿メニューボタン */}
-        {!isEdit && (
-          <button
-            className='cursor-pointer text-23px duration-100 hover:opacity-50'
-            onClick={() => setIsOpenMenu(!isOpenMenu)}
-          >
-            ・・・
-          </button>
-        )}
+        <div className='flex'>
+          {post.bookmark && (
+            <TbBookmarkOff
+              className='cursor-pointer h-7 w-7'
+              onClick={removeBookmark}
+            />
+          )}
+          {/* 投稿メニューボタン */}
+          {!isEdit && (
+            <button
+              className='cursor-pointer text-23px duration-100 hover:opacity-50'
+              onClick={() => setIsOpenMenu(!isOpenMenu)}
+            >
+              ・・・
+            </button>
+          )}
+        </div>
       </div>
       {isOpenMenu && (
         <div className='flex relative justify-end'>
