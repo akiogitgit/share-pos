@@ -77,7 +77,7 @@ export const MyBookmark: FC = () => {
               <input
                 type='text'
                 className='border outline-none border-red-500 rounded-10px h-40px px-2 w-170px duration-150 sm:w-200px'
-                placeholder='ブックマーク名'
+                placeholder='新規フォルダの作成'
                 value={bookmarkName}
                 required
                 onChange={(e) => setBookmarkName(e.target.value)}

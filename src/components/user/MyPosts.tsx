@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { PostItem } from 'components/post/PostItem'
+import { PostItem } from 'components/post/PostItem/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'

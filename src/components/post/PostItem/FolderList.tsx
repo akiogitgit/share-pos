@@ -11,7 +11,7 @@ type Props = {
   setIsOpenMenu: Dispatch<SetStateAction<boolean>>
 }
 
-export const MyFolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
+export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
   const authHeaderParams = useAuthHeaderParams()
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { data: bookmarks, mutate } = useGetApi<Folder[]>(

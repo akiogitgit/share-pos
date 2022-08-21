@@ -1,8 +1,8 @@
 import { FC, useMemo, useState } from 'react'
 
-import { PostForm } from './PostForm'
+import { PostForm } from '../PostForm'
+import { FolderList } from './FolderList'
 import { PostLinkCard } from './PostLinkCard'
-import { MyFolderList } from 'components/user/MyFolderList'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
@@ -94,7 +94,7 @@ export const PostItem: FC<Props> = ({ post, className }) => {
                   ブックマークに追加
                 </div>
                 <div className='hidden group-hover:block'>
-                  <MyFolderList post={post} setIsOpenMenu={setIsOpenMenu} />
+                  <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
                 </div>
               </div>
             )}

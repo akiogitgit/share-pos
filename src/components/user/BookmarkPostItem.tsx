@@ -2,8 +2,8 @@ import { FC, useCallback, useMemo, useState } from 'react'
 import { TbBookmarkOff } from 'react-icons/tb'
 
 import { PostForm } from 'components/post/PostForm'
-import { PostLinkCard } from 'components/post/PostLinkCard'
-import { MyFolderList } from 'components/user/MyFolderList'
+import { FolderList } from 'components/post/PostItem/FolderList'
+import { PostLinkCard } from 'components/post/PostItem/PostLinkCard'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
@@ -146,7 +146,7 @@ export const BookmarkPostItem: FC<Props> = ({
                   ブックマークに追加
                 </div>
                 <div className='hidden group-hover:block'>
-                  <MyFolderList post={post} setIsOpenMenu={setIsOpenMenu} />
+                  <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
                 </div>
               </div>
             )}

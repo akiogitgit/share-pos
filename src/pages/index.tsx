@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
-import { PostItem } from 'components/post/PostItem'
+import { PostItem } from 'components/post/PostItem/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { PostStars } from 'components/post/PostStars'
 import { Layout } from 'components/shared/Layout'
