@@ -83,7 +83,9 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
             onClick={() => setIsOpenModal(false)}
             className='bg-black h-3000vh opacity-20 top-[-500vh] left-[-100vw] w-300vw z-10 fixed'
           ></div>
-          <div className='bg-red-500 top-0 left-0 z-11 fixed'>aaa</div>
+          <div className='bg-red-500 top-0 left-0 z-11 fixed'>
+            ここで新しいフォルダの作成したい
+          </div>
         </>
       )}
     </>

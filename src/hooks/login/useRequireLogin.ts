@@ -8,10 +8,10 @@ export const useRequireLogin = () => {
   const router = useRouter()
 
   function sleep(waitTime: number, callbackFunc: any) {
-    let spenedTime = 0
+    let spendTime = 0
     let id = setInterval(function () {
-      spenedTime++
-      if (spenedTime >= waitTime) {
+      spendTime++
+      if (spendTime >= waitTime) {
         clearInterval(id)
         if (callbackFunc) callbackFunc()
       }
@@ -19,12 +19,6 @@ export const useRequireLogin = () => {
   }
 
   const moveToLogin = useCallback(() => {
-    // 初回アクセス時、必ず loginに飛ばされる
-    // if (!isLoggedIn) {
-    //   // router.push('/login')
-    //   return
-    // }
-
     sleep(100, function () {
       if (!isLoggedIn) {
         router.push('/login')

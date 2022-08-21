@@ -2,9 +2,9 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Layout } from 'components/shared/Layout'
-import { MyBookmark } from 'components/user/Bookmark'
-import { MyInfo } from 'components/user/MyInfo'
 import { MyPosts } from 'components/user/MyPosts'
+import { MyBookmark } from 'components/user/myPage/Bookmark'
+import { MyInfo } from 'components/user/myPage/MyInfo'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 
 const MyPage: NextPage = () => {

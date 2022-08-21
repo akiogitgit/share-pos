@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { Layout } from 'components/shared/Layout'
-import { MyInfo } from 'components/user/MyInfo'
+import { MyInfo } from 'components/user/myPage/MyInfo'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 
 const MyPage: NextPage = () => {
