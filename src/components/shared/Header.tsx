@@ -37,7 +37,7 @@ export const Header: FC = () => {
                     <BsPencilSquare />
                   </div>
                 </Link>
-                <Link href='/myPage2'>
+                <Link href='/myPage'>
                   <div className='flex gap-0.5 items-center'>
                     <div className='cursor-pointer duration-300 hover:(underline) '>
                       マイページ

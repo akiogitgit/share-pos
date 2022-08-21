@@ -17,7 +17,7 @@ const MyPage: NextPage = () => {
       <div className='sm:(flex gap-10) '>
         <nav className='flex text-center justify-center sm:gap-2 sm:(justify-start flex-col) '>
           {tabs.map((tab, i) => (
-            <Link href={`myPage2/${tab.name}`} key={i}>
+            <Link href={`myPage/${tab.name}`} key={i}>
               <button
                 className={`sm:p-4 font-bold w-30vw max-w-130px h-60px ${
                   tab.name === 'userInfo'

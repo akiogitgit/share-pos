@@ -28,8 +28,14 @@ export const useCookies = <
   )
 
   const remove = useCallback(
-    (key: Key) => {
-      removeCookie(key)
+    (key: Key | Key[]) => {
+      if (typeof key === 'string') {
+        removeCookie(key)
+        return
+      }
+      key.forEach((v) => {
+        return removeCookie(v)
+      })
     },
     [removeCookie],
   )
