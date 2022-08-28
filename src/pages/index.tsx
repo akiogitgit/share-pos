@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
-import { PostItem } from 'components/post/PostItem'
+import { PostItem } from 'components/post/Item/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { PostStars } from 'components/post/PostStars'
 import { Layout } from 'components/shared/Layout'
@@ -28,10 +28,10 @@ const Home: NextPage = () => {
           evaluation={stars}
           onClick={(newStar) => setStars(newStar)}
         />
-        {posts && posts.length && (
-          <PostItemList>
+        {posts?.length && (
+          <PostItemList className='flex flex-wrap mt-4 gap-3 justify-center'>
             {posts.map((post, i) => (
-              <PostItem post={post} key={i} />
+              <PostItem post={post} key={i} className='mb-1' />
             ))}
           </PostItemList>
         )}

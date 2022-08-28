@@ -65,6 +65,7 @@ export const PostForm: FC<Props> = ({
               name='comment'
               className='border h-full outline-none w-full p-2 pr-9 top-0 left-0 ring-blue-500 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
               value={formParams.comment}
+              placeholder='この記事オススメ！'
               onChange={onChange}
             />
           </div>

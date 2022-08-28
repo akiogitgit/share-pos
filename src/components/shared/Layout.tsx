@@ -9,8 +9,8 @@ export const Layout: FC<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className='bg-red-100 min-h-100vh pt-25 overflow-hidden '>
-        <div className='mx-auto max-w-1000px px-2 break-words'>{children}</div>
+      <main className='bg-red-100 min-h-100vh pt-130px overflow-hidden '>
+        <div className='mx-auto max-w-1110px px-2 break-words'>{children}</div>
       </main>
     </>
   )

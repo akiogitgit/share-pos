@@ -40,7 +40,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           <input
             type='text'
             value={formParams.username}
-            placeholder='username'
+            placeholder='シェアポス太郎'
             required
             name='username'
             onChange={(e) => onChange(e)}
@@ -56,7 +56,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             type='email'
             id='email'
             value={formParams.email}
-            placeholder='email'
+            placeholder='example@example.com'
             required
             name='email'
             onChange={(e) => onChange(e)}
@@ -92,9 +92,9 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             type='password'
             id='passwordConfirmation'
             value={formParams.passwordConfirmation}
-            placeholder='確認用パスワード'
             required
             minLength={6}
+            placeholder='password'
             name='passwordConfirmation'
             onChange={(e) => onChange(e)}
             className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
@@ -105,7 +105,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           type='submit'
           className='border bg-blue-500 border-blue-500 mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-blue-500) '
         >
-          ユーザー作成
+          登録
         </button>
       </form>
     </div>

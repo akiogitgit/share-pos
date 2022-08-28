@@ -1,16 +1,29 @@
-import { FC, useMemo, useState } from 'react'
-import { PostForm } from './PostForm'
-import { PostLinkCard } from './PostLinkCard'
+import { FC, useCallback, useMemo, useState } from 'react'
+import { TbBookmarkOff } from 'react-icons/tb'
+
+import { FolderList } from 'components/post/Item/FolderList'
+import { PostLinkCard } from 'components/post/Item/PostLinkCard'
+import { PostForm } from 'components/post/PostForm'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
+import { useGetApi } from 'hooks/useApi'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
+import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
+import { deleteApi, HttpError } from 'utils/api'
 import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
+  className?: string
+  selectedFolder: number
 }
 
-export const PostItem: FC<Props> = ({ post }) => {
+export const BookmarkPostItem: FC<Props> = ({
+  post,
+  className,
+  selectedFolder,
+}) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
@@ -20,6 +33,13 @@ export const PostItem: FC<Props> = ({ post }) => {
   const { deletePost } = useDeletePost(post)
   const { ref, height } = useElementSize()
 
+  const authHeaderParams = useAuthHeaderParams()
+  const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
+    `/folders/${selectedFolder}`,
+    undefined,
+    authHeaderParams,
+  )
+
   // 要素の高さを取得
   const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
 
@@ -28,19 +48,56 @@ export const PostItem: FC<Props> = ({ post }) => {
     [hasElementMoreThan3Lines, isOpenComment],
   )
 
+  const removeBookmark = useCallback(async () => {
+    try {
+      const res = await deleteApi(
+        `/folders/bookmarks/${post.bookmark?.id}`,
+        {},
+        authHeaderParams,
+      )
+      if (!bookmarkPosts) {
+        return
+      }
+
+      const newBookmarkPosts = {
+        id: bookmarkPosts?.id,
+        name: bookmarkPosts?.name,
+        posts: bookmarkPosts?.posts.filter(
+          (v) => v.bookmark?.id !== post.bookmark?.id,
+        ),
+      }
+      postsMutate(newBookmarkPosts, false)
+      console.log('ブックマークを削除しました', res)
+    } catch (e) {
+      if (e instanceof HttpError) {
+        console.error(e.message)
+      }
+    }
+  }, [authHeaderParams, bookmarkPosts, post.bookmark?.id, postsMutate])
+
   return (
-    <article className='bg-white rounded-xl my-2 max-w-460px p-4 w-90vw sm:w-291px'>
+    <article
+      className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
+    >
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
-        {/* 投稿メニューボタン */}
-        {!isEdit && (
-          <button
-            className='cursor-pointer text-23px duration-100 hover:opacity-50'
-            onClick={() => setIsOpenMenu(!isOpenMenu)}
-          >
-            ・・・
-          </button>
-        )}
+        <div className='flex'>
+          {post.bookmark && (
+            <TbBookmarkOff
+              className='cursor-pointer h-7 w-7'
+              onClick={removeBookmark}
+            />
+          )}
+          {/* 投稿メニューボタン */}
+          {!isEdit && (
+            <button
+              className='cursor-pointer text-23px duration-100 hover:opacity-50'
+              onClick={() => setIsOpenMenu(!isOpenMenu)}
+            >
+              ・・・
+            </button>
+          )}
+        </div>
       </div>
       {isOpenMenu && (
         <div className='flex relative justify-end'>
@@ -83,9 +140,16 @@ export const PostItem: FC<Props> = ({ post }) => {
             >
               記事リンクをコピー
             </div>
-            <div className='rounded-b-10px py-2 px-4 hover:bg-red-300'>
-              フォルダに追加
-            </div>
+            {cookies.userInfo && (
+              <div className='rounded-b-10px group relative'>
+                <div className=' py-2 px-4 hover:bg-red-300'>
+                  ブックマークに追加
+                </div>
+                <div className='hidden group-hover:block'>
+                  <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
