@@ -1,26 +1,27 @@
 import { NextPage } from 'next'
 import { useCallback, useEffect, useState } from 'react'
-import { BsFolder } from 'react-icons/bs'
 import { PostItemList } from 'components/post/PostItemList'
 import { MyPageLayout } from 'components/user/MyPageLayout'
 import { BookmarkPostItem } from 'components/user/myPage/BookmarkPostItem'
+import { FolderList } from 'components/user/myPage/FolderList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Folder, BookmarkPosts } from 'types/bookmark'
-import { deleteApi, postApi } from 'utils/api'
+import { postApi } from 'utils/api'
 
 const Bookmark: NextPage = () => {
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
-  // 一番左のブックマークidを初期値で入れたい
   const [selectedFolder, setSelectedFolder] = useState(0)
 
   const authHeaderParams = useAuthHeaderParams()
-  const { data: bookmarks, mutate } = useGetApi<Folder[]>(
+
+  const { data: folders, mutate } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
   )
+
   const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
     `/folders/${selectedFolder}`,
     undefined,
@@ -30,10 +31,10 @@ const Bookmark: NextPage = () => {
 
   // 自分の一番左のフォルダのPostsを取得   useEffect使いたくない
   useEffect(() => {
-    if (bookmarks?.length) {
-      setSelectedFolder(bookmarks[0].id)
+    if (folders?.length) {
+      setSelectedFolder(folders[0].id)
     }
-  }, [bookmarks])
+  }, [folders])
 
   const createFolder = useCallback(async () => {
     try {
@@ -42,25 +43,16 @@ const Bookmark: NextPage = () => {
         { name: bookmarkName },
         authHeaderParams,
       )
-      if (res && bookmarks) {
+      if (res && folders) {
         console.log('フォルダの作成に成功 ', res)
-        mutate([...bookmarks, res], false)
+        mutate([...folders, res], false)
       }
 
       console.log(res)
     } catch (e) {
       console.error(e)
     }
-  }, [authHeaderParams, bookmarkName, bookmarks, mutate])
-
-  const deleteFolder = useCallback(async () => {
-    try {
-      const res = await deleteApi('/folders/3', {}, authHeaderParams)
-      console.log(res)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [authHeaderParams])
+  }, [authHeaderParams, bookmarkName, folders, mutate])
 
   return (
     <MyPageLayout tabName='bookmark'>
@@ -120,63 +112,11 @@ const Bookmark: NextPage = () => {
           </div>
         </div>
 
-        <style jsx>{`
-          .scroll-bar::-webkit-scrollbar {
-            height: 0;
-          }
-
-          .scroll-bar:hover::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-          }
-          .scroll-bar::-webkit-scrollbar-track {
-            border-radius: 100px;
-            background-color: rgba(254, 226, 226, var(--tw-bg-opacity));
-            height: 100px;
-            transform: scale(0.5);
-          }
-          .scroll-bar::-webkit-scrollbar-thumb {
-            border-radius: 100px;
-            background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
-          }
-        `}</style>
-
-        {bookmarks?.length ? (
-          // ブックマーク名一覧
-          <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
-            {bookmarks.map((bookmark) => (
-              <div
-                key={bookmark.id}
-                className={`whitespace-nowrap h-40px flex gap-1 ${
-                  selectedFolder === bookmark.id
-                    ? 'border-b-3 border-red-500 text-red-500'
-                    : 'text-gray-500 border-b-2'
-                }`}
-              >
-                <BsFolder className='mt-3.5' />
-
-                <button
-                  onClick={() => setSelectedFolder(bookmark.id)}
-                  className={`${selectedFolder === bookmark.id && 'font-bold'}`}
-                >
-                  {bookmark.name}
-                </button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className='mx-auto mt-20 w-300px'>
-            <p className='overflow-hidden'>
-              右の
-              <span className='font-bold bg-red-500 rounded-10px text-white px-1 text-30px'>
-                +
-              </span>
-              を押してブックマークを作成
-            </p>
-            <p>ブックマークを作成して記事を追加しよう！</p>
-            <p>画像を貼って手順を分かりやすく表示</p>
-          </div>
-        )}
+        {/* 自分のフォルダ一覧 */}
+        <FolderList
+          selectedFolder={selectedFolder}
+          setSelectedFolder={setSelectedFolder}
+        />
       </div>
 
       <ul className='mt-4'>

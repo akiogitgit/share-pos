@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import { MyPageLayout } from 'components/user/MyPageLayout'
-import { MyInfo } from 'components/user/myPage/MyInfo'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 
 const MyPage: NextPage = () => {
@@ -15,9 +14,7 @@ const MyPage: NextPage = () => {
   return (
     <MyPageLayout>
       {/* ブックマーク、右はみ出る */}
-      <div className='mt-4 w-full'>
-        <MyInfo />
-      </div>
+      <div className='mt-4 w-full'></div>
     </MyPageLayout>
   )
 }
