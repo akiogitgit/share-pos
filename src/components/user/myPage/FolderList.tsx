@@ -18,26 +18,39 @@ export const FolderList: FC<Props> = ({
   const [editFolderName, setEditFolderName] = useState('')
   const authHeaderParams = useAuthHeaderParams()
 
-  const { data: folders, mutate } = useGetApi<Folder[]>(
+  const { data: folders, mutate: foldersMutate } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
   )
 
   const updateFolder = useCallback(
-    async (id: number, name: string) => {
+    async (id: number) => {
       try {
-        const res = await putApi(
+        const res = await putApi<Folder>(
           `/folders/${id}`,
-          { name: name },
+          { name: editFolderName },
           authHeaderParams,
         )
+        if (!res || !folders) {
+          return
+        }
+
+        const newFolders = folders.map((folder) => {
+          if (folder.id === id) {
+            return res
+          }
+          return folder
+        })
+
+        foldersMutate(newFolders)
         console.log(res)
+        console.log(newFolders)
       } catch (e) {
         console.error(e)
       }
     },
-    [authHeaderParams],
+    [authHeaderParams, editFolderName, folders, foldersMutate],
   )
 
   const deleteFolder = useCallback(
@@ -45,25 +58,21 @@ export const FolderList: FC<Props> = ({
       try {
         const res = await deleteApi(`/folders/${id}`, {}, authHeaderParams)
         const newFolders = folders?.filter((folder) => folder.id !== id)
-        mutate(newFolders)
+        foldersMutate(newFolders)
 
         console.log(res)
       } catch (e) {
         console.error(e)
       }
     },
-    [authHeaderParams, folders, mutate],
+    [authHeaderParams, folders, foldersMutate],
   )
-
-  const onUpdateFolder = useCallback((id: number) => {
-    console.log('form!!')
-  }, [])
 
   const onClickFolder = useCallback(
     (folderId: number, folderName: string) => {
       if (selectedFolder === folderId) {
         setEditFolderId(folderId)
-        setEditFolderName(folderName)
+        setEditFolderName(folderName) // こいつでupdate失敗する
       } else {
         setEditFolderId(0)
       }
@@ -86,21 +95,18 @@ export const FolderList: FC<Props> = ({
                   : 'text-gray-500 border-b-2'
               }`}
             >
-              <button
-                onClick={() => onClickFolder(folder.id, folder.name)}
+              <div
                 className={`flex items-center mt-2 ${
                   selectedFolder === folder.id && 'font-bold'
                 }`}
               >
-                <BsFolder className='mr-1' />
-
                 {/* {folder.name} */}
                 {editFolderId === folder.id ? (
                   <form
                     className='flex'
                     onSubmit={(e) => {
                       e.preventDefault()
-                      onUpdateFolder(folder.id)
+                      updateFolder(folder.id)
                     }}
                   >
                     <input
@@ -123,9 +129,12 @@ export const FolderList: FC<Props> = ({
                     </div>
                   </form>
                 ) : (
-                  folder.name
+                  <button onClick={() => onClickFolder(folder.id, folder.name)}>
+                    <BsFolder className='mr-1' />
+                    {folder.name}
+                  </button>
                 )}
-              </button>
+              </div>
             </div>
           ))}
         </div>
