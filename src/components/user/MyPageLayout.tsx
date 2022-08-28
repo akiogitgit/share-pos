@@ -1,13 +1,16 @@
-import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { FC, ReactNode } from 'react'
 import { Layout } from 'components/shared/Layout'
-import { MyPosts } from 'components/user/MyPosts'
-import { MyBookmark } from 'components/user/myPage/Bookmark'
-import { MyInfo } from 'components/user/myPage/MyInfo'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 
-const MyPage: NextPage = () => {
+type Props = {
+  children: ReactNode
+  tabName?: string
+}
+
+// 最初に表示するタブ何にしよう
+export const MyPageLayout: FC<Props> = ({ children, tabName = 'userInfo' }) => {
   useRequireLogin()
   const router = useRouter()
   const { selectedTab } = router.query
@@ -25,7 +28,7 @@ const MyPage: NextPage = () => {
             <Link href={`/myPage/${tab.name}`} key={i}>
               <button
                 className={`sm:p-4 font-bold w-30vw max-w-130px h-60px ${
-                  tab.name === selectedTab
+                  tab.name === tabName
                     ? 'bg-red-500 rounded-10px text-white'
                     : ' cursor-pointer'
                 }`}
@@ -36,13 +39,8 @@ const MyPage: NextPage = () => {
           ))}
         </nav>
 
-        <div className='mt-4 w-full'>
-          {selectedTab === 'userInfo' && <MyInfo />}
-          {selectedTab === 'myPosts' && <MyPosts />}
-          {selectedTab === 'bookmark' && <MyBookmark />}
-        </div>
+        <div className='mt-4 w-full'>{children}</div>
       </div>
     </Layout>
   )
 }
-export default MyPage

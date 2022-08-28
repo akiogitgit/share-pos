@@ -1,9 +1,9 @@
 import { FC, useCallback, useMemo, useState } from 'react'
 import { TbBookmarkOff } from 'react-icons/tb'
 
+import { FolderList } from 'components/post/Item/FolderList'
+import { PostLinkCard } from 'components/post/Item/PostLinkCard'
 import { PostForm } from 'components/post/PostForm'
-import { FolderList } from 'components/post/PostItem/FolderList'
-import { PostLinkCard } from 'components/post/PostItem/PostLinkCard'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'

@@ -1,6 +1,8 @@
-import { FC, useState } from 'react'
+import { NextPage } from 'next'
+import { useState } from 'react'
 import { PostItem } from 'components/post/Item/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
+import { MyPageLayout } from 'components/user/MyPageLayout'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
@@ -14,7 +16,7 @@ type MyPosts = {
   posts: Post[]
 }
 
-export const MyPosts: FC = () => {
+const MyPosts: NextPage = () => {
   const [selectedPublished, setSelectedPublished] = useState(true)
   const { cookies } = useCookies('userInfo')
   const authHeaderParams = useAuthHeaderParams()
@@ -25,7 +27,7 @@ export const MyPosts: FC = () => {
   )
 
   return (
-    <div>
+    <MyPageLayout tabName='myPosts'>
       <div className='ml-4 sm:ml-0'>
         <h1 className='font-bold text-2xl'>投稿した記事</h1>
         <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
@@ -60,6 +62,8 @@ export const MyPosts: FC = () => {
           </PostItemList>
         )}
       </ul>
-    </div>
+    </MyPageLayout>
   )
 }
+
+export default MyPosts
