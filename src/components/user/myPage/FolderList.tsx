@@ -44,12 +44,15 @@ export const FolderList: FC<Props> = ({
     async (id: number) => {
       try {
         const res = await deleteApi(`/folders/${id}`, {}, authHeaderParams)
+        const newFolders = folders?.filter((folder) => folder.id !== id)
+        mutate(newFolders)
+
         console.log(res)
       } catch (e) {
         console.error(e)
       }
     },
-    [authHeaderParams],
+    [authHeaderParams, folders, mutate],
   )
 
   const onUpdateFolder = useCallback((id: number) => {
