@@ -1,28 +1,30 @@
 import { NextPage } from 'next'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PostItemList } from 'components/post/PostItemList'
 import { MyPageLayout } from 'components/user/MyPageLayout'
 import { BookmarkPostItem } from 'components/user/myPage/BookmarkPostItem'
 import { FolderList } from 'components/user/myPage/FolderList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
+import { useFolder } from 'hooks/useFolder'
 import { Folder, BookmarkPosts } from 'types/bookmark'
-import { HttpError, postApi } from 'utils/api'
 
 const Bookmark: NextPage = () => {
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
   const [selectedFolder, setSelectedFolder] = useState(0)
 
+  const { createFolder } = useFolder()
+
   const authHeaderParams = useAuthHeaderParams()
 
-  const { data: folders, mutate } = useGetApi<Folder[]>(
+  const { data: folders } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
   )
 
-  const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
+  const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
     `/folders/${selectedFolder}`,
     undefined,
     authHeaderParams,
@@ -36,26 +38,6 @@ const Bookmark: NextPage = () => {
     }
   }, [folders])
 
-  const createFolder = useCallback(async () => {
-    try {
-      const res = await postApi<Folder>(
-        '/folders',
-        { name: bookmarkName },
-        authHeaderParams,
-      )
-      if (res && folders) {
-        console.log('フォルダの作成に成功 ', res)
-        mutate([...folders, res], false)
-      }
-
-      console.log(res)
-    } catch (e) {
-      if (e instanceof HttpError) {
-        console.error(e.message)
-      }
-    }
-  }, [authHeaderParams, bookmarkName, folders, mutate])
-
   return (
     <MyPageLayout tabName='bookmark'>
       <div className='ml-4 sm:ml-0'>
@@ -65,7 +47,7 @@ const Bookmark: NextPage = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                createFolder()
+                createFolder(bookmarkName)
                 setBookmarkName('')
               }}
               className='flex gap-3 items-center'

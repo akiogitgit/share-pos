@@ -2,8 +2,8 @@ import { Dispatch, FC, SetStateAction, useCallback, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
+import { useFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
-import { deleteApi, HttpError, putApi } from 'utils/api'
 
 type Props = {
   selectedFolder: number
@@ -18,58 +18,12 @@ export const FolderList: FC<Props> = ({
   const [editFolderName, setEditFolderName] = useState('')
   const authHeaderParams = useAuthHeaderParams()
 
-  const { data: folders, mutate: foldersMutate } = useGetApi<Folder[]>(
+  const { updateFolder, deleteFolder } = useFolder()
+
+  const { data: folders } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
-  )
-
-  const updateFolder = useCallback(
-    async (id: number) => {
-      try {
-        const res = await putApi<Folder>(
-          `/folders/${id}`,
-          { name: editFolderName },
-          authHeaderParams,
-        )
-        if (!res || !folders) {
-          return
-        }
-
-        const newFolders = folders.map((folder) => {
-          if (folder.id === id) {
-            return res
-          }
-          return folder
-        })
-
-        foldersMutate(newFolders)
-        console.log(res)
-        console.log(newFolders)
-      } catch (e) {
-        if (e instanceof HttpError) {
-          console.error(e.message)
-        }
-      }
-    },
-    [authHeaderParams, editFolderName, folders, foldersMutate],
-  )
-
-  const deleteFolder = useCallback(
-    async (id: number) => {
-      try {
-        const res = await deleteApi(`/folders/${id}`, {}, authHeaderParams)
-        const newFolders = folders?.filter((folder) => folder.id !== id)
-        foldersMutate(newFolders)
-
-        console.log(res)
-      } catch (e) {
-        if (e instanceof HttpError) {
-          console.error(e.message)
-        }
-      }
-    },
-    [authHeaderParams, folders, foldersMutate],
   )
 
   const onClickFolder = useCallback(
@@ -111,7 +65,8 @@ export const FolderList: FC<Props> = ({
                     className='flex'
                     onSubmit={(e) => {
                       e.preventDefault()
-                      updateFolder(folder.id)
+                      updateFolder(folder.id, editFolderName)
+                      setEditFolderId(0)
                     }}
                   >
                     <input
@@ -127,7 +82,7 @@ export const FolderList: FC<Props> = ({
                       更新
                     </button>
                     <div
-                      className='font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
+                      className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
                       onClick={() => deleteFolder(folder.id)}
                     >
                       削除
