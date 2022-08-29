@@ -7,7 +7,7 @@ import { FolderList } from 'components/user/myPage/FolderList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Folder, BookmarkPosts } from 'types/bookmark'
-import { postApi } from 'utils/api'
+import { HttpError, postApi } from 'utils/api'
 
 const Bookmark: NextPage = () => {
   const [isOpenInputField, setIsOpenInputField] = useState(false)
@@ -50,7 +50,9 @@ const Bookmark: NextPage = () => {
 
       console.log(res)
     } catch (e) {
-      console.error(e)
+      if (e instanceof HttpError) {
+        console.error(e.message)
+      }
     }
   }, [authHeaderParams, bookmarkName, folders, mutate])
 
@@ -119,6 +121,7 @@ const Bookmark: NextPage = () => {
         />
       </div>
 
+      {/* 選択しているフォルダの記事一覧 */}
       <ul className='mt-4'>
         {bookmarkPosts?.posts.length ? (
           <PostItemList className='flex flex-wrap justify-center sm:justify-start'>

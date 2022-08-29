@@ -3,7 +3,7 @@ import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Folder } from 'types/bookmark'
-import { deleteApi, putApi } from 'utils/api'
+import { deleteApi, HttpError, putApi } from 'utils/api'
 
 type Props = {
   selectedFolder: number
@@ -47,7 +47,9 @@ export const FolderList: FC<Props> = ({
         console.log(res)
         console.log(newFolders)
       } catch (e) {
-        console.error(e)
+        if (e instanceof HttpError) {
+          console.error(e.message)
+        }
       }
     },
     [authHeaderParams, editFolderName, folders, foldersMutate],
@@ -62,7 +64,9 @@ export const FolderList: FC<Props> = ({
 
         console.log(res)
       } catch (e) {
-        console.error(e)
+        if (e instanceof HttpError) {
+          console.error(e.message)
+        }
       }
     },
     [authHeaderParams, folders, foldersMutate],
@@ -70,9 +74,10 @@ export const FolderList: FC<Props> = ({
 
   const onClickFolder = useCallback(
     (folderId: number, folderName: string) => {
+      // 連続で同じフォルダを押したときに、編集モードにする
       if (selectedFolder === folderId) {
         setEditFolderId(folderId)
-        setEditFolderName(folderName) // こいつでupdate失敗する
+        setEditFolderName(folderName)
       } else {
         setEditFolderId(0)
       }
@@ -111,7 +116,7 @@ export const FolderList: FC<Props> = ({
                   >
                     <input
                       type='text'
-                      className='text-black'
+                      className='border outline-none text-black ring-blue-500 w-100px duration-300 focus:rounded-10px focus:ring-1'
                       value={editFolderName}
                       onChange={(e) => setEditFolderName(e.target.value)}
                     />
@@ -122,7 +127,7 @@ export const FolderList: FC<Props> = ({
                       更新
                     </button>
                     <div
-                      className='font-bold bg-red-500 text-white py-0.5 px-1'
+                      className='font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
                       onClick={() => deleteFolder(folder.id)}
                     >
                       削除
