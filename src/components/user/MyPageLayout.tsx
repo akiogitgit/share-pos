@@ -39,7 +39,7 @@ export const MyPageLayout: FC<Props> = ({ children, tabName = 'userInfo' }) => {
           ))}
         </nav>
 
-        <div className='mt-4 w-full'>{children}</div>
+        <div className='mt-8 w-full sm:mt-0'>{children}</div>
       </div>
     </Layout>
   )
