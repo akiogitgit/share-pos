@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { AiOutlineUser } from 'react-icons/ai'
-import { MyPageLayout } from 'components/user/MyPageLayout'
+import { MyPageLayout } from 'components/layout/MyPageLayout'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 
 const MyPage: NextPage = () => {

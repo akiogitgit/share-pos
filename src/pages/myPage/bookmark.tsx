@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import { MyPageLayout } from 'components/layout/MyPageLayout'
 import { PostItemList } from 'components/post/PostItemList'
-import { MyPageLayout } from 'components/user/MyPageLayout'
 import { BookmarkPostItem } from 'components/user/myPage/BookmarkPostItem'
 import { FolderList } from 'components/user/myPage/FolderList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'

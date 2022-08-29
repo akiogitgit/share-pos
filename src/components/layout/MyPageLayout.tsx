@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, ReactNode } from 'react'
-import { Layout } from 'components/shared/Layout'
+import { Layout } from 'components/layout/Layout'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 
 type Props = {
