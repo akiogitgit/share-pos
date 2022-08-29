@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction, useCallback, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { useFolder } from 'hooks/useFolder'
+import { useDeleteFolder, useUpdateFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 
 type Props = {
@@ -18,8 +18,8 @@ export const BookmarkFolderList: FC<Props> = ({
   const [editFolderName, setEditFolderName] = useState('')
   const authHeaderParams = useAuthHeaderParams()
 
-  const { updateFolder, deleteFolder } = useFolder()
-
+  const { updateFolder } = useUpdateFolder()
+  const { deleteFolder } = useDeleteFolder()
   const { data: folders } = useGetApi<Folder[]>(
     '/folders',
     undefined,

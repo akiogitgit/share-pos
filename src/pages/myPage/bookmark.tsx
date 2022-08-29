@@ -6,7 +6,7 @@ import { BookmarkPostItem } from 'components/myPage/BookmarkPostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { useFolder } from 'hooks/useFolder'
+import { useCreateFolder } from 'hooks/useFolder'
 import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
@@ -14,7 +14,7 @@ const Bookmark: NextPage = () => {
   const [bookmarkName, setBookmarkName] = useState('')
   const [selectedFolder, setSelectedFolder] = useState(0)
 
-  const { createFolder } = useFolder()
+  const { createFolder } = useCreateFolder()
 
   const authHeaderParams = useAuthHeaderParams()
 

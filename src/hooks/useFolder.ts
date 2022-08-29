@@ -4,7 +4,7 @@ import { useGetApi } from './useApi'
 import { Folder } from 'types/bookmark'
 import { postApi, HttpError, putApi, deleteApi } from 'utils/api'
 
-export const useFolder = () => {
+export const useCreateFolder = () => {
   const authHeaderParams = useAuthHeaderParams()
 
   const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
@@ -36,6 +36,18 @@ export const useFolder = () => {
     [authHeaderParams, folders, mutateFolders],
   )
 
+  return { createFolder }
+}
+
+export const useUpdateFolder = () => {
+  const authHeaderParams = useAuthHeaderParams()
+
+  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
+    '/folders',
+    undefined,
+    authHeaderParams,
+  )
+
   const updateFolder = useCallback(
     async (id: number, editFolderName: string) => {
       try {
@@ -65,6 +77,17 @@ export const useFolder = () => {
     },
     [authHeaderParams, folders, mutateFolders],
   )
+  return { updateFolder }
+}
+
+export const useDeleteFolder = () => {
+  const authHeaderParams = useAuthHeaderParams()
+
+  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
+    '/folders',
+    undefined,
+    authHeaderParams,
+  )
 
   const deleteFolder = useCallback(
     async (id: number) => {
@@ -83,5 +106,5 @@ export const useFolder = () => {
     [authHeaderParams, folders, mutateFolders],
   )
 
-  return { createFolder, updateFolder, deleteFolder }
+  return { deleteFolder }
 }
