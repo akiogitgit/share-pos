@@ -7,7 +7,7 @@ import { postApi, HttpError, putApi, deleteApi } from 'utils/api'
 export const useFolder = () => {
   const authHeaderParams = useAuthHeaderParams()
 
-  const { data: folders, mutate: foldersMutate } = useGetApi<Folder[]>(
+  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
@@ -23,7 +23,7 @@ export const useFolder = () => {
         )
         if (res && folders) {
           console.log('フォルダの作成に成功 ', res)
-          foldersMutate([...folders, res], false)
+          mutateFolders([...folders, res], false)
         }
 
         console.log(res)
@@ -33,7 +33,7 @@ export const useFolder = () => {
         }
       }
     },
-    [authHeaderParams, folders, foldersMutate],
+    [authHeaderParams, folders, mutateFolders],
   )
 
   const updateFolder = useCallback(
@@ -55,7 +55,7 @@ export const useFolder = () => {
           return folder
         })
 
-        foldersMutate(newFolders)
+        mutateFolders(newFolders)
         console.log(res)
       } catch (e) {
         if (e instanceof HttpError) {
@@ -63,7 +63,7 @@ export const useFolder = () => {
         }
       }
     },
-    [authHeaderParams, folders, foldersMutate],
+    [authHeaderParams, folders, mutateFolders],
   )
 
   const deleteFolder = useCallback(
@@ -71,7 +71,7 @@ export const useFolder = () => {
       try {
         const res = await deleteApi(`/folders/${id}`, {}, authHeaderParams)
         const newFolders = folders?.filter((folder) => folder.id !== id)
-        foldersMutate(newFolders)
+        mutateFolders(newFolders)
 
         console.log(res)
       } catch (e) {
@@ -80,7 +80,7 @@ export const useFolder = () => {
         }
       }
     },
-    [authHeaderParams, folders, foldersMutate],
+    [authHeaderParams, folders, mutateFolders],
   )
 
   return { createFolder, updateFolder, deleteFolder }

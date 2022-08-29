@@ -10,7 +10,7 @@ type Props = {
   setSelectedFolder: Dispatch<SetStateAction<number>>
 }
 
-export const FolderList: FC<Props> = ({
+export const BookmarkFolderList: FC<Props> = ({
   selectedFolder,
   setSelectedFolder,
 }) => {

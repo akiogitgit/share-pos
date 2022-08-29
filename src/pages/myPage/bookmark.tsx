@@ -2,8 +2,8 @@ import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { MyPageLayout } from 'components/layout/MyPageLayout'
 import { PostItemList } from 'components/post/PostItemList'
+import { BookmarkFolderList } from 'components/user/myPage/BookmarkFolderList'
 import { BookmarkPostItem } from 'components/user/myPage/BookmarkPostItem'
-import { FolderList } from 'components/user/myPage/FolderList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useFolder } from 'hooks/useFolder'
@@ -97,7 +97,7 @@ const Bookmark: NextPage = () => {
         </div>
 
         {/* 自分のフォルダ一覧 */}
-        <FolderList
+        <BookmarkFolderList
           selectedFolder={selectedFolder}
           setSelectedFolder={setSelectedFolder}
         />
