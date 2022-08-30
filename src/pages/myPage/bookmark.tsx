@@ -40,86 +40,88 @@ const Bookmark: NextPage = () => {
 
   return (
     <MyPageLayout tabName='bookmark'>
-      <div className='ml-4 sm:ml-0'>
-        <div className='flex justify-between'>
-          <h1 className='font-bold text-2xl'>ブックマーク</h1>
-          <div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                createFolder(bookmarkName)
-                setBookmarkName('')
-              }}
-              className='flex gap-3 items-center'
-            >
-              <input
-                type='text'
-                className='border outline-none border-red-500 rounded-10px h-40px px-2 w-170px duration-150 sm:w-200px'
-                placeholder='新規フォルダの作成'
-                value={bookmarkName}
-                required
-                onChange={(e) => setBookmarkName(e.target.value)}
-                style={{
-                  clipPath: `${
-                    isOpenInputField ? 'inset(0)' : 'inset(0 0 0 100%)'
-                  }`,
+      <div className='sm:w-70vw md:w-75vw lg:w-full'>
+        <div className='ml-4 sm:ml-0'>
+          <div className='flex justify-between'>
+            <h1 className='font-bold text-2xl'>ブックマーク</h1>
+            <div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  createFolder(bookmarkName)
+                  setBookmarkName('')
                 }}
-              />
-
-              <button
-                type={bookmarkName ? 'submit' : 'button'}
-                className='font-bold bg-red-500 rounded-10px h-40px text-white text-4xl w-40px relative'
-                onClick={() => setIsOpenInputField(!isOpenInputField)}
+                className='flex gap-3 items-center'
               >
-                <div
-                  className={`top-1px left-9px h-42px absolute transform duration-400 ${
-                    !bookmarkName && isOpenInputField && 'rotate-360'
-                  } ${
-                    bookmarkName &&
-                    'rotate-45 scale-x-70 translate-x-[-10px] translate-y-6px'
-                  }`}
+                <input
+                  type='text'
+                  className='border outline-none border-red-500 rounded-10px h-40px px-2 w-170px duration-150 sm:w-200px'
+                  placeholder='新規フォルダの作成'
+                  value={bookmarkName}
+                  required
+                  onChange={(e) => setBookmarkName(e.target.value)}
+                  style={{
+                    clipPath: `${
+                      isOpenInputField ? 'inset(0)' : 'inset(0 0 0 100%)'
+                    }`,
+                  }}
+                />
+
+                <button
+                  type={bookmarkName ? 'submit' : 'button'}
+                  className='font-bold bg-red-500 rounded-10px h-40px text-white text-4xl w-40px relative'
+                  onClick={() => setIsOpenInputField(!isOpenInputField)}
                 >
-                  ー
-                </div>
-                <div
-                  className={`top-1px left-9px h-42px absolute transform rotate-90 duration-400 ${
-                    !bookmarkName && isOpenInputField && 'rotate-[-180deg]'
-                  } ${
-                    bookmarkName &&
-                    'rotate-137 scale-x-140 translate-x-3px translate-y-px'
-                  }`}
-                >
-                  ー
-                </div>
-              </button>
-            </form>
+                  <div
+                    className={`top-1px left-9px h-42px absolute transform duration-400 ${
+                      !bookmarkName && isOpenInputField && 'rotate-360'
+                    } ${
+                      bookmarkName &&
+                      'rotate-45 scale-x-70 translate-x-[-10px] translate-y-6px'
+                    }`}
+                  >
+                    ー
+                  </div>
+                  <div
+                    className={`top-1px left-9px h-42px absolute transform rotate-90 duration-400 ${
+                      !bookmarkName && isOpenInputField && 'rotate-[-180deg]'
+                    } ${
+                      bookmarkName &&
+                      'rotate-137 scale-x-140 translate-x-3px translate-y-px'
+                    }`}
+                  >
+                    ー
+                  </div>
+                </button>
+              </form>
+            </div>
           </div>
+
+          {/* 自分のフォルダ一覧 */}
+          <BookmarkFolderList
+            selectedFolder={selectedFolder}
+            setSelectedFolder={setSelectedFolder}
+          />
         </div>
 
-        {/* 自分のフォルダ一覧 */}
-        <BookmarkFolderList
-          selectedFolder={selectedFolder}
-          setSelectedFolder={setSelectedFolder}
-        />
+        {/* 選択しているフォルダの記事一覧 */}
+        <ul className='mt-4'>
+          {bookmarkPosts?.posts.length ? (
+            <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
+              {bookmarkPosts.posts.map((post, i) => (
+                <BookmarkPostItem
+                  key={i}
+                  className='m-2'
+                  post={post}
+                  selectedFolder={selectedFolder}
+                />
+              ))}
+            </PostItemList>
+          ) : (
+            <h2 className='mt-20 text-center'>記事がありません</h2>
+          )}
+        </ul>
       </div>
-
-      {/* 選択しているフォルダの記事一覧 */}
-      <ul className='mt-4'>
-        {bookmarkPosts?.posts.length ? (
-          <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
-            {bookmarkPosts.posts.map((post, i) => (
-              <BookmarkPostItem
-                key={i}
-                className='m-2'
-                post={post}
-                selectedFolder={selectedFolder}
-              />
-            ))}
-          </PostItemList>
-        ) : (
-          <h2 className='mt-20 text-center'>記事がありません</h2>
-        )}
-      </ul>
     </MyPageLayout>
   )
 }

@@ -8,12 +8,10 @@ export const useRequireLogin = () => {
   const router = useRouter()
 
   const moveToLogin = useCallback(() => {
-    setTimeout(() => {
-      if (!isLoggedIn) {
-        router.push('/login')
-        return
-      }
-    }, 300)
+    if (!isLoggedIn) {
+      router.push('/login')
+      return
+    }
   }, [isLoggedIn, router])
 
   useEffect(() => {

@@ -1,38 +1,62 @@
 import { NextPage } from 'next'
-import { AiOutlineUser } from 'react-icons/ai'
+import { useState } from 'react'
+import MyPosts from './myPosts'
 import { MyPageLayout } from 'components/layout/MyPageLayout'
+import { PostItem } from 'components/post/Item/PostItem'
+import { PostItemList } from 'components/post/PostItemList'
+import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
+import { useGetApi } from 'hooks/useApi'
+import { useCookies } from 'stores/useCookies'
 
 const MyPage: NextPage = () => {
   useRequireLogin()
   // const tabs = ['userInfo', 'myPosts', 'bookmark']
-  const tabs = [
-    { label: 'ユーザー情報', name: 'userInfo' },
-    { label: '投稿した記事', name: 'myPosts' },
-    { label: 'ブックマーク', name: 'bookmark' },
-  ]
+  const [selectedPublished, setSelectedPublished] = useState(true)
+  const { cookies } = useCookies('userInfo')
+  const authHeaderParams = useAuthHeaderParams()
+  const { data: myPosts } = useGetApi<MyPosts>(
+    `/users/${cookies.userInfo?.id}`,
+    undefined,
+    authHeaderParams,
+  )
 
   return (
-    <MyPageLayout>
-      {/* ブックマーク、右はみ出る */}
-      <div className='mx-4'>
-        <h1 className='font-bold text-2xl'>ユーザー情報</h1>
-        <div className='flex justify-end'>
-          <button className='bg-red-500 rounded-10px text-white py-1 px-2'>
-            登録情報を編集
-          </button>
+    <MyPageLayout tabName='myPosts'>
+      <div className='ml-4 sm:ml-0'>
+        <h1 className='font-bold text-2xl'>投稿した記事</h1>
+        <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
+          {[
+            { label: '公開している投稿', published: true },
+            { label: '非公開の投稿', published: false },
+          ].map((tab, i) => (
+            <button
+              key={i}
+              onClick={() => setSelectedPublished(tab.published)}
+              className={`${
+                selectedPublished === tab.published
+                  ? 'font-bold border-b-2 border-red-500 text-red-500'
+                  : ' cursor-pointer'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-        <div>
-          <AiOutlineUser className='transform scale-200' />
-        </div>
-        <ul className='mt-4'>
-          <li>ユーザー名： あきお</li>
-          <li>Eメール　 ： あきお</li>
-          <li>投稿数　： あきお</li>
-          <li>フォルダ数： あきお</li>
-          <li>フォルダ数： あきお</li>
-        </ul>
       </div>
+
+      <ul className='mt-4'>
+        {myPosts?.posts.length && (
+          <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
+            {myPosts.posts.map(
+              (post, i) =>
+                selectedPublished === post.published && (
+                  <PostItem post={post} key={i} className='m-2' />
+                ),
+            )}
+          </PostItemList>
+        )}
+      </ul>
     </MyPageLayout>
   )
 }
