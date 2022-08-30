@@ -56,7 +56,9 @@ export const useUpdatePost = (post: Post) => {
         mutate(newPosts, false)
         console.log('投稿の修正に成功しました。 ', params)
       } catch (e) {
-        console.error(e)
+        if (e instanceof HttpError) {
+          console.error(e.message)
+        }
       }
     },
     [authHeaderParams, mutate, post.id, posts],
@@ -84,7 +86,9 @@ export const useDeletePost = (post: Post) => {
 
       console.log(res)
     } catch (e) {
-      console.error(e)
+      if (e instanceof HttpError) {
+        console.error(e.message)
+      }
     }
   }, [authHeaderParams, mutate, post.id, posts])
 

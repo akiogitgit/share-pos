@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import { useLogin } from '../hooks/login/useAuth'
 import { LoginForm } from 'components/auth/LoginForm'
-import { Layout } from 'components/shared/Layout'
+import { Layout } from 'components/layout/Layout'
 import { LoginRequestParams } from 'types/user/auth'
 import { HttpError } from 'utils/api'
 

@@ -1,16 +1,13 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { TbBookmarkOff } from 'react-icons/tb'
 
 import { FolderList } from 'components/post/Item/FolderList'
 import { PostLinkCard } from 'components/post/Item/PostLinkCard'
 import { PostForm } from 'components/post/PostForm'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
-import { useGetApi } from 'hooks/useApi'
+import { useRemoveBookmark } from 'hooks/useBookmark'
 import { useUpdatePost, useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
-import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
-import { deleteApi, HttpError } from 'utils/api'
 import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
@@ -31,14 +28,8 @@ export const BookmarkPostItem: FC<Props> = ({
 
   const { updatePost } = useUpdatePost(post)
   const { deletePost } = useDeletePost(post)
+  const { removeBookmark } = useRemoveBookmark(selectedFolder, post)
   const { ref, height } = useElementSize()
-
-  const authHeaderParams = useAuthHeaderParams()
-  const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
-    `/folders/${selectedFolder}`,
-    undefined,
-    authHeaderParams,
-  )
 
   // 要素の高さを取得
   const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
@@ -47,33 +38,6 @@ export const BookmarkPostItem: FC<Props> = ({
     () => hasElementMoreThan3Lines && !isOpenComment,
     [hasElementMoreThan3Lines, isOpenComment],
   )
-
-  const removeBookmark = useCallback(async () => {
-    try {
-      const res = await deleteApi(
-        `/folders/bookmarks/${post.bookmark?.id}`,
-        {},
-        authHeaderParams,
-      )
-      if (!bookmarkPosts) {
-        return
-      }
-
-      const newBookmarkPosts = {
-        id: bookmarkPosts?.id,
-        name: bookmarkPosts?.name,
-        posts: bookmarkPosts?.posts.filter(
-          (v) => v.bookmark?.id !== post.bookmark?.id,
-        ),
-      }
-      postsMutate(newBookmarkPosts, false)
-      console.log('ブックマークを削除しました', res)
-    } catch (e) {
-      if (e instanceof HttpError) {
-        console.error(e.message)
-      }
-    }
-  }, [authHeaderParams, bookmarkPosts, post.bookmark?.id, postsMutate])
 
   return (
     <article

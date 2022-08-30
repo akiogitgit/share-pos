@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { Layout } from 'components/layout/Layout'
 import { PostForm } from 'components/post/PostForm'
-import { Layout } from 'components/shared/Layout'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useCreatePost } from 'hooks/usePost'
 

@@ -1,10 +1,10 @@
-import { Dispatch, FC, SetStateAction, useCallback, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
+import { useAddBookmark } from 'hooks/useBookmark'
 import { Folder } from 'types/bookmark'
 import { Post } from 'types/post'
-import { HttpError, postApi } from 'utils/api'
 
 type Props = {
   post: Post
@@ -12,36 +12,21 @@ type Props = {
 }
 
 export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
-  const authHeaderParams = useAuthHeaderParams()
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const { data: bookmarks, mutate } = useGetApi<Folder[]>(
+  const { addBookmark } = useAddBookmark()
+
+  const authHeaderParams = useAuthHeaderParams()
+  const { data: folders, mutate } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
   )
 
-  const addBookmark = useCallback(
-    async (folderId: number) => {
-      try {
-        const res = await postApi(
-          '/folders/bookmarks',
-          { folder_id: folderId, post_id: post.id },
-          authHeaderParams,
-        )
-        console.log(res)
-        setIsOpenMenu(false)
-      } catch (e) {
-        if (e instanceof HttpError) {
-          console.error(e.message)
-        }
-      }
-    },
-    [authHeaderParams, post.id, setIsOpenMenu],
-  )
-
   return (
     <>
-      {/* <style jsx>{`
+      {/* 
+      画面全体のスクロール無くしたかった
+      <style jsx>{`
         html,
         body {
           overflow: hidden;
@@ -60,18 +45,20 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
           ブックマークを作成+ モーダル出す
         </div>
         <div className='max-h-303px overflow-y-scroll scroll-bar-none'>
-          {bookmarks?.length &&
-            bookmarks.map((bookmark) => (
+          {folders?.length &&
+            folders.map((folder) => (
               <div
-                key={bookmark.id}
+                key={folder.id}
                 className='flex px-2 gap-1 items-center hover:bg-red-300'
               >
                 <BsFolder />
                 <div
-                  onClick={() => addBookmark(bookmark.id)}
-                  // className='px-2 hover:bg-red-300'
+                  onClick={() => {
+                    addBookmark(folder.id, post)
+                    setIsOpenMenu(false)
+                  }}
                 >
-                  {bookmark.name}
+                  {folder.name}
                 </div>
               </div>
             ))}
