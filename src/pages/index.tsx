@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
-import { PostStars } from 'components/post/PostStars'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
@@ -24,10 +23,10 @@ const Home: NextPage = () => {
         <title>SharePos 投稿一覧ページ</title>
       </Head>
       <Layout>
-        <PostStars
+        {/* <PostStars
           evaluation={stars}
           onClick={(newStar) => setStars(newStar)}
-        />
+        /> */}
         {posts?.length && (
           <PostItemList className='flex flex-wrap mt-4 gap-3 justify-center'>
             {posts.map((post, i) => (
