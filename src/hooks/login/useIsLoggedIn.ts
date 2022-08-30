@@ -28,6 +28,5 @@ export const useIsLoggedIn = (): boolean => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.token])
-
-  return isLoggedIn ?? false
+  return isLoggedIn ?? true
 }

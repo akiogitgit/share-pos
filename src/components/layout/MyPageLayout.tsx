@@ -15,9 +15,9 @@ export const MyPageLayout: FC<Props> = ({ children, tabName = 'userInfo' }) => {
   const router = useRouter()
   const { selectedTab } = router.query
   const tabs = [
-    { label: 'ユーザー情報', name: 'userInfo' },
     { label: '投稿した記事', name: 'myPosts' },
     { label: 'ブックマーク', name: 'bookmark' },
+    { label: 'ユーザー情報', name: 'userInfo' },
   ]
 
   return (
