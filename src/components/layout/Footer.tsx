@@ -14,25 +14,29 @@ export const Footer: FC = () => {
         </button>
       )}
 
-      <nav className='bg-white flex w-full py-1.5 bottom-0 left-0 text-25px justify-around fixed'>
+      <nav className='bg-white flex w-full bottom-0 left-0 text-25px justify-around fixed'>
         <Link href='/'>
-          <div className={`${router.pathname === '/' && 'text-red-500'}`}>
-            <AiTwotoneHome className='cursor-pointer' />
+          <div
+            className={`cursor-pointer py-2 px-3 ${
+              router.pathname === '/' && 'text-red-500'
+            }`}
+          >
+            <AiTwotoneHome />
           </div>
         </Link>
         <Link href='/'>
           {/* 記事検索 */}
-          <div>
-            <AiOutlineSearch className='cursor-pointer' />
+          <div className='cursor-pointer py-2 px-3'>
+            <AiOutlineSearch />
           </div>
         </Link>
         <Link href='/myPage'>
           <div
-            className={`${
+            className={`cursor-pointer py-2 px-3 ${
               router.pathname.includes('/myPage') && 'text-red-500'
             }`}
           >
-            <AiOutlineUser className='cursor-pointer' />
+            <AiOutlineUser />
           </div>
         </Link>
       </nav>
