@@ -11,15 +11,16 @@ export const Header: FC = () => {
 
   return (
     <>
-      <header className='bg-white w-full py-2 top-0 z-10000 fixed'>
+      <header className='bg-white w-full py-2 top-0 z-100 fixed'>
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
-            <h1 className='cursor-pointer mt-0 mb-1  text-6xl text-red-500'>
+            <h1 className='cursor-pointer mt-0 mb-1  text-4xl text-red-500 sm:text-6xl'>
               SharePos
             </h1>
           </Link>
 
           <div className='flex gap-3 justify-end items-center'>
+            {/* <div className='gap-3 hidden justify-end items-center sm:flex'> */}
             <AiOutlineSearch className='cursor-pointer mt-1' />
             <div className='hidden'>
               <input
@@ -30,16 +31,18 @@ export const Header: FC = () => {
             {isLoggedIn ? (
               <div className='flex gap-3 justify-end items-center'>
                 <Link href='/create'>
-                  <div className='flex gap-0.5 items-center'>
-                    <div className='cursor-pointer duration-300 hover:(underline) '>
+                  <div className='cursor-pointer flex gap-0.5 items-center'>
+                    {/* <div className='duration-300 hover:(underline) '> */}
+                    <div className='duration-300 hidden sm:block hover:(underline) '>
                       投稿する
                     </div>
                     <BsPencilSquare />
                   </div>
                 </Link>
                 <Link href='/myPage'>
-                  <div className='flex gap-0.5 items-center'>
-                    <div className='cursor-pointer duration-300 hover:(underline) '>
+                  <div className='cursor-pointer flex gap-0.5 items-center'>
+                    {/* <div className='duration-300 hover:(underline) '> */}
+                    <div className='duration-300 hidden sm:block hover:(underline) '>
                       マイページ
                     </div>
                     <AiOutlineUser />
@@ -53,30 +56,6 @@ export const Header: FC = () => {
                 </div>
               </div>
             ) : (
-              // <div className='flex gap-2 justify-end items-center'>
-              //   <Link href='/create'>
-              //     <div className='text-center'>
-              //       <BsPencilSquare />
-              //       <div className='cursor-pointer duration-300 hover:(underline) '>
-              //         投稿する
-              //       </div>
-              //     </div>
-              //   </Link>
-              //   <Link href='/myPage'>
-              //     <div className='text-center'>
-              //       <AiOutlineUser />
-              //       <div className='cursor-pointer duration-300 hover:(underline) '>
-              //         マイページ
-              //       </div>
-              //     </div>
-              //   </Link>
-              //   <div
-              //     onClick={logOut}
-              //     className='cursor-pointer duration-300 hover:(underline) '
-              //   >
-              //     ログアウト
-              //   </div>
-              // </div>
               <div className='flex gap-2'>
                 <Link href='/login'>
                   <div className='cursor-pointer duration-300 hover:(underline) '>
