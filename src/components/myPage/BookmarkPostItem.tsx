@@ -49,7 +49,7 @@ export const BookmarkPostItem: FC<Props> = ({
         <div className='flex gap-2'>
           {post.bookmark && (
             <TbBookmarkOff
-              className='cursor-pointer h-7 w-7'
+              className='cursor-pointer text-40px sm:text-30px'
               onClick={removeBookmark}
             />
           )}
