@@ -1,5 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
+import { BsThreeDots } from 'react-icons/bs'
 import { PostForm } from '../PostForm'
 import { FolderList } from './FolderList'
 import { PostLinkCard } from './PostLinkCard'
@@ -35,15 +36,15 @@ export const PostItem: FC<Props> = ({ post, className }) => {
     <article
       className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
     >
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         {/* 投稿メニューボタン */}
         {!isEdit && (
           <button
-            className='cursor-pointer text-23px duration-100 hover:opacity-50'
+            className='cursor-pointer text-30px duration-100 hover:opacity-50'
             onClick={() => setIsOpenMenu(!isOpenMenu)}
           >
-            ・・・
+            <BsThreeDots />
           </button>
         )}
       </div>

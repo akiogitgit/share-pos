@@ -1,4 +1,5 @@
 import { FC, useMemo, useState } from 'react'
+import { BsThreeDots } from 'react-icons/bs'
 import { TbBookmarkOff } from 'react-icons/tb'
 
 import { FolderList } from 'components/post/Item/FolderList'
@@ -45,7 +46,7 @@ export const BookmarkPostItem: FC<Props> = ({
     >
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
-        <div className='flex'>
+        <div className='flex gap-2'>
           {post.bookmark && (
             <TbBookmarkOff
               className='cursor-pointer h-7 w-7'
@@ -55,10 +56,10 @@ export const BookmarkPostItem: FC<Props> = ({
           {/* 投稿メニューボタン */}
           {!isEdit && (
             <button
-              className='cursor-pointer text-23px duration-100 hover:opacity-50'
+              className='cursor-pointer text-30px duration-100 hover:opacity-50'
               onClick={() => setIsOpenMenu(!isOpenMenu)}
             >
-              ・・・
+              <BsThreeDots />
             </button>
           )}
         </div>
