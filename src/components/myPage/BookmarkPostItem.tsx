@@ -2,12 +2,11 @@ import { FC, useMemo, useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs'
 import { TbBookmarkOff } from 'react-icons/tb'
 
-import { FolderList } from 'components/post/Item/FolderList'
 import { PostLinkCard } from 'components/post/Item/PostLinkCard'
+import { PostMenu } from 'components/post/Item/PostMenu'
 import { PostForm } from 'components/post/PostForm'
 import { useRemoveBookmark } from 'hooks/useBookmark'
-import { useUpdatePost, useDeletePost } from 'hooks/usePost'
-import { useCookies } from 'stores/useCookies'
+import { useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
 import { useElementSize } from 'utils/useElementSize'
 
@@ -25,10 +24,8 @@ export const BookmarkPostItem: FC<Props> = ({
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenComment, setIsOpenComment] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const { cookies } = useCookies('userInfo')
 
   const { updatePost } = useUpdatePost(post)
-  const { deletePost } = useDeletePost(post)
   const { removeBookmark } = useRemoveBookmark(selectedFolder, post)
   const { ref, height } = useElementSize()
 
@@ -47,6 +44,7 @@ export const BookmarkPostItem: FC<Props> = ({
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         <div className='flex gap-2'>
+          {/* ブックマーク解除 */}
           {post.bookmark && (
             <TbBookmarkOff
               className='cursor-pointer text-40px sm:text-30px'
@@ -64,59 +62,14 @@ export const BookmarkPostItem: FC<Props> = ({
           )}
         </div>
       </div>
+
+      {/* 。。。を押して表示されるメニュー */}
       {isOpenMenu && (
-        <div className='flex relative justify-end'>
-          <div
-            onClick={() => setIsOpenMenu(false)}
-            className='h-100vh top-0 left-0 w-100vw z-10 fixed'
-          ></div>
-          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-150px z-11 absolute'>
-            {cookies.userInfo?.id === post.userId && (
-              <>
-                <div
-                  className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
-                  onClick={() => {
-                    setIsEdit(true)
-                    setIsOpenMenu(false)
-                  }}
-                >
-                  投稿を編集する
-                </div>
-                <div
-                  className='px-4 pt-2 hover:bg-red-300'
-                  onClick={() => {
-                    deletePost()
-                    setIsOpenMenu(false)
-                  }}
-                >
-                  投稿を
-                  <span className='font-bold text-red-500 text-18px'>削除</span>
-                  する
-                </div>
-              </>
-            )}
-            <div
-              className='rounded-b-10px px-4 pt-2 hover:bg-red-300'
-              onClick={() => {
-                navigator.clipboard.writeText(post.url)
-                alert('リンクをコピーしました')
-                setIsOpenMenu(false)
-              }}
-            >
-              記事リンクをコピー
-            </div>
-            {cookies.userInfo && (
-              <div className='rounded-b-10px group relative'>
-                <div className=' py-2 px-4 hover:bg-red-300'>
-                  ブックマークに追加
-                </div>
-                <div className='hidden group-hover:block'>
-                  <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        <PostMenu
+          setIsEdit={setIsEdit}
+          setIsOpenMenu={setIsOpenMenu}
+          post={post}
+        />
       )}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
@@ -151,8 +104,6 @@ export const BookmarkPostItem: FC<Props> = ({
                 !isOpenComment && 'h-70px'
               } overflow-hidden whitespace-pre-wrap group relative`}
             >
-              {/* <textarea className='m-2 ring w-100%' ref={ref}></textarea> */}
-              {/* <div className='h-auto'> */}
               <div ref={ref} className='h-auto'>
                 {post.comment}
               </div>

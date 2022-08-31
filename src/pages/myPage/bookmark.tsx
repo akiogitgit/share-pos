@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { MyPageLayout } from 'components/layout/MyPageLayout'
 import { BookmarkFolderList } from 'components/myPage/BookmarkFolderList'
-import { BookmarkPostItem } from 'components/myPage/BookmarkPostItem'
+import { PostItem } from 'components/post/Item/PostItem'
 import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
@@ -109,7 +109,7 @@ const Bookmark: NextPage = () => {
           {bookmarkPosts?.posts.length ? (
             <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
               {bookmarkPosts.posts.map((post, i) => (
-                <BookmarkPostItem
+                <PostItem
                   key={i}
                   className='m-2'
                   post={post}
