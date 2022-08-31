@@ -66,31 +66,29 @@ const Bookmark: NextPage = () => {
                     }`,
                   }}
                 />
-
                 <button
                   type={bookmarkName ? 'submit' : 'button'}
                   className='font-bold bg-red-500 rounded-10px h-40px text-white text-4xl w-40px relative'
                   onClick={() => setIsOpenInputField(!isOpenInputField)}
                 >
                   <div
-                    className={`top-1px left-9px h-42px absolute transform duration-400 ${
+                    className={`top-0px left-8px h-40px absolute transform duration-400 ${
                       !bookmarkName && isOpenInputField && 'rotate-360'
                     } ${
                       bookmarkName &&
-                      'rotate-45 scale-x-70 translate-x-[-10px] translate-y-6px'
+                      'rotate-45 scale-x-50 translate-x-[-10px] translate-y-3px'
                     }`}
                   >
-                    ー
+                    <div className='bg-white rounded-full h-4px mt-18px w-24px'></div>
                   </div>
                   <div
-                    className={`top-1px left-9px h-42px absolute transform rotate-90 duration-400 ${
+                    className={`top-0px left-8px h-40px absolute transform rotate-90 duration-400 ${
                       !bookmarkName && isOpenInputField && 'rotate-[-180deg]'
                     } ${
-                      bookmarkName &&
-                      'rotate-137 scale-x-140 translate-x-3px translate-y-px'
+                      bookmarkName && 'rotate-135 scale-x-110 translate-x-3px'
                     }`}
                   >
-                    ー
+                    <div className='bg-white rounded-full h-4px mt-18px w-24px'></div>
                   </div>
                 </button>
               </form>
@@ -127,55 +125,3 @@ const Bookmark: NextPage = () => {
 }
 
 export default Bookmark
-
-{
-  /* <button
-              className='font-bold bg-red-500 rounded-10px h-50px text-white text-4xl w-50px relative'
-              onClick={() => {
-                setIsOpenInputField(!isOpenInputField)
-                setBookmarkName('')
-              }}
-            >
-              <div
-                className={`top-4px left-13px h-42px absolute transform duration-400 ${
-                  !bookmarkName && isOpenInputField && 'rotate-360'
-                } ${
-                  bookmarkName &&
-                  'rotate-45 scale-x-70 translate-x-[-13px] translate-y-6px'
-                }`}
-              >
-                ー
-              </div>
-              <div
-                className={`top-4px left-13px h-42px absolute transform rotate-90 duration-400 ${
-                  !bookmarkName && isOpenInputField && 'rotate-[-180deg]'
-                } ${
-                  bookmarkName &&
-                  'rotate-137 scale-x-150 translate-x-3px translate-y-px'
-                }`}
-              >
-                ー
-              </div>
-            </button> */
-}
-{
-  /* <button
-              className='font-bold bg-red-500 rounded-10px h-50px text-white text-4xl w-50px relative'
-              onClick={() => setIsOpenInputField(!isOpenInputField)}
-            >
-              <div
-                className={`top-4px left-13px h-42px absolute transform ${
-                  isOpenInputField && 'rotate-360'
-                } duration-400`}
-              >
-                ー
-              </div>
-              <div
-                className={`top-4px left-13px h-42px absolute transform rotate-90 ${
-                  isOpenInputField && 'rotate-[-180deg]'
-                } duration-400`}
-              >
-                ー
-              </div>
-            </button> */
-}
