@@ -16,15 +16,17 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
 
   return (
     <div className='flex relative justify-end'>
+      {/* モーダルの周り押したら消えるやつ */}
       <div
         onClick={() => setIsOpenMenu(false)}
         className='h-100vh top-0 left-0 w-100vw z-10 fixed'
       ></div>
-      <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-150px z-11 absolute'>
+      {/* <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-160px z-11 absolute'> */}
+      <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-37px] right-3px shadow-red-200 w-170px z-11 absolute sm:top-[-30px] sm:right-35px sm:w-150px'>
         {cookies.userInfo?.id === post.userId && (
           <>
             <div
-              className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
+              className='rounded-t-10px px-4 pt-2 pb-1 hover:bg-red-300'
               onClick={() => {
                 setIsEdit(true)
                 setIsOpenMenu(false)
@@ -33,7 +35,7 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
               投稿を編集する
             </div>
             <div
-              className='px-4 pt-2 hover:bg-red-300'
+              className='py-1 px-4 hover:bg-red-300'
               onClick={() => {
                 deletePost()
                 setIsOpenMenu(false)
@@ -46,7 +48,9 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
           </>
         )}
         <div
-          className='rounded-b-10px px-4 pt-2 hover:bg-red-300'
+          className={`py-1 px-4 hover:bg-red-300 ${
+            cookies.userInfo?.id !== post.userId && 'pt-2 rounded-t-10px'
+          }`}
           onClick={() => {
             navigator.clipboard.writeText(post.url)
             alert('リンクをコピーしました')
@@ -57,7 +61,7 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
         </div>
         {cookies.userInfo && (
           <div className='rounded-b-10px group relative'>
-            <div className=' py-2 px-4 hover:bg-red-300'>
+            <div className='px-4 pt-1 pb-2 hover:bg-red-300'>
               ブックマークに追加
             </div>
             <div className='hidden group-hover:block'>
