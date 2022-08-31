@@ -9,12 +9,12 @@ export const Footer: FC = () => {
   return (
     <footer className='sm:hidden'>
       {router.pathname !== '/create' && (
-        <button className='border rounded-full font-bold bg-red-500 border-red-500 text-white p-2 right-20px bottom-50px text-30px fixed'>
+        <button className='border rounded-full font-bold bg-red-500 border-red-500 text-white p-2 right-20px bottom-50px text-30px z-100 fixed'>
           <Link href='/create'>＋</Link>
         </button>
       )}
 
-      <nav className='bg-white flex w-full bottom-0 left-0 text-25px justify-around fixed'>
+      <nav className='bg-white flex w-full bottom-0 left-0 text-25px z-100 justify-around fixed'>
         <Link href='/'>
           <div
             className={`cursor-pointer py-2 px-3 ${
