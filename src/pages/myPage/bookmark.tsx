@@ -55,7 +55,7 @@ const Bookmark: NextPage = () => {
               >
                 <input
                   type='text'
-                  className='border outline-none border-red-500 rounded-10px h-40px px-2 w-170px duration-150 sm:w-200px'
+                  className='border outline-none border-red-500 rounded-10px h-40px max-w-170px px-2 w-40vw duration-150 sm:w-200px'
                   placeholder='新規フォルダの作成'
                   value={bookmarkName}
                   required
