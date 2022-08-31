@@ -15,7 +15,7 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
   const { deletePost } = useDeletePost(post)
 
   return (
-    <div className='flex relative justify-end'>
+    <div className='relative'>
       {/* モーダルの周り押したら消えるやつ */}
       <div
         onClick={() => setIsOpenMenu(false)}
@@ -64,8 +64,10 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
             <div className='px-4 pt-1 pb-2 hover:bg-red-300'>
               ブックマークに追加
             </div>
-            <div className='hidden group-hover:block'>
-              {/* 自分のフォルダ一覧 */}
+
+            {/* 自分のフォルダ一覧 */}
+            {/* <div className='top-10px left-40px hidden absolute group-hover:block'> */}
+            <div className='top-0px right-150px hidden absolute sm:right-80px group-hover:block'>
               <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
             </div>
           </div>

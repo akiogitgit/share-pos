@@ -23,7 +23,7 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
   )
 
   return (
-    <>
+    <div>
       {/* 
       画面全体のスクロール無くしたかった
       <style jsx>{`
@@ -37,14 +37,14 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
           display: none;
         }
       `}</style>
-      <div className='border bg-red-100 border-red-500 rounded-10px top-10px left-40px w-145px absolute group-hover:block'>
-        <div
+      <div className='border bg-red-100 border-red-500 rounded-10px w-145px'>
+        {/* <div
           onClick={() => setIsOpenModal(true)}
           className='rounded-t-10px px-2 pt-2 hover:bg-red-300'
         >
           ブックマークを作成+ モーダル出す
-        </div>
-        <div className='max-h-303px overflow-y-scroll scroll-bar-none'>
+        </div> */}
+        <div className='max-h-180px overflow-y-scroll scroll-bar-none sm:max-h-303px'>
           {folders?.length &&
             folders.map((folder) => (
               <div
@@ -65,16 +65,16 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
         </div>
       </div>
       {isOpenModal && (
-        <>
+        <div>
           <div
             onClick={() => setIsOpenModal(false)}
             className='bg-black h-3000vh opacity-20 top-[-500vh] left-[-100vw] w-300vw z-10 fixed'
           ></div>
-          <div className='bg-red-500 top-0 left-0 z-11 fixed'>
+          <div className='bg-red-500 top-50vh left-0 z-1100 fixed'>
             ここで新しいフォルダの作成したい
           </div>
-        </>
+        </div>
       )}
-    </>
+    </div>
   )
 }
