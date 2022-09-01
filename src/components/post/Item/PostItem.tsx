@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { FC, useMemo, useState } from 'react'
 
 import { PostForm } from '../PostForm'
@@ -36,7 +37,11 @@ export const PostItem: FC<Props> = ({ post, className }) => {
       className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
     >
       <div className='flex justify-between'>
-        <div className='font-bold text-20px'>{post.user.username}</div>
+        <Link href={`/user/${post.user.id}`}>
+          <h2 className='cursor-pointer font-bold text-20px'>
+            {post.user.username}
+          </h2>
+        </Link>
         {/* 投稿メニューボタン */}
         {!isEdit && (
           <button

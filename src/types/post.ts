@@ -8,6 +8,7 @@ export type Post = {
   createdAt: string
   updatedAt: string
   user: {
+    id: number
     username: string
   }
   metaInfo: {
