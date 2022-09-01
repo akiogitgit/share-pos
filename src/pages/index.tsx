@@ -30,7 +30,9 @@ const Home: NextPage = () => {
         {posts?.length && (
           <PostItemList className='flex flex-wrap mt-4 gap-3 justify-center'>
             {posts.map((post, i) => (
-              <PostItem post={post} key={i} className='mb-1' />
+              <div key={i} className='mb-1'>
+                <PostItem post={post} />
+              </div>
             ))}
           </PostItemList>
         )}
