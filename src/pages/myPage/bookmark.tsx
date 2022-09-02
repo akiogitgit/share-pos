@@ -36,9 +36,9 @@ const Bookmark: NextPage = () => {
             <h1 className='font-bold text-2xl'>ブックマーク</h1>
             <div>
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault()
-                  createFolder(bookmarkName)
+                  await createFolder(bookmarkName)
                   setBookmarkName('')
                 }}
                 className='flex gap-3 items-center'

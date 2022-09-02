@@ -57,8 +57,8 @@ export const PostMenuButton: FC<Props> = ({
                 <div
                   className='py-1 px-4 hover:bg-red-300'
                   onClick={async () => {
-                    await deletePost()
                     setIsOpenMenu(false)
+                    await deletePost()
                   }}
                 >
                   投稿を

@@ -53,9 +53,9 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
               >
                 <BsFolder />
                 <div
-                  onClick={() => {
-                    addBookmark(folder.id, post)
+                  onClick={async () => {
                     setIsOpenMenu(false)
+                    await addBookmark(folder.id, post)
                   }}
                 >
                   {folder.name}
