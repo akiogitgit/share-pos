@@ -26,7 +26,7 @@ export const PostMenuButton: FC<Props> = ({
   const [isOpenMenu, setIsOpenMenu] = useState(false)
 
   return (
-    <>
+    <div>
       <button
         className='cursor-pointer text-30px duration-100 hover:opacity-50'
         onClick={() => setIsOpenMenu(!isOpenMenu)}
@@ -36,14 +36,13 @@ export const PostMenuButton: FC<Props> = ({
 
       {/* モーダル */}
       {isOpenMenu && (
-        <div className='relative'>
+        <div className='h-0 w-0 relative'>
           {/* モーダルの周り押したら消えるやつ */}
           <div
             onClick={() => setIsOpenMenu(false)}
             className='h-100vh top-0 left-0 w-100vw z-10 fixed'
           ></div>
-          {/* <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-37px] right-3px shadow-red-200 w-170px z-11 absolute sm:top-[-30px] sm:right-35px sm:w-150px'> */}
-          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-0 right-3px shadow-red-200 w-170px z-11 absolute sm:top-0 sm:right-35px sm:w-150px'>
+          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-35px] right-[-27px] shadow-red-200 w-170px z-11 absolute sm:top-[-30px] sm:right-5px sm:w-150px'>
             {cookies.userInfo?.id === post.userId && (
               <>
                 <div
@@ -86,8 +85,7 @@ export const PostMenuButton: FC<Props> = ({
                   ブックマークに追加
                 </div>
 
-                {/* 自分のフォルダ一覧 */}
-                {/* <div className='top-10px left-40px hidden absolute group-hover:block'> */}
+                {/* 自分のフォルダ一覧  */}
                 <div className='top-0px right-150px hidden absolute sm:right-80px group-hover:block'>
                   <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
                 </div>
@@ -96,6 +94,6 @@ export const PostMenuButton: FC<Props> = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }

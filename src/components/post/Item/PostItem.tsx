@@ -19,7 +19,6 @@ export const PostItem: FC<Props> = ({
   className,
   selectedFolder = 0,
 }) => {
-  const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
   const { removeBookmark } = useRemoveBookmark(selectedFolder, post)
@@ -43,15 +42,6 @@ export const PostItem: FC<Props> = ({
           <PostMenuButton post={post} onEdit={() => setIsEditing(true)} />
         </div>
       </div>
-
-      {/* 。。。を押して表示されるメニュー */}
-      {/* {isOpenMenu && (
-        <PostMenu
-          post={post}
-          onOpenMenu={() => setIsOpenMenu(true)}
-          onEdit={}
-        />
-      )} */}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
