@@ -1,16 +1,16 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { FC } from 'react'
 import { FolderList } from './FolderList'
 import { useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
 
 type Props = {
-  setIsOpenMenu: Dispatch<SetStateAction<boolean>>
-  setIsEdit: Dispatch<SetStateAction<boolean>>
+  onOpenMenu: () => void
+  onEdit: () => void
   post: Post
 }
 
-export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
+export const PostMenu: FC<Props> = ({ onOpenMenu, post, setIsEdit }) => {
   const { cookies } = useCookies('userInfo')
   const { deletePost } = useDeletePost(post)
 
@@ -18,7 +18,7 @@ export const PostMenu: FC<Props> = ({ setIsOpenMenu, post, setIsEdit }) => {
     <div className='relative'>
       {/* モーダルの周り押したら消えるやつ */}
       <div
-        onClick={() => setIsOpenMenu(false)}
+        onClick={() => onOpenMenu(false)}
         className='h-100vh top-0 left-0 w-100vw z-10 fixed'
       ></div>
       {/* <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-160px z-11 absolute'> */}

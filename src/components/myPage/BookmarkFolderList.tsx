@@ -38,6 +38,7 @@ export const BookmarkFolderList: FC<Props> = ({
     <>
       {folders?.length ? (
         // ブックマーク名一覧
+        // TODO: 掴め！！！！
         <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
           {folders.map((folder, index) => (
             <div
@@ -58,9 +59,9 @@ export const BookmarkFolderList: FC<Props> = ({
                   <form
                     className='flex'
                     onSubmit={async (e) => {
+                      setEditingFolderIndex(undefined)
                       e.preventDefault()
                       await updateFolder(folder.id, editFolderName)
-                      setEditingFolderIndex(undefined)
                     }}
                   >
                     <input
@@ -119,7 +120,6 @@ export const BookmarkFolderList: FC<Props> = ({
           border-radius: 100px;
           background-color: rgba(254, 226, 226, var(--tw-bg-opacity));
           height: 100px;
-          transform: scale(0.5);
         }
         .scroll-bar::-webkit-scrollbar-thumb {
           border-radius: 100px;

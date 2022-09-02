@@ -1,10 +1,9 @@
 import { FC, useState } from 'react'
-import { BsThreeDots } from 'react-icons/bs'
 import { TbBookmarkOff } from 'react-icons/tb'
 import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
-import { PostMenu } from './PostMenu'
+import { PostMenuButton } from './PostMenuButton'
 import { useRemoveBookmark } from 'hooks/useBookmark'
 import { useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
@@ -21,7 +20,7 @@ export const PostItem: FC<Props> = ({
   selectedFolder = 0,
 }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const [isEdit, setIsEdit] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   const { removeBookmark } = useRemoveBookmark(selectedFolder, post)
   const { updatePost } = useUpdatePost(post)
@@ -41,44 +40,36 @@ export const PostItem: FC<Props> = ({
             />
           )}
           {/* 投稿メニューボタン */}
-          {!isEdit && (
-            <button
-              className='cursor-pointer text-30px duration-100 hover:opacity-50'
-              onClick={() => setIsOpenMenu(!isOpenMenu)}
-            >
-              <BsThreeDots />
-            </button>
-          )}
+          <PostMenuButton post={post} onEdit={() => setIsEditing(true)} />
         </div>
       </div>
 
       {/* 。。。を押して表示されるメニュー */}
-      {isOpenMenu && (
+      {/* {isOpenMenu && (
         <PostMenu
-          setIsEdit={setIsEdit}
-          setIsOpenMenu={setIsOpenMenu}
           post={post}
+          onOpenMenu={() => setIsOpenMenu(true)}
+          onEdit={}
         />
-      )}
+      )} */}
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
-        {isEdit ? (
+        {isEditing ? (
           <div>
             <PostForm
               key={post.id}
               onSubmit={async (params) => {
                 await updatePost(params)
-                setIsEdit(false)
+                setIsEditing(false)
               }}
-              // className='max-w-429px w-83vw sm:w-259px'
               className='w-full'
               formParamsProps={post}
               submitButtonText='更新'
             />
             <button
               className='border bg-gray-500 border-gray-500 mt-2 text-white w-full py-1 duration-300 hover:(opacity-60) '
-              onClick={() => setIsEdit(false)}
+              onClick={() => setIsEditing(false)}
             >
               キャンセル
             </button>
