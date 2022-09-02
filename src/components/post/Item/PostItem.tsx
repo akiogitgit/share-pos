@@ -1,14 +1,13 @@
-import { FC, useMemo, useState } from 'react'
-
+import { FC, useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs'
 import { TbBookmarkOff } from 'react-icons/tb'
 import { PostForm } from '../PostForm'
+import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenu } from './PostMenu'
 import { useRemoveBookmark } from 'hooks/useBookmark'
 import { useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
-import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
@@ -22,20 +21,10 @@ export const PostItem: FC<Props> = ({
   selectedFolder = 0,
 }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const [isOpenComment, setIsOpenComment] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
 
   const { removeBookmark } = useRemoveBookmark(selectedFolder, post)
   const { updatePost } = useUpdatePost(post)
-  const { ref, height } = useElementSize()
-
-  // 要素の高さを取得
-  const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
-
-  const showSeeMore = useMemo(
-    () => hasElementMoreThan3Lines && !isOpenComment,
-    [hasElementMoreThan3Lines, isOpenComment],
-  )
 
   return (
     <article
@@ -96,27 +85,7 @@ export const PostItem: FC<Props> = ({
           </div>
         ) : (
           <>
-            <div
-              onClick={() =>
-                hasElementMoreThan3Lines && setIsOpenComment(!isOpenComment)
-              }
-              className={`${
-                !isOpenComment && 'h-70px'
-              } overflow-hidden whitespace-pre-wrap group relative`}
-            >
-              <div ref={ref} className='h-auto'>
-                {post.comment}
-              </div>
-              <div
-                className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
-                  showSeeMore
-                    ? 'visible sm:invisible sm:group-hover:visible'
-                    : 'invisible'
-                }`}
-              >
-                もっとみる
-              </div>
-            </div>
+            <PostItemComment comment={post.comment} />
 
             {/* urlのサムネイル画像等 */}
             <PostLinkCard post={post} />
