@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import { useState } from 'react'
 import { MyPageLayout } from 'components/layout/MyPageLayout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
@@ -50,18 +49,16 @@ const MyPosts: NextPage = () => {
         </div>
       </div>
 
-      <ul className='mt-4'>
-        {myPosts?.posts.length && (
-          <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
-            {myPosts.posts.map(
-              (post, i) =>
-                selectedPublished === post.published && (
-                  <PostItem post={post} key={i} className='m-2' />
-                ),
-            )}
-          </PostItemList>
-        )}
-      </ul>
+      {myPosts?.posts.length && (
+        <div className='flex mt-4 flex-wrap justify-center sm:justify-start'>
+          {myPosts.posts.map(
+            (post, i) =>
+              selectedPublished === post.published && (
+                <PostItem post={post} key={i} className='m-2' />
+              ),
+          )}
+        </div>
+      )}
     </MyPageLayout>
   )
 }
