@@ -1,22 +1,19 @@
 import { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { MyPageLayout } from 'components/layout/MyPageLayout'
 import { BookmarkFolderList } from 'components/myPage/BookmarkFolderList'
 import { PostItem } from 'components/post/Item/PostItem'
-import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useCreateFolder } from 'hooks/useFolder'
 import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
+  const authHeaderParams = useAuthHeaderParams()
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
-  const [selectedFolder, setSelectedFolder] = useState(0)
 
   const { createFolder } = useCreateFolder()
-
-  const authHeaderParams = useAuthHeaderParams()
 
   const { data: folders } = useGetApi<Folder[]>(
     '/folders',
@@ -24,19 +21,14 @@ const Bookmark: NextPage = () => {
     authHeaderParams,
   )
 
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
-    `/folders/${selectedFolder}`,
+    `/folders/${folders && folders[selectedIndex].id}`,
     undefined,
     authHeaderParams,
   )
   console.log(bookmarkPosts)
-
-  // 自分の一番左のフォルダのPostsを取得   useEffect使いたくない
-  useEffect(() => {
-    if (folders?.length) {
-      setSelectedFolder(folders[0].id)
-    }
-  }, [folders])
 
   return (
     <MyPageLayout tabName='bookmark'>
@@ -96,29 +88,30 @@ const Bookmark: NextPage = () => {
           </div>
 
           {/* 自分のフォルダ一覧 */}
-          <BookmarkFolderList
-            selectedFolder={selectedFolder}
-            setSelectedFolder={setSelectedFolder}
-          />
+          {folders && (
+            <BookmarkFolderList
+              folders={folders}
+              selectedIndex={selectedIndex}
+              onSelect={setSelectedIndex}
+            />
+          )}
         </div>
 
         {/* 選択しているフォルダの記事一覧 */}
-        <ul className='mt-4'>
-          {bookmarkPosts?.posts.length ? (
-            <PostItemList className='flex flex-wrap justify-center sm:justify-start'>
-              {bookmarkPosts.posts.map((post, i) => (
-                <PostItem
-                  key={i}
-                  className='m-2'
-                  post={post}
-                  selectedFolder={selectedFolder}
-                />
-              ))}
-            </PostItemList>
-          ) : (
-            <h2 className='mt-20 text-center'>記事がありません</h2>
-          )}
-        </ul>
+        {bookmarkPosts?.posts.length ? (
+          <div className='flex mt-4 flex-wrap justify-center sm:justify-start'>
+            {bookmarkPosts.posts.map((post, i) => (
+              <PostItem
+                key={i}
+                className='m-2'
+                post={post}
+                selectedFolder={selectedIndex}
+              />
+            ))}
+          </div>
+        ) : (
+          <h2 className='mt-20 text-center'>記事がありません</h2>
+        )}
       </div>
     </MyPageLayout>
   )

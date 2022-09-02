@@ -1,43 +1,37 @@
-import { Dispatch, FC, SetStateAction, useCallback, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
-import { useGetApi } from 'hooks/useApi'
 import { useDeleteFolder, useUpdateFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 
 type Props = {
-  selectedFolder: number
-  setSelectedFolder: Dispatch<SetStateAction<number>>
+  folders: Folder[]
+  selectedIndex: number
+  onSelect: (index: number) => void
 }
 
 export const BookmarkFolderList: FC<Props> = ({
-  selectedFolder,
-  setSelectedFolder,
+  folders,
+  selectedIndex,
+  onSelect,
 }) => {
-  const [editFolderId, setEditFolderId] = useState(0)
+  const [editingFolderIndex, setEditingFolderIndex] = useState<number>()
   const [editFolderName, setEditFolderName] = useState('')
-  const authHeaderParams = useAuthHeaderParams()
 
   const { updateFolder } = useUpdateFolder()
   const { deleteFolder } = useDeleteFolder()
-  const { data: folders } = useGetApi<Folder[]>(
-    '/folders',
-    undefined,
-    authHeaderParams,
-  )
 
   const onClickFolder = useCallback(
-    (folderId: number, folderName: string) => {
+    (index: number, folderName: string) => {
       // 連続で同じフォルダを押したときに、編集モードにする
-      if (selectedFolder === folderId) {
-        setEditFolderId(folderId)
+      if (selectedIndex === index) {
+        setEditingFolderIndex(index)
         setEditFolderName(folderName)
       } else {
-        setEditFolderId(0)
+        setEditingFolderIndex(undefined)
       }
-      setSelectedFolder(folderId)
+      onSelect(index)
     },
-    [selectedFolder, setSelectedFolder],
+    [selectedIndex, onSelect],
   )
 
   return (
@@ -45,28 +39,28 @@ export const BookmarkFolderList: FC<Props> = ({
       {folders?.length ? (
         // ブックマーク名一覧
         <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:w-70vw md:w-full'>
-          {folders.map((folder) => (
+          {folders.map((folder, index) => (
             <div
               key={folder.id}
               className={`whitespace-nowrap h-40px  ${
-                selectedFolder === folder.id
+                selectedIndex === index
                   ? 'border-b-3 border-red-500 text-red-500'
                   : 'text-gray-500 border-b-2'
               }`}
             >
               <div
                 className={`flex items-center mt-2 ${
-                  selectedFolder === folder.id && 'font-bold'
+                  selectedIndex === index && 'font-bold'
                 }`}
               >
                 {/* {folder.name} */}
-                {editFolderId === folder.id ? (
+                {editingFolderIndex === index ? (
                   <form
                     className='flex'
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                       e.preventDefault()
-                      updateFolder(folder.id, editFolderName)
-                      setEditFolderId(0)
+                      await updateFolder(folder.id, editFolderName)
+                      setEditingFolderIndex(undefined)
                     }}
                   >
                     <input
@@ -83,13 +77,13 @@ export const BookmarkFolderList: FC<Props> = ({
                     </button>
                     <div
                       className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
-                      onClick={() => deleteFolder(folder.id)}
+                      onClick={async () => await deleteFolder(folder.id)}
                     >
                       削除
                     </div>
                   </form>
                 ) : (
-                  <button onClick={() => onClickFolder(folder.id, folder.name)}>
+                  <button onClick={() => onClickFolder(index, folder.name)}>
                     <BsFolder className='mr-1' />
                     {folder.name}
                   </button>
