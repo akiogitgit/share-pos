@@ -11,17 +11,17 @@ import { Post } from 'types/post'
 type Props = {
   post: Post
   className?: string
-  selectedFolder?: number
+  selectedFolderId?: number
 }
 
 export const PostItem: FC<Props> = ({
   post,
   className,
-  selectedFolder = 0,
+  selectedFolderId = 0,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
 
-  const { removeBookmark } = useRemoveBookmark(selectedFolder, post)
+  const { removeBookmark } = useRemoveBookmark(selectedFolderId, post)
   const { updatePost } = useUpdatePost(post)
 
   return (

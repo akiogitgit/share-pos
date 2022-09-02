@@ -96,14 +96,14 @@ const Bookmark: NextPage = () => {
         </div>
 
         {/* 選択しているフォルダの記事一覧 */}
-        {bookmarkPosts?.posts.length ? (
+        {bookmarkPosts?.posts.length && folders ? (
           <div className='flex flex-wrap mt-4 justify-center sm:justify-start'>
             {bookmarkPosts.posts.map((post, i) => (
               <PostItem
                 key={i}
                 className='m-2'
                 post={post}
-                selectedFolder={selectedFolderIndex}
+                selectedFolderId={folders[selectedFolderIndex].id}
               />
             ))}
           </div>
