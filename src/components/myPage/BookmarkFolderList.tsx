@@ -5,13 +5,13 @@ import { Folder } from 'types/bookmark'
 
 type Props = {
   folders: Folder[]
-  selectedIndex: number
+  selectedFolderIndex: number
   onSelect: (index: number) => void
 }
 
 export const BookmarkFolderList: FC<Props> = ({
   folders,
-  selectedIndex,
+  selectedFolderIndex,
   onSelect,
 }) => {
   const [editingFolderIndex, setEditingFolderIndex] = useState<number>()
@@ -23,7 +23,7 @@ export const BookmarkFolderList: FC<Props> = ({
   const onClickFolder = useCallback(
     (index: number, folderName: string) => {
       // 連続で同じフォルダを押したときに、編集モードにする
-      if (selectedIndex === index) {
+      if (selectedFolderIndex === index) {
         setEditingFolderIndex(index)
         setEditFolderName(folderName)
       } else {
@@ -31,7 +31,7 @@ export const BookmarkFolderList: FC<Props> = ({
       }
       onSelect(index)
     },
-    [selectedIndex, onSelect],
+    [selectedFolderIndex, onSelect],
   )
 
   return (
@@ -44,14 +44,14 @@ export const BookmarkFolderList: FC<Props> = ({
             <div
               key={folder.id}
               className={`whitespace-nowrap h-40px  ${
-                selectedIndex === index
+                selectedFolderIndex === index
                   ? 'border-b-3 border-red-500 text-red-500'
                   : 'text-gray-500 border-b-2'
               }`}
             >
               <div
                 className={`flex items-center mt-2 ${
-                  selectedIndex === index && 'font-bold'
+                  selectedFolderIndex === index && 'font-bold'
                 }`}
               >
                 {/* {folder.name} */}
@@ -78,7 +78,10 @@ export const BookmarkFolderList: FC<Props> = ({
                     </button>
                     <div
                       className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
-                      onClick={async () => await deleteFolder(folder.id)}
+                      onClick={async () => {
+                        setEditingFolderIndex(undefined)
+                        await deleteFolder(folder.id)
+                      }}
                     >
                       削除
                     </div>

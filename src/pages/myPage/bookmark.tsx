@@ -12,6 +12,7 @@ const Bookmark: NextPage = () => {
   const authHeaderParams = useAuthHeaderParams()
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
+  const [selectedFolderIndex, setSelectedFolderIndex] = useState(0)
 
   const { createFolder } = useCreateFolder()
 
@@ -21,14 +22,11 @@ const Bookmark: NextPage = () => {
     authHeaderParams,
   )
 
-  const [selectedIndex, setSelectedIndex] = useState(0)
-
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
-    `/folders/${folders && folders[selectedIndex].id}`,
+    `/folders/${folders && folders[selectedFolderIndex].id}`,
     undefined,
     authHeaderParams,
   )
-  console.log(bookmarkPosts)
 
   return (
     <MyPageLayout tabName='bookmark'>
@@ -91,21 +89,21 @@ const Bookmark: NextPage = () => {
           {folders && (
             <BookmarkFolderList
               folders={folders}
-              selectedIndex={selectedIndex}
-              onSelect={setSelectedIndex}
+              selectedFolderIndex={selectedFolderIndex}
+              onSelect={setSelectedFolderIndex}
             />
           )}
         </div>
 
         {/* 選択しているフォルダの記事一覧 */}
         {bookmarkPosts?.posts.length ? (
-          <div className='flex mt-4 flex-wrap justify-center sm:justify-start'>
+          <div className='flex flex-wrap mt-4 justify-center sm:justify-start'>
             {bookmarkPosts.posts.map((post, i) => (
               <PostItem
                 key={i}
                 className='m-2'
                 post={post}
-                selectedFolder={selectedIndex}
+                selectedFolder={selectedFolderIndex}
               />
             ))}
           </div>
