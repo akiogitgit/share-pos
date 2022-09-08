@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { PostItemList } from 'components/post/PostItemList'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
@@ -28,11 +27,11 @@ const Home: NextPage = () => {
           onClick={(newStar) => setStars(newStar)}
         /> */}
         {posts?.length && (
-          <PostItemList className='flex flex-wrap mt-4 gap-3 justify-center'>
+          <div className='flex flex-wrap mt-4 gap-3 justify-center'>
             {posts.map((post, i) => (
               <PostItem post={post} key={i} className='mb-1' />
             ))}
-          </PostItemList>
+          </div>
         )}
       </Layout>
     </>

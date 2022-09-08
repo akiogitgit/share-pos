@@ -1,8 +1,13 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { FC, ReactNode } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
+
+const tabs = [
+  { label: '投稿した記事', name: 'myPosts' },
+  { label: 'ブックマーク', name: 'bookmark' },
+  { label: 'ユーザー情報', name: 'userInfo' },
+]
 
 type Props = {
   children: ReactNode
@@ -12,13 +17,6 @@ type Props = {
 // 最初に表示するタブ何にしよう
 export const MyPageLayout: FC<Props> = ({ children, tabName = 'userInfo' }) => {
   useRequireLogin()
-  const router = useRouter()
-  const { selectedTab } = router.query
-  const tabs = [
-    { label: '投稿した記事', name: 'myPosts' },
-    { label: 'ブックマーク', name: 'bookmark' },
-    { label: 'ユーザー情報', name: 'userInfo' },
-  ]
 
   return (
     <Layout>
