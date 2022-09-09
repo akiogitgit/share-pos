@@ -27,7 +27,7 @@ const Home: NextPage = () => {
           onClick={(newStar) => setStars(newStar)}
         /> */}
         {posts?.length && (
-          <div className='flex flex-wrap mt-4 gap-3 justify-center'>
+          <div className='mt-4 grid gap-6 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center'>
             {posts.map((post, i) => (
               <PostItem post={post} key={i} className='mb-1' />
             ))}
