@@ -84,7 +84,7 @@ const Bookmark: NextPage = () => {
           </div>
         </div>
 
-        <div className='sm:flex'>
+        <div className='sm:(flex gap-3 items-start) '>
           {/* 自分のフォルダ一覧 */}
           {folders && (
             <BookmarkFolderList

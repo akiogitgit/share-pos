@@ -39,11 +39,13 @@ export const BookmarkFolderList: FC<Props> = ({
       {folders?.length ? (
         // ブックマーク名一覧
         // TODO: 掴め！！！！, 編集・削除をモーダルで
-        <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto) '>
+        // <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto min-w-20 ) '>
+        <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto min-w-90px w-20vw) '>
+          {/* // <div className=''> */}
           {folders.map((folder, index) => (
             <div
               key={folder.id}
-              className={`whitespace-nowrap h-40px  ${
+              className={`whitespace-nowrap h-40px ${
                 selectedFolderIndex === index
                   ? 'border-b-3 border-red-500 text-red-500'
                   : 'text-gray-500 border-b-2'
@@ -87,7 +89,10 @@ export const BookmarkFolderList: FC<Props> = ({
                     </div>
                   </form>
                 ) : (
-                  <button onClick={() => onClickFolder(index, folder.name)}>
+                  <button
+                    className='text-left w-full'
+                    onClick={() => onClickFolder(index, folder.name)}
+                  >
                     <BsFolder className='mr-1' />
                     {folder.name}
                   </button>
