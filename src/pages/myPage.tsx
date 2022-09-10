@@ -71,12 +71,12 @@ const MyPage: NextPage = () => {
         </div>
 
         {myPosts?.posts.length && (
-          <div className='flex flex-wrap mt-4 justify-center items-start sm:justify-start'>
+          <div className='flex flex-wrap mt-4 gap-4 justify-center items-start sm:justify-start'>
             {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
             {myPosts.posts.map(
               (post, i) =>
                 selectedPublished === post.published && (
-                  <PostItem post={post} key={i} className='m-2' />
+                  <PostItem post={post} key={i} />
                 ),
             )}
           </div>
