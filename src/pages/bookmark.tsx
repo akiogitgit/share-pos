@@ -4,11 +4,13 @@ import { Layout } from 'components/layout/Layout'
 import { BookmarkFolderList } from 'components/myPage/BookmarkFolderList'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
+import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
 import { useCreateFolder } from 'hooks/useFolder'
 import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
+  useRequireLogin()
   const authHeaderParams = useAuthHeaderParams()
   const [isOpenInputField, setIsOpenInputField] = useState(false)
   const [bookmarkName, setBookmarkName] = useState('')
@@ -23,14 +25,14 @@ const Bookmark: NextPage = () => {
   )
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
-    `/folders/${folders && folders[selectedFolderIndex].id}`,
+    `/folders/${folders && folders[selectedFolderIndex]?.id}`,
     undefined,
     authHeaderParams,
   )
 
   return (
     <Layout>
-      <div className='ml-4 sm:ml-0'>
+      <div className='ml-4'>
         <div className='flex justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
           <div>
@@ -84,32 +86,49 @@ const Bookmark: NextPage = () => {
           </div>
         </div>
 
-        <div className='sm:(flex gap-3 items-start) '>
-          {/* 自分のフォルダ一覧 */}
-          {folders && (
-            <BookmarkFolderList
-              folders={folders}
-              selectedFolderIndex={selectedFolderIndex}
-              onSelect={setSelectedFolderIndex}
-            />
-          )}
-
-          {/* 選択しているフォルダの記事一覧 */}
-          {bookmarkPosts?.posts.length && folders ? (
-            <div className='flex flex-wrap mt-4 justify-center items-start sm:justify-start'>
-              {bookmarkPosts.posts.map((post, i) => (
-                <PostItem
-                  key={i}
-                  className='m-2'
-                  post={post}
-                  selectedFolderId={folders[selectedFolderIndex].id}
+        {folders?.length ? (
+          <div className='sm:(flex gap-3 items-start) '>
+            {/* 自分のフォルダ一覧 */}
+            {folders && (
+              <div className='top-100px sm:sticky'>
+                <BookmarkFolderList
+                  folders={folders}
+                  selectedFolderIndex={selectedFolderIndex}
+                  onSelect={setSelectedFolderIndex}
                 />
-              ))}
-            </div>
-          ) : (
-            <h2 className='mt-20 text-center'>記事がありません</h2>
-          )}
-        </div>
+              </div>
+            )}
+
+            {/* 選択しているフォルダの記事一覧 */}
+            {bookmarkPosts?.posts.length && folders ? (
+              // <div className='flex flex-wrap mt-4 justify-center items-start sm:justify-start'>
+              <div className='mt-4 w-full grid gap-3 grid-cols-[repeat(auto-fill,minmax(290px,auto))] justify-center items-start'>
+                {bookmarkPosts.posts.map((post, i) => (
+                  <PostItem
+                    key={i}
+                    className='m-2'
+                    post={post}
+                    selectedFolderId={folders[selectedFolderIndex].id}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className='mt-20 text-center w-full'>記事がありません</div>
+            )}
+          </div>
+        ) : (
+          <div className='mx-auto mt-20 w-300px'>
+            <p className='overflow-hidden'>
+              右の
+              <span className='font-bold bg-red-500 rounded-10px text-white px-0.3 text-30px'>
+                ＋
+              </span>
+              を押してブックマークを作成
+            </p>
+            <p>ブックマークを作成して記事を追加しよう！</p>
+            <p>画像を貼って手順を分かりやすく表示</p>
+          </div>
+        )}
       </div>
     </Layout>
   )

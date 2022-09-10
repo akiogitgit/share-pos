@@ -62,8 +62,12 @@ export const useSignUp = () => {
 
 export const useLogOut = () => {
   const { remove } = useCookies(['token', 'userInfo'])
+  const router = useRouter()
   return {
-    logOut: () => remove(['token', 'userInfo']),
+    logOut: () => {
+      remove(['token', 'userInfo'])
+      router.push('/')
+    },
   }
 }
 

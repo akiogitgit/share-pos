@@ -25,48 +25,49 @@ const MyPage: NextPage = () => {
     undefined,
     authHeaderParams,
   )
+
   return (
     <Layout>
-      <section>
+      <section className='ml-4'>
         <h1 className='font-bold text-2xl'>ユーザー情報</h1>
         <div className='flex justify-end'>
           <button className='bg-red-500 rounded-10px text-white py-1 px-2'>
             登録情報を編集
           </button>
         </div>
-        <div>
+        <div className='flex gap-3 items-center'>
           <AiOutlineUser className='transform scale-200' />
+          <h1 className='font-bold text-xl'>あきお</h1>
         </div>
-        <ul className='mt-4'>
-          <li>ユーザー名： あきお</li>
-          <li>Eメール　 ： あきお</li>
-          <li>投稿数　： あきお</li>
-          <li>フォルダ数： あきお</li>
-          <li>フォルダ数： あきお</li>
+        <ul className='flex mt-4 gap-3'>
+          <li>
+            フォロワー数 : <span className='font-bold'>56</span>
+          </li>
+          <li>
+            投稿数 : <span className='font-bold'>20</span>
+          </li>
         </ul>
       </section>
 
-      <section className='mt-10'>
-        <div className='ml-4 sm:ml-0'>
-          <h1 className='font-bold text-2xl'>投稿した記事</h1>
-          <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
-            {[
-              { label: '公開している投稿', published: true },
-              { label: '非公開の投稿', published: false },
-            ].map((tab, i) => (
-              <button
-                key={i}
-                onClick={() => setSelectedPublished(tab.published)}
-                className={`${
-                  selectedPublished === tab.published
-                    ? 'font-bold border-b-2 border-red-500 text-red-500'
-                    : ' cursor-pointer'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+      <section className='mt-10 ml-4'>
+        <h1 className='font-bold text-2xl'>投稿した記事</h1>
+        <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
+          {[
+            { label: '公開している投稿', published: true },
+            { label: '非公開の投稿', published: false },
+          ].map((tab, i) => (
+            <button
+              key={i}
+              onClick={() => setSelectedPublished(tab.published)}
+              className={`${
+                selectedPublished === tab.published
+                  ? 'font-bold border-b-2 border-red-500 text-red-500'
+                  : ' cursor-pointer'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         {myPosts?.posts.length && (
