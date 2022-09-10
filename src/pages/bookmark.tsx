@@ -96,7 +96,7 @@ const Bookmark: NextPage = () => {
 
           {/* 選択しているフォルダの記事一覧 */}
           {bookmarkPosts?.posts.length && folders ? (
-            <div className='flex flex-wrap mt-4 justify-center sm:justify-start'>
+            <div className='flex flex-wrap mt-4 justify-center items-start sm:justify-start'>
               {bookmarkPosts.posts.map((post, i) => (
                 <PostItem
                   key={i}
