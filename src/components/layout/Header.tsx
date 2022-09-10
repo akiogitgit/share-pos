@@ -12,8 +12,8 @@ export const Header: FC = () => {
 
   return (
     <>
-      {/* <header className='bg-white w-full py-2 top-0 z-100 fixed'> */}
-      <header className='bg-white w-full py-2 top-0 z-100 sticky'>
+      <header className='bg-white w-full py-2 top-0 z-100 fixed'>
+        {/* <header className='bg-white w-full py-2 top-0 z-100 sticky'> */}
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
             <h1 className='cursor-pointer mt-0 mb-1  text-4xl text-red-500 sm:text-6xl'>
