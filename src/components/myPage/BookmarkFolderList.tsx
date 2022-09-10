@@ -38,8 +38,8 @@ export const BookmarkFolderList: FC<Props> = ({
     <>
       {folders?.length ? (
         // ブックマーク名一覧
-        // TODO: 掴め！！！！
-        <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar'>
+        // TODO: 掴め！！！！, 編集・削除をモーダルで
+        <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto) '>
           {folders.map((folder, index) => (
             <div
               key={folder.id}

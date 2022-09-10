@@ -1,10 +1,17 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
-import { AiTwotoneHome, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
+import { AiTwotoneHome, AiOutlineUser } from 'react-icons/ai'
+import { HiOutlineBookOpen } from 'react-icons/hi'
 
 export const Footer: FC = () => {
   const router = useRouter()
+
+  const menus = [
+    { path: '/', icon: <AiTwotoneHome /> },
+    { path: '/bookmark', icon: <HiOutlineBookOpen /> },
+    { path: '/myPage', icon: <AiOutlineUser /> },
+  ]
 
   return (
     <footer className='sm:hidden'>
@@ -15,30 +22,17 @@ export const Footer: FC = () => {
       )}
 
       <nav className='bg-white flex w-full bottom-0 left-0 text-25px z-100 justify-around fixed'>
-        <Link href='/'>
-          <div
-            className={`cursor-pointer py-2 px-3 ${
-              router.pathname === '/' && 'text-red-500'
-            }`}
-          >
-            <AiTwotoneHome />
-          </div>
-        </Link>
-        <Link href='/'>
-          {/* 記事検索 */}
-          <div className='cursor-pointer py-2 px-3'>
-            <AiOutlineSearch />
-          </div>
-        </Link>
-        <Link href='/myPage'>
-          <div
-            className={`cursor-pointer py-2 px-3 ${
-              router.pathname.includes('/myPage') && 'text-red-500'
-            }`}
-          >
-            <AiOutlineUser />
-          </div>
-        </Link>
+        {menus.map((menu) => (
+          <Link href={menu.path} key={menu.path}>
+            <div
+              className={`cursor-pointer py-2 px-3 ${
+                router.pathname === menu.path && 'text-red-500'
+              }`}
+            >
+              {menu.icon}
+            </div>
+          </Link>
+        ))}
       </nav>
     </footer>
   )
