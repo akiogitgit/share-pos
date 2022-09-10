@@ -40,7 +40,7 @@ export const BookmarkFolderList: FC<Props> = ({
         // ブックマーク名一覧
         // TODO: 掴め！！！！, 編集・削除をモーダルで
         // <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto min-w-20 ) '>
-        <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto min-w-90px w-20vw) '>
+        <div className='flex h-50px mt-5 gap-2 overflow-x-scroll scroll-bar sm:(flex-col h-auto min-w-150px max-w-150px h-500px max-h-100vh overflow-x-hidden overflow-y-scroll) '>
           {/* // <div className=''> */}
           {folders.map((folder, index) => (
             <div
@@ -117,6 +117,7 @@ export const BookmarkFolderList: FC<Props> = ({
 
       <style jsx>{`
         .scroll-bar::-webkit-scrollbar {
+          width: 0;
           height: 0;
         }
 

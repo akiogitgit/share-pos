@@ -14,14 +14,14 @@ export const Footer: FC = () => {
   ]
 
   return (
-    <footer className='sm:hidden'>
+    <footer className='bottom-0 sticky sm:hidden'>
       {router.pathname !== '/create' && (
-        <button className='border rounded-full font-bold bg-red-500 border-red-500 text-white p-2 right-20px bottom-50px text-30px z-100 fixed'>
+        <button className='border rounded-full font-bold bg-red-500 border-red-500 text-white text-right p-2 right-20px bottom-50px text-30px z-100 absolute'>
           <Link href='/create'>＋</Link>
         </button>
       )}
 
-      <nav className='bg-white flex w-full bottom-0 left-0 text-25px z-100 justify-around fixed'>
+      <nav className='bg-white flex w-full text-25px z-100 justify-around'>
         {menus.map((menu) => (
           <Link href={menu.path} key={menu.path}>
             <div
