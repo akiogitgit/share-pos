@@ -39,14 +39,13 @@ export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
         {isEditing ? (
-          <div>
+          <div className=''>
             <PostForm
               key={post.id}
               onSubmit={async (params) => {
                 await updatePost(params)
                 setIsEditing(false)
               }}
-              className='w-full'
               formParamsProps={post}
               submitButtonText='更新'
             />
