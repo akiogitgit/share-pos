@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
-import { MyPageLayout } from 'components/layout/MyPageLayout'
+import { Layout } from 'components/layout/Layout'
 import { BookmarkFolderList } from 'components/myPage/BookmarkFolderList'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
@@ -29,8 +29,8 @@ const Bookmark: NextPage = () => {
   )
 
   return (
-    <MyPageLayout tabName='bookmark'>
-      <div className='sm:w-70vw md:w-75vw lg:w-full'>
+    <Layout>
+      <div className=''>
         <div className='ml-4 sm:ml-0'>
           <div className='flex justify-between'>
             <h1 className='font-bold text-2xl'>ブックマーク</h1>
@@ -111,7 +111,7 @@ const Bookmark: NextPage = () => {
           <h2 className='mt-20 text-center'>記事がありません</h2>
         )}
       </div>
-    </MyPageLayout>
+    </Layout>
   )
 }
 

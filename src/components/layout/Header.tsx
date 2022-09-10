@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
 import { BsPencilSquare } from 'react-icons/bs'
+import { HiOutlineBookOpen } from 'react-icons/hi'
 import { useLogOut } from 'hooks/login/useAuth'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
@@ -37,6 +38,14 @@ export const Header: FC = () => {
                       投稿する
                     </div>
                     <BsPencilSquare />
+                  </div>
+                </Link>
+                <Link href='/bookmark'>
+                  <div className='cursor-pointer flex gap-0.5 items-center'>
+                    <div className='duration-300 hidden sm:block hover:(underline) '>
+                      ブックマーク
+                    </div>
+                    <HiOutlineBookOpen />
                   </div>
                 </Link>
                 <Link href='/myPage'>
