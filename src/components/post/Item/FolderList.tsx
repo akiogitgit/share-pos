@@ -8,10 +8,10 @@ import { Post } from 'types/post'
 
 type Props = {
   post: Post
-  onClick?: () => void
+  onClickFolderName?: () => void
 }
 
-export const FolderList: FC<Props> = ({ post, onClick }) => {
+export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { addBookmark } = useAddBookmark()
 
@@ -54,7 +54,7 @@ export const FolderList: FC<Props> = ({ post, onClick }) => {
                 <BsFolder />
                 <div
                   onClick={async () => {
-                    onClick?.()
+                    onClickFolderName?.()
                     await addBookmark(folder.id, post)
                   }}
                 >
