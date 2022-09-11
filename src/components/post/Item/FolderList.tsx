@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { FC, useState } from 'react'
 import { BsFolder } from 'react-icons/bs'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
@@ -8,10 +8,10 @@ import { Post } from 'types/post'
 
 type Props = {
   post: Post
-  setIsOpenMenu: Dispatch<SetStateAction<boolean>>
+  onClickFolderName?: () => void
 }
 
-export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
+export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { addBookmark } = useAddBookmark()
 
@@ -54,7 +54,7 @@ export const FolderList: FC<Props> = ({ post, setIsOpenMenu }) => {
                 <BsFolder />
                 <div
                   onClick={async () => {
-                    setIsOpenMenu(false)
+                    onClickFolderName?.()
                     await addBookmark(folder.id, post)
                   }}
                 >

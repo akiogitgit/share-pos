@@ -6,14 +6,12 @@ import { PostRequestParams } from 'types/post'
 // Props多すぎ？
 type Props = {
   onSubmit: (params: PostRequestParams) => void
-  className?: string // widthを fullにするかどうか
   formParamsProps?: PostRequestParams
   submitButtonText?: string
 }
 
 export const PostForm: FC<Props> = ({
   onSubmit,
-  className = 'max-w-300px w-80vw',
   formParamsProps = {
     comment: '',
     url: '',
@@ -50,7 +48,7 @@ export const PostForm: FC<Props> = ({
           onSubmit(formParams)
           e.preventDefault()
         }}
-        className={`${className}  min-w-90% relative`}
+        className='w-full max-w-430px relative'
       >
         <div>
           <label htmlFor='username' className='font-bold text-sm block '>

@@ -10,24 +10,17 @@ import { Post } from 'types/post'
 
 type Props = {
   post: Post
-  className?: string
   selectedFolderId?: number
 }
 
-export const PostItem: FC<Props> = ({
-  post,
-  className,
-  selectedFolderId = 0,
-}) => {
+export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const { removeBookmark } = useRemoveBookmark(selectedFolderId, post)
   const { updatePost } = useUpdatePost(post)
 
   return (
-    <article
-      className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
-    >
+    <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
         <div className='font-bold text-20px'>{post.user.username}</div>
         <div className='flex gap-2'>
@@ -53,7 +46,6 @@ export const PostItem: FC<Props> = ({
                 await updatePost(params)
                 setIsEditing(false)
               }}
-              className='w-full'
               formParamsProps={post}
               submitButtonText='更新'
             />

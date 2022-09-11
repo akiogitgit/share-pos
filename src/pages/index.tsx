@@ -27,10 +27,14 @@ const Home: NextPage = () => {
           onClick={(newStar) => setStars(newStar)}
         /> */}
         {posts?.length && (
-          <div className='mt-4 grid gap-6 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center'>
-            {posts.map((post, i) => (
-              <PostItem post={post} key={i} className='mb-1' />
-            ))}
+          <div className='mt-4'>
+            <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
+              {posts.map((post, i) => (
+                <div key={i} className='mb-1'>
+                  <PostItem post={post} key={i} />
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </Layout>
