@@ -1,6 +1,8 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
-import { AiOutlineUser } from 'react-icons/ai'
+
+import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
+
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
@@ -36,7 +38,7 @@ const MyPage: NextPage = () => {
           </button>
         </div>
         <div className='flex gap-3 items-center'>
-          <AiOutlineUser className='transform scale-200' />
+          <AiOutlineUserIcon className='transform scale-200' />
           <h1 className='font-bold text-xl'>あきお</h1>
         </div>
         <ul className='flex mt-4 gap-3'>

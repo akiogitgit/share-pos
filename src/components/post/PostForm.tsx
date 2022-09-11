@@ -1,6 +1,8 @@
 import { FC, useCallback, useState } from 'react'
-import { BiCommentDetail } from 'react-icons/bi'
-import { RiArticleLine } from 'react-icons/ri'
+
+import { BiCommentDetail as BiCommentDetailIcon } from 'react-icons/bi'
+import { RiArticleLine as RiArticleLineIcon } from 'react-icons/ri'
+
 import { PostRequestParams } from 'types/post'
 
 // Props多すぎ？
@@ -68,7 +70,7 @@ export const PostForm: FC<Props> = ({
             />
           </div>
           <div className='flex justify-end'>
-            <BiCommentDetail className='top-33px right-10px absolute' />
+            <BiCommentDetailIcon className='top-33px right-10px absolute' />
           </div>
         </div>
         <div className='mt-2 relative'>
@@ -86,7 +88,7 @@ export const PostForm: FC<Props> = ({
           />
 
           <div className='flex justify-end'>
-            <RiArticleLine className='top-33px right-10px absolute' />
+            <RiArticleLineIcon className='top-33px right-10px absolute' />
           </div>
         </div>
         <div className='h-80px mt-2 relative'>

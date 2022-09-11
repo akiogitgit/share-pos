@@ -1,13 +1,17 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
-import { AiTwotoneHome, AiOutlineUser } from 'react-icons/ai'
-import { HiOutlineBookOpen } from 'react-icons/hi'
+
+import {
+  AiTwotoneHome as AiTwotoneHomeIcon,
+  AiOutlineUser as AiOutlineUserIcon,
+} from 'react-icons/ai'
+import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
 const menus = [
-  { path: '/', icon: <AiTwotoneHome /> },
-  { path: '/bookmark', icon: <HiOutlineBookOpen /> },
-  { path: '/myPage', icon: <AiOutlineUser /> },
+  { path: '/', icon: <AiTwotoneHomeIcon /> },
+  { path: '/bookmark', icon: <HiOutlineBookOpenIcon /> },
+  { path: '/myPage', icon: <AiOutlineUserIcon /> },
 ]
 
 export const Footer: FC = () => {

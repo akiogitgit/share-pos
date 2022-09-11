@@ -1,5 +1,7 @@
 import { FC, useState } from 'react'
-import { BsThreeDots } from 'react-icons/bs'
+
+import { BsThreeDots as BsThreeDotsIcon } from 'react-icons/bs'
+
 import { FolderList } from './FolderList'
 import { useDeletePost } from 'hooks/usePost'
 import { useCookies } from 'stores/useCookies'
@@ -31,7 +33,7 @@ export const PostMenuButton: FC<Props> = ({
         className='cursor-pointer text-30px duration-100 hover:opacity-50'
         onClick={() => setIsOpenMenu(!isOpenMenu)}
       >
-        <BsThreeDots />
+        <BsThreeDotsIcon />
       </button>
 
       {/* モーダル */}
