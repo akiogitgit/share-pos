@@ -4,14 +4,14 @@ import { FC } from 'react'
 import { AiTwotoneHome, AiOutlineUser } from 'react-icons/ai'
 import { HiOutlineBookOpen } from 'react-icons/hi'
 
+const menus = [
+  { path: '/', icon: <AiTwotoneHome /> },
+  { path: '/bookmark', icon: <HiOutlineBookOpen /> },
+  { path: '/myPage', icon: <AiOutlineUser /> },
+]
+
 export const Footer: FC = () => {
   const router = useRouter()
-
-  const menus = [
-    { path: '/', icon: <AiTwotoneHome /> },
-    { path: '/bookmark', icon: <HiOutlineBookOpen /> },
-    { path: '/myPage', icon: <AiOutlineUser /> },
-  ]
 
   return (
     <footer className='sm:hidden'>

@@ -87,7 +87,10 @@ export const PostMenuButton: FC<Props> = ({
 
                 {/* 自分のフォルダ一覧  */}
                 <div className='top-0px right-150px hidden absolute sm:right-80px group-hover:block'>
-                  <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
+                  <FolderList
+                    post={post}
+                    onClick={() => setIsOpenMenu(false)}
+                  />
                 </div>
               </div>
             )}
