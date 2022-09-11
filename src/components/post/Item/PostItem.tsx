@@ -1,5 +1,7 @@
 import { FC, useState } from 'react'
-import { TbBookmarkOff } from 'react-icons/tb'
+
+import { TbBookmarkOff as TbBookmarkOffIcon } from 'react-icons/tb'
+
 import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
@@ -26,7 +28,7 @@ export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
         <div className='flex gap-2'>
           {/* ブックマーク解除 (マイページ/ブックマークで表示) */}
           {post.bookmark && (
-            <TbBookmarkOff
+            <TbBookmarkOffIcon
               className='cursor-pointer text-40px sm:text-30px'
               onClick={removeBookmark}
             />

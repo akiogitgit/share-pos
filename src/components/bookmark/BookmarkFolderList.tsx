@@ -1,5 +1,7 @@
 import { FC, useCallback, useState } from 'react'
-import { BsFolder } from 'react-icons/bs'
+
+import { BsFolder as BsFolderIcon } from 'react-icons/bs'
+
 import { useDeleteFolder, useUpdateFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 
@@ -94,7 +96,7 @@ export const BookmarkFolderList: FC<Props> = ({
                       className='text-left w-full'
                       onClick={() => onClickFolder(index, folder.name)}
                     >
-                      <BsFolder className='mr-1' />
+                      <BsFolderIcon className='mr-1' />
                       {folder.name}
                     </button>
                   )}

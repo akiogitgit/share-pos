@@ -1,5 +1,7 @@
 import { FC, useState } from 'react'
-import { BsFolder } from 'react-icons/bs'
+
+import { BsFolder as BsFolderIcon } from 'react-icons/bs'
+
 import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useAddBookmark } from 'hooks/useBookmark'
@@ -51,7 +53,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
                 key={folder.id}
                 className='flex px-2 gap-1 items-center hover:bg-red-300'
               >
-                <BsFolder />
+                <BsFolderIcon />
                 <div
                   onClick={async () => {
                     onClickFolderName?.()
