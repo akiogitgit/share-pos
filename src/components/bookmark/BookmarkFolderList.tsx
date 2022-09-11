@@ -69,6 +69,7 @@ export const BookmarkFolderList: FC<Props> = ({
                       <input
                         type='text'
                         className='border outline-none text-black ring-blue-500 w-100px duration-300 focus:rounded-10px focus:ring-1'
+                        maxLength={15}
                         value={editFolderName}
                         onChange={(e) => setEditFolderName(e.target.value)}
                       />

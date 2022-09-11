@@ -28,11 +28,13 @@ const Bookmark: NextPage = () => {
 
   return (
     <Layout>
-      <div className='ml-4'>
-        <div className='flex justify-between'>
-          <h1 className='font-bold text-2xl'>ああああああ</h1>
-          <div className='min-w-100px max-w-210px w-53vw'>
-            <CreateFolderField />
+      <div className=''>
+        <div className='flex ml-4 justify-between'>
+          <h1 className='font-bold text-2xl'>ブックマーク</h1>
+          <div className={`${folders?.length && 'sm:hidden'}`}>
+            <div className='min-w-100px max-w-210px w-53vw'>
+              <CreateFolderField />
+            </div>
           </div>
         </div>
 
@@ -40,7 +42,7 @@ const Bookmark: NextPage = () => {
           <div className='sm:(flex gap-3 items-start) '>
             {/* 自分のフォルダ一覧 */}
             {folders && (
-              <div className='top-100px sm:sticky'>
+              <div className='ml-4 top-100px sm:sticky'>
                 <BookmarkFolderList
                   folders={folders}
                   selectedFolderIndex={selectedFolderIndex}
@@ -54,14 +56,17 @@ const Bookmark: NextPage = () => {
             {/* 選択しているフォルダの記事一覧 */}
             {bookmarkPosts?.posts.length && folders ? (
               // <div className='flex flex-wrap mt-4 justify-center items-start sm:justify-start'>
-              <div className='mt-4 w-full grid gap-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'>
-                {bookmarkPosts.posts.map((post, i) => (
-                  <PostItem
-                    key={i}
-                    post={post}
-                    selectedFolderId={folders[selectedFolderIndex].id}
-                  />
-                ))}
+              <div className='mt-4 w-full'>
+                {/* TODO: スマホサイズのレイアウト修正 */}
+                <div className='grid gap-3 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
+                  {bookmarkPosts.posts.map((post, i) => (
+                    <PostItem
+                      key={i}
+                      post={post}
+                      selectedFolderId={folders[selectedFolderIndex].id}
+                    />
+                  ))}
+                </div>
               </div>
             ) : (
               <div className='mt-20 text-center w-full'>記事がありません</div>
