@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 
 import { BsThreeDots as BsThreeDotsIcon } from 'react-icons/bs'
 
@@ -26,6 +26,12 @@ export const PostMenuButton: FC<Props> = ({
   const { cookies } = useCookies('userInfo')
   const { deletePost } = useDeletePost(post)
   const [isOpenMenu, setIsOpenMenu] = useState(false)
+  const [isOpenFolder, setIsOpenFolder] = useState(false)
+
+  const closeMenu = useCallback(() => {
+    setIsOpenMenu(false)
+    setIsOpenFolder(false)
+  }, [])
 
   return (
     <div>
@@ -41,7 +47,7 @@ export const PostMenuButton: FC<Props> = ({
         <div className='h-0 w-0 relative'>
           {/* モーダルの周り押したら消えるやつ */}
           <div
-            onClick={() => setIsOpenMenu(false)}
+            onClick={closeMenu}
             className='h-100vh top-0 left-0 w-100vw z-10 fixed'
           ></div>
           <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-35px] right-[-27px] shadow-red-200 w-170px z-11 absolute sm:top-[-30px] sm:right-5px sm:w-150px'>
@@ -59,7 +65,7 @@ export const PostMenuButton: FC<Props> = ({
                 <div
                   className='py-1 px-4 hover:bg-red-300'
                   onClick={async () => {
-                    setIsOpenMenu(false)
+                    closeMenu()
                     await deletePost()
                   }}
                 >
@@ -76,23 +82,29 @@ export const PostMenuButton: FC<Props> = ({
               onClick={() => {
                 navigator.clipboard.writeText(post.url)
                 alert('リンクをコピーしました')
-                setIsOpenMenu(false)
+                closeMenu()
               }}
             >
               記事リンクをコピー
             </div>
             {cookies.userInfo && (
               <div className='rounded-b-10px group relative'>
-                <div className='px-4 pt-1 pb-2 hover:bg-red-300'>
+                <div
+                  className='px-4 pt-1 pb-2 hover:bg-red-300'
+                  onClick={() => setIsOpenFolder(!isOpenFolder)}
+                >
                   ブックマークに追加
                 </div>
 
                 {/* 自分のフォルダ一覧  */}
-                <div className='top-0px right-150px hidden absolute sm:right-80px group-hover:block'>
-                  <FolderList
-                    post={post}
-                    onClickFolderName={() => setIsOpenMenu(false)}
-                  />
+                <div
+                  className={`${
+                    isOpenFolder ? '' : 'hidden'
+                  } sm:group-hover:block`}
+                >
+                  <div className='top-0px right-150px absolute sm:right-80px'>
+                    <FolderList post={post} onClickFolderName={closeMenu} />
+                  </div>
                 </div>
               </div>
             )}
