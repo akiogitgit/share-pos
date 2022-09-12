@@ -51,25 +51,27 @@ const MyPage: NextPage = () => {
         </ul>
       </section>
 
-      <section className='mt-10 ml-4'>
-        <h1 className='font-bold text-2xl'>投稿した記事</h1>
-        <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
-          {[
-            { label: '公開している投稿', published: true },
-            { label: '非公開の投稿', published: false },
-          ].map((tab, i) => (
-            <button
-              key={i}
-              onClick={() => setSelectedPublished(tab.published)}
-              className={`${
-                selectedPublished === tab.published
-                  ? 'font-bold border-b-2 border-red-500 text-red-500'
-                  : ' cursor-pointer'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+      <section className='mt-10'>
+        <div className='ml-4'>
+          <h1 className='font-bold text-2xl'>投稿した記事</h1>
+          <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
+            {[
+              { label: '公開している投稿', published: true },
+              { label: '非公開の投稿', published: false },
+            ].map((tab, i) => (
+              <button
+                key={i}
+                onClick={() => setSelectedPublished(tab.published)}
+                className={`${
+                  selectedPublished === tab.published
+                    ? 'font-bold border-b-2 border-red-500 text-red-500'
+                    : ' cursor-pointer'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {myPosts?.posts.length && (
