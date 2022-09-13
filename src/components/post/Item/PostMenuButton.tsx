@@ -53,7 +53,6 @@ export const PostMenuButton: FC<Props> = ({
 
           <div className='top-[-35px] right-5px z-11 absolute sm:top-[-35px] '>
             <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform shadow-red-200 w-170px sm:w-150px'>
-              {/* <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-35px] right-[-27px] shadow-red-200 w-170px z-11 absolute sm:top-[-30px] sm:right-5px sm:w-150px'> */}
               {cookies.userInfo?.id === post.userId && (
                 <>
                   <div
@@ -104,10 +103,9 @@ export const PostMenuButton: FC<Props> = ({
                   {/* 自分のフォルダ一覧  */}
                   <div
                     className={`${
-                      isOpenFolder ? '' : 'hidden'
+                      !isOpenFolder && 'hidden'
                     } sm:group-hover:block`}
                   >
-                    {/* <div className='top-0px right-150px absolute sm:right-80px'> */}
                     <div className='shadow-md top-0px right-80px shadow-red-200 absolute sm:right-80px'>
                       <FolderList post={post} onClickFolderName={closeMenu} />
                     </div>
