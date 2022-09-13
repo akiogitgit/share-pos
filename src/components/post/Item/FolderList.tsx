@@ -18,7 +18,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
   const { addBookmark } = useAddBookmark()
 
   const authHeaderParams = useAuthHeaderParams()
-  const { data: folders, mutate } = useGetApi<Folder[]>(
+  const { data: folders } = useGetApi<Folder[]>(
     '/folders',
     undefined,
     authHeaderParams,
@@ -39,19 +39,19 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
           display: none;
         }
       `}</style>
-      <div className='border bg-red-100 border-red-500 rounded-10px w-145px'>
+      <div className='border bg-red-100 border-red-500 rounded-10px w-160px'>
         {/* <div
           onClick={() => setIsOpenModal(true)}
           className='rounded-t-10px px-2 pt-2 hover:bg-red-300'
         >
           ブックマークを作成+ モーダル出す
         </div> */}
-        <div className='max-h-180px overflow-y-scroll scroll-bar-none sm:max-h-303px'>
+        <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
           {folders?.length &&
             folders.map((folder) => (
               <div
                 key={folder.id}
-                className='flex px-2 gap-1 items-center hover:bg-red-300'
+                className='flex py-1 px-4 gap-1 items-center hover:bg-red-300'
               >
                 <BsFolderIcon />
                 <div

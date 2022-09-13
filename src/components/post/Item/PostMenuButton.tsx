@@ -107,7 +107,8 @@ export const PostMenuButton: FC<Props> = ({
                       isOpenFolder ? '' : 'hidden'
                     } sm:group-hover:block`}
                   >
-                    <div className='top-0px right-150px absolute sm:right-80px'>
+                    {/* <div className='top-0px right-150px absolute sm:right-80px'> */}
+                    <div className='shadow-md top-0px right-80px shadow-red-200 absolute sm:right-80px'>
                       <FolderList post={post} onClickFolderName={closeMenu} />
                     </div>
                   </div>
