@@ -7,7 +7,7 @@ import {
   AiOutlineHome as AiOutlineHomeIcon,
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
-import { FaUser } from 'react-icons/fa'
+import { FaUser as FaUserIcon } from 'react-icons/fa'
 import {
   IoBook as IoBookIcon,
   IoBookOutline as IoBookOutlineIcon,
@@ -23,7 +23,7 @@ const menus = [
   {
     path: '/myPage',
     icon: <AiOutlineUserIcon />,
-    selectedIcon: <FaUser />,
+    selectedIcon: <FaUserIcon />,
   },
 ]
 
