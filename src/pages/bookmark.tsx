@@ -43,15 +43,14 @@ const Bookmark: NextPage = () => {
             {/* 自分のフォルダ一覧 */}
             {folders && (
               <div className='bg-red-100 pl-4 top-60px z-10 sticky sm:top-100px'>
-                {/* <div className='ml-4 top-100px sm:sticky'> */}
+                <div className='mt-4 w-190px hidden sm:block'>
+                  <CreateFolderField />
+                </div>
                 <BookmarkFolderList
                   folders={folders}
                   selectedFolderIndex={selectedFolderIndex}
                   onSelect={setSelectedFolderIndex}
                 />
-                <div className='mt-4 w-190px hidden sm:block'>
-                  <CreateFolderField />
-                </div>
               </div>
             )}
             {/* 選択しているフォルダの記事一覧 */}
@@ -59,7 +58,7 @@ const Bookmark: NextPage = () => {
               // <div className='flex flex-wrap mt-4 justify-center items-start sm:justify-start'>
               <div className='mt-4 w-full'>
                 {/* TODO: スマホサイズのレイアウト修正 */}
-                <div className='grid gap-6 justify-center items-start sm:(gap-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
+                <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
                   {bookmarkPosts.posts.map((post, i) => (
                     <PostItem
                       key={i}
