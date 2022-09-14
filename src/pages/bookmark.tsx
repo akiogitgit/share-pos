@@ -46,11 +46,13 @@ const Bookmark: NextPage = () => {
                 <div className='mt-4 w-190px hidden sm:block'>
                   <CreateFolderField />
                 </div>
-                <BookmarkFolderList
-                  folders={folders}
-                  selectedFolderIndex={selectedFolderIndex}
-                  onSelect={setSelectedFolderIndex}
-                />
+                <div className='mt-5'>
+                  <BookmarkFolderList
+                    folders={folders}
+                    selectedFolderIndex={selectedFolderIndex}
+                    onSelect={setSelectedFolderIndex}
+                  />
+                </div>
               </div>
             )}
             {/* 選択しているフォルダの記事一覧 */}
