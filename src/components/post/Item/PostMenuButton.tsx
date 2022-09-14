@@ -48,10 +48,10 @@ export const PostMenuButton: FC<Props> = ({
           {/* モーダルの周り押したら消えるやつ */}
           <div
             onClick={closeMenu}
-            className='h-100vh top-0 left-0 w-100vw z-10 fixed'
+            className='h-100vh top-0 left-0 w-100vw z-1 fixed'
           ></div>
 
-          <div className='top-[-35px] right-5px z-11 absolute sm:top-[-35px] '>
+          <div className='top-[-35px] right-5px z-2 absolute sm:top-[-35px] '>
             <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform shadow-red-200 w-170px sm:w-150px'>
               {cookies.userInfo?.id === post.userId && (
                 <>
