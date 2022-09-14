@@ -105,7 +105,7 @@ export const PostForm: FC<Props> = ({
             name='evaluation'
             onChange={(e) => onChange(e)}
           />
-          <div className='transform translate-y-[-40px] translate-x-150px block'>
+          <div className='transform w-2 translate-y-[-40px] translate-x-40vw sm:translate-x-125px'>
             {formParams.evaluation}
           </div>
         </div>
