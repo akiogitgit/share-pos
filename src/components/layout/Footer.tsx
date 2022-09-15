@@ -13,17 +13,25 @@ import {
   IoBookOutline as IoBookOutlineIcon,
 } from 'react-icons/io5'
 
-const menus = [
-  { path: '/', icon: <AiOutlineHomeIcon />, selectedIcon: <AiFillHomeIcon /> },
+const menuIcons: {
+  href: string
+  default: JSX.Element
+  selected: JSX.Element
+}[] = [
   {
-    path: '/bookmark',
-    icon: <IoBookOutlineIcon />,
-    selectedIcon: <IoBookIcon />,
+    href: '/',
+    default: <AiOutlineHomeIcon />,
+    selected: <AiFillHomeIcon />,
   },
   {
-    path: '/myPage',
-    icon: <AiOutlineUserIcon />,
-    selectedIcon: <FaUserIcon />,
+    href: '/bookmark',
+    default: <IoBookOutlineIcon />,
+    selected: <IoBookIcon />,
+  },
+  {
+    href: '/myPage',
+    default: <AiOutlineUserIcon />,
+    selected: <FaUserIcon />,
   },
 ]
 
@@ -38,14 +46,16 @@ export const Footer: FC = () => {
         </button>
       )}
       <nav className='bg-white flex w-full bottom-0 text-25px z-100 justify-around fixed'>
-        {menus.map((menu) => (
-          <Link href={menu.path} key={menu.path}>
+        {menuIcons.map((menuIcon) => (
+          <Link href={menuIcon.href} key={menuIcon.href}>
             <div
               className={`cursor-pointer py-2 px-3 ${
-                router.pathname === menu.path && 'text-red-500'
+                router.pathname === menuIcon.href && 'text-red-500'
               }`}
             >
-              {router.pathname === menu.path ? menu.selectedIcon : menu.icon}
+              {router.pathname === menuIcon.href
+                ? menuIcon.selected
+                : menuIcon.default}
             </div>
           </Link>
         ))}
