@@ -3,15 +3,36 @@ import { useRouter } from 'next/router'
 import { FC } from 'react'
 
 import {
-  AiTwotoneHome as AiTwotoneHomeIcon,
+  AiFillHome as AiFillHomeIcon,
+  AiOutlineHome as AiOutlineHomeIcon,
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
-import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
+import { FaUser as FaUserIcon } from 'react-icons/fa'
+import {
+  IoBook as IoBookIcon,
+  IoBookOutline as IoBookOutlineIcon,
+} from 'react-icons/io5'
 
-const menus = [
-  { path: '/', icon: <AiTwotoneHomeIcon /> },
-  { path: '/bookmark', icon: <HiOutlineBookOpenIcon /> },
-  { path: '/myPage', icon: <AiOutlineUserIcon /> },
+const menuIcons: {
+  href: string
+  default: JSX.Element
+  selected: JSX.Element
+}[] = [
+  {
+    href: '/',
+    default: <AiOutlineHomeIcon />,
+    selected: <AiFillHomeIcon />,
+  },
+  {
+    href: '/bookmark',
+    default: <IoBookOutlineIcon />,
+    selected: <IoBookIcon />,
+  },
+  {
+    href: '/myPage',
+    default: <AiOutlineUserIcon />,
+    selected: <FaUserIcon />,
+  },
 ]
 
 export const Footer: FC = () => {
@@ -24,16 +45,17 @@ export const Footer: FC = () => {
           <Link href='/create'>＋</Link>
         </button>
       )}
-
       <nav className='bg-white flex w-full bottom-0 text-25px z-100 justify-around fixed'>
-        {menus.map((menu) => (
-          <Link href={menu.path} key={menu.path}>
+        {menuIcons.map((menuIcon) => (
+          <Link href={menuIcon.href} key={menuIcon.href}>
             <div
               className={`cursor-pointer py-2 px-3 ${
-                router.pathname === menu.path && 'text-red-500'
+                router.pathname === menuIcon.href && 'text-red-500'
               }`}
             >
-              {menu.icon}
+              {router.pathname === menuIcon.href
+                ? menuIcon.selected
+                : menuIcon.default}
             </div>
           </Link>
         ))}
