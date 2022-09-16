@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { useCookies } from 'stores/useCookies'
 import { LoginRequestParams, SignUpRequestParams } from 'types/user/auth'
 import { User } from 'types/user/user'
-import { HttpError, postApi } from 'utils/api'
+import { deleteApi, HttpError, postApi } from 'utils/api'
 
 export const useLogin = () => {
   const { set } = useCookies(['token', 'userInfo'])
@@ -17,8 +17,8 @@ export const useLogin = () => {
           return
         }
 
-        set('token', res.token)
-        set('userInfo', { id: res.id, username: res.username })
+        // set('token', res.token)
+        // set('userInfo', { id: res.id, username: res.username })
         console.log('ログインに成功しました', res)
         router.push('/')
       } catch (e) {
@@ -27,7 +27,7 @@ export const useLogin = () => {
         }
       }
     },
-    [router, set],
+    [router],
   )
   return { login }
 }
@@ -46,8 +46,8 @@ export const useSignUp = () => {
         }
         console.log('ユーザー作成に成功しました', res)
 
-        set('token', res.token)
-        set('userInfo', { id: res.id, username: res.username })
+        // set('token', res.token)
+        // set('userInfo', { id: res.id, username: res.username })
         router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
@@ -55,23 +55,28 @@ export const useSignUp = () => {
         }
       }
     },
-    [router, set],
+    [router],
   )
   return { signUp }
 }
 
 export const useLogOut = () => {
-  const { remove } = useCookies(['token', 'userInfo'])
   const router = useRouter()
+  const logout = useCallback(async () => {
+    try {
+      const res = await deleteApi('/auth/logout')
+      console.log('ログアウトしました')
+    } catch (e) {
+      if (e instanceof HttpError) {
+        console.log(e)
+      }
+    }
+  }, [])
+
   return {
     logOut: () => {
-      remove(['token', 'userInfo'])
+      logout()
       router.push('/')
     },
   }
-}
-
-export const useAuthHeaderParams = () => {
-  const { cookies } = useCookies('token')
-  return { Authorization: `Token ${cookies.token}` }
 }

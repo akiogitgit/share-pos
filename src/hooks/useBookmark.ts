@@ -1,50 +1,36 @@
 import { useCallback } from 'react'
-import { useAuthHeaderParams } from './login/useAuth'
 import { useGetApi } from './useApi'
 import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
 import { postApi, HttpError, deleteApi } from 'utils/api'
 
 export const useAddBookmark = () => {
-  const authHeaderParams = useAuthHeaderParams()
-
-  const addBookmark = useCallback(
-    async (folderId: number, post: Post) => {
-      try {
-        const res = await postApi(
-          '/folders/bookmarks',
-          { folder_id: folderId, post_id: post.id },
-          authHeaderParams,
-        )
-        console.log(res)
-      } catch (e) {
-        if (e instanceof HttpError) {
-          console.error(e.message)
-        }
+  const addBookmark = useCallback(async (folderId: number, post: Post) => {
+    try {
+      const res = await postApi('/folders/bookmarks', {
+        folder_id: folderId,
+        post_id: post.id,
+      })
+      console.log(res)
+    } catch (e) {
+      if (e instanceof HttpError) {
+        console.error(e.message)
       }
-    },
-    [authHeaderParams],
-  )
+    }
+  }, [])
 
   return { addBookmark }
 }
 
 export const useRemoveBookmark = (selectedFolder: number, post: Post) => {
-  const authHeaderParams = useAuthHeaderParams()
-
   const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
     `/folders/${selectedFolder}`,
     undefined,
-    authHeaderParams,
   )
 
   const removeBookmark = useCallback(async () => {
     try {
-      const res = await deleteApi(
-        `/folders/bookmarks/${post.bookmark?.id}`,
-        {},
-        authHeaderParams,
-      )
+      const res = await deleteApi(`/folders/bookmarks/${post.bookmark?.id}`, {})
       if (!bookmarkPosts) {
         return
       }
@@ -63,7 +49,7 @@ export const useRemoveBookmark = (selectedFolder: number, post: Post) => {
         console.error(e.message)
       }
     }
-  }, [authHeaderParams, bookmarkPosts, post.bookmark?.id, postsMutate])
+  }, [bookmarkPosts, post.bookmark?.id, postsMutate])
 
   return { removeBookmark }
 }

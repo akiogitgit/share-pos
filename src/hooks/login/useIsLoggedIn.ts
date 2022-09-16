@@ -1,32 +1,39 @@
-// import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-// import { useLogOut } from './useAuth'
-import { useCookies } from 'stores/useCookies'
-import { useGlobalState } from 'stores/useGlobalState'
+import { useGetApi } from 'hooks/useApi'
 
-// export const useObserveAuthInfoExpired = () => {
-//   const { cookies } = useCookies('authInfo')
-//   const { logOut } = useLogOut()
-//   const router = useRouter()
+// user_idがCookieにあるとログイン。でも、そのまま確認できない。
+// /users/me にアクセスしてresがあるなら、ログイン
+// resからuser_info{user_id,username}をCookieに格納
+export const useIsLoggedIn = (): boolean => {
+  const { data, error } = useGetApi('/users/me')
+  console.log(data)
+  // const { cookies } = useCookies('token')
+  // const [isLoggedIn, setIsLoggedIn] = useGlobalState('isLoggedIn')
+
+  // useEffect(() => {
+  //   if (cookies.token) {
+  //     setIsLoggedIn(true)
+  //   } else {
+  //     setIsLoggedIn(false)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [cookies.token])
+  if (error) {
+    return false
+  }
+  return data ?? true
+}
+
+// export const useIsLoggedIn = (): boolean => {
+//   const { cookies } = useCookies('token')
+//   const [isLoggedIn, setIsLoggedIn] = useGlobalState('isLoggedIn')
 
 //   useEffect(() => {
-//     if (Number(cookies?.authInfo?.expiry) < Date.now() / 1000) {
-//       logOut()
+//     if (cookies.token) {
+//       setIsLoggedIn(true)
+//     } else {
+//       setIsLoggedIn(false)
 //     }
-//   }, [cookies?.authInfo?.expiry, logOut, router.pathname])
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [cookies.token])
+//   return isLoggedIn ?? true
 // }
-
-export const useIsLoggedIn = (): boolean => {
-  const { cookies } = useCookies('token')
-  const [isLoggedIn, setIsLoggedIn] = useGlobalState('isLoggedIn')
-
-  useEffect(() => {
-    if (cookies.token) {
-      setIsLoggedIn(true)
-    } else {
-      setIsLoggedIn(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cookies.token])
-  return isLoggedIn ?? true
-}

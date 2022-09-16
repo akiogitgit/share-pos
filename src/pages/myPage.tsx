@@ -5,7 +5,6 @@ import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
@@ -23,11 +22,9 @@ const MyPage: NextPage = () => {
   useRequireLogin()
   const [selectedPublished, setSelectedPublished] = useState(true)
   const { cookies } = useCookies('userInfo')
-  const authHeaderParams = useAuthHeaderParams()
   const { data: myPosts } = useGetApi<MyPosts>(
     `/users/${cookies.userInfo?.id}`,
     undefined,
-    authHeaderParams,
   )
 
   return (
