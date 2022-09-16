@@ -7,8 +7,8 @@ import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { User } from 'types/user/user'
 
 type MyPosts = {
   user: {
@@ -21,11 +21,8 @@ type MyPosts = {
 const MyPage: NextPage = () => {
   useRequireLogin()
   const [selectedPublished, setSelectedPublished] = useState(true)
-  const { cookies } = useCookies('user_info')
-  const { data: myPosts } = useGetApi<MyPosts>(
-    `/users/${cookies.user_info?.id}`,
-    undefined,
-  )
+  const { data: user } = useGetApi<User>('/users/me')
+  const { data: myPosts } = useGetApi<MyPosts>(`/users/${user?.id}`)
 
   return (
     <Layout>

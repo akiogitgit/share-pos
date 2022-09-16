@@ -3,9 +3,10 @@ import { FC, useCallback, useState } from 'react'
 import { BsThreeDots as BsThreeDotsIcon } from 'react-icons/bs'
 
 import { FolderList } from './FolderList'
+import { useGetApi } from 'hooks/useApi'
 import { useDeletePost } from 'hooks/usePost'
-import { useCookies } from 'stores/useCookies'
 import { Post } from 'types/post'
+import { User } from 'types/user/user'
 
 type MenuProps = {
   onEdit?: () => void
@@ -23,7 +24,7 @@ export const PostMenuButton: FC<Props> = ({
   onDelete,
   onAddBookmark,
 }) => {
-  const { cookies } = useCookies('user_info')
+  const { data: user } = useGetApi<User>('/users/me')
   const { deletePost } = useDeletePost(post)
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenFolder, setIsOpenFolder] = useState(false)
@@ -53,7 +54,7 @@ export const PostMenuButton: FC<Props> = ({
 
           <div className='top-[-35px] right-5px z-2 absolute sm:top-[-35px] '>
             <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform shadow-red-200 w-170px sm:w-150px'>
-              {cookies.user_info?.id === post.userId && (
+              {user?.id === post.userId && (
                 <>
                   <div
                     className='rounded-t-10px px-4 pt-2 pb-1 hover:bg-red-300'
@@ -81,7 +82,7 @@ export const PostMenuButton: FC<Props> = ({
               )}
               <div
                 className={`py-1 px-4 hover:bg-red-300 ${
-                  cookies.user_info?.id !== post.userId && 'pt-2 rounded-t-10px'
+                  user?.id !== post.userId && 'pt-2 rounded-t-10px'
                 }`}
                 onClick={() => {
                   navigator.clipboard.writeText(post.url)
@@ -91,7 +92,7 @@ export const PostMenuButton: FC<Props> = ({
               >
                 記事リンクをコピー
               </div>
-              {cookies.user_info && (
+              {user && (
                 <div className='rounded-b-10px group relative'>
                   <div
                     className='px-4 pt-1 pb-2 hover:bg-red-300'
