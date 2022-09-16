@@ -21,9 +21,9 @@ type MyPosts = {
 const MyPage: NextPage = () => {
   useRequireLogin()
   const [selectedPublished, setSelectedPublished] = useState(true)
-  const { cookies } = useCookies('userInfo')
+  const { cookies } = useCookies('user_info')
   const { data: myPosts } = useGetApi<MyPosts>(
-    `/users/${cookies.userInfo?.id}`,
+    `/users/${cookies.user_info?.id}`,
     undefined,
   )
 

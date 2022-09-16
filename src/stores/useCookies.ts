@@ -3,14 +3,14 @@ import { useCookies as useCookiesOriginal } from 'react-cookie'
 
 type Cookies = {
   token: string
-  userInfo: {
+  user_info: {
     id: number
     username: string
   }
 }
 
 // 1つだけなら useCookies("token")
-// 2つ以上なら useCookies(["token","userInfo"])
+// 2つ以上なら useCookies(["token","user_info"])
 export const useCookies = <
   Key extends keyof Cookies,
   Data extends Cookies[Key],

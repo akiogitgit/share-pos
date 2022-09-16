@@ -6,7 +6,7 @@ import { User } from 'types/user/user'
 import { deleteApi, HttpError, postApi } from 'utils/api'
 
 export const useLogin = () => {
-  const { set } = useCookies(['token', 'userInfo'])
+  const { set } = useCookies(['token', 'user_info'])
   const router = useRouter()
 
   const login = useCallback(
@@ -18,7 +18,7 @@ export const useLogin = () => {
         }
 
         // set('token', res.token)
-        // set('userInfo', { id: res.id, username: res.username })
+        // set('user_info', { id: res.id, username: res.username })
         console.log('ログインに成功しました', res)
         router.push('/')
       } catch (e) {
@@ -33,7 +33,7 @@ export const useLogin = () => {
 }
 
 export const useSignUp = () => {
-  const { set } = useCookies(['token', 'userInfo'])
+  const { set } = useCookies(['token', 'user_info'])
   const router = useRouter()
 
   const signUp = useCallback(
@@ -47,7 +47,7 @@ export const useSignUp = () => {
         console.log('ユーザー作成に成功しました', res)
 
         // set('token', res.token)
-        // set('userInfo', { id: res.id, username: res.username })
+        // set('user_info', { id: res.id, username: res.username })
         router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
