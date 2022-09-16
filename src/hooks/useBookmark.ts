@@ -8,8 +8,8 @@ export const useAddBookmark = () => {
   const addBookmark = useCallback(async (folderId: number, post: Post) => {
     try {
       const res = await postApi('/folders/bookmarks', {
-        folder_id: folderId,
-        post_id: post.id,
+        folderId,
+        postId: post.id,
       })
       console.log(res)
     } catch (e) {
