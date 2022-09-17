@@ -4,10 +4,8 @@ import { Folder } from 'types/bookmark'
 import { postApi, HttpError, putApi, deleteApi } from 'utils/api'
 
 export const useCreateFolder = () => {
-  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
-    '/folders',
-    undefined,
-  )
+  const { data: folders, mutate: mutateFolders } =
+    useGetApi<Folder[]>('/folders')
 
   const createFolder = useCallback(
     async (bookmarkName: string) => {
@@ -32,10 +30,8 @@ export const useCreateFolder = () => {
 }
 
 export const useUpdateFolder = () => {
-  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
-    '/folders',
-    undefined,
-  )
+  const { data: folders, mutate: mutateFolders } =
+    useGetApi<Folder[]>('/folders')
 
   const updateFolder = useCallback(
     async (id: number, editFolderName: string) => {
@@ -68,10 +64,8 @@ export const useUpdateFolder = () => {
 }
 
 export const useDeleteFolder = () => {
-  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
-    '/folders',
-    undefined,
-  )
+  const { data: folders, mutate: mutateFolders } =
+    useGetApi<Folder[]>('/folders')
 
   const deleteFolder = useCallback(
     async (id: number) => {

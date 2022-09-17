@@ -65,7 +65,7 @@ export const useDeletePost = (post: Post) => {
 
   const deletePost = useCallback(async () => {
     try {
-      const res = await deleteApi(`/posts/${post.id}`, undefined)
+      const res = await deleteApi(`/posts/${post.id}`)
       if (!posts) {
         return
       }

@@ -16,7 +16,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { addBookmark } = useAddBookmark()
 
-  const { data: folders } = useGetApi<Folder[]>('/folders', undefined)
+  const { data: folders } = useGetApi<Folder[]>('/folders')
 
   return (
     <div>

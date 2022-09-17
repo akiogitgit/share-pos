@@ -25,7 +25,6 @@ export const useAddBookmark = () => {
 export const useRemoveBookmark = (selectedFolder: number, post: Post) => {
   const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
     `/folders/${selectedFolder}`,
-    undefined,
   )
 
   const removeBookmark = useCallback(async () => {

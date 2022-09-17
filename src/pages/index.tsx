@@ -10,7 +10,7 @@ import { deleteApi } from 'utils/api'
 const Home: NextPage = () => {
   const { data: posts, error } = useGetApi<Post[]>('/posts')
   if (false) {
-    deleteApi('/posts/delete_all', undefined)
+    deleteApi('/posts/delete_all')
   }
   const [stars, setStars] = useState(1)
 

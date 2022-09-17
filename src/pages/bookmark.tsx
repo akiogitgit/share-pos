@@ -12,11 +12,10 @@ const Bookmark: NextPage = () => {
   useRequireLogin()
   const [selectedFolderIndex, setSelectedFolderIndex] = useState(0)
 
-  const { data: folders } = useGetApi<Folder[]>('/folders', undefined)
+  const { data: folders } = useGetApi<Folder[]>('/folders')
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
     `/folders/${folders && folders[selectedFolderIndex]?.id}`,
-    undefined,
   )
 
   return (
