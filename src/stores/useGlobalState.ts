@@ -1,8 +1,6 @@
 import useSWR, { KeyedMutator } from 'swr'
 
-type GlobalState = {
-  isLoggedIn: boolean
-}
+type GlobalState = {}
 
 export const useGlobalState = <
   Path extends keyof GlobalState,

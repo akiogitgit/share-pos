@@ -1,19 +1,17 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Post, PostRequestParams } from 'types/post'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
-  const authHeaderParams = useAuthHeaderParams()
   const router = useRouter()
 
   const createPost = useCallback(
     async (params: PostRequestParams) => {
       try {
-        const newPost = await postApi<Post>('/posts', params, authHeaderParams)
+        const newPost = await postApi<Post>('/posts', params)
         if (newPost && posts) {
           console.log('投稿の作成に成功 ', newPost)
           router.push('/')
@@ -25,7 +23,7 @@ export const useCreatePost = () => {
         }
       }
     },
-    [authHeaderParams, mutate, posts, router],
+    [mutate, posts, router],
   )
 
   return { createPost }
@@ -33,16 +31,11 @@ export const useCreatePost = () => {
 
 export const useUpdatePost = (post: Post) => {
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
-  const authHeaderParams = useAuthHeaderParams()
 
   const updatePost = useCallback(
     async (params: PostRequestParams) => {
       try {
-        const res = await putApi<Post>(
-          `/posts/${post.id}`,
-          params,
-          authHeaderParams,
-        )
+        const res = await putApi<Post>(`/posts/${post.id}`, params)
         if (!res || !posts) {
           return
         }
@@ -61,7 +54,7 @@ export const useUpdatePost = (post: Post) => {
         }
       }
     },
-    [authHeaderParams, mutate, post.id, posts],
+    [mutate, post.id, posts],
   )
 
   return { updatePost }
@@ -69,15 +62,10 @@ export const useUpdatePost = (post: Post) => {
 
 export const useDeletePost = (post: Post) => {
   const { data: posts, mutate } = useGetApi<Post[]>('/posts')
-  const authHeaderParams = useAuthHeaderParams()
 
   const deletePost = useCallback(async () => {
     try {
-      const res = await deleteApi(
-        `/posts/${post.id}`,
-        undefined,
-        authHeaderParams,
-      )
+      const res = await deleteApi(`/posts/${post.id}`)
       if (!posts) {
         return
       }
@@ -90,7 +78,7 @@ export const useDeletePost = (post: Post) => {
         console.error(e.message)
       }
     }
-  }, [authHeaderParams, mutate, post.id, posts])
+  }, [mutate, post.id, posts])
 
   return { deletePost }
 }

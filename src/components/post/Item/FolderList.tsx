@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
 
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { useAddBookmark } from 'hooks/useBookmark'
 import { Folder } from 'types/bookmark'
@@ -17,12 +16,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { addBookmark } = useAddBookmark()
 
-  const authHeaderParams = useAuthHeaderParams()
-  const { data: folders } = useGetApi<Folder[]>(
-    '/folders',
-    undefined,
-    authHeaderParams,
-  )
+  const { data: folders } = useGetApi<Folder[]>('/folders')
 
   return (
     <div>

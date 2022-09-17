@@ -4,26 +4,18 @@ import { BookmarkFolderList } from 'components/bookmark/BookmarkFolderList'
 import { CreateFolderField } from 'components/bookmark/CreateFolderField'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
 import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
   useRequireLogin()
-  const authHeaderParams = useAuthHeaderParams()
   const [selectedFolderIndex, setSelectedFolderIndex] = useState(0)
 
-  const { data: folders } = useGetApi<Folder[]>(
-    '/folders',
-    undefined,
-    authHeaderParams,
-  )
+  const { data: folders } = useGetApi<Folder[]>('/folders')
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
     `/folders/${folders && folders[selectedFolderIndex]?.id}`,
-    undefined,
-    authHeaderParams,
   )
 
   return (

@@ -2,7 +2,7 @@ import { isEmptyObj } from './isEmptyObj'
 import { toCamelCaseObj } from './toCamelCaseObj'
 import { Res } from 'types/response'
 
-export const BASE_URL = 'https://share-pos.herokuapp.com/api/v1'
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
@@ -51,6 +51,8 @@ export const fetchApi = async <T>(
         ? undefined
         : JSON.stringify(requestParams),
       headers: { ...requestHeaders },
+      mode: 'cors',
+      credentials: 'include',
     })
 
     if (!res.ok) {
