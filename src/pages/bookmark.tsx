@@ -53,9 +53,9 @@ const Bookmark: NextPage = () => {
               <div className='mt-4 w-full'>
                 {/* TODO: スマホサイズのレイアウト修正 */}
                 <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
-                  {bookmarkPosts.posts.map((post, i) => (
+                  {bookmarkPosts.posts.map((post) => (
                     <PostItem
-                      key={i}
+                      key={post.id}
                       post={post}
                       selectedFolderId={folders[selectedFolderIndex].id}
                     />

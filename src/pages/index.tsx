@@ -27,9 +27,9 @@ const Home: NextPage = () => {
         {posts?.length && (
           <div className='mt-4'>
             <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
-              {posts.map((post, i) => (
-                <div key={i} className='mb-1'>
-                  <PostItem post={post} key={i} />
+              {posts.map((post) => (
+                <div key={post.id} className='mb-1'>
+                  <PostItem post={post} />
                 </div>
               ))}
             </div>

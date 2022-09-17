@@ -43,7 +43,6 @@ export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
         {isEditing ? (
           <div>
             <PostForm
-              key={post.id}
               onSubmit={async (params) => {
                 await updatePost(params)
                 setIsEditing(false)
@@ -67,8 +66,8 @@ export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
 
             <div className='flex mt-1 items-center justify-between'>
               <div className='flex'>
-                {[...Array(post.evaluation)].map((v, i) => (
-                  <div key={i}>☆</div>
+                {[...Array(post.evaluation)].map((v) => (
+                  <div key={v}>☆</div>
                 ))}
               </div>
               <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
