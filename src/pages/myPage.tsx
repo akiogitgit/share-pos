@@ -54,9 +54,9 @@ const MyPage: NextPage = () => {
             {[
               { label: '公開している投稿', published: true },
               { label: '非公開の投稿', published: false },
-            ].map((tab, i) => (
+            ].map((tab) => (
               <button
-                key={i}
+                key={tab.label}
                 onClick={() => setSelectedPublished(tab.published)}
                 className={`${
                   selectedPublished === tab.published
@@ -74,9 +74,9 @@ const MyPage: NextPage = () => {
           <div className='flex flex-wrap mt-4 gap-4 justify-center items-start sm:justify-start'>
             {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
             {myPosts.posts.map(
-              (post, i) =>
+              (post) =>
                 selectedPublished === post.published && (
-                  <PostItem post={post} key={i} />
+                  <PostItem post={post} key={post.id} />
                 ),
             )}
           </div>
