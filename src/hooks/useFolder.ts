@@ -50,7 +50,7 @@ export const useUpdateFolder = () => {
           return folder
         })
 
-        mutateFolders(newFolders)
+        mutateFolders(newFolders, false)
         console.log(res)
       } catch (e) {
         if (e instanceof HttpError) {
@@ -72,7 +72,7 @@ export const useDeleteFolder = () => {
       try {
         const res = await deleteApi(`/folders/${id}`)
         const newFolders = folders?.filter((folder) => folder.id !== id)
-        mutateFolders(newFolders)
+        mutateFolders(newFolders, false)
 
         console.log(res)
       } catch (e) {
