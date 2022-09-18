@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useGetApi } from 'hooks/useApi'
-import { Post, PostRequestParams } from 'types/post'
+import { MyPosts, Post, PostRequestParams } from 'types/post'
+import { User } from 'types/user/user'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
@@ -30,7 +31,11 @@ export const useCreatePost = () => {
 }
 
 export const useUpdatePost = (post: Post) => {
-  const { data: posts, mutate } = useGetApi<Post[]>('/posts')
+  const { data: user } = useGetApi<User>('/users/me')
+  const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
+  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<MyPosts>(
+    `/users/${user?.id}`,
+  )
 
   const updatePost = useCallback(
     async (params: PostRequestParams) => {
@@ -46,7 +51,13 @@ export const useUpdatePost = (post: Post) => {
           return post
         })
 
-        mutate(newPosts, false)
+        const newMyPosts = {
+          user: myPosts?.user,
+          posts: newPosts,
+        }
+
+        mutatePosts(newPosts, false)
+        mutateMyPosts(newMyPosts, false)
         console.log('投稿の修正に成功しました。 ', params)
       } catch (e) {
         if (e instanceof HttpError) {
@@ -54,7 +65,7 @@ export const useUpdatePost = (post: Post) => {
         }
       }
     },
-    [mutate, post.id, posts],
+    [mutatePosts, post.id, posts],
   )
 
   return { updatePost }

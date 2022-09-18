@@ -7,16 +7,8 @@ import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { Post } from 'types/post'
+import { MyPosts } from 'types/post'
 import { User } from 'types/user/user'
-
-type MyPosts = {
-  user: {
-    id: number
-    username: string
-  }
-  posts: Post[]
-}
 
 const MyPage: NextPage = () => {
   useRequireLogin()
