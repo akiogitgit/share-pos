@@ -1,7 +1,9 @@
 import { useCallback } from 'react'
 import { useCookies as useCookiesOriginal } from 'react-cookie'
 
-type Cookies = {}
+type Cookies = {
+  token: string
+}
 
 // 1つだけなら useCookies("token")
 // 2つ以上なら useCookies(["token","user_info"])
