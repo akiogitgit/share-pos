@@ -23,6 +23,9 @@ const Home: NextPage = () => {
   const dec = decrypted(enc)
   console.log('dec', dec)
 
+  // console.log('token ', document.cookie)
+  // console.log('token ', document.cookie.split('token')[1].split('=')[1])
+
   // const encrypted = crypto.AES.encrypt('hogehoge', 'key')
   // console.log('暗号', encrypted.toString())
   // const decrypted = crypto.AES.decrypt(encrypted, 'key').toString(
