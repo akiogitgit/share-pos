@@ -64,8 +64,7 @@ export const console_cookie = (cookie: string) => {
     .toString()
     .split('--')
     .map((v) => Buffer.from(v, 'base64'))
-  return encrypted_data
-  // console.log('----------')
-  // console.log('create_digest', digest, digest === create_digest(data))
-  // console.log('decrypt_data', decrypt_data(encrypted_data, iv))
+  console.log('----------')
+  console.log('create_digest', digest, digest === create_digest(data))
+  console.log('decrypt_data', decrypt_data(encrypted_data, iv))
 }
