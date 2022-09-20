@@ -18,6 +18,7 @@ export const useCookies = <
 
   const set = useCallback(
     (key: Key, value: Data) => {
+      // setCookie(key, value, { httpOnly: true, secure: true, sameSite: 'none' })
       setCookie(key, value)
     },
     [setCookie],

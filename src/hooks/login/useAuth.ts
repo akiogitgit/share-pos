@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { useCookies } from 'stores/useCookies'
 import { LoginRequestParams, SignUpRequestParams } from 'types/user/auth'
 import { User } from 'types/user/user'
-import { deleteApi, HttpError, postApi } from 'utils/api'
+import { HttpError, postApi } from 'utils/api'
 import { encrypted } from 'utils/encrypt'
 
 export const useLogin = () => {
@@ -34,6 +34,7 @@ export const useLogin = () => {
 
 export const useSignUp = () => {
   const router = useRouter()
+  const { set } = useCookies('token')
 
   const signUp = useCallback(
     async (params: SignUpRequestParams) => {
@@ -44,6 +45,7 @@ export const useSignUp = () => {
           return
         }
 
+        set('token', encrypted(res.token))
         console.log('ユーザー作成に成功しました', res)
         router.push('/')
       } catch (e) {
@@ -52,27 +54,18 @@ export const useSignUp = () => {
         }
       }
     },
-    [router],
+    [router, set],
   )
   return { signUp }
 }
 
 export const useLogOut = () => {
   const router = useRouter()
-  const logout = useCallback(async () => {
-    try {
-      const res = await deleteApi('/auth/logout')
-      console.log('ログアウトしました')
-    } catch (e) {
-      if (e instanceof HttpError) {
-        console.log(e)
-      }
-    }
-  }, [])
+  const { remove } = useCookies('token')
 
   return {
     logOut: () => {
-      logout()
+      remove('token')
       router.push('/')
     },
   }
