@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
+import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
 import { LoginRequestParams, SignUpRequestParams } from 'types/user/auth'
-import { User } from 'types/user/user'
+import { UserWithToken } from 'types/user/user'
 import { HttpError, postApi } from 'utils/api'
 import { encrypted } from 'utils/encrypt'
 
@@ -13,7 +14,7 @@ export const useLogin = () => {
   const login = useCallback(
     async (params: LoginRequestParams) => {
       try {
-        const res = await postApi<User>('/auth/login', params)
+        const res = await postApi<UserWithToken>('/auth/login', params)
         if (!res) {
           return
         }
@@ -40,7 +41,7 @@ export const useSignUp = () => {
     async (params: SignUpRequestParams) => {
       // ユーザー作成に成功したら、そのままログイン
       try {
-        const res = await postApi<User>('/auth/sign_up', params)
+        const res = await postApi<UserWithToken>('/auth/sign_up', params)
         if (!res) {
           return
         }
@@ -62,10 +63,12 @@ export const useSignUp = () => {
 export const useLogOut = () => {
   const router = useRouter()
   const { remove } = useCookies('token')
+  const { data, mutate } = useGetApi('/users/me')
 
   return {
     logOut: () => {
       remove('token')
+      mutate(undefined, false)
       router.push('/')
     },
   }

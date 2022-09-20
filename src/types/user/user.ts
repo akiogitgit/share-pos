@@ -5,5 +5,6 @@ export type User = {
   email: string
   createdAt: string
   updatedAt: string
-  token: string
 }
+
+export type UserWithToken = User & { token: string }
