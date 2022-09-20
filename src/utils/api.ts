@@ -1,8 +1,11 @@
+import { Cookies } from 'react-cookie'
+import { decrypted } from './encrypt'
 import { isEmptyObj } from './isEmptyObj'
 import { toCamelCaseObj } from './toCamelCaseObj'
 import { Res } from 'types/response'
 
-export const BASE_URL = 'https://share-pos.herokuapp.com/api/v1'
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+// export const BASE_URL = 'http://localhost:3001/api/v1'
 
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
@@ -28,6 +31,15 @@ export const fetchApi = async <T>(
   let requestUrl = url
   let requestParams = { ...params }
   let requestHeaders = headers || {}
+  const cookie = new Cookies()
+
+  // 暗号化されたtokenをCookieから取得して複合化してheaderに格納
+  // 以前はtokenをRailsがCookieにセットしていたが、端末がスマホだとセットされない。
+  // 代わりにfetchApiを使うたびに、headerにtokenを手動で入れた
+  if (cookie.get('token')) {
+    const token = decrypted(cookie.get('token'))
+    requestHeaders['Authorization'] = `Token ${token}`
+  }
 
   if (method === 'GET') {
     // /example/1 -> /example/1?searchWord="あああ"

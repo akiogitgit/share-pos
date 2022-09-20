@@ -1,19 +1,19 @@
 import { FC, useCallback, useState } from 'react'
-import { BiCommentDetail } from 'react-icons/bi'
-import { RiArticleLine } from 'react-icons/ri'
+
+import { BiCommentDetail as BiCommentDetailIcon } from 'react-icons/bi'
+import { RiArticleLine as RiArticleLineIcon } from 'react-icons/ri'
+
 import { PostRequestParams } from 'types/post'
 
 // Props多すぎ？
 type Props = {
   onSubmit: (params: PostRequestParams) => void
-  className?: string // widthを fullにするかどうか
   formParamsProps?: PostRequestParams
   submitButtonText?: string
 }
 
 export const PostForm: FC<Props> = ({
   onSubmit,
-  className = 'max-w-300px w-80vw',
   formParamsProps = {
     comment: '',
     url: '',
@@ -50,7 +50,7 @@ export const PostForm: FC<Props> = ({
           onSubmit(formParams)
           e.preventDefault()
         }}
-        className={`${className}  min-w-90% relative`}
+        className='w-full max-w-430px relative'
       >
         <div>
           <label htmlFor='username' className='font-bold text-sm block '>
@@ -70,7 +70,7 @@ export const PostForm: FC<Props> = ({
             />
           </div>
           <div className='flex justify-end'>
-            <BiCommentDetail className='top-33px right-10px absolute' />
+            <BiCommentDetailIcon className='top-33px right-10px absolute' />
           </div>
         </div>
         <div className='mt-2 relative'>
@@ -88,7 +88,7 @@ export const PostForm: FC<Props> = ({
           />
 
           <div className='flex justify-end'>
-            <RiArticleLine className='top-33px right-10px absolute' />
+            <RiArticleLineIcon className='top-33px right-10px absolute' />
           </div>
         </div>
         <div className='h-80px mt-2 relative'>
@@ -105,7 +105,7 @@ export const PostForm: FC<Props> = ({
             name='evaluation'
             onChange={(e) => onChange(e)}
           />
-          <div className='transform translate-y-[-40px] translate-x-150px block'>
+          <div className='transform w-2 translate-y-[-40px] translate-x-40vw sm:translate-x-125px'>
             {formParams.evaluation}
           </div>
         </div>

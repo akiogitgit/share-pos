@@ -1,166 +1,78 @@
 import Link from 'next/link'
-import { FC, useMemo, useState } from 'react'
+import { FC, useState } from 'react'
+
+import { TbBookmarkOff as TbBookmarkOffIcon } from 'react-icons/tb'
 
 import { PostForm } from '../PostForm'
-import { FolderList } from './FolderList'
+import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
-import { useUpdatePost, useDeletePost } from 'hooks/usePost'
-import { useCookies } from 'stores/useCookies'
+import { PostMenuButton } from './PostMenuButton'
+import { useRemoveBookmark } from 'hooks/useBookmark'
+import { useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
-import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
   post: Post
-  className?: string
+  selectedFolderId?: number
 }
 
-export const PostItem: FC<Props> = ({ post, className }) => {
-  const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const [isOpenComment, setIsOpenComment] = useState(false)
-  const [isEdit, setIsEdit] = useState(false)
-  const { cookies } = useCookies('userInfo')
+export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
+  const [isEditing, setIsEditing] = useState(false)
 
+  const { removeBookmark } = useRemoveBookmark(selectedFolderId, post)
   const { updatePost } = useUpdatePost(post)
-  const { deletePost } = useDeletePost(post)
-  const { ref, height } = useElementSize()
-
-  // 要素の高さを取得
-  const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
-
-  const showSeeMore = useMemo(
-    () => hasElementMoreThan3Lines && !isOpenComment,
-    [hasElementMoreThan3Lines, isOpenComment],
-  )
 
   return (
-    <article
-      className={`${className} bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px`}
-    >
+    <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
         <Link href={`/user/${post.user.id}`}>
           <h2 className='cursor-pointer font-bold text-20px'>
             {post.user.username}
           </h2>
         </Link>
-        {/* 投稿メニューボタン */}
-        {!isEdit && (
-          <button
-            className='cursor-pointer text-23px duration-100 hover:opacity-50'
-            onClick={() => setIsOpenMenu(!isOpenMenu)}
-          >
-            ・・・
-          </button>
-        )}
-      </div>
-      {isOpenMenu && (
-        <div className='flex relative justify-end'>
-          <div
-            onClick={() => setIsOpenMenu(false)}
-            className='h-100vh top-0 left-0 w-100vw z-10 fixed'
-          ></div>
-          <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform top-[-20px] right-50px shadow-red-200 w-150px z-11 absolute'>
-            {cookies.userInfo?.id === post.userId && (
-              <>
-                <div
-                  className='rounded-t-10px px-4 pt-2 hover:bg-red-300'
-                  onClick={() => {
-                    setIsEdit(true)
-                    setIsOpenMenu(false)
-                  }}
-                >
-                  投稿を編集する
-                </div>
-                <div
-                  className='px-4 pt-2 hover:bg-red-300'
-                  onClick={() => {
-                    deletePost()
-                    setIsOpenMenu(false)
-                  }}
-                >
-                  投稿を
-                  <span className='font-bold text-red-500 text-18px'>削除</span>
-                  する
-                </div>
-              </>
-            )}
-            <div
-              className='rounded-b-10px px-4 pt-2 hover:bg-red-300'
-              onClick={() => {
-                navigator.clipboard.writeText(post.url)
-                alert('リンクをコピーしました')
-                setIsOpenMenu(false)
-              }}
-            >
-              記事リンクをコピー
-            </div>
-            {cookies.userInfo && (
-              <div className='rounded-b-10px group relative'>
-                <div className=' py-2 px-4 hover:bg-red-300'>
-                  ブックマークに追加
-                </div>
-                <div className='hidden group-hover:block'>
-                  <FolderList post={post} setIsOpenMenu={setIsOpenMenu} />
-                </div>
-              </div>
-            )}
-          </div>
+        <div className='flex gap-2'>
+          {/* ブックマーク解除 (マイページ/ブックマークで表示) */}
+          {post.bookmark && (
+            <TbBookmarkOffIcon
+              className='cursor-pointer text-40px sm:text-30px'
+              onClick={removeBookmark}
+            />
+          )}
+          {/* 投稿メニューボタン */}
+          <PostMenuButton post={post} onEdit={() => setIsEditing(true)} />
         </div>
-      )}
+      </div>
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
-        {isEdit ? (
+        {isEditing ? (
           <div>
             <PostForm
-              key={post.id}
               onSubmit={async (params) => {
                 await updatePost(params)
-                setIsEdit(false)
+                setIsEditing(false)
               }}
-              // className='max-w-429px w-83vw sm:w-259px'
-              className='w-full'
               formParamsProps={post}
               submitButtonText='更新'
             />
             <button
               className='border bg-gray-500 border-gray-500 mt-2 text-white w-full py-1 duration-300 hover:(opacity-60) '
-              onClick={() => setIsEdit(false)}
+              onClick={() => setIsEditing(false)}
             >
               キャンセル
             </button>
           </div>
         ) : (
           <>
-            <div
-              onClick={() =>
-                hasElementMoreThan3Lines && setIsOpenComment(!isOpenComment)
-              }
-              className={`${
-                !isOpenComment && 'h-70px'
-              } overflow-hidden whitespace-pre-wrap group relative`}
-            >
-              {/* <textarea className='m-2 ring w-100%' ref={ref}></textarea> */}
-              {/* <div className='h-auto'> */}
-              <div ref={ref} className='h-auto'>
-                {post.comment}
-              </div>
-              <div
-                className={`bg-red-200 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
-                  showSeeMore
-                    ? 'visible sm:invisible sm:group-hover:visible'
-                    : 'invisible'
-                }`}
-              >
-                もっとみる
-              </div>
-            </div>
+            <PostItemComment comment={post.comment} />
 
+            {/* urlのサムネイル画像等 */}
             <PostLinkCard post={post} />
 
             <div className='flex mt-1 items-center justify-between'>
               <div className='flex'>
-                {[...Array(post.evaluation)].map((v, i) => (
-                  <div key={i}>☆</div>
+                {[...Array(post.evaluation)].map((v) => (
+                  <div key={v}>☆</div>
                 ))}
               </div>
               <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>

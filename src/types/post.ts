@@ -20,6 +20,14 @@ export type Post = {
   }
 }
 
+export type MyPosts = {
+  user: {
+    id: number
+    username: string
+  }
+  posts: Post[]
+}
+
 export type PostRequestParams = {
   comment: string
   url: string

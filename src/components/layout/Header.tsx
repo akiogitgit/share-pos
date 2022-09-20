@@ -1,7 +1,13 @@
 import Link from 'next/link'
 import { FC } from 'react'
-import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
-import { BsPencilSquare } from 'react-icons/bs'
+
+import {
+  AiOutlineSearch as AiOutlineSearchIcon,
+  AiOutlineUser as AiOutlineUserIcon,
+} from 'react-icons/ai'
+import { BsPencilSquare as BsPencilSquareIcon } from 'react-icons/bs'
+import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
+
 import { useLogOut } from 'hooks/login/useAuth'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
@@ -12,6 +18,7 @@ export const Header: FC = () => {
   return (
     <>
       <header className='bg-white w-full py-2 top-0 z-100 fixed'>
+        {/* <header className='bg-white w-full py-2 top-0 z-100 sticky'> */}
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
             <h1 className='cursor-pointer mt-0 mb-1  text-4xl text-red-500 sm:text-6xl'>
@@ -21,7 +28,7 @@ export const Header: FC = () => {
 
           <div className='flex gap-3 justify-end items-center'>
             {/* <div className='gap-3 hidden justify-end items-center sm:flex'> */}
-            <AiOutlineSearch className='cursor-pointer mt-1' />
+            <AiOutlineSearchIcon className='cursor-pointer mt-1' />
             <div className='hidden'>
               <input
                 type='text'
@@ -36,7 +43,15 @@ export const Header: FC = () => {
                     <div className='duration-300 hidden sm:block hover:(underline) '>
                       投稿する
                     </div>
-                    <BsPencilSquare />
+                    <BsPencilSquareIcon />
+                  </div>
+                </Link>
+                <Link href='/bookmark'>
+                  <div className='cursor-pointer flex gap-0.5 items-center'>
+                    <div className='duration-300 hidden sm:block hover:(underline) '>
+                      ブックマーク
+                    </div>
+                    <HiOutlineBookOpenIcon />
                   </div>
                 </Link>
                 <Link href='/myPage'>
@@ -45,7 +60,7 @@ export const Header: FC = () => {
                     <div className='duration-300 hidden sm:block hover:(underline) '>
                       マイページ
                     </div>
-                    <AiOutlineUser />
+                    <AiOutlineUserIcon />
                   </div>
                 </Link>
                 <div

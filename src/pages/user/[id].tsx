@@ -2,8 +2,6 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { PostItemList } from 'components/post/PostItemList'
-import { useAuthHeaderParams } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
 import { User } from 'types/user/user'
@@ -16,8 +14,7 @@ type UserParams = {
 const User: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
-  const authHeader = useAuthHeaderParams()
-  const { data: user } = useGetApi<UserParams>(`/users/${id}`, {}, authHeader)
+  const { data: user } = useGetApi<UserParams>(`/users/${id}`)
   console.log(user)
 
   return (
@@ -30,11 +27,15 @@ const User: NextPage = () => {
       <div>投稿数：20</div>
       <div>総いいね数?：1</div>
       {user?.posts.length && (
-        <PostItemList className='flex flex-wrap mt-4 gap-3 justify-center'>
-          {user.posts.map((post, i) => (
-            <PostItem post={post} key={i} />
-          ))}
-        </PostItemList>
+        <div className='mt-4'>
+          <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
+            {user.posts.map((post) => (
+              <div key={post.id} className='mb-1'>
+                <PostItem post={post} />
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </Layout>
   )

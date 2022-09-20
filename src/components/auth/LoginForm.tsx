@@ -1,6 +1,8 @@
 import { FC, useState } from 'react'
-import { AiOutlineMail } from 'react-icons/ai'
-import { RiLockPasswordLine } from 'react-icons/ri'
+
+import { AiOutlineMail as AiOutlineMailIcon } from 'react-icons/ai'
+import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
+
 import { LoginRequestParams } from 'types/user/auth'
 
 type Props = {
@@ -33,7 +35,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             onChange={(v) => setEmail(v.target.value)}
             className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <AiOutlineMail className='top-33px left-270px absolute' />
+          <AiOutlineMailIcon className='top-33px left-270px absolute' />
         </div>
         <div className='mt-2 relative '>
           <label htmlFor='password' className='font-bold text-sm block'>
@@ -48,7 +50,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             onChange={(v) => setPassword(v.target.value)}
             className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
           />
-          <RiLockPasswordLine className='top-33px left-270px absolute' />
+          <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
         <button
           type='submit'

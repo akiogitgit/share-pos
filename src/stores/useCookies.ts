@@ -3,14 +3,10 @@ import { useCookies as useCookiesOriginal } from 'react-cookie'
 
 type Cookies = {
   token: string
-  userInfo: {
-    id: number
-    username: string
-  }
 }
 
 // 1つだけなら useCookies("token")
-// 2つ以上なら useCookies(["token","userInfo"])
+// 2つ以上なら useCookies(["token","user_info"])
 export const useCookies = <
   Key extends keyof Cookies,
   Data extends Cookies[Key],
@@ -21,8 +17,19 @@ export const useCookies = <
   const [cookies, setCookie, removeCookie] = useCookiesOriginal(params)
 
   const set = useCallback(
-    (key: Key, value: Data) => {
-      setCookie(key, value)
+    (
+      key: Key,
+      value: Data,
+      options?: {
+        path?: string
+        expires?: Date
+        maxAge?: number
+        domain?: string
+        secure?: boolean
+        httpOnly?: boolean
+      },
+    ) => {
+      setCookie(key, value, options)
     },
     [setCookie],
   )
