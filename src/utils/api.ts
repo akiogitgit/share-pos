@@ -55,7 +55,6 @@ export const fetchApi = async <T>(
     requestHeaders['Content-Type'] = 'application/json'
   }
 
-  // requestHeaders['Authorization'] = `Token ${cookies.token}`
   let result: Res<object> | undefined
   try {
     const res = await fetch(encodeURI(`${BASE_URL}${requestUrl}`), {

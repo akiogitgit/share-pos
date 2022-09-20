@@ -18,7 +18,7 @@ export const useLogin = () => {
           return
         }
 
-        set('token', encrypted(res.token))
+        set('token', encrypted(res.token), { secure: true })
         console.log('ログインに成功しました', res)
         router.push('/')
       } catch (e) {
@@ -45,7 +45,7 @@ export const useSignUp = () => {
           return
         }
 
-        set('token', encrypted(res.token))
+        set('token', encrypted(res.token), { secure: true })
         console.log('ユーザー作成に成功しました', res)
         router.push('/')
       } catch (e) {
