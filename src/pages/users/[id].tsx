@@ -6,19 +6,14 @@ import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useGetApi } from 'hooks/useApi'
-import { Post } from 'types/post'
+import { UserPosts } from 'types/post'
 import { User } from 'types/user/user'
-
-type UserParams = {
-  user: Pick<User, 'id' | 'username'>
-  posts: Post[]
-}
 
 const User: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: userPosts } = useGetApi<UserParams>(`/users/${id}`)
+  const { data: userPosts } = useGetApi<UserPosts>(`/users/${id}`)
 
   const [selectedPublished, setSelectedPublished] = useState(true)
   const isMyPage: boolean = user?.id === Number(id)

@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useGetApi } from 'hooks/useApi'
-import { MyPosts, Post, PostRequestParams } from 'types/post'
+import { UserPosts, Post, PostRequestParams } from 'types/post'
 import { User } from 'types/user/user'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
   const { data: user } = useGetApi<User>('/users/me')
   const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
-  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<MyPosts>(
+  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
   const router = useRouter()
@@ -43,7 +43,7 @@ export const useCreatePost = () => {
 export const useUpdatePost = (post: Post) => {
   const { data: user } = useGetApi<User>('/users/me')
   const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
-  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<MyPosts>(
+  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
 
@@ -88,7 +88,7 @@ export const useUpdatePost = (post: Post) => {
 export const useDeletePost = (post: Post) => {
   const { data: user } = useGetApi<User>('/users/me')
   const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
-  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<MyPosts>(
+  const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
 
