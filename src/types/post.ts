@@ -20,7 +20,7 @@ export type Post = {
   }
 }
 
-export type MyPosts = {
+export type UserPosts = {
   user: {
     id: number
     username: string

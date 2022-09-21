@@ -25,7 +25,7 @@ export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
   return (
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
-        <Link href={`/user/${post.user.id}`}>
+        <Link href={`/users/${post.user.id}`}>
           <h2 className='cursor-pointer font-bold text-20px'>
             {post.user.username}
           </h2>

@@ -12,34 +12,38 @@ import {
   IoBook as IoBookIcon,
   IoBookOutline as IoBookOutlineIcon,
 } from 'react-icons/io5'
-
-const menuIcons: {
-  href: string
-  default: JSX.Element
-  selected: JSX.Element
-}[] = [
-  {
-    href: '/',
-    default: <AiOutlineHomeIcon />,
-    selected: <AiFillHomeIcon />,
-  },
-  {
-    href: '/bookmark',
-    default: <IoBookOutlineIcon />,
-    selected: <IoBookIcon />,
-  },
-  {
-    href: '/myPage',
-    default: <AiOutlineUserIcon />,
-    selected: <FaUserIcon />,
-  },
-]
+import { useGetApi } from 'hooks/useApi'
+import { User } from 'types/user/user'
 
 export const Footer: FC = () => {
   const router = useRouter()
+  const { data: user, error } = useGetApi<User>('/users/me')
+
+  const menuIcons: {
+    href: string
+    default: JSX.Element
+    selected: JSX.Element
+  }[] = [
+    {
+      href: '/',
+      default: <AiOutlineHomeIcon />,
+      selected: <AiFillHomeIcon />,
+    },
+    {
+      href: '/bookmark',
+      default: <IoBookOutlineIcon />,
+      selected: <IoBookIcon />,
+    },
+    {
+      // href: 'myPage',
+      href: `/users/${user?.id}`,
+      default: <AiOutlineUserIcon />,
+      selected: <FaUserIcon />,
+    },
+  ]
 
   return (
-    <footer className='sm:hidden'>
+    <footer className={`sm:hidden ${error && 'hidden'}`}>
       {router.pathname !== '/create' && (
         <button className='border rounded-full font-bold bg-red-500 border-red-500 text-white text-right p-2 right-20px bottom-50px text-30px z-100 fixed'>
           <Link href='/create'>＋</Link>

@@ -7,14 +7,14 @@ import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { MyPosts } from 'types/post'
+import { UserPosts } from 'types/post'
 import { User } from 'types/user/user'
 
 const MyPage: NextPage = () => {
   useRequireLogin()
   const [selectedPublished, setSelectedPublished] = useState(true)
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: myPosts } = useGetApi<MyPosts>(`/users/${user?.id}`)
+  const { data: myPosts } = useGetApi<UserPosts>(`/users/${user?.id}`)
 
   return (
     <Layout>
@@ -41,7 +41,7 @@ const MyPage: NextPage = () => {
 
       <section className='mt-10'>
         <div className='ml-4'>
-          <h1 className='font-bold text-2xl'>投稿した記事</h1>
+          <h1 className='font-bold text-2xl'>シェアした記事</h1>
           <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
             {[
               { label: '公開している投稿', published: true },
