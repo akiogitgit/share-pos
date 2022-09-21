@@ -21,6 +21,7 @@ const User: NextPage = () => {
   const { data: userPosts } = useGetApi<UserParams>(`/users/${id}`)
 
   const [selectedPublished, setSelectedPublished] = useState(true)
+  const isMyPage: boolean = user?.id === Number(id)
 
   if (!userPosts) {
     return (
@@ -41,9 +42,10 @@ const User: NextPage = () => {
             </h1>
           </div>
           <button className='bg-red-500 rounded-10px text-white py-1 px-2'>
-            フォローする
+            {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
           </button>
         </div>
+
         <ul className='flex mt-4 gap-3'>
           <li>
             フォロワー数 : <span className='font-bold'>56</span>
@@ -57,19 +59,41 @@ const User: NextPage = () => {
 
       <section className='mt-10'>
         <div className='ml-4'>
-          <h1 className='font-bold text-2xl'>共有した記事</h1>
-          {userPosts?.posts.length && (
-            <div className='mt-4'>
-              <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
-                {userPosts.posts.map((post) => (
-                  <div key={post.id} className='mb-1'>
-                    <PostItem post={post} />
-                  </div>
-                ))}
-              </div>
+          <h1 className='font-bold text-2xl'>シェアした記事</h1>
+
+          {isMyPage && (
+            <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
+              {[
+                { label: '公開している投稿', published: true },
+                { label: '非公開の投稿', published: false },
+              ].map((tab) => (
+                <button
+                  key={tab.label}
+                  onClick={() => setSelectedPublished(tab.published)}
+                  className={`${
+                    selectedPublished === tab.published
+                      ? 'font-bold border-b-2 border-red-500 text-red-500'
+                      : ' cursor-pointer'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
           )}
         </div>
+
+        {userPosts?.posts.length && (
+          <div className='flex flex-wrap mt-4 gap-4 justify-center items-start sm:justify-start'>
+            {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
+            {userPosts.posts.map(
+              (post) =>
+                selectedPublished === post.published && (
+                  <PostItem post={post} key={post.id} />
+                ),
+            )}
+          </div>
+        )}
       </section>
     </Layout>
   )

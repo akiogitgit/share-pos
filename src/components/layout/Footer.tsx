@@ -19,6 +19,11 @@ export const Footer: FC = () => {
   const router = useRouter()
   const { data: user, error } = useGetApi<User>('/users/me')
 
+  // ログインしてる時だけ表示
+  if (error) {
+    return <></>
+  }
+
   const menuIcons: {
     href: string
     default: JSX.Element
@@ -43,7 +48,7 @@ export const Footer: FC = () => {
   ]
 
   return (
-    <footer className={`sm:hidden ${error && 'hidden'}`}>
+    <footer className='sm:hidden'>
       {router.pathname !== '/create' && (
         <button className='border rounded-full font-bold bg-red-500 border-red-500 text-white text-right p-2 right-20px bottom-50px text-30px z-100 fixed'>
           <Link href='/create'>＋</Link>

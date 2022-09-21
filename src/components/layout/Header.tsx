@@ -10,9 +10,12 @@ import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
 import { useLogOut } from 'hooks/login/useAuth'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
+import { useGetApi } from 'hooks/useApi'
+import { User } from 'types/user/user'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
+  const { data: user } = useGetApi<User>('/users/me')
   const { logOut } = useLogOut()
 
   return (
@@ -54,7 +57,7 @@ export const Header: FC = () => {
                     <HiOutlineBookOpenIcon />
                   </div>
                 </Link>
-                <Link href='/myPage'>
+                <Link href={`/users/${user?.id}`}>
                   <div className='cursor-pointer flex gap-0.5 items-center'>
                     {/* <div className='duration-300 hover:(underline) '> */}
                     <div className='duration-300 hidden sm:block hover:(underline) '>
