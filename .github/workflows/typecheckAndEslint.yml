@@ -1,7 +1,7 @@
 on: [push]
 name: type-check and eslint
 jobs:
-  check-bats-version:
+  type-check-and-eslint:
     runs-on: ubuntu-latest
     steps:
       - run: echo "test"
