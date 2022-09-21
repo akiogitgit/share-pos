@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { FC, useState } from 'react'
 
 import { TbBookmarkOff as TbBookmarkOffIcon } from 'react-icons/tb'
@@ -24,7 +25,11 @@ export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
   return (
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
-        <div className='font-bold text-20px'>{post.user.username}</div>
+        <Link href={`/users/${post.user.id}`}>
+          <h2 className='cursor-pointer font-bold text-20px'>
+            {post.user.username}
+          </h2>
+        </Link>
         <div className='flex gap-2'>
           {/* ブックマーク解除 (マイページ/ブックマークで表示) */}
           {post.bookmark && (

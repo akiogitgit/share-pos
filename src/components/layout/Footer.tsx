@@ -12,31 +12,40 @@ import {
   IoBook as IoBookIcon,
   IoBookOutline as IoBookOutlineIcon,
 } from 'react-icons/io5'
-
-const menuIcons: {
-  href: string
-  default: JSX.Element
-  selected: JSX.Element
-}[] = [
-  {
-    href: '/',
-    default: <AiOutlineHomeIcon />,
-    selected: <AiFillHomeIcon />,
-  },
-  {
-    href: '/bookmark',
-    default: <IoBookOutlineIcon />,
-    selected: <IoBookIcon />,
-  },
-  {
-    href: '/myPage',
-    default: <AiOutlineUserIcon />,
-    selected: <FaUserIcon />,
-  },
-]
+import { useGetApi } from 'hooks/useApi'
+import { User } from 'types/user/user'
 
 export const Footer: FC = () => {
   const router = useRouter()
+  const { data: user, error } = useGetApi<User>('/users/me')
+
+  // ログインしてる時だけ表示
+  if (error) {
+    return <></>
+  }
+
+  const menuIcons: {
+    href: string
+    default: JSX.Element
+    selected: JSX.Element
+  }[] = [
+    {
+      href: '/',
+      default: <AiOutlineHomeIcon />,
+      selected: <AiFillHomeIcon />,
+    },
+    {
+      href: '/bookmark',
+      default: <IoBookOutlineIcon />,
+      selected: <IoBookIcon />,
+    },
+    {
+      // href: 'myPage',
+      href: `/users/${user?.id}`,
+      default: <AiOutlineUserIcon />,
+      selected: <FaUserIcon />,
+    },
+  ]
 
   return (
     <footer className='sm:hidden'>
