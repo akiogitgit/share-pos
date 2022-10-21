@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { BookmarkFolderList } from 'components/bookmark/BookmarkFolderList'
 import { CreateFolderField } from 'components/bookmark/CreateFolderField'
 import { Layout } from 'components/layout/Layout'
@@ -10,13 +10,23 @@ import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
   useRequireLogin()
-  const [selectedFolderIndex, setSelectedFolderIndex] = useState(0)
+  const [selectedFolderId, setSelectedFolderId] = useState(0)
 
   const { data: folders } = useGetApi<Folder[]>('/folders')
+  const folderId = useMemo(() => {
+    if (selectedFolderId === 0) return folders && folders[0]?.id
+    return selectedFolderId
+  }, [folders, selectedFolderId])
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
-    `/folders/${folders && folders[selectedFolderIndex]?.id}`,
+    // `/folders/${folders && folders[selectedFolderId]?.id}`,
+    // `/folders/${folders && selectedFolderId}`,
+    `/folders/${folderId}`,
   )
+
+  console.log(`folders: `, folders)
+  console.log(`folderId: `, folderId)
+  console.log(`folders[0]: `, folders && folders[selectedFolderId])
 
   return (
     <Layout>
@@ -41,8 +51,8 @@ const Bookmark: NextPage = () => {
                 <div className='mt-5'>
                   <BookmarkFolderList
                     folders={folders}
-                    selectedFolderIndex={selectedFolderIndex}
-                    onSelect={setSelectedFolderIndex}
+                    selectedFolderId={selectedFolderId}
+                    onSelect={setSelectedFolderId}
                   />
                 </div>
               </div>
@@ -53,11 +63,12 @@ const Bookmark: NextPage = () => {
               <div className='mt-4 w-full'>
                 {/* TODO: スマホサイズのレイアウト修正 */}
                 <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
-                  {bookmarkPosts.posts.map((post) => (
+                  {bookmarkPosts.posts.map((post, i) => (
                     <PostItem
-                      key={post.id}
+                      key={i}
                       post={post}
-                      selectedFolderId={folders[selectedFolderIndex].id}
+                      // selectedFolderId={folders[selectedFolderId].id}
+                      selectedFolderId={selectedFolderId}
                     />
                   ))}
                 </div>

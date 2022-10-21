@@ -8,16 +8,17 @@ import { Folder } from 'types/bookmark'
 
 type Props = {
   folders: Folder[]
-  selectedFolderIndex: number
+  selectedFolderId: number
   onSelect: (index: number) => void
 }
 
 export const BookmarkFolderList: FC<Props> = ({
   folders,
-  selectedFolderIndex,
+  selectedFolderId, // idに変えよう。これを updateFolderで使うから
   onSelect,
 }) => {
-  const [editingFolderIndex, setEditingFolderIndex] = useState(-1)
+  // これいらない
+  // const [editingFolderIndex, setEditingFolderIndex] = useState(-1)
   const [editFolderName, setEditFolderName] = useState('')
 
   const { updateFolder } = useUpdateFolder()
@@ -28,21 +29,15 @@ export const BookmarkFolderList: FC<Props> = ({
   const onClickFolder = useCallback(
     (index: number, folderName: string) => {
       // 連続で同じフォルダを押したときに、編集モードにする
-      if (selectedFolderIndex === index) {
-        setEditingFolderIndex(index)
+      if (selectedFolderId === index) {
+        // setEditingFolderIndex(index)
         setEditFolderName(folderName)
         setIsOpen((s) => !s)
-      } else {
-        setEditingFolderIndex(-1)
       }
-      console.log(`editingFolderIndex: `, editingFolderIndex)
-      console.log(`editFolderName: `, editFolderName)
 
-      // setEditingFolderIndex(index)
-      // setEditFolderName(folderName)
-      onSelect(index)
+      onSelect(index) // selectedFolderIndexを更新
     },
-    [editFolderName, editingFolderIndex, onSelect, selectedFolderIndex],
+    [onSelect, selectedFolderId],
   )
 
   return (
@@ -51,18 +46,18 @@ export const BookmarkFolderList: FC<Props> = ({
           TODO: 掴め！！！！, 編集・削除をモーダルで */}
       <div className='h-50px overflow-x-scroll scroll-bar sm:(h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '>
         <div className='flex gap-2 sm:(flex-col-reverse gap-1) '>
-          {folders.map((folder, index) => (
+          {folders.map((folder) => (
             <div
               key={folder.id}
               className={`whitespace-nowrap h-40px ${
-                selectedFolderIndex === index
+                selectedFolderId === folder.id
                   ? 'border-b-3 border-red-500 text-red-500'
                   : 'text-gray-500 border-b-2'
               }`}
             >
               <div
                 className={`flex items-center mt-2 ${
-                  selectedFolderIndex === index && 'font-bold'
+                  selectedFolderId === folder.id && 'font-bold'
                 }`}
               >
                 {/* {folder.name} */}
@@ -101,7 +96,7 @@ export const BookmarkFolderList: FC<Props> = ({
                 ) : ( */}
                 <button
                   className='text-left w-full'
-                  onClick={() => onClickFolder(index, folder.name)}
+                  onClick={() => onClickFolder(folder.id, folder.name)}
                 >
                   <BsFolderIcon className='mr-1' />
                   {folder.name}
@@ -125,15 +120,16 @@ export const BookmarkFolderList: FC<Props> = ({
       >
         <Dialog.Panel className='bg-white bg-opacity-90 rounded-10px w-300px'>
           <Dialog.Title className='text-center pt-4'>
-            フォルダを編集
+            フォルダを編集{selectedFolderId}
           </Dialog.Title>
-          <Dialog.Description className='mx-2 text-center'>
+          <div className='mx-2 text-center'>
             This will permanently deactivate your account
             <form
               className='flex'
               onSubmit={async (e) => {
                 e.preventDefault()
-                await updateFolder(editingFolderIndex, editFolderName)
+                console.log(`update: `, selectedFolderId, editFolderName)
+                await updateFolder(selectedFolderId, editFolderName)
               }}
             >
               <input
@@ -152,15 +148,14 @@ export const BookmarkFolderList: FC<Props> = ({
               <div
                 className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
                 onClick={async () => {
-                  await deleteFolder(editingFolderIndex)
-                  setEditingFolderIndex(-1)
+                  setIsOpen(false)
+                  await deleteFolder(selectedFolderId)
                 }}
               >
                 削除
               </div>
             </form>
-          </Dialog.Description>
-
+          </div>
           <div className='flex justify-between'>
             <button
               onClick={() => setIsOpen(false)}
