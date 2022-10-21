@@ -20,7 +20,7 @@ const Bookmark: NextPage = () => {
 
   return (
     <Layout>
-      <div className=''>
+      <div>
         <div className='flex ml-4 justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
           <div className={`${folders?.length && 'sm:hidden'}`}>
