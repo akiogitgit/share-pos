@@ -17,13 +17,13 @@ export const BookmarkFolderList: FC<Props> = ({
   selectedFolderIndex,
   onSelect,
 }) => {
-  const [editingFolderIndex, setEditingFolderIndex] = useState<number>()
+  const [editingFolderIndex, setEditingFolderIndex] = useState(-1)
   const [editFolderName, setEditFolderName] = useState('')
 
   const { updateFolder } = useUpdateFolder()
   const { deleteFolder } = useDeleteFolder()
 
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   const onClickFolder = useCallback(
     (index: number, folderName: string) => {
@@ -31,12 +31,18 @@ export const BookmarkFolderList: FC<Props> = ({
       if (selectedFolderIndex === index) {
         setEditingFolderIndex(index)
         setEditFolderName(folderName)
+        setIsOpen((s) => !s)
       } else {
-        setEditingFolderIndex(undefined)
+        setEditingFolderIndex(-1)
       }
+      console.log(`editingFolderIndex: `, editingFolderIndex)
+      console.log(`editFolderName: `, editFolderName)
+
+      // setEditingFolderIndex(index)
+      // setEditFolderName(folderName)
       onSelect(index)
     },
-    [selectedFolderIndex, onSelect],
+    [editFolderName, editingFolderIndex, onSelect, selectedFolderIndex],
   )
 
   return (
@@ -60,7 +66,7 @@ export const BookmarkFolderList: FC<Props> = ({
                 }`}
               >
                 {/* {folder.name} */}
-                {editingFolderIndex === index ? (
+                {/* {editingFolderIndex === index ? (
                   <form
                     className='flex'
                     onSubmit={async (e) => {
@@ -92,18 +98,15 @@ export const BookmarkFolderList: FC<Props> = ({
                       削除
                     </div>
                   </form>
-                ) : (
-                  <button
-                    className='text-left w-full'
-                    onClick={() => {
-                      onClickFolder(index, folder.name)
-                      setIsOpen((s) => !s)
-                    }}
-                  >
-                    <BsFolderIcon className='mr-1' />
-                    {folder.name}
-                  </button>
-                )}
+                ) : ( */}
+                <button
+                  className='text-left w-full'
+                  onClick={() => onClickFolder(index, folder.name)}
+                >
+                  <BsFolderIcon className='mr-1' />
+                  {folder.name}
+                </button>
+                {/* // )} */}
               </div>
             </div>
           ))}
@@ -118,21 +121,60 @@ export const BookmarkFolderList: FC<Props> = ({
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className='top-100px z-100 fixed'
+        className='m-auto transform top-[50%] left-[50%] z-100 translate-x-[-50%] translate-y-[-50%] fixed'
       >
-        <Dialog.Panel className='bg-white z-100'>
-          <Dialog.Title>Deactivate account</Dialog.Title>
-          <Dialog.Description>
+        <Dialog.Panel className='bg-white bg-opacity-90 rounded-10px w-300px'>
+          <Dialog.Title className='text-center pt-4'>
+            フォルダを編集
+          </Dialog.Title>
+          <Dialog.Description className='mx-2 text-center'>
             This will permanently deactivate your account
+            <form
+              className='flex'
+              onSubmit={async (e) => {
+                e.preventDefault()
+                await updateFolder(editingFolderIndex, editFolderName)
+              }}
+            >
+              <input
+                type='text'
+                className='border outline-none text-black ring-blue-500 w-100px duration-300 focus:rounded-10px focus:ring-1'
+                maxLength={15}
+                value={editFolderName}
+                onChange={(e) => setEditFolderName(e.target.value)}
+              />
+              <button
+                className='font-bold bg-blue-500 text-white py-0.5 px-1'
+                type='submit'
+              >
+                更新
+              </button>
+              <div
+                className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
+                onClick={async () => {
+                  await deleteFolder(editingFolderIndex)
+                  setEditingFolderIndex(-1)
+                }}
+              >
+                削除
+              </div>
+            </form>
           </Dialog.Description>
 
-          <p>
-            Are you sure you want to deactivate your account? All of your data
-            will be permanently removed. This action cannot be undone.
-          </p>
-
-          <button onClick={() => setIsOpen(false)}>Deactivate</button>
-          <button onClick={() => setIsOpen(false)}>Cancel</button>
+          <div className='flex justify-between'>
+            <button
+              onClick={() => setIsOpen(false)}
+              className='font-bold border-r-2 border-t-2 mt-4 w-full py-2 text-blue-500'
+            >
+              閉じる
+            </button>
+            <button
+              onClick={() => setIsOpen(false)}
+              className='font-bold border-t-2 mt-4 w-full py-2 text-blue-500'
+            >
+              削除
+            </button>
+          </div>
         </Dialog.Panel>
       </Dialog>
 
