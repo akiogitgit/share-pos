@@ -81,9 +81,9 @@ export const BookmarkFolderList: FC<Props> = ({
         onClose={() => setIsOpenModal(false)}
         className='m-auto transform top-[50%] left-[50%] z-100 translate-x-[-50%] translate-y-[-50%] fixed'
       >
-        <Dialog.Panel className='bg-white bg-opacity-90 rounded-10px w-300px'>
+        <Dialog.Panel className='bg-white bg-opacity-90 rounded-10px shadow-2xl w-300px'>
           <Dialog.Title className='text-center pt-4'>
-            フォルダを編集{selectedFolderId}
+            フォルダを編集
           </Dialog.Title>
           <div className='mx-2 text-center'>
             <form
