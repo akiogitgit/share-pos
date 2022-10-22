@@ -20,11 +20,10 @@ export const BookmarkFolderList: FC<Props> = ({
   // これいらない
   // const [editingFolderIndex, setEditingFolderIndex] = useState(-1)
   const [editFolderName, setEditFolderName] = useState('')
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   const { updateFolder } = useUpdateFolder()
   const { deleteFolder } = useDeleteFolder()
-
-  const [isOpen, setIsOpen] = useState(false)
 
   const onClickFolder = useCallback(
     (index: number, folderName: string) => {
@@ -32,7 +31,7 @@ export const BookmarkFolderList: FC<Props> = ({
       if (selectedFolderId === index) {
         // setEditingFolderIndex(index)
         setEditFolderName(folderName)
-        setIsOpen((s) => !s)
+        setIsOpenModal((s) => !s)
       }
 
       onSelect(index) // selectedFolderIndexを更新
@@ -42,8 +41,7 @@ export const BookmarkFolderList: FC<Props> = ({
 
   return (
     <div>
-      {/* ブックマーク名一覧
-          TODO: 掴め！！！！, 編集・削除をモーダルで */}
+      {/* ブックマーク名一覧 */}
       <div className='h-50px overflow-x-scroll scroll-bar sm:(h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '>
         <div className='flex gap-2 sm:(flex-col-reverse gap-1) '>
           {folders.map((folder) => (
@@ -60,40 +58,6 @@ export const BookmarkFolderList: FC<Props> = ({
                   selectedFolderId === folder.id && 'font-bold'
                 }`}
               >
-                {/* {folder.name} */}
-                {/* {editingFolderIndex === index ? (
-                  <form
-                    className='flex'
-                    onSubmit={async (e) => {
-                      setEditingFolderIndex(undefined)
-                      e.preventDefault()
-                      await updateFolder(folder.id, editFolderName)
-                    }}
-                  >
-                    <input
-                      type='text'
-                      className='border outline-none text-black ring-blue-500 w-100px duration-300 focus:rounded-10px focus:ring-1'
-                      maxLength={15}
-                      value={editFolderName}
-                      onChange={(e) => setEditFolderName(e.target.value)}
-                    />
-                    <button
-                      className='font-bold bg-blue-500 text-white py-0.5 px-1'
-                      type='submit'
-                    >
-                      更新
-                    </button>
-                    <div
-                      className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
-                      onClick={async () => {
-                        setEditingFolderIndex(undefined)
-                        await deleteFolder(folder.id)
-                      }}
-                    >
-                      削除
-                    </div>
-                  </form>
-                ) : ( */}
                 <button
                   className='text-left w-full'
                   onClick={() => onClickFolder(folder.id, folder.name)}
@@ -101,7 +65,6 @@ export const BookmarkFolderList: FC<Props> = ({
                   <BsFolderIcon className='mr-1' />
                   {folder.name}
                 </button>
-                {/* // )} */}
               </div>
             </div>
           ))}
@@ -109,13 +72,13 @@ export const BookmarkFolderList: FC<Props> = ({
       </div>
       <div
         className={`${
-          !isOpen && 'hidden'
+          !isOpenModal && 'hidden'
         } bg-black h-screen w-screen opacity-20 top-0 left-0 z-100 fixed`}
       ></div>
 
       <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
+        open={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
         className='m-auto transform top-[50%] left-[50%] z-100 translate-x-[-50%] translate-y-[-50%] fixed'
       >
         <Dialog.Panel className='bg-white bg-opacity-90 rounded-10px w-300px'>
@@ -123,9 +86,8 @@ export const BookmarkFolderList: FC<Props> = ({
             フォルダを編集{selectedFolderId}
           </Dialog.Title>
           <div className='mx-2 text-center'>
-            This will permanently deactivate your account
             <form
-              className='flex'
+              className='flex justify-center'
               onSubmit={async (e) => {
                 e.preventDefault()
                 console.log(`update: `, selectedFolderId, editFolderName)
@@ -134,7 +96,7 @@ export const BookmarkFolderList: FC<Props> = ({
             >
               <input
                 type='text'
-                className='border outline-none text-black ring-blue-500 w-100px duration-300 focus:rounded-10px focus:ring-1'
+                className='border outline-none text-black ring-blue-500 w-100px duration-150 focus:ring-1'
                 maxLength={15}
                 value={editFolderName}
                 onChange={(e) => setEditFolderName(e.target.value)}
@@ -148,7 +110,7 @@ export const BookmarkFolderList: FC<Props> = ({
               <div
                 className='cursor-pointer font-bold bg-red-500 text-white ml-1 py-0.5 px-1'
                 onClick={async () => {
-                  setIsOpen(false)
+                  setIsOpenModal(false)
                   await deleteFolder(selectedFolderId)
                 }}
               >
@@ -158,13 +120,13 @@ export const BookmarkFolderList: FC<Props> = ({
           </div>
           <div className='flex justify-between'>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsOpenModal(false)}
               className='font-bold border-r-2 border-t-2 mt-4 w-full py-2 text-blue-500'
             >
               閉じる
             </button>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsOpenModal(false)}
               className='font-bold border-t-2 mt-4 w-full py-2 text-blue-500'
             >
               削除
