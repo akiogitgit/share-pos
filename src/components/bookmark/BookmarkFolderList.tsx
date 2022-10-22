@@ -8,33 +8,31 @@ import { Folder } from 'types/bookmark'
 
 type Props = {
   folders: Folder[]
-  selectedFolderId: number
-  setSelectedFolderId: (index: number) => void
+  selectedFolderIndex: number
+  setSelectedFolderIndex: (index: number) => void
 }
 
 export const BookmarkFolderList: FC<Props> = ({
   folders,
-  selectedFolderId,
-  setSelectedFolderId,
+  selectedFolderIndex,
+  setSelectedFolderIndex,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const [editingFolderName, setEditingFolderName] = useState('')
 
   const { updateFolder } = useUpdateFolder()
   const { deleteFolder } = useDeleteFolder()
 
   const onClickFolder = useCallback(
-    (index: number, folderName: string) => {
+    (index: number) => {
       // 2連続で同じフォルダを押したときに、編集モードにする
-      if (selectedFolderId === index) {
+      if (selectedFolderIndex === index) {
         setIsOpenModal(true)
       }
 
       // 選択しているフォルダを設定
-      setSelectedFolderId(index)
-      setEditingFolderName(folderName)
+      setSelectedFolderIndex(index)
     },
-    [setSelectedFolderId, selectedFolderId],
+    [selectedFolderIndex, setSelectedFolderIndex],
   )
 
   return (
@@ -42,20 +40,20 @@ export const BookmarkFolderList: FC<Props> = ({
       {/* ブックマーク名一覧 */}
       <div className='h-50px overflow-x-scroll scroll-bar sm:(h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '>
         <div className='flex gap-2 sm:(flex-col-reverse gap-1) '>
-          {folders.map((folder) => (
+          {folders.map((folder, index) => (
             <div
               key={folder.id}
               className={`whitespace-nowrap h-40px ${
-                selectedFolderId === folder.id
+                folders[selectedFolderIndex].id === folder.id
                   ? 'border-b-3 border-red-500 text-red-500'
                   : 'text-gray-500 border-b-2'
               }`}
             >
               <button
                 className={`mt-2 w-full text-left ${
-                  selectedFolderId === folder.id && 'font-bold'
+                  folders[selectedFolderIndex].id === folder.id && 'font-bold'
                 }`}
-                onClick={() => onClickFolder(folder.id, folder.name)}
+                onClick={() => onClickFolder(index)}
               >
                 <BsFolderIcon className='mr-1' />
                 {folder.name}
@@ -69,12 +67,14 @@ export const BookmarkFolderList: FC<Props> = ({
       {isOpenModal && (
         <FolderEditModal
           onClose={() => setIsOpenModal(false)}
-          selectedFolderId={selectedFolderId}
-          folderName={editingFolderName}
+          folder={folders[selectedFolderIndex]}
           onUpdateFolder={async (folderName: string) =>
-            updateFolder(selectedFolderId, folderName)
+            await updateFolder(folders[selectedFolderIndex].id, folderName)
           }
-          onDeleteFolder={async () => deleteFolder(selectedFolderId)}
+          onDeleteFolder={async () => {
+            await deleteFolder(folders[selectedFolderIndex].id)
+            setSelectedFolderIndex(0)
+          }}
         />
       )}
 

@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
 import { BookmarkFolderList } from 'components/bookmark/BookmarkFolderList'
 import { CreateFolderField } from 'components/bookmark/CreateFolderField'
@@ -11,24 +12,16 @@ import { Folder, BookmarkPosts } from 'types/bookmark'
 const Bookmark: NextPage = () => {
   useRequireLogin()
 
+  const router = useRouter()
+  const bookmarkFolerId = useMemo(() => router.query['id'] as string, [])
+
   const { data: folders } = useGetApi<Folder[]>('/folders')
-
-  const [selectedFolderId, setSelectedFolderId] = useState(0)
-  // useEffect(() => {
-  //   if (selectedFolderId === 0) {
-  //     setSelectedFolderId(folders ? folders[0]?.id : 0)
-  //   }
-  // }, [folders])
-
-  const folderId = useMemo(() => {
-    if (selectedFolderId === 0) return folders ? folders[0]?.id : 0
-    return selectedFolderId
-  }, [folders, selectedFolderId])
+  const [selectedFolderIndex, setSelectedFolderIndex] = useState(0)
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
-    // `/folders/${selectedFolderId}`,
-    `/folders/${folderId}`,
+    `/folders/${folders && folders[selectedFolderIndex]?.id}`,
   )
+
   // フォルダが無い
   if (!folders?.length) {
     return (
@@ -74,8 +67,10 @@ const Bookmark: NextPage = () => {
           <div className='mt-5'>
             <BookmarkFolderList
               folders={folders}
-              selectedFolderId={folderId}
-              setSelectedFolderId={setSelectedFolderId}
+              // selectedFolderId={folderId}
+              // setSelectedFolderId={setSelectedFolderId}
+              selectedFolderIndex={selectedFolderIndex}
+              setSelectedFolderIndex={setSelectedFolderIndex}
             />
           </div>
         </div>
@@ -85,7 +80,11 @@ const Bookmark: NextPage = () => {
           <div className='mt-4 w-full'>
             <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
               {bookmarkPosts.posts.map((post, i) => (
-                <PostItem key={i} post={post} selectedFolderId={folderId} />
+                <PostItem
+                  key={i}
+                  post={post}
+                  bookmarkFolderId={folders[selectedFolderIndex].id}
+                />
               ))}
             </div>
           </div>

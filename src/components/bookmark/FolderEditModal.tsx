@@ -1,22 +1,25 @@
 import { Dialog } from '@headlessui/react'
 import { FC, useState } from 'react'
+import { Folder } from 'types/bookmark'
 
 type Props = {
+  folder: Folder
   onClose: () => void
-  selectedFolderId: number
-  folderName: string
+  // selectedFolderId: string
+  // folderName: string
   onUpdateFolder: (folderName: string) => void
   onDeleteFolder: () => void
 }
 
 export const FolderEditModal: FC<Props> = ({
+  folder,
+  // selectedFolderId,
+  // folderName,
   onClose,
-  selectedFolderId,
-  folderName,
   onUpdateFolder,
   onDeleteFolder,
 }) => {
-  const [editFolderName, setEditFolderName] = useState(folderName)
+  const [editFolderName, setEditFolderName] = useState(folder.name)
   const [isShowDeleteMessage, setIsShowDeleteMessage] = useState(false)
 
   return (
@@ -38,7 +41,7 @@ export const FolderEditModal: FC<Props> = ({
           <form
             onSubmit={async (e) => {
               e.preventDefault()
-              console.log(`update: `, selectedFolderId, editFolderName)
+              console.log(`update: `, folder.id, editFolderName)
               onClose()
               await onUpdateFolder(editFolderName)
             }}

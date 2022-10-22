@@ -34,7 +34,7 @@ export const useUpdateFolder = () => {
     useGetApi<Folder[]>('/folders')
 
   const updateFolder = useCallback(
-    async (id: number, editFolderName: string) => {
+    async (id: string, editFolderName: string) => {
       try {
         const res = await putApi<Folder>(`/folders/${id}`, {
           name: editFolderName,
@@ -68,7 +68,7 @@ export const useDeleteFolder = () => {
     useGetApi<Folder[]>('/folders')
 
   const deleteFolder = useCallback(
-    async (id: number) => {
+    async (id: string) => {
       try {
         const res = await deleteApi(`/folders/${id}`)
         const newFolders = folders?.filter((folder) => folder.id !== id)
