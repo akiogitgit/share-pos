@@ -1,23 +1,23 @@
 import { Dialog } from '@headlessui/react'
 import { FC, useState } from 'react'
-import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 
 type Props = {
   onClose: () => void
   selectedFolderId: number
   folderName: string
+  onUpdateFolder: (folderName: string) => void
+  onDeleteFolder: () => void
 }
 
 export const FolderEditModal: FC<Props> = ({
   onClose,
   selectedFolderId,
   folderName,
+  onUpdateFolder,
+  onDeleteFolder,
 }) => {
   const [editFolderName, setEditFolderName] = useState(folderName)
   const [isShowDeleteMessage, setIsShowDeleteMessage] = useState(false)
-
-  const { updateFolder } = useUpdateFolder()
-  const { deleteFolder } = useDeleteFolder()
 
   return (
     <div>
@@ -40,7 +40,7 @@ export const FolderEditModal: FC<Props> = ({
               e.preventDefault()
               console.log(`update: `, selectedFolderId, editFolderName)
               onClose()
-              await updateFolder(selectedFolderId, editFolderName)
+              await onUpdateFolder(editFolderName)
             }}
           >
             <div className='flex justify-center'>
@@ -107,7 +107,7 @@ export const FolderEditModal: FC<Props> = ({
               type='submit'
               onClick={async () => {
                 onClose()
-                await deleteFolder(selectedFolderId)
+                await onDeleteFolder()
               }}
               className='font-bold border-t-2 mt-4 w-full py-2 text-red-500'
             >

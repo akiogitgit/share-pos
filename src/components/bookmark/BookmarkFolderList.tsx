@@ -3,6 +3,7 @@ import { FC, useCallback, useState } from 'react'
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
 
 import { FolderEditModal } from './FolderEditModal'
+import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 
 type Props = {
@@ -18,6 +19,9 @@ export const BookmarkFolderList: FC<Props> = ({
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [editingFolderName, setEditingFolderName] = useState('')
+
+  const { updateFolder } = useUpdateFolder()
+  const { deleteFolder } = useDeleteFolder()
 
   const onClickFolder = useCallback(
     (index: number, folderName: string) => {
@@ -67,6 +71,10 @@ export const BookmarkFolderList: FC<Props> = ({
           onClose={() => setIsOpenModal(false)}
           selectedFolderId={selectedFolderId}
           folderName={editingFolderName}
+          onUpdateFolder={async (folderName: string) =>
+            updateFolder(selectedFolderId, folderName)
+          }
+          onDeleteFolder={async () => deleteFolder(selectedFolderId)}
         />
       )}
 
