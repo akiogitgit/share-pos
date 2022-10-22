@@ -39,7 +39,7 @@ export const useUpdateFolder = () => {
         const res = await putApi<Folder>(`/folders/${id}`, {
           name: editFolderName,
         })
-        if (!res || !folders) {
+        if (!folders) {
           return
         }
 

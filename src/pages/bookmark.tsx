@@ -12,7 +12,8 @@ const Bookmark: NextPage = () => {
   useRequireLogin()
 
   const { data: folders } = useGetApi<Folder[]>('/folders')
-  const [selectedFolderId, setSelectedFolderId] = useState(0) // フォルダのグローバルのID
+
+  const [selectedFolderId, setSelectedFolderId] = useState(0)
   // useEffect(() => {
   //   if (selectedFolderId === 0) {
   //     setSelectedFolderId(folders ? folders[0]?.id : 0)
@@ -28,7 +29,6 @@ const Bookmark: NextPage = () => {
     // `/folders/${selectedFolderId}`,
     `/folders/${folderId}`,
   )
-
   // フォルダが無い
   if (!folders?.length) {
     return (
@@ -75,8 +75,7 @@ const Bookmark: NextPage = () => {
             <BookmarkFolderList
               folders={folders}
               selectedFolderId={folderId}
-              // selectedFolderId={selectedFolderId}
-              onSelect={setSelectedFolderId}
+              setSelectedFolderId={setSelectedFolderId}
             />
           </div>
         </div>
@@ -86,12 +85,7 @@ const Bookmark: NextPage = () => {
           <div className='mt-4 w-full'>
             <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
               {bookmarkPosts.posts.map((post, i) => (
-                <PostItem
-                  key={i}
-                  post={post}
-                  // selectedFolderId={folderId}
-                  selectedFolderId={selectedFolderId}
-                />
+                <PostItem key={i} post={post} selectedFolderId={folderId} />
               ))}
             </div>
           </div>
