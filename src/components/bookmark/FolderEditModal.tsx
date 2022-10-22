@@ -25,6 +25,7 @@ export const FolderEditModal: FC<Props> = ({
         className={`bg-black h-screen w-screen opacity-50 top-0 left-0 z-100 fixed`}
       ></div>
 
+      {/* フォルダ編集モーダル */}
       <Dialog
         open={!isShowDeleteMessage}
         onClose={onClose}
@@ -78,6 +79,8 @@ export const FolderEditModal: FC<Props> = ({
           </form>
         </Dialog.Panel>
       </Dialog>
+
+      {/* フォルダ削除モーダル */}
 
       <Dialog
         open={isShowDeleteMessage}
