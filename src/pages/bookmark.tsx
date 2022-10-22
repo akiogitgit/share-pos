@@ -10,9 +10,14 @@ import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
   useRequireLogin()
-  const [selectedFolderId, setSelectedFolderId] = useState(0)
 
   const { data: folders } = useGetApi<Folder[]>('/folders')
+  const [selectedFolderId, setSelectedFolderId] = useState(0) // フォルダのグローバルのID
+  // useEffect(() => {
+  //   if (selectedFolderId === 0) {
+  //     setSelectedFolderId(folders ? folders[0]?.id : 0)
+  //   }
+  // }, [folders])
 
   const folderId = useMemo(() => {
     if (selectedFolderId === 0) return folders ? folders[0]?.id : 0
@@ -20,6 +25,7 @@ const Bookmark: NextPage = () => {
   }, [folders, selectedFolderId])
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
+    // `/folders/${selectedFolderId}`,
     `/folders/${folderId}`,
   )
 
@@ -69,6 +75,7 @@ const Bookmark: NextPage = () => {
             <BookmarkFolderList
               folders={folders}
               selectedFolderId={folderId}
+              // selectedFolderId={selectedFolderId}
               onSelect={setSelectedFolderId}
             />
           </div>
@@ -82,8 +89,8 @@ const Bookmark: NextPage = () => {
                 <PostItem
                   key={i}
                   post={post}
-                  // selectedFolderId={folders[selectedFolderId].id}
-                  selectedFolderId={folderId}
+                  // selectedFolderId={folderId}
+                  selectedFolderId={selectedFolderId}
                 />
               ))}
             </div>
