@@ -13,13 +13,13 @@ import { Post } from 'types/post'
 
 type Props = {
   post: Post
-  selectedFolderId?: number
+  bookmarkFolderId?: string
 }
 
-export const PostItem: FC<Props> = ({ post, selectedFolderId = 0 }) => {
+export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
   const [isEditing, setIsEditing] = useState(false)
 
-  const { removeBookmark } = useRemoveBookmark(selectedFolderId, post)
+  const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
   const { updatePost } = useUpdatePost(post)
 
   return (

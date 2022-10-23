@@ -1,5 +1,5 @@
 export type Post = {
-  id: number
+  id: string
   comment: string
   url: string
   published: boolean
@@ -16,13 +16,13 @@ export type Post = {
     title: string
   }
   bookmark?: {
-    id: number
+    id: string
   }
 }
 
 export type UserPosts = {
   user: {
-    id: number
+    id: string
     username: string
   }
   posts: Post[]

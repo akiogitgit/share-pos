@@ -5,7 +5,7 @@ import { Post } from 'types/post'
 import { postApi, HttpError, deleteApi } from 'utils/api'
 
 export const useAddBookmark = () => {
-  const addBookmark = useCallback(async (folderId: number, post: Post) => {
+  const addBookmark = useCallback(async (folderId: string, post: Post) => {
     try {
       const res = await postApi('/folders/bookmarks', {
         folderId,
@@ -22,9 +22,9 @@ export const useAddBookmark = () => {
   return { addBookmark }
 }
 
-export const useRemoveBookmark = (selectedFolder: number, post: Post) => {
+export const useRemoveBookmark = (folderId: string, post: Post) => {
   const { data: bookmarkPosts, mutate: postsMutate } = useGetApi<BookmarkPosts>(
-    `/folders/${selectedFolder}`,
+    `/folders/${folderId}`,
   )
 
   const removeBookmark = useCallback(async () => {

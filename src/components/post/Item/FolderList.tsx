@@ -20,14 +20,6 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
 
   return (
     <div>
-      {/* 
-      画面全体のスクロール無くしたかった
-      <style jsx>{`
-        html,
-        body {
-          overflow: hidden;
-        }
-      `}</style> */}
       <style jsx>{`
         .scroll-bar-none::-webkit-scrollbar {
           display: none;
@@ -42,21 +34,19 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
         </div> */}
         <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
           {folders?.length &&
-            folders.map((folder) => (
-              <div
-                key={folder.id}
-                className='flex py-1 px-4 gap-1 items-center hover:bg-red-300'
+            folders.map((folder, index) => (
+              <button
+                key={index}
+                className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-red-300'
+                onClick={async () => {
+                  console.log('click! : ')
+                  onClickFolderName?.()
+                  await addBookmark(folder.id, post)
+                }}
               >
                 <BsFolderIcon />
-                <div
-                  onClick={async () => {
-                    onClickFolderName?.()
-                    await addBookmark(folder.id, post)
-                  }}
-                >
-                  {folder.name}
-                </div>
-              </div>
+                <p>{folder.name}</p>
+              </button>
             ))}
         </div>
       </div>

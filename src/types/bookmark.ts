@@ -1,7 +1,7 @@
 import { Post } from './post'
 
 export type Folder = {
-  id: number
+  id: string
   name: string
   createdAt: string
   updatedAt: string
@@ -9,7 +9,7 @@ export type Folder = {
 }
 
 export type BookmarkPosts = {
-  id: number
+  id: string
   name: string
   posts: Post[] // bookmark.idあり
 }
