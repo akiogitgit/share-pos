@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react'
 type Props = {
   open: boolean
   onClose: () => void
-  title?: ReactNode
+  title?: string
   children?: ReactNode
 }
 

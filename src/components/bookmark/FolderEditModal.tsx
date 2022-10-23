@@ -45,7 +45,7 @@ export const FolderEditModal: FC<Props> = ({
             />
             <div
               className='cursor-pointer font-bold bg-red-500 rounded-3px text-white ml-1 py-1 px-2.5'
-              onClick={async () => setIsShowDeleteMessage(true)}
+              onClick={() => setIsShowDeleteMessage(true)}
             >
               ✕
             </div>
@@ -72,7 +72,7 @@ export const FolderEditModal: FC<Props> = ({
       <Modal
         open={isShowDeleteMessage}
         onClose={onClose}
-        title={<>&quot;{editFolderName}&quot; を削除しますか？</>}
+        title={`\"${editFolderName}\" を削除しますか？`}
       >
         <p className='text-center px-2'>
           フォルダ内の記事は全て削除されます。

@@ -64,9 +64,9 @@ const Bookmark: NextPage = () => {
         {bookmarkPosts?.posts.length && folders ? (
           <div className='mt-4 w-full'>
             <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
-              {bookmarkPosts.posts.map((post, i) => (
+              {bookmarkPosts.posts.map((post, index) => (
                 <PostItem
-                  key={i}
+                  key={index}
                   post={post}
                   bookmarkFolderId={folders[selectedFolderIndex].id}
                 />
