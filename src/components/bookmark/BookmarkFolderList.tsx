@@ -73,7 +73,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
           }
           onDeleteFolder={async () => {
             await deleteFolder(folders[routerFolderIndex].id)
-            router.push({ pathname: 'bookmark', query: { id: 0 } })
+            router.push('bookmark')
           }}
         />
       )}
