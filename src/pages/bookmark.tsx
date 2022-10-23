@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { BookmarkFolderList } from 'components/bookmark/BookmarkFolderList'
-import { CreateFolderField } from 'components/bookmark/CreateFolderField'
+import { CreateFolderButton } from 'components/bookmark/CreateFolderButton'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
@@ -29,7 +29,7 @@ const Bookmark: NextPage = () => {
       <Layout>
         <div className='flex ml-4 justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
-          <CreateFolderField />
+          <CreateFolderButton className='font-bold bg-red-500 rounded-10px text-white py-1 px-2' />
         </div>
         <div className='mx-auto mt-20 w-300px'>
           <p>1. フォルダを作成してみよう！</p>
@@ -45,7 +45,7 @@ const Bookmark: NextPage = () => {
       <div className='flex ml-4 justify-between'>
         <h1 className='font-bold text-2xl'>ブックマーク</h1>
         <div className='sm:hidden'>
-          <CreateFolderField />
+          <CreateFolderButton className='font-bold bg-red-500 rounded-10px text-white py-1 px-2' />
         </div>
       </div>
 
@@ -53,7 +53,7 @@ const Bookmark: NextPage = () => {
         {/* 自分のフォルダ一覧 */}
         <div className='bg-red-100 pl-4 top-60px z-10 sticky sm:top-100px'>
           <div className='mt-4 w-190px hidden sm:block'>
-            <CreateFolderField />
+            <CreateFolderButton className='font-bold bg-red-500 rounded-10px text-white py-1 px-2' />
           </div>
           <div className='mt-5'>
             <BookmarkFolderList folders={folders} />

@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
 
+import { CreateFolderButton } from 'components/bookmark/CreateFolderButton'
 import { Modal } from 'components/shares/Modal'
 import { useGetApi } from 'hooks/useApi'
 import { useAddBookmark } from 'hooks/useBookmark'
@@ -28,12 +29,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
       `}</style>
       <div className='border bg-red-100 border-red-500 rounded-10px w-160px'>
         <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
-          <button
-            className='bg-red-300 w-full py-2 px-4'
-            onClick={() => setIsOpenModal(true)}
-          >
-            ＋新規フォルダ
-          </button>
+          <CreateFolderButton className='bg-red-300 w-full py-2 px-4' />
           {folders?.length &&
             folders.map((folder, index) => (
               <button
