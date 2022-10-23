@@ -1,9 +1,8 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
 
 import { CreateFolderButton } from 'components/bookmark/CreateFolderButton'
-import { Modal } from 'components/shares/Modal'
 import { useGetApi } from 'hooks/useApi'
 import { useAddBookmark } from 'hooks/useBookmark'
 import { Folder } from 'types/bookmark'
@@ -15,7 +14,6 @@ type Props = {
 }
 
 export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
-  const [isOpenModal, setIsOpenModal] = useState(false)
   const { addBookmark } = useAddBookmark()
 
   const { data: folders } = useGetApi<Folder[]>('/folders')
@@ -27,6 +25,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
           display: none;
         }
       `}</style>
+
       <div className='border bg-red-100 border-red-500 rounded-10px w-160px'>
         <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
           <CreateFolderButton className='bg-red-300 w-full py-2 px-4' />
@@ -47,9 +46,6 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
             ))}
         </div>
       </div>
-      <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
-        a
-      </Modal>
     </div>
   )
 }

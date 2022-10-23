@@ -31,23 +31,6 @@ export const Modal: FC<Props> = ({ open, onClose, title, children }) => {
             </Dialog.Panel>
           </Dialog>
         </>
-        // <>
-        //   <div className='h-screen bg-black/50 w-screen top-0 left-0 z-100 fixed'></div>
-        //   <Dialog
-        //     open={open}
-        //     onClose={onClose}
-        //     className='m-auto transform top-[50%] left-[50%] z-100 translate-x-[-50%] translate-y-[-50%] fixed'
-        //   >
-        //     <Dialog.Panel className='bg-white bg-opacity-90 rounded-10px shadow-2xl w-300px'>
-        //       <Dialog.Title className='font-bold text-center text-xl px-2 pt-4'>
-        //         {title}
-        //       </Dialog.Title>
-        //       <Dialog.Description className='mt-2'>
-        //         {children}
-        //       </Dialog.Description>
-        //     </Dialog.Panel>
-        //   </Dialog>
-        // </>
       )}
     </>
   )
