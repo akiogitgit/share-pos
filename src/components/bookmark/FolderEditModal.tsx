@@ -34,17 +34,17 @@ export const FolderEditModal: FC<Props> = ({
             await onUpdateFolder(editFolderName)
           }}
         >
-          <div className='flex justify-center'>
+          <div className='flex px-4 justify-center items-center'>
             <input
               type='text'
-              className='border outline-none rounded-10px text-black ring-gray-300 w-170px duration-150 focus:ring-1'
+              className='border outline-none rounded-3px w-full p-1 ring-gray-300 duration-300 focus:ring-1'
               maxLength={15}
               required
               value={editFolderName}
               onChange={(e) => setEditFolderName(e.target.value)}
             />
             <div
-              className='cursor-pointer font-bold bg-red-500 rounded-10px text-white ml-1 py-0.5 px-2'
+              className='cursor-pointer font-bold bg-red-500 rounded-3px text-white ml-1 py-1 px-2.5'
               onClick={async () => setIsShowDeleteMessage(true)}
             >
               ✕
@@ -54,13 +54,13 @@ export const FolderEditModal: FC<Props> = ({
           <div className='flex justify-between'>
             <div
               onClick={onClose}
-              className='cursor-pointer border-r-2 border-t-2 mt-4 text-center w-full py-2 text-blue-500 duration-150 hover:bg-black/5'
+              className='cursor-pointer font-bold border-t-2 border-gray-200 mt-4 text-center w-full py-2 text-blue-500 duration-150 hover:bg-black/10 '
             >
               閉じる
             </div>
             <button
               type='submit'
-              className='font-bold border-t-2 mt-4 w-full py-2 text-blue-500 duration-150 hover:bg-black/5'
+              className='font-bold border-t-2 border-gray-200 mt-4 w-full py-2 text-blue-500 duration-150 hover:bg-black/10 '
             >
               更新
             </button>
@@ -72,17 +72,17 @@ export const FolderEditModal: FC<Props> = ({
       <Modal
         open={isShowDeleteMessage}
         onClose={onClose}
-        title={<>&quot;{editFolderName}&quot;を削除しますか？</>}
+        title={<>&quot;{editFolderName}&quot; を削除しますか？</>}
       >
         <p className='text-center px-2'>
-          このフォルダの記事が全て削除されます。
+          フォルダ内の記事は全て削除されます。
           <br /> この操作は取り消せません
         </p>
 
         <div className='flex justify-between'>
           <button
             onClick={onClose}
-            className='border-r-2 border-t-2 mt-4 w-full py-2 text-blue-500 duration-150 hover:bg-black/5'
+            className='border-r-2 border-t-2 mt-4 w-full py-2 text-blue-500 duration-150 hover:bg-black/10'
           >
             閉じる
           </button>
@@ -92,7 +92,7 @@ export const FolderEditModal: FC<Props> = ({
               onClose()
               await onDeleteFolder()
             }}
-            className='font-bold border-t-2 mt-4 w-full py-2 text-red-500  duration-150 hover:bg-black/5'
+            className='font-bold border-t-2 mt-4 w-full py-2 text-red-500  duration-150 hover:bg-black/10'
           >
             削除
           </button>

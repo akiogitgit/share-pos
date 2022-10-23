@@ -29,19 +29,11 @@ const Bookmark: NextPage = () => {
       <Layout>
         <div className='flex ml-4 justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
-          <div className='min-w-100px max-w-210px w-53vw'>
-            <CreateFolderField />
-          </div>
+          <CreateFolderField />
         </div>
         <div className='mx-auto mt-20 w-300px'>
-          <p className='overflow-hidden'>
-            右の
-            <span className='font-bold bg-red-500 rounded-10px text-white px-0.3 text-30px'>
-              ＋
-            </span>
-            を押してブックマークを作成
-          </p>
-          <p>ブックマークを作成して記事を追加しよう！</p>
+          <p>1. フォルダを作成してみよう！</p>
+          <p>2. 記事をブックマークしよう！</p>
           <p>画像を貼って手順を分かりやすく表示</p>
         </div>
       </Layout>
@@ -53,9 +45,7 @@ const Bookmark: NextPage = () => {
       <div className='flex ml-4 justify-between'>
         <h1 className='font-bold text-2xl'>ブックマーク</h1>
         <div className='sm:hidden'>
-          <div className='min-w-100px max-w-210px w-53vw'>
-            <CreateFolderField />
-          </div>
+          <CreateFolderField />
         </div>
       </div>
 
