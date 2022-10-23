@@ -5,16 +5,12 @@ import { Folder } from 'types/bookmark'
 type Props = {
   folder: Folder
   onClose: () => void
-  // selectedFolderId: string
-  // folderName: string
   onUpdateFolder: (folderName: string) => void
   onDeleteFolder: () => void
 }
 
 export const FolderEditModal: FC<Props> = ({
   folder,
-  // selectedFolderId,
-  // folderName,
   onClose,
   onUpdateFolder,
   onDeleteFolder,
@@ -51,15 +47,13 @@ export const FolderEditModal: FC<Props> = ({
                 type='text'
                 className='border outline-none rounded-10px text-black ring-gray-300 w-170px duration-150 focus:ring-1'
                 maxLength={15}
+                required
                 value={editFolderName}
                 onChange={(e) => setEditFolderName(e.target.value)}
               />
               <div
                 className='cursor-pointer font-bold bg-red-500 rounded-10px text-white ml-1 py-0.5 px-2'
-                onClick={async () => {
-                  // onClose()
-                  setIsShowDeleteMessage(true)
-                }}
+                onClick={async () => setIsShowDeleteMessage(true)}
               >
                 ✕
               </div>

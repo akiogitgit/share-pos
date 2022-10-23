@@ -1,4 +1,6 @@
-import { FC, useCallback, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
 
@@ -8,31 +10,27 @@ import { Folder } from 'types/bookmark'
 
 type Props = {
   folders: Folder[]
-  selectedFolderIndex: number
-  setSelectedFolderIndex: (index: number) => void
 }
 
-export const BookmarkFolderList: FC<Props> = ({
-  folders,
-  selectedFolderIndex,
-  setSelectedFolderIndex,
-}) => {
+export const BookmarkFolderList: FC<Props> = ({ folders }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const router = useRouter()
+  const routerFolderIndex = useMemo(
+    () => Number(router.query.id) || 0,
+    [router.query.id],
+  )
 
   const { updateFolder } = useUpdateFolder()
   const { deleteFolder } = useDeleteFolder()
 
   const onClickFolder = useCallback(
-    (index: number) => {
+    (folderIndex: number) => {
       // 2連続で同じフォルダを押したときに、編集モードにする
-      if (selectedFolderIndex === index) {
+      if (routerFolderIndex === folderIndex) {
         setIsOpenModal(true)
       }
-
-      // 選択しているフォルダを設定
-      setSelectedFolderIndex(index)
     },
-    [selectedFolderIndex, setSelectedFolderIndex],
+    [routerFolderIndex],
   )
 
   return (
@@ -44,20 +42,22 @@ export const BookmarkFolderList: FC<Props> = ({
             <div
               key={folder.id}
               className={`whitespace-nowrap h-40px ${
-                folders[selectedFolderIndex].id === folder.id
-                  ? 'border-b-3 border-red-500 text-red-500'
+                routerFolderIndex == index
+                  ? 'border-b-3 border-red-500 text-red-500 font-bold'
                   : 'text-gray-500 border-b-2'
               }`}
             >
-              <button
-                className={`mt-2 w-full text-left ${
-                  folders[selectedFolderIndex].id === folder.id && 'font-bold'
-                }`}
-                onClick={() => onClickFolder(index)}
-              >
-                <BsFolderIcon className='mr-1' />
-                {folder.name}
-              </button>
+              <Link href={{ pathname: 'bookmark', query: { id: index } }}>
+                <button
+                  className={`mt-2 w-full text-left ${
+                    router.query.id == folder.id && 'font-bold'
+                  }`}
+                  onClick={() => onClickFolder(index)}
+                >
+                  <BsFolderIcon className='mr-1' />
+                  {folder.name}
+                </button>
+              </Link>
             </div>
           ))}
         </div>
@@ -67,13 +67,13 @@ export const BookmarkFolderList: FC<Props> = ({
       {isOpenModal && (
         <FolderEditModal
           onClose={() => setIsOpenModal(false)}
-          folder={folders[selectedFolderIndex]}
+          folder={folders[routerFolderIndex]}
           onUpdateFolder={async (folderName: string) =>
-            await updateFolder(folders[selectedFolderIndex].id, folderName)
+            await updateFolder(folders[routerFolderIndex].id, folderName)
           }
           onDeleteFolder={async () => {
-            await deleteFolder(folders[selectedFolderIndex].id)
-            setSelectedFolderIndex(0)
+            await deleteFolder(folders[routerFolderIndex].id)
+            router.push({ pathname: 'bookmark', query: { id: 0 } })
           }}
         />
       )}
@@ -83,7 +83,6 @@ export const BookmarkFolderList: FC<Props> = ({
           width: 0;
           height: 0;
         }
-
         .scroll-bar:hover::-webkit-scrollbar {
           width: 10px;
           height: 10px;

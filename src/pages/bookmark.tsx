@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { BookmarkFolderList } from 'components/bookmark/BookmarkFolderList'
 import { CreateFolderField } from 'components/bookmark/CreateFolderField'
 import { Layout } from 'components/layout/Layout'
@@ -11,12 +11,13 @@ import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
   useRequireLogin()
-
   const router = useRouter()
-  const bookmarkFolerId = useMemo(() => router.query['id'] as string, [])
-
   const { data: folders } = useGetApi<Folder[]>('/folders')
-  const [selectedFolderIndex, setSelectedFolderIndex] = useState(0)
+
+  const selectedFolderIndex = useMemo(
+    () => Number(router.query.id) || 0,
+    [router.query.id],
+  )
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
     `/folders/${folders && folders[selectedFolderIndex]?.id}`,
@@ -65,13 +66,7 @@ const Bookmark: NextPage = () => {
             <CreateFolderField />
           </div>
           <div className='mt-5'>
-            <BookmarkFolderList
-              folders={folders}
-              // selectedFolderId={folderId}
-              // setSelectedFolderId={setSelectedFolderId}
-              selectedFolderIndex={selectedFolderIndex}
-              setSelectedFolderIndex={setSelectedFolderIndex}
-            />
+            <BookmarkFolderList folders={folders} />
           </div>
         </div>
 
