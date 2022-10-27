@@ -53,7 +53,7 @@ export const PostMenuButton: FC<Props> = ({
           ></div>
 
           <div className='top-[-35px] right-5px z-2 absolute sm:top-[-35px] '>
-            <div className='border cursor-pointer bg-red-100 border-red-600 rounded-10px shadow-lg transform shadow-red-200 w-170px sm:w-150px'>
+            <div className='border cursor-pointer bg-red-100 border-red-500 rounded-10px shadow-lg transform shadow-red-300 w-170px sm:w-150px'>
               {user?.id === post.userId && (
                 <>
                   <div
@@ -107,7 +107,7 @@ export const PostMenuButton: FC<Props> = ({
                       !isOpenFolder && 'hidden'
                     } sm:group-hover:block`}
                   >
-                    <div className='shadow-md top-0px right-80px shadow-red-200 absolute sm:right-80px'>
+                    <div className='rounded-10px shadow-md top-0px right-80px shadow-red-300 absolute sm:right-80px'>
                       <FolderList post={post} onClickFolderName={closeMenu} />
                     </div>
                   </div>

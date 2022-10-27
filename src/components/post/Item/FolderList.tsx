@@ -28,7 +28,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
 
       <div className='border bg-red-100 border-red-500 rounded-10px w-160px'>
         <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
-          <CreateFolderButton className='bg-red-300 w-full py-2 px-4' />
+          <CreateFolderButton className='bg-red-300 rounded-t-10px w-full py-2 px-4' />
           {folders?.length &&
             folders.map((folder, index) => (
               <button

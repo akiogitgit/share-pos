@@ -27,7 +27,7 @@ export const PostForm: FC<Props> = ({
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormParams((state) => {
+      setFormParams(state => {
         return {
           ...state,
           [e.target.name]: e.target.value,
@@ -46,7 +46,7 @@ export const PostForm: FC<Props> = ({
       `}</style>
 
       <form
-        onSubmit={(e) => {
+        onSubmit={e => {
           onSubmit(formParams)
           e.preventDefault()
         }}
@@ -103,7 +103,7 @@ export const PostForm: FC<Props> = ({
             value={formParams.evaluation}
             className='bg-black h-0.5 mt-10 w-full appearance-none'
             name='evaluation'
-            onChange={(e) => onChange(e)}
+            onChange={e => onChange(e)}
           />
           <div className='transform w-2 translate-y-[-40px] translate-x-40vw sm:translate-x-125px'>
             {formParams.evaluation}
@@ -117,10 +117,10 @@ export const PostForm: FC<Props> = ({
           <div>
             <div
               className={`rounded-full cursor-pointer ${
-                formParams.published ? 'bg-red-600' : 'bg-blue-600'
+                formParams.published ? 'bg-red-500' : 'bg-blue-500'
               } h-28px mt-2 text-white w-90px relative inline-block`}
               onClick={() =>
-                setFormParams((state) => {
+                setFormParams(state => {
                   return {
                     ...state,
                     published: !formParams.published,
