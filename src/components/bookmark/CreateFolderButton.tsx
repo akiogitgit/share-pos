@@ -26,7 +26,7 @@ export const CreateFolderButton: FC<Props> = ({ className }) => {
       <Modal open={isOpen} onClose={onClose} title='新規フォルダ作成'>
         <form
           className='pt-2'
-          onSubmit={async (e) => {
+          onSubmit={async e => {
             e.preventDefault()
             onClose()
             await createFolder(name)
@@ -38,13 +38,13 @@ export const CreateFolderButton: FC<Props> = ({ className }) => {
               placeholder='フォルダ名'
               required
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               className='border outline-none rounded-3px w-full p-1 ring-gray-300 duration-300 focus:ring-1'
             />
           </div>
           <button
             type='submit'
-            className='font-bold border-t-2 border-gray-200 mt-4 w-full py-2 text-blue-500 duration-150 hover:bg-black/10 '
+            className='font-bold border-t-2 border-gray-200 mt-4 text-secondary w-full py-2 duration-150 hover:bg-black/10 '
           >
             作成
           </button>

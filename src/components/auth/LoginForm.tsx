@@ -16,7 +16,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <form
-        onSubmit={(e) => {
+        onSubmit={e => {
           onSubmit({ email, password })
           e.preventDefault()
         }}
@@ -32,8 +32,8 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             value={email}
             placeholder='example@example.com'
             required
-            onChange={(v) => setEmail(v.target.value)}
-            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            onChange={v => setEmail(v.target.value)}
+            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineMailIcon className='top-33px left-270px absolute' />
         </div>
@@ -47,14 +47,14 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             value={password}
             placeholder='password'
             required
-            onChange={(v) => setPassword(v.target.value)}
-            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            onChange={v => setPassword(v.target.value)}
+            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
         <button
           type='submit'
-          className='border bg-blue-500 border-blue-500 mt-4 text-white w-full p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-blue-500) '
+          className='border bg-secondary border-secondary mt-4 text-white w-full p-5 py-1 px-3 scale-50 duration-300 hover:(bg-white text-secondary) '
         >
           ログイン
         </button>

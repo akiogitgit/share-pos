@@ -29,7 +29,7 @@ const Bookmark: NextPage = () => {
       <Layout>
         <div className='flex ml-4 justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
-          <CreateFolderButton className='font-bold bg-red-500 rounded-10px text-white py-1 px-2' />
+          <CreateFolderButton className='font-bold bg-primary rounded-10px text-white py-1 px-2' />
         </div>
         <div className='mx-auto mt-20 w-300px'>
           <p>1. フォルダを作成してみよう！</p>
@@ -45,15 +45,15 @@ const Bookmark: NextPage = () => {
       <div className='flex ml-4 justify-between'>
         <h1 className='font-bold text-2xl'>ブックマーク</h1>
         <div className='sm:hidden'>
-          <CreateFolderButton className='font-bold bg-red-500 rounded-10px text-white py-1 px-2' />
+          <CreateFolderButton className='font-bold bg-primary rounded-10px text-white py-1 px-2' />
         </div>
       </div>
 
       <div className='sm:(flex gap-3 items-start) '>
         {/* 自分のフォルダ一覧 */}
-        <div className='bg-red-100 pl-4 top-60px z-10 sticky sm:top-100px'>
+        <div className='bg-base pl-4 top-60px z-10 sticky sm:top-100px'>
           <div className='mt-4 w-190px hidden sm:block'>
-            <CreateFolderButton className='font-bold bg-red-500 rounded-10px text-white py-1 px-2' />
+            <CreateFolderButton className='font-bold bg-primary rounded-10px text-white py-1 px-2' />
           </div>
           <div className='mt-5'>
             <BookmarkFolderList folders={folders} />
