@@ -30,7 +30,7 @@ export const PostItemComment: FC<Props> = ({ comment }) => {
           {comment}
         </div>
         <div
-          className={`bg-red-300 bg-opacity-70 text-center w-full py-2 top-30px absolute ${
+          className={`bg-primary-light bg-opacity-70 text-center w-full py-2 top-30px absolute ${
             showSeeMore
               ? 'visible sm:invisible sm:group-hover:visible'
               : 'invisible'

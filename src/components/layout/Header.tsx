@@ -24,7 +24,7 @@ export const Header: FC = () => {
         {/* <header className='bg-white w-full py-2 top-0 z-100 sticky'> */}
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
-            <h1 className='cursor-pointer mt-0 mb-1  text-4xl text-red-500 sm:text-6xl'>
+            <h1 className='cursor-pointer mt-0 text-primary  mb-1 text-4xl sm:text-6xl'>
               SharePos
             </h1>
           </Link>
@@ -35,7 +35,7 @@ export const Header: FC = () => {
             <div className='hidden'>
               <input
                 type='text'
-                className='rounded-full ring-1 ring-red-500 focus:(ring-2 outline-none) '
+                className='rounded-full ring-primary ring-1 focus:(ring-2 outline-none) '
               />
             </div>
             {isLoggedIn ? (

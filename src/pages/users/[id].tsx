@@ -36,7 +36,7 @@ const User: NextPage = () => {
               <h1>{userPosts?.user.username}</h1>
             </h1>
           </div>
-          <button className='bg-red-500 rounded-10px text-white py-1 px-2'>
+          <button className='bg-primary rounded-10px text-white py-1 px-2'>
             {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
           </button>
         </div>
@@ -61,13 +61,13 @@ const User: NextPage = () => {
               {[
                 { label: '公開している投稿', published: true },
                 { label: '非公開の投稿', published: false },
-              ].map((tab) => (
+              ].map(tab => (
                 <button
                   key={tab.label}
                   onClick={() => setSelectedPublished(tab.published)}
                   className={`${
                     selectedPublished === tab.published
-                      ? 'font-bold border-b-2 border-red-500 text-red-500'
+                      ? 'font-bold border-b-2 border-primary text-primary'
                       : ' cursor-pointer'
                   }`}
                 >
@@ -82,7 +82,7 @@ const User: NextPage = () => {
           <div className='flex flex-wrap mt-4 gap-4 justify-center items-start sm:justify-start'>
             {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
             {userPosts.posts.map(
-              (post) =>
+              post =>
                 selectedPublished === post.published && (
                   <PostItem post={post} key={post.id} />
                 ),

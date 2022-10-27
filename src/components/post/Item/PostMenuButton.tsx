@@ -53,11 +53,11 @@ export const PostMenuButton: FC<Props> = ({
           ></div>
 
           <div className='top-[-35px] right-5px z-2 absolute sm:top-[-35px] '>
-            <div className='border cursor-pointer bg-red-100 border-red-500 rounded-10px shadow-lg transform shadow-red-300 w-170px sm:w-150px'>
+            <div className='border cursor-pointer bg-base border-primary rounded-10px shadow-lg transform shadow-primary-light w-170px sm:w-150px'>
               {user?.id === post.userId && (
                 <>
                   <div
-                    className='rounded-t-10px px-4 pt-2 pb-1 hover:bg-red-300'
+                    className='rounded-t-10px px-4 pt-2 pb-1 hover:bg-primary-light'
                     onClick={() => {
                       onEdit?.()
                       setIsOpenMenu(false)
@@ -66,14 +66,14 @@ export const PostMenuButton: FC<Props> = ({
                     投稿を編集する
                   </div>
                   <div
-                    className='py-1 px-4 hover:bg-red-300'
+                    className='py-1 px-4 hover:bg-primary-light'
                     onClick={async () => {
                       closeMenu()
                       await deletePost()
                     }}
                   >
                     投稿を
-                    <span className='font-bold text-red-500 text-18px'>
+                    <span className='font-bold text-primary text-18px'>
                       削除
                     </span>
                     する
@@ -81,7 +81,7 @@ export const PostMenuButton: FC<Props> = ({
                 </>
               )}
               <div
-                className={`py-1 px-4 hover:bg-red-300 ${
+                className={`py-1 px-4 hover:bg-primary-light ${
                   user?.id !== post.userId && 'pt-2 rounded-t-10px'
                 }`}
                 onClick={() => {
@@ -95,7 +95,7 @@ export const PostMenuButton: FC<Props> = ({
               {user && (
                 <div className='rounded-b-10px group relative'>
                   <div
-                    className='px-4 pt-1 pb-2 hover:bg-red-300'
+                    className='px-4 pt-1 pb-2 hover:bg-primary-light'
                     onClick={() => setIsOpenFolder(!isOpenFolder)}
                   >
                     ブックマークに追加
@@ -107,7 +107,7 @@ export const PostMenuButton: FC<Props> = ({
                       !isOpenFolder && 'hidden'
                     } sm:group-hover:block`}
                   >
-                    <div className='rounded-10px shadow-md top-0px right-80px shadow-red-300 absolute sm:right-80px'>
+                    <div className='rounded-10px shadow-md top-0px right-80px shadow-primary-light absolute sm:right-80px'>
                       <FolderList post={post} onClickFolderName={closeMenu} />
                     </div>
                   </div>

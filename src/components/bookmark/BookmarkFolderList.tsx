@@ -43,7 +43,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
               key={folder.id}
               className={`whitespace-nowrap h-40px ${
                 routerFolderIndex == index
-                  ? 'border-b-3 border-primary-dark text-primary font-bold'
+                  ? 'border-b-3 border-primary text-primary font-bold'
                   : 'text-gray-500 border-b-2'
               }`}
             >

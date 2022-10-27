@@ -21,7 +21,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
   })
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormParams((state) => {
+    setFormParams(state => {
       return {
         ...state,
         [e.target.name]: e.target.value,
@@ -32,7 +32,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <form
-        onSubmit={(e) => {
+        onSubmit={e => {
           onSubmit(formParams)
           e.preventDefault()
         }}
@@ -47,8 +47,8 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             placeholder='シェアポス太郎'
             required
             name='username'
-            onChange={(e) => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            onChange={e => onChange(e)}
+            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineUserIcon className='top-33px left-270px absolute' />
         </div>
@@ -63,8 +63,8 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             placeholder='example@example.com'
             required
             name='email'
-            onChange={(e) => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            onChange={e => onChange(e)}
+            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineMailIcon className='top-33px left-270px absolute' />
         </div>
@@ -80,8 +80,8 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             minLength={6}
             name='password'
-            onChange={(e) => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            onChange={e => onChange(e)}
+            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
@@ -100,14 +100,14 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             minLength={6}
             placeholder='password'
             name='passwordConfirmation'
-            onChange={(e) => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
+            onChange={e => onChange(e)}
+            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
         <button
           type='submit'
-          className='border bg-blue-500 border-blue-500 mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-blue-500) '
+          className='border bg-secondary border-secondary mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-secondary) '
         >
           登録
         </button>
