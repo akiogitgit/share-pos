@@ -31,26 +31,25 @@ export const DropDownMenu: FC = () => {
             aria-hidden='true'
           />
 
-          <div className='bg-white shadow-xl top-10px right-[-20px] w-37 z-200 absolute'>
+          <div className='bg-white shadow-xl top-10px right-[-20px] w-40 z-200 absolute'>
             <Link href='/bookmark'>
-              <div className='cursor-pointer flex py-1 pl-4 gap-2 items-center hover:bg-base'>
+              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
                 <HiOutlineBookOpenIcon />
                 ブックマーク
               </div>
             </Link>
             <Link href={`/users/${user?.id}`}>
-              <div className='cursor-pointer flex py-1 pl-4 gap-2 items-center hover:bg-base'>
+              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
                 <AiOutlineUserIcon />
                 マイページ
               </div>
             </Link>
-            <button className='flex text-left w-full py-1 pl-4 gap-2 items-center hover:bg-base'>
+            <button className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-base'>
               <FiSettingsIcon />
               ユーザー情報
             </button>
-
             <button
-              className='flex text-left w-full py-1 pl-4 gap-2 items-center hover:bg-base'
+              className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-base'
               onClick={logOut}
             >
               <FiLogOutIcon />

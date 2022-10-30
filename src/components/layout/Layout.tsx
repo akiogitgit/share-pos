@@ -12,7 +12,6 @@ export const Layout: FC<Props> = ({ children }) => {
       <div className='bg-base min-h-screen'>
         <Header />
         <main>
-          {/* <div className='mx-auto max-w-1150px px-4 pt-100px pb-70px sm:pt-130px'> */}
           <div className='mx-auto max-w-1150px px-4 pt-50px pb-70px'>
             {children}
           </div>
