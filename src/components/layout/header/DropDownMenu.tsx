@@ -1,15 +1,26 @@
+import Link from 'next/link'
 import { FC, useState } from 'react'
+import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 import { FaUserCircle as FaUserCircleIcon } from 'react-icons/fa'
+import {
+  FiLogOut as FiLogOutIcon,
+  FiSettings as FiSettingsIcon,
+} from 'react-icons/fi'
+import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 import { useLogOut } from 'hooks/login/useAuth'
+import { useGetApi } from 'hooks/useApi'
+import { User } from 'types/user/user'
 
 export const DropDownMenu: FC = () => {
   const { logOut } = useLogOut()
+  const { data: user } = useGetApi<User>('/users/me')
+
   const [isOpenMenu, setIsOpenMenu] = useState(false)
 
   return (
     <div>
       <div className='flex' onClick={() => setIsOpenMenu(s => !s)}>
-        <FaUserCircleIcon className='cursor-pointer h-10 w-10' />
+        <FaUserCircleIcon className='cursor-pointer h-8 w-8' />
       </div>
 
       {isOpenMenu && (
@@ -20,15 +31,29 @@ export const DropDownMenu: FC = () => {
             aria-hidden='true'
           />
 
-          <div className='bg-white shadow-lg top-5px right-0 w-40 z-2 absolute'>
-            <button className='flex text-left py-1 px-4 gap-1 items-center hover:bg-base'>
-              ユーザー情報を編集
+          <div className='bg-white shadow-xl top-10px right-[-20px] w-37 z-200 absolute'>
+            <Link href='/bookmark'>
+              <div className='cursor-pointer flex py-1 pl-4 gap-2 items-center hover:bg-base'>
+                <HiOutlineBookOpenIcon />
+                ブックマーク
+              </div>
+            </Link>
+            <Link href={`/users/${user?.id}`}>
+              <div className='cursor-pointer flex py-1 pl-4 gap-2 items-center hover:bg-base'>
+                <AiOutlineUserIcon />
+                マイページ
+              </div>
+            </Link>
+            <button className='flex text-left w-full py-1 pl-4 gap-2 items-center hover:bg-base'>
+              <FiSettingsIcon />
+              ユーザー情報
             </button>
 
             <button
-              className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-base'
+              className='flex text-left w-full py-1 pl-4 gap-2 items-center hover:bg-base'
               onClick={logOut}
             >
+              <FiLogOutIcon />
               ログアウト
             </button>
           </div>

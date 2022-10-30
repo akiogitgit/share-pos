@@ -1,12 +1,8 @@
 import Link from 'next/link'
 import { FC } from 'react'
 
-import {
-  AiOutlineSearch as AiOutlineSearchIcon,
-  AiOutlineUser as AiOutlineUserIcon,
-} from 'react-icons/ai'
+import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
 import { BsPencilSquare as BsPencilSquareIcon } from 'react-icons/bs'
-import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
 import { DropDownMenu } from './DropDownMenu'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
@@ -37,7 +33,9 @@ export const Header: FC = () => {
             </div>
             {isLoggedIn ? (
               <div className='flex gap-3 items-center'>
-                <div className='gap-3 hidden items-center sm:flex'>
+                <DropDownMenu />
+                {/* <div className='gap-3 hidden items-center sm:flex'> */}
+                <div className='flex gap-3 items-center'>
                   <Link href='/create'>
                     <div className='cursor-pointer flex gap-0.5 items-center'>
                       <div className='duration-300 hover:(underline) '>
@@ -46,27 +44,39 @@ export const Header: FC = () => {
                       <BsPencilSquareIcon />
                     </div>
                   </Link>
-                  <Link href='/bookmark'>
-                    <div className='cursor-pointer flex gap-0.5 items-center'>
-                      <div className='duration-300 hover:(underline) '>
-                        ブックマーク
-                      </div>
-                      <HiOutlineBookOpenIcon />
-                    </div>
-                  </Link>
-                  <Link href={`/users/${user?.id}`}>
-                    <div className='cursor-pointer flex gap-0.5 items-center'>
-                      <div className='duration-300 hover:(underline) '>
-                        マイページ
-                      </div>
-                      <AiOutlineUserIcon />
-                    </div>
-                  </Link>
                 </div>
-
-                <DropDownMenu />
               </div>
             ) : (
+              // <div className='flex gap-3 items-center'>
+              //   <div className='gap-3 hidden items-center sm:flex'>
+              //     <Link href='/create'>
+              //       <div className='cursor-pointer flex gap-0.5 items-center'>
+              //         <div className='duration-300 hover:(underline) '>
+              //           投稿する
+              //         </div>
+              //         <BsPencilSquareIcon />
+              //       </div>
+              //     </Link>
+              //     <Link href='/bookmark'>
+              //       <div className='cursor-pointer flex gap-0.5 items-center'>
+              //         <div className='duration-300 hover:(underline) '>
+              //           ブックマーク
+              //         </div>
+              //         <HiOutlineBookOpenIcon />
+              //       </div>
+              //     </Link>
+              //     <Link href={`/users/${user?.id}`}>
+              //       <div className='cursor-pointer flex gap-0.5 items-center'>
+              //         <div className='duration-300 hover:(underline) '>
+              //           マイページ
+              //         </div>
+              //         <AiOutlineUserIcon />
+              //       </div>
+              //     </Link>
+              //   </div>
+
+              //   <DropDownMenu />
+              // </div>
               <div className='flex gap-2'>
                 <Link href='/login'>
                   <div className='cursor-pointer duration-300 hover:(underline) '>
