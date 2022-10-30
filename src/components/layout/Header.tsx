@@ -20,8 +20,8 @@ export const Header: FC = () => {
 
   return (
     <>
-      <header className='bg-white w-full py-2 top-0 z-10 fixed'>
-        {/* <header className='bg-white w-full py-2 top-0 z-100 sticky'> */}
+      {/* <header className='bg-white w-full py-2 top-0 z-10 sm:fixed'> */}
+      <header className='bg-white w-full py-2 top-0 z-100 sm:sticky'>
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
             <h1 className='cursor-pointer mt-0 text-primary  mb-1 text-4xl sm:text-6xl'>
