@@ -8,7 +8,7 @@ import {
 import { BsPencilSquare as BsPencilSquareIcon } from 'react-icons/bs'
 import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
-import { useLogOut } from 'hooks/login/useAuth'
+import { DropDownMenu } from './DropDownMenu'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
@@ -16,7 +16,6 @@ import { User } from 'types/user/user'
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
   const { data: user } = useGetApi<User>('/users/me')
-  const { logOut } = useLogOut()
 
   return (
     <>
@@ -66,12 +65,7 @@ export const Header: FC = () => {
                     </div>
                   </Link>
                 </div>
-                <div
-                  onClick={logOut}
-                  className='cursor-pointer duration-300 hover:(underline) '
-                >
-                  ログアウト
-                </div>
+                <DropDownMenu />
               </div>
             ) : (
               <div className='flex gap-2'>
