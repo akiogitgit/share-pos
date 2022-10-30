@@ -19,7 +19,6 @@ export const Header: FC = () => {
 
   return (
     <>
-      {/* <header className='bg-white w-full py-2 top-0 z-10 sm:fixed'> */}
       <header className='bg-white w-full py-2 top-0 z-100 sm:sticky'>
         <nav className='flex mx-4 items-center justify-between'>
           <Link href='/'>
@@ -29,8 +28,7 @@ export const Header: FC = () => {
           </Link>
 
           <div className='flex gap-3 justify-end items-center'>
-            {/* <div className='gap-3 hidden justify-end items-center sm:flex'> */}
-            <AiOutlineSearchIcon className='cursor-pointer mt-1' />
+            <AiOutlineSearchIcon className='cursor-pointer h-6 mt-1 w-6' />
             <div className='hidden'>
               <input
                 type='text'
@@ -38,7 +36,7 @@ export const Header: FC = () => {
               />
             </div>
             {isLoggedIn ? (
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center'>
                 <div className='gap-3 hidden items-center sm:flex'>
                   <Link href='/create'>
                     <div className='cursor-pointer flex gap-0.5 items-center'>
@@ -65,6 +63,7 @@ export const Header: FC = () => {
                     </div>
                   </Link>
                 </div>
+
                 <DropDownMenu />
               </div>
             ) : (

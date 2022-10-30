@@ -8,29 +8,29 @@ export const DropDownMenu: FC = () => {
 
   return (
     <div>
-      {/* <div
-        onClick={logOut}
-        className='cursor-pointer duration-300 hover:(underline) '
-      >
-        <FaUserCircleIcon className='h-10 w-10' />
-      </div> */}
-      <div
-        onClick={() => setIsOpenMenu(s => !s)}
-        className='cursor-pointer duration-300 hover:(underline) '
-      >
-        <FaUserCircleIcon className='h-10 w-10' />
+      <div className='flex' onClick={() => setIsOpenMenu(s => !s)}>
+        <FaUserCircleIcon className='cursor-pointer h-10 w-10' />
       </div>
-      {isOpenMenu && (
-        <div className='bg-white shadow-lg top-70px right-20px absolute'>
-          <div className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-base'>
-            ユーザー情報を編集
-          </div>
 
+      {isOpenMenu && (
+        <div className='relative'>
           <div
-            className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-base'
-            onClick={logOut}
-          >
-            ログアウト
+            onClick={() => setIsOpenMenu(false)}
+            className='h-100vh top-0 left-0 w-100vw z-1 fixed'
+            aria-hidden='true'
+          />
+
+          <div className='bg-white shadow-lg top-5px right-0 w-40 z-2 absolute'>
+            <button className='flex text-left py-1 px-4 gap-1 items-center hover:bg-base'>
+              ユーザー情報を編集
+            </button>
+
+            <button
+              className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-base'
+              onClick={logOut}
+            >
+              ログアウト
+            </button>
           </div>
         </div>
       )}
