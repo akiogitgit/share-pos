@@ -39,33 +39,33 @@ export const Header: FC = () => {
               />
             </div>
             {isLoggedIn ? (
-              <div className='flex gap-3 justify-end items-center'>
-                <Link href='/create'>
-                  <div className='cursor-pointer flex gap-0.5 items-center'>
-                    {/* <div className='duration-300 hover:(underline) '> */}
-                    <div className='duration-300 hidden sm:block hover:(underline) '>
-                      投稿する
+              <div className='flex gap-3'>
+                <div className='gap-3 hidden items-center sm:flex'>
+                  <Link href='/create'>
+                    <div className='cursor-pointer flex gap-0.5 items-center'>
+                      <div className='duration-300 hover:(underline) '>
+                        投稿する
+                      </div>
+                      <BsPencilSquareIcon />
                     </div>
-                    <BsPencilSquareIcon />
-                  </div>
-                </Link>
-                <Link href='/bookmark'>
-                  <div className='cursor-pointer flex gap-0.5 items-center'>
-                    <div className='duration-300 hidden sm:block hover:(underline) '>
-                      ブックマーク
+                  </Link>
+                  <Link href='/bookmark'>
+                    <div className='cursor-pointer flex gap-0.5 items-center'>
+                      <div className='duration-300 hover:(underline) '>
+                        ブックマーク
+                      </div>
+                      <HiOutlineBookOpenIcon />
                     </div>
-                    <HiOutlineBookOpenIcon />
-                  </div>
-                </Link>
-                <Link href={`/users/${user?.id}`}>
-                  <div className='cursor-pointer flex gap-0.5 items-center'>
-                    {/* <div className='duration-300 hover:(underline) '> */}
-                    <div className='duration-300 hidden sm:block hover:(underline) '>
-                      マイページ
+                  </Link>
+                  <Link href={`/users/${user?.id}`}>
+                    <div className='cursor-pointer flex gap-0.5 items-center'>
+                      <div className='duration-300 hover:(underline) '>
+                        マイページ
+                      </div>
+                      <AiOutlineUserIcon />
                     </div>
-                    <AiOutlineUserIcon />
-                  </div>
-                </Link>
+                  </Link>
+                </div>
                 <div
                   onClick={logOut}
                   className='cursor-pointer duration-300 hover:(underline) '
