@@ -78,10 +78,10 @@ export const Footer: FC = () => {
           <Link href={menuIcon.href} key={menuIcon.href}>
             <div
               className={`cursor-pointer py-2 px-3 ${
-                router.pathname === menuIcon.href && 'text-primary'
+                router.asPath === menuIcon.href && 'text-primary'
               }`}
             >
-              {router.pathname === menuIcon.href
+              {router.asPath === menuIcon.href
                 ? menuIcon.selected
                 : menuIcon.default}
             </div>
