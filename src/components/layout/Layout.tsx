@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Footer } from './Footer'
-import { Header } from './Header'
+import { Header } from './header/Header'
 
 type Props = {
   children: ReactNode
@@ -9,12 +9,14 @@ type Props = {
 export const Layout: FC<Props> = ({ children }) => {
   return (
     <>
-      <Header />
-      <main className='bg-base min-h-100vh'>
-        <div className='mx-auto max-w-1150px px-4 pt-100px pb-70px break-words sm:pt-130px'>
-          {children}
-        </div>
-      </main>
+      <div className='bg-base min-h-screen'>
+        <Header />
+        <main>
+          <div className='mx-auto max-w-1150px px-4 pt-50px pb-70px'>
+            {children}
+          </div>
+        </main>
+      </div>
 
       <Footer />
     </>
