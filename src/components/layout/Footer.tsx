@@ -21,7 +21,24 @@ export const Footer: FC = () => {
 
   // ログインしてる時だけ表示
   if (error) {
-    return <></>
+    return (
+      <footer className=' bg-primary w-full py-2 bottom-0 z-2 fixed'>
+        <div className='flex mx-4 gap-3 justify-end items-center '>
+          <Link href='/login'>
+            {/* <a className='border-white border rounded-full font-bold text-white py-1 px-2 duration-300 hover:(text-primary bg-white) '> */}
+            <a className='border-white border rounded-full font-bold text-white py-1 px-2 duration-300'>
+              ログイン
+            </a>
+          </Link>
+          <Link href='/signup'>
+            {/* <a className='bg-white border-primary border rounded-full font-bold text-primary py-1 px-2 duration-300 hover:(text-white bg-primary) '> */}
+            <a className='bg-white border-primary border rounded-full font-bold text-primary py-1 px-2 duration-300'>
+              新規登録
+            </a>
+          </Link>
+        </div>
+      </footer>
+    )
   }
 
   const menuIcons: {
@@ -50,7 +67,7 @@ export const Footer: FC = () => {
   return (
     <footer className='sm:hidden'>
       {router.pathname !== '/create' && (
-        <button className='border rounded-full font-bold bg-primary border-primary text-white text-right p-2 right-20px bottom-50px text-30px z-2 fixed'>
+        <button className='bg-primary border border-primary rounded-full font-bold text-white text-right p-2 right-20px bottom-50px text-30px z-2 fixed'>
           <Link href='/create'>＋</Link>
         </button>
       )}
