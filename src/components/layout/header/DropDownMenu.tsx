@@ -7,6 +7,7 @@ import {
   FiSettings as FiSettingsIcon,
 } from 'react-icons/fi'
 import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
+
 import { useLogOut } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
@@ -31,7 +32,7 @@ export const DropDownMenu: FC = () => {
             aria-hidden='true'
           />
 
-          <div className='bg-white shadow-xl top-10px right-[-20px] w-40 z-200 absolute'>
+          <div className='bg-white shadow-xl top-10px right-[-15px] w-40 z-200 absolute'>
             <Link href='/bookmark'>
               <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
                 <HiOutlineBookOpenIcon />

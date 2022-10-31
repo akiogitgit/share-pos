@@ -1,14 +1,16 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { FC } from 'react'
 
 import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
-import { BsPencilSquare as BsPencilSquareIcon } from 'react-icons/bs'
+import { HiPaperAirplane as HiPaperAirplaneIcon } from 'react-icons/hi'
 
 import { DropDownMenu } from './DropDownMenu'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
+  const router = useRouter()
 
   return (
     <>
@@ -27,28 +29,26 @@ export const Header: FC = () => {
               <div className='flex gap-3 items-center'>
                 <DropDownMenu />
 
-                <div className='flex gap-3 items-center'>
-                  <Link href='/create'>
-                    <div className='cursor-pointer flex gap-0.5 items-center'>
-                      <div className='duration-300 hover:(underline) '>
-                        投稿する
-                      </div>
-                      <BsPencilSquareIcon />
-                    </div>
-                  </Link>
-                </div>
+                {router.pathname !== '/create' && (
+                  <div className='flex gap-3 items-center'>
+                    <Link href='/create'>
+                      <a className='bg-primary border border-primary flex rounded-7px text-white py-1 px-2 gap-1 duration-300 items-center hover:(bg-white text-primary) '>
+                        <div className='font-bold'>シェアする</div>
+                        <HiPaperAirplaneIcon className='transform rotate-90' />
+                      </a>
+                    </Link>
+                  </div>
+                )}
               </div>
             ) : (
-              <div className='flex gap-2'>
+              <div className='flex gap-2 items-center'>
                 <Link href='/login'>
-                  <div className='cursor-pointer duration-300 hover:(underline) '>
-                    ログイン
-                  </div>
+                  <a className='cursor-pointer'>ログイン</a>
                 </Link>
                 <Link href='/signup'>
-                  <div className='cursor-pointer duration-300 hover:(underline) '>
+                  <button className='bg-primary border border-primary rounded-7px text-white py-1 px-2 duration-300 hover:(bg-white text-primary) '>
                     新規登録
-                  </div>
+                  </button>
                 </Link>
               </div>
             )}

@@ -8,10 +8,12 @@ import {
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
 import { FaUser as FaUserIcon } from 'react-icons/fa'
+import { HiPaperAirplane as HiPaperAirplaneIcon } from 'react-icons/hi'
 import {
   IoBook as IoBookIcon,
   IoBookOutline as IoBookOutlineIcon,
 } from 'react-icons/io5'
+
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
 
@@ -66,7 +68,9 @@ export const Footer: FC = () => {
     <footer className='sm:hidden'>
       {router.pathname !== '/create' && (
         <button className='bg-primary border border-primary rounded-full font-bold text-white text-right p-2 right-20px bottom-50px text-30px z-2 fixed'>
-          <Link href='/create'>＋</Link>
+          <Link href='/create'>
+            <HiPaperAirplaneIcon className='h-7 transform w-7 rotate-90' />
+          </Link>
         </button>
       )}
       <nav className='bg-white flex w-full bottom-0 text-25px z-2 justify-around fixed'>
