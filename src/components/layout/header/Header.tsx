@@ -13,7 +13,7 @@ export const Header: FC = () => {
   return (
     <>
       <header className='bg-white w-full py-2 top-0 z-100 sm:sticky'>
-        <nav className='flex px-4 items-center justify-between'>
+        <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>
           <Link href='/'>
             <h1 className='cursor-pointer mt-0 text-primary  mb-1 text-4xl'>
               SharePos
