@@ -27,10 +27,10 @@ const Home: NextPage = () => {
           evaluation={stars}
           onClick={(newStar) => setStars(newStar)}
         /> */}
-        {posts?.length && (
+        {posts && (
           <div className='mt-4'>
             <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
-              {posts.map((post) => (
+              {posts.map(post => (
                 <div key={post.id} className='mb-1'>
                   <PostItem post={post} />
                 </div>
