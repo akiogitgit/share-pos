@@ -5,7 +5,6 @@ import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { Button } from 'components/shares/Button'
 import { useGetApi } from 'hooks/useApi'
 import { UserPosts } from 'types/post'
 import { User } from 'types/user/user'
@@ -36,24 +35,6 @@ const User: NextPage = () => {
             <h1 className='font-bold text-xl'>
               <h1>{userPosts?.user.username}</h1>
             </h1>
-          </div>
-          <div className='flex gap-2 items-start'>
-            {/* <Button size='xs'>Settings</Button>
-            <Button size='sm'>Settings</Button>
-            <Button size='md'>Settings</Button> */}
-            {/* <Button size='lg'>Settings</Button> */}
-            <Button size='xl' radius='sm'>
-              Settings
-            </Button>
-            <Button size='xl' radius='md'>
-              Settings
-            </Button>
-            <Button size='xl' radius='lg'>
-              Settings
-            </Button>
-            <Button size='xl' radius='xl'>
-              Settings
-            </Button>
           </div>
           <button className='bg-primary rounded-10px text-white py-1 px-2'>
             {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
