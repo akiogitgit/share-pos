@@ -32,19 +32,13 @@ export const Header: FC = () => {
 
                 {router.pathname !== '/create' && (
                   <div className='flex gap-3 items-center'>
-                    {/* <a className='bg-primary border border-primary flex rounded-7px text-white py-1 px-2 gap-1 duration-300 items-center hover:(bg-white text-primary) '>
-                        <div className='font-bold'>シェアする</div>
-                        <HiPaperAirplaneIcon className='transform rotate-90' />
-                      </a> */}
-                    {/* <Button>
-                        <a className='bg-primary border border-primary flex rounded-7px text-white py-1 px-2 gap-1 duration-300 items-center hover:(bg-white text-primary) '>
-                          <div className='font-bold'>シェアする</div>
-                          <HiPaperAirplaneIcon className='transform rotate-90' />
-                        </a>
-                      </Button> */}
                     <Link href='/create'>
                       <a>
                         <Button
+                          radius='md'
+                          size='lg'
+                          compact
+                          animate
                           rightIcon={
                             <HiPaperAirplaneIcon className='transform rotate-90' />
                           }

@@ -7,8 +7,9 @@ type Props = {
   color?: 'red' | 'blue' | 'gray'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  animate?: boolean
   variant?: 'outline' | 'light' | 'filled'
+  animate?: boolean
+  compact?: boolean
   fullWidth?: boolean
   rightIcon?: React.ReactElement
   leftIcon?: React.ReactElement
@@ -24,6 +25,7 @@ export const Button: FC<Props> = ({
   radius = 'sm',
   variant = 'filled',
   animate,
+  compact,
   fullWidth,
   rightIcon,
   leftIcon,
@@ -32,79 +34,12 @@ export const Button: FC<Props> = ({
   const defaultClass =
     'duration-300 font-bold flex items-center justify-center gap-1 '
 
-  // const bg50 = useMemo(() => {
-  //   if (color === 'red') return 'bg-red-50'
-  //   if (color === 'blue') return 'bg-blue-50'
-  //   if (color === 'gray') return 'bg-gray-50'
-  // }, [color])
-  // const bg100 = useMemo(() => {
-  //   if (color === 'red') return 'bg-red-100'
-  //   if (color === 'blue') return 'bg-blue-100'
-  //   if (color === 'gray') return 'bg-gray-100'
-  // }, [color])
-  // const bg500 = useMemo(() => {
-  //   if (color === 'red') return 'bg-red-500'
-  //   if (color === 'blue') return 'bg-blue-500'
-  //   if (color === 'gray') return 'bg-gray-500'
-  // }, [color])
-  // const text500 = useMemo(() => {
-  //   if (color === 'red') return 'text-red-500'
-  //   if (color === 'blue') return 'text-blue-500'
-  //   if (color === 'gray') return 'text-gray-500'
-  // }, [color])
-  // const border500 = useMemo(() => {
-  //   if (color === 'red') return 'border-red-500'
-  //   if (color === 'blue') return 'border-blue-500'
-  //   if (color === 'gray') return 'border-gray-500'
-  // }, [color])
-
-  // const hoverbg50 = useMemo(() => {
-  //   if (color === 'red') return 'hover:bg-red-50'
-  //   if (color === 'blue') return 'hover:bg-blue-50'
-  //   if (color === 'gray') return 'hover:bg-gray-50'
-  // }, [color])
-  // const hoverbg100 = useMemo(() => {
-  //   if (color === 'red') return 'hover:bg-red-100'
-  //   if (color === 'blue') return 'hover:bg-blue-100'
-  //   if (color === 'gray') return 'hover:bg-gray-100'
-  // }, [color])
-  // const hoverbg500 = useMemo(() => {
-  //   if (color === 'red') return 'hover:bg-red-500'
-  //   if (color === 'blue') return 'hover:bg-blue-500'
-  //   if (color === 'gray') return 'hover:bg-gray-500'
-  // }, [color])
-  // const hovertext500 = useMemo(() => {
-  //   if (color === 'red') return 'hover:text-red-500'
-  //   if (color === 'blue') return 'hover:text-blue-500'
-  //   if (color === 'gray') return 'hover:text-gray-500'
-  // }, [color])
-  // const hoverborder500 = useMemo(() => {
-  //   if (color === 'red') return 'hover:border-red-500'
-  //   if (color === 'blue') return 'hover:border-blue-500'
-  //   if (color === 'gray') return 'hover:border-gray-500'
-  // }, [color])
+  // tailwindで使うためコメントで書く
+  // bg-red-50 bg-blue-50 bg-gray-50 bg-red-100 bg-blue-100 bg-gray-100 bg-red-500 bg-blue-500 bg-gray-500 text-red-500 text-blue-500 text-gray-500 border-red-500 border-blue-500 border-gray-500 hover:bg-red-50 hover:bg-blue-50 hover:bg-gray-50 hover:bg-red-100 hover:bg-blue-100 hover:bg-gray-100 hover:bg-red-500 hover:bg-blue-500 hover:bg-gray-500 hover:text-red-500 hover:text-blue-500 hover:text-gray-500 hover:border-red-500 hover:border-blue-500 hover:border-gray-500
 
   const colorFilled = `bg-${color}-500 text-white border-1 border-${color}-500`
   const colorLight = `bg-${color}-50 text-${color}-500 border-1 border-${color}-50`
   const colorOutline = `bg-white text-${color}-500 border-1 border-${color}-500`
-  // const colorFilled = `${bg500} text-white border-1 border-${color}-500`
-  // const colorLight = `${bg50} text-${color}-500 border-1 border-${color}-50`
-  // const colorOutline = `bg-white text-${color}-500 border-1 border-${color}-500`
-
-  // const colorFilled = useMemo(() => {
-  //   const common = 'text-white border-1'
-  //   switch (color) {
-  //     case 'red':
-  //       return `${common} bg-red-500 border-red-500`
-  //     case 'blue':
-  //       return `${common} bg-blue-500 border-blue-500`
-  //     case 'gray':
-  //       return `${common} bg-gray-500 border-gray-500`
-  //   }
-  // }, [color])
-
-  // const colorLight = `bg-${color}-50 text-${color}-500 border-1 border-${color}-50`
-  // const colorOutline = `bg-white text-${color}-500 border-1 border-${color}-500`
 
   const colorClass = (() => {
     switch (variant) {
@@ -140,6 +75,20 @@ export const Button: FC<Props> = ({
   })()
 
   const sizeClass = (() => {
+    if (compact) {
+      switch (size) {
+        case 'xs':
+          return 'text-12px py-4px px-7px'
+        case 'sm':
+          return 'text-14px py-5px px-8px'
+        case 'md':
+          return 'text-16px py-6px px-10px'
+        case 'lg':
+          return 'text-18px py-7px px-12px'
+        case 'xl':
+          return 'text-20px py-9px px-14px'
+      }
+    }
     switch (size) {
       case 'xs':
         return 'text-12px py-8px px-14px'

@@ -67,6 +67,41 @@ const Test: NextPage = () => {
         </Button>
       </div>
 
+      <div className='flex mt-4 gap-2 items-start'>
+        <Button color='gray' size='xs'>
+          Settings
+        </Button>
+        <Button color='gray' size='sm'>
+          Settings
+        </Button>
+        <Button color='gray' size='md'>
+          Settings
+        </Button>
+        <Button color='gray' size='lg'>
+          Settings
+        </Button>
+        <Button color='gray' size='xl'>
+          Settings
+        </Button>
+      </div>
+      <div className='flex mt-4 gap-2 items-start'>
+        <Button color='gray' compact size='xs'>
+          Settings
+        </Button>
+        <Button color='gray' compact size='sm'>
+          Settings
+        </Button>
+        <Button color='gray' compact size='md'>
+          Settings
+        </Button>
+        <Button color='gray' compact size='lg'>
+          Settings
+        </Button>
+        <Button color='gray' compact size='xl'>
+          Settings
+        </Button>
+      </div>
+
       <form
         onSubmit={e => {
           e.preventDefault()
