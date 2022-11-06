@@ -7,11 +7,12 @@ const Test: NextPage = () => {
     <Layout>
       <div className='flex gap-2 items-start'>
         <Button size='xs'>Settings</Button>
-        <div className='w-200px'>
+        {/* <div className='w-200px'>
           <Button size='sm' fullWidth onClick={() => alert('a')}>
             Settings Settings
           </Button>
-        </div>
+        </div> */}
+        <Button size='sm'>Settings</Button>
         <Button size='md'>Settings</Button>
         <Button size='lg'>Settings</Button>
         <Button size='xl' radius='sm'>
@@ -36,7 +37,10 @@ const Test: NextPage = () => {
           required
           className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
         />
-        <Button color='blue' type='button'>
+        <Button color='blue' type='button' animate>
+          作成
+        </Button>
+        <Button color='red' type='button' animate>
           作成
         </Button>
       </form>

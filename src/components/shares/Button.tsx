@@ -30,29 +30,35 @@ export const Button: FC<Props> = ({
   const defaultClass =
     'font-bold flex items-center justify-center gap-1 hover:bg-opacity-80'
 
-  const colorClass = (() => {
-    switch (color) {
-      case 'red':
-        return 'bg-red-500 text-white'
-      case 'blue':
-        return 'bg-blue-500 text-white'
-      case 'gray':
-        return 'bg-gray-500 text-white'
-    }
-  })()
+  const colorClass = `bg-${color}-500 text-white border border-${color}-500`
+
+  // const colorClass = (() => {
+  //   switch (color) {
+  //     case 'red':
+  //       return 'bg-red-500 text-white'
+  //     case 'blue':
+  //       return 'bg-blue-500 text-white'
+  //     case 'gray':
+  //       return 'bg-gray-500 text-white'
+  //   }
+  // })()
+
+  const animateClass = animate
+    ? `duration-300 hover:text-${color}-500 hover:bg-white`
+    : ''
 
   const sizeClass = (() => {
     switch (size) {
       case 'xs':
-        return 'text-12px py-9px px-15px'
+        return 'text-12px py-8px px-14px'
       case 'sm':
-        return 'text-14px py-11px px-19px'
+        return 'text-14px py-10px px-18px'
       case 'md':
-        return 'text-16px py-13px px-23px'
+        return 'text-16px py-12px px-22px'
       case 'lg':
-        return 'text-18px py-16px px-27px'
+        return 'text-18px py-15px px-26px'
       case 'xl':
-        return 'text-20px py-20px px-33px'
+        return 'text-20px py-19px px-32px'
     }
   })()
 
@@ -71,7 +77,7 @@ export const Button: FC<Props> = ({
     }
   })()
 
-  const allClass = `${defaultClass} ${className} ${colorClass} ${sizeClass} ${RadiusClass} ${fullWidthClass}`
+  const allClass = `${defaultClass} ${className} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass}`
 
   return (
     // <button className='bg-primary border border-primary flex rounded-7px text-white py-1 px-2 gap-1 duration-300 items-center hover:(bg-white text-primary) '>
