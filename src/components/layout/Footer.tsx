@@ -32,13 +32,20 @@ export const Footer: FC = () => {
               radius='xl'
               size='md'
               compact
+              component='a'
               className='border border-white rounded-full'
             >
               ログイン
             </Button>
           </Link>
           <Link href='/signup'>
-            <Button variant='outline' radius='xl' size='md' compact>
+            <Button
+              variant='outline'
+              radius='xl'
+              size='md'
+              compact
+              component='a'
+            >
               新規登録
             </Button>
           </Link>
