@@ -21,7 +21,7 @@ export const Footer: FC = () => {
   const router = useRouter()
   const { data: user, error } = useGetApi<User>('/users/me')
 
-  // ログインしてる時だけ表示
+  // ログインしていない時だけ表示
   if (error) {
     return (
       <footer className=' bg-primary w-full py-2 bottom-0 z-2 fixed'>

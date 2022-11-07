@@ -7,11 +7,6 @@ const Test: NextPage = () => {
     <Layout>
       <div className='flex gap-2 items-start'>
         <Button size='xs'>Settings</Button>
-        {/* <div className='w-200px'>
-        <Button size='sm' fullWidth onClick={() => alert('a')}>
-          Settings Settings
-        </Button>
-      </div> */}
         <Button size='sm'>Settings</Button>
         <Button size='md' color='gray'>
           Settings
@@ -80,7 +75,7 @@ const Test: NextPage = () => {
         <Button color='gray' size='lg'>
           Settings
         </Button>
-        <Button color='gray' size='xl'>
+        <Button color='gray' size='xl' borderWhite>
           Settings
         </Button>
       </div>
@@ -101,6 +96,22 @@ const Test: NextPage = () => {
           Settings
         </Button>
       </div>
+
+      <button className='border-white border-2'>
+        <Button color='gray' compact size='xl'>
+          Settings
+        </Button>
+      </button>
+
+      <Button
+        color='blue'
+        compact
+        size='xl'
+        animate
+        className='border-white border-4'
+      >
+        Settia
+      </Button>
 
       <form
         onSubmit={e => {

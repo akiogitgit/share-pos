@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 type Props = {
   children: React.ReactNode
@@ -11,6 +11,7 @@ type Props = {
   animate?: boolean
   compact?: boolean
   fullWidth?: boolean
+  borderWhite?: boolean
   rightIcon?: React.ReactElement
   leftIcon?: React.ReactElement
   onClick?: () => void
@@ -27,32 +28,29 @@ export const Button: FC<Props> = ({
   animate,
   compact,
   fullWidth,
+  borderWhite,
   rightIcon,
   leftIcon,
   onClick,
 }) => {
-  const defaultClass =
-    'duration-300 font-bold flex items-center justify-center gap-1 '
-
   // tailwindで使うためコメントで書く
   // bg-red-50 bg-blue-50 bg-gray-50 bg-red-100 bg-blue-100 bg-gray-100 bg-red-500 bg-blue-500 bg-gray-500 text-red-500 text-blue-500 text-gray-500 border-red-500 border-blue-500 border-gray-500 hover:bg-red-50 hover:bg-blue-50 hover:bg-gray-50 hover:bg-red-100 hover:bg-blue-100 hover:bg-gray-100 hover:bg-red-500 hover:bg-blue-500 hover:bg-gray-500 hover:text-red-500 hover:text-blue-500 hover:text-gray-500 hover:border-red-500 hover:border-blue-500 hover:border-gray-500
 
-  const colorFilled = `bg-${color}-500 text-white border-1 border-${color}-500`
-  const colorLight = `bg-${color}-50 text-${color}-500 border-1 border-${color}-50`
-  const colorOutline = `bg-white text-${color}-500 border-1 border-${color}-500`
+  const defaultClass =
+    'duration-300 font-bold flex items-center justify-center gap-1 '
 
-  const colorClass = (() => {
+  const colorClass = useMemo(() => {
     switch (variant) {
       case 'filled':
-        return colorFilled
+        return `bg-${color}-500 text-white border-1 border-${color}-500`
       case 'light':
-        return colorLight
+        return `bg-${color}-50 text-${color}-500 border-1 border-${color}-50`
       case 'outline':
-        return colorOutline
+        return `bg-white text-${color}-500 border-1 border-${color}-500`
     }
-  })()
+  }, [color, variant])
 
-  const animateClass = (() => {
+  const animateClass = useMemo(() => {
     if (!animate) {
       switch (variant) {
         case 'filled':
@@ -63,7 +61,6 @@ export const Button: FC<Props> = ({
           return `hover:bg-${color}-50`
       }
     }
-
     switch (variant) {
       case 'filled':
         return `hover:text-${color}-500 hover:bg-white`
@@ -72,9 +69,9 @@ export const Button: FC<Props> = ({
       case 'outline':
         return `hover:bg-${color}-500 hover:text-white`
     }
-  })()
+  }, [animate, color, variant])
 
-  const sizeClass = (() => {
+  const sizeClass = useMemo(() => {
     if (compact) {
       switch (size) {
         case 'xs':
@@ -101,11 +98,16 @@ export const Button: FC<Props> = ({
       case 'xl':
         return 'text-20px py-19px px-32px'
     }
-  })()
+  }, [compact, size])
 
-  const fullWidthClass = fullWidth ? 'w-full' : ''
+  const fullWidthClass = useMemo(() => (fullWidth ? 'w-full' : ''), [fullWidth])
 
-  const RadiusClass = (() => {
+  const borderWhiteClass = useMemo(
+    () => (borderWhite ? 'border-white' : ''),
+    [borderWhite],
+  )
+
+  const RadiusClass = useMemo(() => {
     switch (radius) {
       case 'sm':
         return 'rounded-3px'
@@ -116,15 +118,19 @@ export const Button: FC<Props> = ({
       case 'xl':
         return 'rounded-full'
     }
-  })()
+  }, [radius])
 
-  const allClass = `${defaultClass} ${className} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass}`
+  const allClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} ${borderWhiteClass}`
 
+  // border border-white出来る
+  // padding margin 出来ない
   return (
-    <button className={allClass} onClick={onClick} type={type}>
-      {leftIcon}
-      {children}
-      {rightIcon}
+    <button className={className} onClick={onClick} type={type}>
+      <span className={allClass}>
+        {leftIcon}
+        {children}
+        {rightIcon}
+      </span>
     </button>
   )
 }

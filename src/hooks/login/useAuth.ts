@@ -70,7 +70,7 @@ export const useLogOut = () => {
       mutate(undefined, false)
       remove('token')
       console.log('logout')
-      router.push('/')
+      router.push('/login')
     },
   }
 }
