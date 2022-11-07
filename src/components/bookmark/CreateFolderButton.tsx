@@ -3,7 +3,12 @@ import { Button } from 'components/shares/Button'
 import { Modal } from 'components/shares/Modal'
 import { useCreateFolder } from 'hooks/useFolder'
 
-export const CreateFolderButton: FC = () => {
+// bookmark, FolderListで使うときradiusを変える
+type Props = {
+  radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+}
+
+export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
 
@@ -16,7 +21,7 @@ export const CreateFolderButton: FC = () => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} size='md' fullWidth>
+      <Button onClick={() => setIsOpen(true)} radius={radius} fullWidth>
         新規フォルダ作成
       </Button>
 

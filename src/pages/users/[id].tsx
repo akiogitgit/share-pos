@@ -37,20 +37,20 @@ const User: NextPage = () => {
               <h1>{userPosts?.user.username}</h1>
             </h1>
           </div>
-          <Button radius='md' size='md'>
+          <Button radius='md'>
             {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
           </Button>
         </div>
 
-        <ul className='flex mt-4 gap-3'>
-          <li>
-            フォロワー数 : <span className='font-bold'>56</span>
-          </li>
-          <li>
+        <div className='flex mt-4 gap-3'>
+          <p>
+            フォロワー数 : <span className='font-bold'>○○</span>
+          </p>
+          <p>
             投稿数 :{' '}
             <span className='font-bold'>{userPosts?.posts.length}</span>
-          </li>
-        </ul>
+          </p>
+        </div>
       </section>
 
       <section className='mt-10'>
