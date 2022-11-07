@@ -52,12 +52,13 @@ export const FolderEditModal: FC<Props> = ({
           </div>
 
           <div className='flex justify-between'>
-            <div
+            <button
+              type='button'
               onClick={onClose}
               className='cursor-pointer font-bold border-t-2 border-gray-200 mt-4 text-center text-secondary w-full py-2 duration-150 hover:bg-black/10 '
             >
               閉じる
-            </div>
+            </button>
             <button
               type='submit'
               className='font-bold border-t-2 border-gray-200 mt-4 text-secondary w-full py-2 duration-150 hover:bg-black/10 '

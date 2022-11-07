@@ -53,20 +53,20 @@ export const PostMenuButton: FC<Props> = ({
           ></div>
 
           <div className='top-[-35px] right-5px z-2 absolute sm:top-[-35px] '>
-            <div className='border cursor-pointer bg-base border-primary rounded-10px shadow-lg transform shadow-primary-light w-170px sm:w-150px'>
+            <div className='bg-base border border-primary cursor-pointer rounded-10px shadow-lg shadow-primary-light transform w-170px sm:w-150px'>
               {user?.id === post.userId && (
                 <>
-                  <div
-                    className='rounded-t-10px px-4 pt-2 pb-1 hover:bg-primary-light'
+                  <button
+                    className='rounded-t-10px text-left w-full px-4 pt-2 pb-1 hover:bg-primary-light'
                     onClick={() => {
                       onEdit?.()
                       setIsOpenMenu(false)
                     }}
                   >
                     投稿を編集する
-                  </div>
-                  <div
-                    className='py-1 px-4 hover:bg-primary-light'
+                  </button>
+                  <button
+                    className='text-left w-full py-1 px-4 hover:bg-primary-light'
                     onClick={async () => {
                       closeMenu()
                       await deletePost()
@@ -77,11 +77,11 @@ export const PostMenuButton: FC<Props> = ({
                       削除
                     </span>
                     する
-                  </div>
+                  </button>
                 </>
               )}
-              <div
-                className={`py-1 px-4 hover:bg-primary-light ${
+              <button
+                className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
                   user?.id !== post.userId && 'pt-2 rounded-t-10px'
                 }`}
                 onClick={() => {
@@ -91,15 +91,15 @@ export const PostMenuButton: FC<Props> = ({
                 }}
               >
                 記事リンクをコピー
-              </div>
+              </button>
               {user && (
-                <div className='rounded-b-10px group relative'>
-                  <div
-                    className='px-4 pt-1 pb-2 hover:bg-primary-light'
+                <div className='rounded-b-10px text-left w-full group relative'>
+                  <button
+                    className='text-left w-full px-4 pt-1 pb-2 hover:bg-primary-light'
                     onClick={() => setIsOpenFolder(!isOpenFolder)}
                   >
                     ブックマークに追加
-                  </div>
+                  </button>
 
                   {/* 自分のフォルダ一覧  */}
                   <div
@@ -107,7 +107,7 @@ export const PostMenuButton: FC<Props> = ({
                       !isOpenFolder && 'hidden'
                     } sm:group-hover:block`}
                   >
-                    <div className='rounded-10px shadow-md top-0px right-80px shadow-primary-light absolute sm:right-80px'>
+                    <div className='rounded-10px shadow-md shadow-primary-light top-0px right-80px absolute sm:right-80px'>
                       <FolderList post={post} onClickFolderName={closeMenu} />
                     </div>
                   </div>

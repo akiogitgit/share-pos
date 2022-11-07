@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { FC, useCallback, useMemo, useState } from 'react'
 
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
-
 import { FolderEditModal } from './FolderEditModal'
 import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
@@ -48,15 +47,15 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
               }`}
             >
               <Link href={{ pathname: 'bookmark', query: { id: index } }}>
-                <button
-                  className={`mt-2 w-full text-left ${
+                <a
+                  className={`block mt-2 w-full text-left ${
                     router.query.id == folder.id && 'font-bold'
                   }`}
                   onClick={() => onClickFolder(index)}
                 >
                   <BsFolderIcon className='mr-1' />
                   {folder.name}
-                </button>
+                </a>
               </Link>
             </div>
           ))}

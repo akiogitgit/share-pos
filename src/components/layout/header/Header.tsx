@@ -31,23 +31,20 @@ export const Header: FC = () => {
                 <DropDownMenu />
 
                 {router.pathname !== '/create' && (
-                  <div className='flex gap-3 items-center'>
-                    <Link href='/create'>
-                      <a>
-                        <Button
-                          radius='md'
-                          size='lg'
-                          compact
-                          animate
-                          rightIcon={
-                            <HiPaperAirplaneIcon className='transform rotate-90' />
-                          }
-                        >
-                          シェアする
-                        </Button>
-                      </a>
-                    </Link>
-                  </div>
+                  <Link href='/create'>
+                    <Button
+                      radius='md'
+                      size='lg'
+                      compact
+                      animate
+                      component='a'
+                      rightIcon={
+                        <HiPaperAirplaneIcon className='transform rotate-90' />
+                      }
+                    >
+                      シェアする
+                    </Button>
+                  </Link>
                 )}
               </div>
             ) : (
@@ -56,9 +53,9 @@ export const Header: FC = () => {
                   <a className='cursor-pointer'>ログイン</a>
                 </Link>
                 <Link href='/signup'>
-                  <button className='bg-primary border border-primary rounded-7px text-white py-1 px-2 duration-300 hover:(bg-white text-primary) '>
+                  <Button radius='md' component='a'>
                     新規登録
-                  </button>
+                  </Button>
                 </Link>
               </div>
             )}

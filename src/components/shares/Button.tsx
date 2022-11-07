@@ -7,11 +7,12 @@ type Props = {
   color?: 'red' | 'blue' | 'gray'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'outline' | 'light' | 'filled'
+  variant?: 'outline' | 'light' | 'filled' | 'default'
   animate?: boolean
   compact?: boolean
   fullWidth?: boolean
-  borderWhite?: boolean
+  component?: 'button' | 'a' // ここやる-------------
+  href?: string
   rightIcon?: React.ReactElement
   leftIcon?: React.ReactElement
   onClick?: () => void
@@ -23,12 +24,13 @@ export const Button: FC<Props> = ({
   type,
   color = 'red',
   size = 'sm',
-  radius = 'sm',
+  radius = 'md',
   variant = 'filled',
   animate,
   compact,
   fullWidth,
-  borderWhite,
+  component = 'button',
+  href,
   rightIcon,
   leftIcon,
   onClick,
@@ -37,7 +39,7 @@ export const Button: FC<Props> = ({
   // bg-red-50 bg-blue-50 bg-gray-50 bg-red-100 bg-blue-100 bg-gray-100 bg-red-500 bg-blue-500 bg-gray-500 text-red-500 text-blue-500 text-gray-500 border-red-500 border-blue-500 border-gray-500 hover:bg-red-50 hover:bg-blue-50 hover:bg-gray-50 hover:bg-red-100 hover:bg-blue-100 hover:bg-gray-100 hover:bg-red-500 hover:bg-blue-500 hover:bg-gray-500 hover:text-red-500 hover:text-blue-500 hover:text-gray-500 hover:border-red-500 hover:border-blue-500 hover:border-gray-500
 
   const defaultClass =
-    'duration-300 font-bold flex items-center justify-center gap-1 '
+    'font-bold flex items-center justify-center gap-1 cursor-pointer'
 
   const colorClass = useMemo(() => {
     switch (variant) {
@@ -63,11 +65,11 @@ export const Button: FC<Props> = ({
     }
     switch (variant) {
       case 'filled':
-        return `hover:text-${color}-500 hover:bg-white`
+        return `duration-300 hover:text-${color}-500 hover:bg-white`
       case 'light':
-        return `hover:bg-${color}-500 hover:text-white`
+        return `duration-300 hover:bg-${color}-500 hover:text-white`
       case 'outline':
-        return `hover:bg-${color}-500 hover:text-white`
+        return `duration-300 hover:bg-${color}-500 hover:text-white`
     }
   }, [animate, color, variant])
 
@@ -102,11 +104,6 @@ export const Button: FC<Props> = ({
 
   const fullWidthClass = useMemo(() => (fullWidth ? 'w-full' : ''), [fullWidth])
 
-  const borderWhiteClass = useMemo(
-    () => (borderWhite ? 'border-white' : ''),
-    [borderWhite],
-  )
-
   const RadiusClass = useMemo(() => {
     switch (radius) {
       case 'sm':
@@ -120,13 +117,25 @@ export const Button: FC<Props> = ({
     }
   }, [radius])
 
-  const allClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} ${borderWhiteClass}`
+  const buttonClass = `${className} ${fullWidthClass}`
+  const spanClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} `
 
   // border border-white出来る
   // padding margin 出来ない
+  if (component === 'a') {
+    return (
+      <a className={buttonClass} href={href} onClick={onClick} type={type}>
+        <span className={spanClass}>
+          {leftIcon}
+          {children}
+          {rightIcon}
+        </span>
+      </a>
+    )
+  }
   return (
-    <button className={className} onClick={onClick} type={type}>
-      <span className={allClass}>
+    <button className={buttonClass} onClick={onClick} type={type}>
+      <span className={spanClass}>
         {leftIcon}
         {children}
         {rightIcon}
@@ -134,3 +143,17 @@ export const Button: FC<Props> = ({
     </button>
   )
 }
+
+// const allClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} ${borderWhiteClass}`
+
+// // border border-white出来る
+// // padding margin 出来ない
+// return (
+//   <button className={className} onClick={onClick} type={type}>
+//     <span className={allClass}>
+//       {leftIcon}
+//       {children}
+//       {rightIcon}
+//     </span>
+//   </button>
+// )

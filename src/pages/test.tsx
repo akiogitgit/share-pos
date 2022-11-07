@@ -75,7 +75,7 @@ const Test: NextPage = () => {
         <Button color='gray' size='lg'>
           Settings
         </Button>
-        <Button color='gray' size='xl' borderWhite>
+        <Button color='gray' size='xl'>
           Settings
         </Button>
       </div>
@@ -97,12 +97,6 @@ const Test: NextPage = () => {
         </Button>
       </div>
 
-      <button className='border-white border-2'>
-        <Button color='gray' compact size='xl'>
-          Settings
-        </Button>
-      </button>
-
       <Button
         color='blue'
         compact
@@ -113,7 +107,7 @@ const Test: NextPage = () => {
         Settia
       </Button>
 
-      <form
+      {/* <form
         onSubmit={e => {
           e.preventDefault()
           console.log('anpan')
@@ -136,7 +130,7 @@ const Test: NextPage = () => {
         <Button color='red' type='button' animate>
           作成
         </Button>
-      </form>
+      </form> */}
     </Layout>
   )
 }

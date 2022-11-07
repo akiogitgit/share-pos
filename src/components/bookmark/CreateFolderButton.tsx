@@ -1,12 +1,9 @@
 import { FC, useCallback, useState } from 'react'
+import { Button } from 'components/shares/Button'
 import { Modal } from 'components/shares/Modal'
 import { useCreateFolder } from 'hooks/useFolder'
 
-type Props = {
-  className?: string
-}
-
-export const CreateFolderButton: FC<Props> = ({ className }) => {
+export const CreateFolderButton: FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
 
@@ -19,9 +16,9 @@ export const CreateFolderButton: FC<Props> = ({ className }) => {
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)} className={className}>
+      <Button onClick={() => setIsOpen(true)} size='md' fullWidth>
         新規フォルダ作成
-      </button>
+      </Button>
 
       <Modal open={isOpen} onClose={onClose} title='新規フォルダ作成'>
         <form

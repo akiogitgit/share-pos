@@ -5,6 +5,7 @@ import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
+import { Button } from 'components/shares/Button'
 import { useGetApi } from 'hooks/useApi'
 import { UserPosts } from 'types/post'
 import { User } from 'types/user/user'
@@ -36,9 +37,9 @@ const User: NextPage = () => {
               <h1>{userPosts?.user.username}</h1>
             </h1>
           </div>
-          <button className='bg-primary rounded-10px text-white py-1 px-2'>
+          <Button radius='md' size='md'>
             {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
-          </button>
+          </Button>
         </div>
 
         <ul className='flex mt-4 gap-3'>
