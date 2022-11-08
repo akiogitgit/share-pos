@@ -35,13 +35,11 @@ export const PostMenuButton: FC<Props> = ({
   }, [])
 
   return (
-    <div>
-      <button
+    <>
+      <BsThreeDotsIcon
         className='cursor-pointer text-30px duration-100 hover:opacity-50'
         onClick={() => setIsOpenMenu(!isOpenMenu)}
-      >
-        <BsThreeDotsIcon />
-      </button>
+      />
 
       {/* モーダル */}
       {isOpenMenu && (
@@ -117,6 +115,6 @@ export const PostMenuButton: FC<Props> = ({
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }

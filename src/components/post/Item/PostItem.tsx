@@ -12,6 +12,7 @@ import { useRemoveBookmark } from 'hooks/useBookmark'
 import { useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
 
+// bookmarkページの時、bookmarkFolderIdを受け取る
 type Props = {
   post: Post
   bookmarkFolderId?: string
@@ -25,7 +26,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
 
   return (
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <Link href={`/users/${post.user.id}`}>
           <a className='cursor-pointer font-bold text-20px'>
             {post.user.username}
@@ -39,7 +40,6 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
               onClick={removeBookmark}
             />
           )}
-          {/* 投稿メニューボタン */}
           <PostMenuButton post={post} onEdit={() => setIsEditing(true)} />
         </div>
       </div>
