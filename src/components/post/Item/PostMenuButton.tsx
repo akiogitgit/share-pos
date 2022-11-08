@@ -35,22 +35,23 @@ export const PostMenuButton: FC<Props> = ({
   }, [])
 
   return (
-    <>
+    <div className='flex'>
       <BsThreeDotsIcon
         className='cursor-pointer text-30px duration-100 hover:opacity-50'
         onClick={() => setIsOpenMenu(!isOpenMenu)}
       />
 
-      {/* モーダル */}
       {isOpenMenu && (
         <div className='h-0 w-0 relative'>
           {/* モーダルの周り押したら消えるやつ */}
           <div
             onClick={closeMenu}
             className='h-100vh top-0 left-0 w-100vw z-1 fixed'
-          ></div>
+            aria-hidden='true'
+          />
 
-          <div className='top-[-35px] right-5px z-2 absolute sm:top-[-35px] '>
+          {/* モーダル */}
+          <div className='top-0 right-40px z-2 absolute sm:top-0 '>
             <div className='bg-base border border-primary cursor-pointer rounded-10px shadow-lg shadow-primary-light transform w-170px sm:w-150px'>
               {user?.id === post.userId && (
                 <>
@@ -115,6 +116,6 @@ export const PostMenuButton: FC<Props> = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
