@@ -2,7 +2,7 @@ import { FC, useCallback, useState } from 'react'
 
 import { BiCommentDetail as BiCommentDetailIcon } from 'react-icons/bi'
 import { RiArticleLine as RiArticleLineIcon } from 'react-icons/ri'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button'
 
 import { PostRequestParams } from 'types/post'
 

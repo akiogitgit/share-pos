@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import { Layout } from 'components/layout/Layout'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button'
 
 const Test: NextPage = () => {
   return (

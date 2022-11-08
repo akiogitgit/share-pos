@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 
 import { AiOutlineMail as AiOutlineMailIcon } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button/Button'
 
 import { LoginRequestParams } from 'types/user/auth'
 
