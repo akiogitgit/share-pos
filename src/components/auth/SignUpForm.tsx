@@ -5,7 +5,7 @@ import {
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button'
 
 import { SignUpRequestParams } from 'types/user/auth'
 
@@ -106,7 +106,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
-        <Button color='blue' fullWidth className='mt-4' animate>
+        <Button type='submit' color='blue' fullWidth className='mt-4' animate>
           登録
         </Button>
       </form>

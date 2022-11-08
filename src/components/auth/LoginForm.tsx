@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 
 import { AiOutlineMail as AiOutlineMailIcon } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button/Button'
 
 import { LoginRequestParams } from 'types/user/auth'
 
@@ -54,7 +54,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
 
-        <Button fullWidth color='blue' animate className='mt-4'>
+        <Button type='submit' fullWidth color='blue' animate className='mt-4'>
           ログイン
         </Button>
       </form>

@@ -5,9 +5,10 @@ import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button'
 import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
 import { useDeletePost, useUpdatePost } from 'hooks/usePost'
+
 import { Post } from 'types/post'
 
 // bookmarkページの時、bookmarkFolderIdを受け取る

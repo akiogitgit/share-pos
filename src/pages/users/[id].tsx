@@ -5,7 +5,7 @@ import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { Button } from 'components/shares/Button'
+import { Button } from 'components/shares/button'
 import { useGetApi } from 'hooks/useApi'
 import { UserPosts } from 'types/post'
 import { User } from 'types/user/user'
