@@ -8,8 +8,8 @@ import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
 import { Button } from 'components/shares/Button'
-import { useRemoveBookmark } from 'hooks/useBookmark'
-import { useUpdatePost } from 'hooks/usePost'
+import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
+import { useDeletePost, useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
 
 // bookmarkページの時、bookmarkFolderIdを受け取る
@@ -21,8 +21,10 @@ type Props = {
 export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
   const [isEditing, setIsEditing] = useState(false)
 
-  const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
   const { updatePost } = useUpdatePost(post)
+  const { deletePost } = useDeletePost(post)
+  const { addBookmark } = useAddBookmark()
+  const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
 
   return (
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
@@ -40,7 +42,16 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
               onClick={removeBookmark}
             />
           )}
-          <PostMenuButton post={post} onEdit={() => setIsEditing(true)} />
+
+          {/* 右上の・・・ボタン */}
+          <PostMenuButton
+            post={post}
+            onEdit={() => setIsEditing(true)}
+            onDelete={() => deletePost()}
+            onAddBookmark={(folderId: string, post: Post) =>
+              addBookmark(folderId, post)
+            }
+          />
         </div>
       </div>
 

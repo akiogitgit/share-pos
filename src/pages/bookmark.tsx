@@ -14,6 +14,7 @@ const Bookmark: NextPage = () => {
   const router = useRouter()
   const { data: folders } = useGetApi<Folder[]>('/folders')
 
+  // 選択したフォルダをURLパラメータから取得
   const selectedFolderIndex = useMemo(
     () => Number(router.query.id) || 0,
     [router.query.id],
@@ -68,6 +69,7 @@ const Bookmark: NextPage = () => {
                 <PostItem
                   key={index}
                   post={post}
+                  // Postはどのフォルダに居るか知らない
                   bookmarkFolderId={folders[selectedFolderIndex].id}
                 />
               ))}

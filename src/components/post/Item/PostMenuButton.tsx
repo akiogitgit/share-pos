@@ -4,19 +4,15 @@ import { BsThreeDots as BsThreeDotsIcon } from 'react-icons/bs'
 
 import { FolderList } from './FolderList'
 import { useGetApi } from 'hooks/useApi'
-import { useDeletePost } from 'hooks/usePost'
 import { Post } from 'types/post'
 import { User } from 'types/user/user'
 
-type MenuProps = {
-  onEdit?: () => void
-  onDelete?: () => void
-  onAddBookmark?: () => void
-}
-
 type Props = {
   post: Post
-} & MenuProps
+  onEdit?: () => void
+  onDelete?: () => void
+  onAddBookmark?: (folderId: string, post: Post) => void
+}
 
 export const PostMenuButton: FC<Props> = ({
   post,
@@ -25,11 +21,10 @@ export const PostMenuButton: FC<Props> = ({
   onAddBookmark,
 }) => {
   const { data: user } = useGetApi<User>('/users/me')
-  const { deletePost } = useDeletePost(post)
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenFolder, setIsOpenFolder] = useState(false)
 
-  const closeMenu = useCallback(() => {
+  const onCloseMenu = useCallback(() => {
     setIsOpenMenu(false)
     setIsOpenFolder(false)
   }, [])
@@ -45,7 +40,7 @@ export const PostMenuButton: FC<Props> = ({
         <div className='h-0 w-0 relative'>
           {/* モーダルの周り押したら消えるやつ */}
           <div
-            onClick={closeMenu}
+            onClick={onCloseMenu}
             className='h-100vh top-0 left-0 w-100vw z-1 fixed'
             aria-hidden='true'
           />
@@ -67,8 +62,8 @@ export const PostMenuButton: FC<Props> = ({
                   <button
                     className='text-left w-full py-1 px-4 hover:bg-primary-light'
                     onClick={async () => {
-                      closeMenu()
-                      await deletePost()
+                      onCloseMenu()
+                      await onDelete?.()
                     }}
                   >
                     投稿を
@@ -86,7 +81,7 @@ export const PostMenuButton: FC<Props> = ({
                 onClick={() => {
                   navigator.clipboard.writeText(post.url)
                   alert('リンクをコピーしました')
-                  closeMenu()
+                  onCloseMenu()
                 }}
               >
                 記事リンクをコピー
@@ -107,7 +102,11 @@ export const PostMenuButton: FC<Props> = ({
                     } sm:group-hover:block`}
                   >
                     <div className='rounded-10px shadow-md shadow-primary-light top-0px right-80px absolute sm:right-80px'>
-                      <FolderList post={post} onClickFolderName={closeMenu} />
+                      <FolderList
+                        post={post}
+                        onClickFolderName={onCloseMenu}
+                        onAddBookmark={onAddBookmark}
+                      />
                     </div>
                   </div>
                 </div>
