@@ -12,6 +12,7 @@ type Props = {
   onEdit?: () => void
   onDelete?: () => void
   onAddBookmark?: (folderId: string, post: Post) => void
+  onRemoveBookmark?: () => void
 }
 
 export const PostMenuButton: FC<Props> = ({
@@ -19,6 +20,7 @@ export const PostMenuButton: FC<Props> = ({
   onEdit,
   onDelete,
   onAddBookmark,
+  onRemoveBookmark,
 }) => {
   const { data: user } = useGetApi<User>('/users/me')
   const [isOpenMenu, setIsOpenMenu] = useState(false)
@@ -74,10 +76,12 @@ export const PostMenuButton: FC<Props> = ({
                   </button>
                 </>
               )}
+
               <button
                 className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
                   user?.id !== post.userId && 'pt-2 rounded-t-10px'
-                }`}
+                }
+                  ${!user && 'pb-2 rounded-b-10px'}`}
                 onClick={() => {
                   navigator.clipboard.writeText(post.url)
                   alert('リンクをコピーしました')
@@ -86,30 +90,49 @@ export const PostMenuButton: FC<Props> = ({
               >
                 記事リンクをコピー
               </button>
-              {user && (
-                <div className='rounded-b-10px text-left w-full group relative'>
-                  <button
-                    className='text-left w-full px-4 pt-1 pb-2 hover:bg-primary-light'
-                    onClick={() => setIsOpenFolder(!isOpenFolder)}
-                  >
-                    ブックマークに追加
-                  </button>
 
-                  {/* 自分のフォルダ一覧  */}
-                  <div
-                    className={`${
-                      !isOpenFolder && 'hidden'
-                    } sm:group-hover:block`}
-                  >
-                    <div className='rounded-10px shadow-md shadow-primary-light top-0px right-80px absolute sm:right-80px'>
-                      <FolderList
-                        post={post}
-                        onClickFolderName={onCloseMenu}
-                        onAddBookmark={onAddBookmark}
-                      />
+              {user && (
+                <>
+                  <div className='group relative'>
+                    <button
+                      className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
+                        !post.bookmark && 'rounded-b-10px pb-2'
+                      }`}
+                      onClick={() => setIsOpenFolder(!isOpenFolder)}
+                    >
+                      ブックマークに追加
+                    </button>
+                    {/* 自分のフォルダ一覧  */}
+                    <div
+                      className={`${
+                        !isOpenFolder && 'hidden'
+                      } sm:group-hover:block`}
+                    >
+                      <div className='rounded-10px shadow-md shadow-primary-light top-0px right-80px absolute sm:right-80px'>
+                        <FolderList
+                          post={post}
+                          onClickFolderName={onCloseMenu}
+                          onAddBookmark={onAddBookmark}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+
+                  {post.bookmark && (
+                    <button
+                      className='rounded-b-10px text-left w-full px-4 pt-1 pb-2 hover:bg-primary-light'
+                      onClick={() => {
+                        onRemoveBookmark?.()
+                        onCloseMenu()
+                      }}
+                    >
+                      ブックマークを
+                      <span className='font-bold text-primary text-18px'>
+                        削除
+                      </span>
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
