@@ -1,13 +1,14 @@
-import { FC, useCallback, useState } from 'react'
+import { ComponentProps, FC, useCallback, useState } from 'react'
 import { Button } from 'components/shares/Button'
 import { Modal } from 'components/shares/Modal'
 import { useCreateFolder } from 'hooks/useFolder'
 
 // bookmark, FolderListで使うときradiusを変える
 type Props = {
-  radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  radius?: ComponentProps<typeof Button>['radius']
 }
 
+Button
 export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')

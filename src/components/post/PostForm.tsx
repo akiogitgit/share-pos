@@ -143,7 +143,7 @@ export const PostForm: FC<Props> = ({
             </div>
           </div>
         </div>
-        <Button color='blue' fullWidth animate className='mt-4'>
+        <Button type='submit' color='blue' fullWidth animate className='mt-4'>
           {submitButtonText}
         </Button>
       </form>

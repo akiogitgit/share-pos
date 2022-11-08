@@ -106,7 +106,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
-        <Button color='blue' fullWidth className='mt-4' animate>
+        <Button type='submit' color='blue' fullWidth className='mt-4' animate>
           登録
         </Button>
       </form>
