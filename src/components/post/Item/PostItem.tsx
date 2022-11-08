@@ -7,6 +7,7 @@ import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
+import { Button } from 'components/shares/button'
 import { useRemoveBookmark } from 'hooks/useBookmark'
 import { useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
@@ -26,9 +27,9 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between'>
         <Link href={`/users/${post.user.id}`}>
-          <h2 className='cursor-pointer font-bold text-20px'>
+          <a className='cursor-pointer font-bold text-20px'>
             {post.user.username}
-          </h2>
+          </a>
         </Link>
         <div className='flex gap-2'>
           {/* ブックマーク解除 (マイページ/ブックマークで表示) */}
@@ -48,19 +49,21 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
         {isEditing ? (
           <div>
             <PostForm
-              onSubmit={async (params) => {
+              onSubmit={async params => {
                 await updatePost(params)
                 setIsEditing(false)
               }}
               formParamsProps={post}
               submitButtonText='更新'
             />
-            <button
-              className='border bg-gray-500 border-gray-500 mt-2 text-white w-full py-1 duration-300 hover:(opacity-60) '
+            <Button
+              color='gray'
+              fullWidth
+              className='mt-2'
               onClick={() => setIsEditing(false)}
             >
               キャンセル
-            </button>
+            </Button>
           </div>
         ) : (
           <>
@@ -71,7 +74,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
 
             <div className='flex mt-1 items-center justify-between'>
               <div className='flex'>
-                {[...Array(post.evaluation)].map((v) => (
+                {[...Array(post.evaluation)].map(v => (
                   <div key={v}>☆</div>
                 ))}
               </div>

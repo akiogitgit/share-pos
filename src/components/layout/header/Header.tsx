@@ -6,6 +6,7 @@ import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
 import { HiPaperAirplane as HiPaperAirplaneIcon } from 'react-icons/hi'
 
 import { DropDownMenu } from './DropDownMenu'
+import { Button } from 'components/shares/button'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
 export const Header: FC = () => {
@@ -30,14 +31,20 @@ export const Header: FC = () => {
                 <DropDownMenu />
 
                 {router.pathname !== '/create' && (
-                  <div className='flex gap-3 items-center'>
-                    <Link href='/create'>
-                      <a className='bg-primary border border-primary flex rounded-7px text-white py-1 px-2 gap-1 duration-300 items-center hover:(bg-white text-primary) '>
-                        <div className='font-bold'>シェアする</div>
+                  <Link href='/create'>
+                    <Button
+                      radius='md'
+                      size='lg'
+                      compact
+                      animate
+                      component='a'
+                      rightIcon={
                         <HiPaperAirplaneIcon className='transform rotate-90' />
-                      </a>
-                    </Link>
-                  </div>
+                      }
+                    >
+                      シェアする
+                    </Button>
+                  </Link>
                 )}
               </div>
             ) : (
@@ -46,9 +53,9 @@ export const Header: FC = () => {
                   <a className='cursor-pointer'>ログイン</a>
                 </Link>
                 <Link href='/signup'>
-                  <button className='bg-primary border border-primary rounded-7px text-white py-1 px-2 duration-300 hover:(bg-white text-primary) '>
+                  <Button radius='md' component='a'>
                     新規登録
-                  </button>
+                  </Button>
                 </Link>
               </div>
             )}

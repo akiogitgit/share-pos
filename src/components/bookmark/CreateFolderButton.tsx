@@ -1,12 +1,15 @@
-import { FC, useCallback, useState } from 'react'
+import { ComponentProps, FC, useCallback, useState } from 'react'
 import { Modal } from 'components/shares/Modal'
+import { Button } from 'components/shares/button'
 import { useCreateFolder } from 'hooks/useFolder'
 
+// bookmark, FolderListで使うときradiusを変える
 type Props = {
-  className?: string
+  radius?: ComponentProps<typeof Button>['radius']
 }
 
-export const CreateFolderButton: FC<Props> = ({ className }) => {
+Button
+export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
 
@@ -19,9 +22,9 @@ export const CreateFolderButton: FC<Props> = ({ className }) => {
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)} className={className}>
+      <Button onClick={() => setIsOpen(true)} radius={radius} fullWidth>
         新規フォルダ作成
-      </button>
+      </Button>
 
       <Modal open={isOpen} onClose={onClose} title='新規フォルダ作成'>
         <form

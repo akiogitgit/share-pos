@@ -5,6 +5,7 @@ import {
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
+import { Button } from 'components/shares/button'
 
 import { SignUpRequestParams } from 'types/user/auth'
 
@@ -48,7 +49,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             name='username'
             onChange={e => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineUserIcon className='top-33px left-270px absolute' />
         </div>
@@ -64,7 +65,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             name='email'
             onChange={e => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineMailIcon className='top-33px left-270px absolute' />
         </div>
@@ -81,7 +82,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             minLength={6}
             name='password'
             onChange={e => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
@@ -101,16 +102,13 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             placeholder='password'
             name='passwordConfirmation'
             onChange={e => onChange(e)}
-            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
-        <button
-          type='submit'
-          className='border bg-secondary border-secondary mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-secondary) '
-        >
+        <Button type='submit' color='blue' fullWidth className='mt-4' animate>
           登録
-        </button>
+        </Button>
       </form>
     </div>
   )

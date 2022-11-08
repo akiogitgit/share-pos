@@ -2,6 +2,7 @@ import { FC, useCallback, useState } from 'react'
 
 import { BiCommentDetail as BiCommentDetailIcon } from 'react-icons/bi'
 import { RiArticleLine as RiArticleLineIcon } from 'react-icons/ri'
+import { Button } from 'components/shares/button'
 
 import { PostRequestParams } from 'types/post'
 
@@ -63,7 +64,7 @@ export const PostForm: FC<Props> = ({
             </div>
             <textarea
               name='comment'
-              className='border h-full outline-none w-full p-2 pr-9 top-0 left-0 ring-secondary duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
+              className='border h-full outline-none ring-secondary w-full p-2 pr-9 top-0 left-0 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
               value={formParams.comment}
               placeholder='この記事オススメ！'
               onChange={onChange}
@@ -84,7 +85,7 @@ export const PostForm: FC<Props> = ({
             required
             name='url'
             onChange={onChange}
-            className='border outline-none w-full p-2 pr-9 ring-secondary duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
 
           <div className='flex justify-end'>
@@ -142,12 +143,9 @@ export const PostForm: FC<Props> = ({
             </div>
           </div>
         </div>
-        <button
-          type='submit'
-          className='border bg-secondary border-secondary mt-4 text-white w-full py-1 duration-300 hover:(bg-white text-secondary) '
-        >
+        <Button type='submit' color='blue' fullWidth animate className='mt-4'>
           {submitButtonText}
-        </button>
+        </Button>
       </form>
     </div>
   )
