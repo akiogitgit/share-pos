@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useCallback } from 'react'
 import { SignUpForm } from 'components/auth/SignUpForm'
 import { Layout } from 'components/layout/Layout'
@@ -39,6 +40,13 @@ const SignUp: NextPage = () => {
         <div className='mt-4'>
           <SignUpForm onSubmit={onSubmit} />
         </div>
+
+        <p className='mt-4 text-center'>
+          ログインは
+          <Link href='/login'>
+            <a className='font-bold text-secondary'>こちら</a>
+          </Link>
+        </p>
       </Layout>
     </>
   )

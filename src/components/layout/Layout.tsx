@@ -12,13 +12,12 @@ export const Layout: FC<Props> = ({ children }) => {
       <div className='bg-base min-h-screen'>
         <Header />
         <main>
-          <div className='mx-auto max-w-1150px px-4 pt-50px pb-70px'>
+          <div className='mx-auto max-w-1150px px-4 pt-50px pb-150px'>
             {children}
           </div>
         </main>
+        <Footer />
       </div>
-
-      <Footer />
     </>
   )
 }
