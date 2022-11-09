@@ -46,9 +46,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
             post={post}
             onEdit={() => setIsEditing(true)}
             onDelete={() => deletePost()}
-            onAddBookmark={(folderId: string, post: Post) =>
-              addBookmark(folderId, post)
-            }
+            onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
             onRemoveBookmark={() => removeBookmark()}
           />
         </div>
