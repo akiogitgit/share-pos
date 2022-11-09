@@ -54,7 +54,7 @@ export const PostMenuButton: FC<Props> = ({
               {user?.id === post.userId && (
                 <>
                   <button
-                    className='text-left w-full px-4 pt-2 pb-1 hover:bg-primary-light'
+                    className='text-left w-full py-2 px-4  hover:bg-primary-light'
                     onClick={() => {
                       onEdit?.()
                       setIsOpenMenu(false)
@@ -63,7 +63,7 @@ export const PostMenuButton: FC<Props> = ({
                     投稿を編集する
                   </button>
                   <button
-                    className='text-left w-full py-1 px-4 hover:bg-primary-light'
+                    className='text-left w-full py-2 px-4 hover:bg-primary-light'
                     onClick={async () => {
                       onCloseMenu()
                       await onDelete?.()
@@ -79,9 +79,7 @@ export const PostMenuButton: FC<Props> = ({
               )}
 
               <button
-                className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
-                  user?.id !== post.userId && 'pt-2 '
-                }`}
+                className='text-left w-full py-2 px-4 hover:bg-primary-light'
                 onClick={() => {
                   navigator.clipboard.writeText(post.url)
                   alert('リンクをコピーしました')
@@ -94,9 +92,7 @@ export const PostMenuButton: FC<Props> = ({
               {user && (
                 <>
                   <button
-                    className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
-                      !post.bookmark && 'pb-2'
-                    }`}
+                    className='text-left w-full py-2 px-4 hover:bg-primary-light'
                     onClick={() => setIsOpenFolder(!isOpenFolder)}
                     onMouseEnter={() => setIsOpenFolderList(true)}
                     onMouseLeave={() => setIsOpenFolderList(false)}
@@ -106,7 +102,7 @@ export const PostMenuButton: FC<Props> = ({
 
                   {post.bookmark && (
                     <button
-                      className='text-left w-full px-4 pt-1 pb-2 hover:bg-primary-light'
+                      className='text-left w-full py-2 px-4 hover:bg-primary-light'
                       onClick={() => {
                         onRemoveBookmark?.()
                         onCloseMenu()
@@ -126,7 +122,7 @@ export const PostMenuButton: FC<Props> = ({
             {(isOpenFolder || isOpenFolderList) && (
               <div
                 className={`shadow-md shadow-primary-light right-80px absolute sm:right-80px  ${
-                  user?.id !== post.userId ? 'top-40px' : 'top-100px'
+                  user?.id !== post.userId ? 'top-40px' : 'top-120px'
                 }`}
                 onMouseEnter={() => setIsOpenFolderList(true)}
                 onMouseLeave={() => setIsOpenFolderList(false)}
