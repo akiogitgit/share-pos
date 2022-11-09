@@ -33,6 +33,7 @@ export const Header: FC = () => {
                 {router.pathname !== '/create' && (
                   <Link href='/create'>
                     <Button
+                      className='hidden sm:block'
                       radius='md'
                       size='lg'
                       compact
