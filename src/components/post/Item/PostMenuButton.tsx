@@ -25,6 +25,7 @@ export const PostMenuButton: FC<Props> = ({
   const { data: user } = useGetApi<User>('/users/me')
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isOpenFolder, setIsOpenFolder] = useState(false)
+  const [isOpenFolderList, setIsOpenFolderList] = useState(false)
 
   const onCloseMenu = useCallback(() => {
     setIsOpenMenu(false)
@@ -49,11 +50,11 @@ export const PostMenuButton: FC<Props> = ({
 
           {/* モーダル */}
           <div className='top-0 right-40px z-2 absolute sm:top-0 '>
-            <div className='bg-base border border-primary cursor-pointer rounded-10px shadow-lg shadow-primary-light transform w-170px sm:w-150px'>
+            <div className='bg-base border border-primary cursor-pointer rounded-10px shadow-lg shadow-primary-light transform w-170px overflow-hidden sm:w-150px'>
               {user?.id === post.userId && (
                 <>
                   <button
-                    className='rounded-t-10px text-left w-full px-4 pt-2 pb-1 hover:bg-primary-light'
+                    className='text-left w-full px-4 pt-2 pb-1 hover:bg-primary-light'
                     onClick={() => {
                       onEdit?.()
                       setIsOpenMenu(false)
@@ -79,9 +80,8 @@ export const PostMenuButton: FC<Props> = ({
 
               <button
                 className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
-                  user?.id !== post.userId && 'pt-2 rounded-t-10px'
-                }
-                  ${!user && 'pb-2 rounded-b-10px'}`}
+                  user?.id !== post.userId && 'pt-2 '
+                }`}
                 onClick={() => {
                   navigator.clipboard.writeText(post.url)
                   alert('リンクをコピーしました')
@@ -93,34 +93,20 @@ export const PostMenuButton: FC<Props> = ({
 
               {user && (
                 <>
-                  <div className='group relative'>
-                    <button
-                      className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
-                        !post.bookmark && 'rounded-b-10px pb-2'
-                      }`}
-                      onClick={() => setIsOpenFolder(!isOpenFolder)}
-                    >
-                      ブックマークに追加
-                    </button>
-                    {/* 自分のフォルダ一覧  */}
-                    <div
-                      className={`${
-                        !isOpenFolder && 'hidden'
-                      } sm:group-hover:block`}
-                    >
-                      <div className='rounded-10px shadow-md shadow-primary-light top-0px right-80px absolute sm:right-80px'>
-                        <FolderList
-                          post={post}
-                          onClickFolderName={onCloseMenu}
-                          onAddBookmark={onAddBookmark}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <button
+                    className={`text-left w-full py-1 px-4 hover:bg-primary-light ${
+                      !post.bookmark && 'pb-2'
+                    }`}
+                    onClick={() => setIsOpenFolder(!isOpenFolder)}
+                    onMouseEnter={() => setIsOpenFolderList(true)}
+                    onMouseLeave={() => setIsOpenFolderList(false)}
+                  >
+                    ブックマークに追加
+                  </button>
 
                   {post.bookmark && (
                     <button
-                      className='rounded-b-10px text-left w-full px-4 pt-1 pb-2 hover:bg-primary-light'
+                      className='text-left w-full px-4 pt-1 pb-2 hover:bg-primary-light'
                       onClick={() => {
                         onRemoveBookmark?.()
                         onCloseMenu()
@@ -135,6 +121,23 @@ export const PostMenuButton: FC<Props> = ({
                 </>
               )}
             </div>
+
+            {/* 自分のフォルダ一覧  */}
+            {(isOpenFolder || isOpenFolderList) && (
+              <div
+                className={`shadow-md shadow-primary-light right-80px absolute sm:right-80px  ${
+                  user?.id !== post.userId ? 'top-40px' : 'top-100px'
+                }`}
+                onMouseEnter={() => setIsOpenFolderList(true)}
+                onMouseLeave={() => setIsOpenFolderList(false)}
+              >
+                <FolderList
+                  post={post}
+                  onClickFolderName={onCloseMenu}
+                  onAddBookmark={onAddBookmark}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
