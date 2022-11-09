@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import { FC, useState } from 'react'
 
-import { TbBookmarkOff as TbBookmarkOffIcon } from 'react-icons/tb'
-
 import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
 import { Button } from 'components/shares/button'
-import { useRemoveBookmark } from 'hooks/useBookmark'
-import { useUpdatePost } from 'hooks/usePost'
+import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
+import { useDeletePost, useUpdatePost } from 'hooks/usePost'
+
 import { Post } from 'types/post'
 
+// bookmarkページの時、bookmarkFolderIdを受け取る
 type Props = {
   post: Post
   bookmarkFolderId?: string
@@ -20,27 +20,35 @@ type Props = {
 export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
   const [isEditing, setIsEditing] = useState(false)
 
-  const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
   const { updatePost } = useUpdatePost(post)
+  const { deletePost } = useDeletePost(post)
+  const { addBookmark } = useAddBookmark()
+  const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
 
   return (
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <Link href={`/users/${post.user.id}`}>
           <a className='cursor-pointer font-bold text-20px'>
             {post.user.username}
           </a>
         </Link>
         <div className='flex gap-2'>
-          {/* ブックマーク解除 (マイページ/ブックマークで表示) */}
-          {post.bookmark && (
+          {/* {post.bookmark && (
             <TbBookmarkOffIcon
               className='cursor-pointer text-40px sm:text-30px'
               onClick={removeBookmark}
             />
-          )}
-          {/* 投稿メニューボタン */}
-          <PostMenuButton post={post} onEdit={() => setIsEditing(true)} />
+          )} */}
+
+          {/* 右上の・・・ボタン */}
+          <PostMenuButton
+            post={post}
+            onEdit={() => setIsEditing(true)}
+            onDelete={() => deletePost()}
+            onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
+            onRemoveBookmark={() => removeBookmark()}
+          />
         </div>
       </div>
 

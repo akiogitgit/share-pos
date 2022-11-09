@@ -4,18 +4,20 @@ import { BsFolder as BsFolderIcon } from 'react-icons/bs'
 
 import { CreateFolderButton } from 'components/bookmark/CreateFolderButton'
 import { useGetApi } from 'hooks/useApi'
-import { useAddBookmark } from 'hooks/useBookmark'
 import { Folder } from 'types/bookmark'
 import { Post } from 'types/post'
 
 type Props = {
   post: Post
   onClickFolderName?: () => void
+  onAddBookmark?: (folderId: string, post: Post) => void
 }
 
-export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
-  const { addBookmark } = useAddBookmark()
-
+export const FolderList: FC<Props> = ({
+  post,
+  onClickFolderName,
+  onAddBookmark,
+}) => {
   const { data: folders } = useGetApi<Folder[]>('/folders')
 
   return (
@@ -38,7 +40,7 @@ export const FolderList: FC<Props> = ({ post, onClickFolderName }) => {
                 onClick={async () => {
                   console.log('click! : ')
                   onClickFolderName?.()
-                  await addBookmark(folder.id, post)
+                  await onAddBookmark?.(folder.id, post)
                 }}
               >
                 <BsFolderIcon />
