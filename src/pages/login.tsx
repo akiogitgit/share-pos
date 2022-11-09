@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useCallback } from 'react'
 
 import { useLogin } from '../hooks/login/useAuth'
@@ -32,6 +33,13 @@ const Login: NextPage = () => {
       <Layout>
         <h1 className='text-center text-lg'>ログイン</h1>
         <LoginForm onSubmit={onSubmit} />
+
+        <p className='mt-4 text-center'>
+          新規登録は
+          <Link href='/signup'>
+            <a className='font-bold text-secondary'>こちら</a>
+          </Link>
+        </p>
       </Layout>
     </>
   )

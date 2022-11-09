@@ -55,8 +55,6 @@ const User: NextPage = () => {
 
       <section className='mt-10'>
         <div className='ml-4'>
-          <h1 className='font-bold text-2xl'>シェアした記事</h1>
-
           {isMyPage && (
             <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
               {[
