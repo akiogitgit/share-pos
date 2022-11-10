@@ -32,7 +32,7 @@ export const JumpToCreatePostButton: FC = () => {
         <div className='my-auto'>
           <div
             className={`${
-              isShowText ? 'w-20' : 'translate-x-100% w-0'
+              isShowText ? 'w-25' : 'translate-x-100% w-0'
             } h-5 transform text-20px overflow-hidden duration-500`}
           >
             シェアする
