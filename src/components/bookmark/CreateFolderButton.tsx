@@ -8,7 +8,6 @@ type Props = {
   radius?: ComponentProps<typeof Button>['radius']
 }
 
-Button
 export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
