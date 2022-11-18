@@ -10,7 +10,7 @@ export const PostItemComment: FC<Props> = ({ comment }) => {
   const [isOpenComment, setIsOpenComment] = useState(false)
 
   // 要素の高さを取得
-  const hasElementMoreThan3Lines = useMemo(() => height > 80, [height])
+  const hasElementMoreThan3Lines = useMemo(() => height > 60, [height])
 
   const showSeeMore = useMemo(
     () => hasElementMoreThan3Lines && !isOpenComment,
@@ -23,14 +23,14 @@ export const PostItemComment: FC<Props> = ({ comment }) => {
           hasElementMoreThan3Lines && setIsOpenComment(!isOpenComment)
         }
         className={`${
-          !isOpenComment && 'h-70px'
+          !isOpenComment && 'h-50px'
         } overflow-hidden whitespace-pre-wrap group relative`}
       >
         <div ref={ref} className='h-auto'>
           {comment}
         </div>
         <div
-          className={`bg-primary-light bg-opacity-70 text-center w-full py-2 top-30px absolute ${
+          className={`bg-primary-light bg-opacity-80 text-center w-full py-1 top-20px absolute ${
             showSeeMore
               ? 'visible sm:invisible sm:group-hover:visible'
               : 'invisible'
