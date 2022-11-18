@@ -34,13 +34,6 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
           </a>
         </Link>
         <div className='flex gap-2'>
-          {/* {post.bookmark && (
-            <TbBookmarkOffIcon
-              className='cursor-pointer text-40px sm:text-30px'
-              onClick={removeBookmark}
-            />
-          )} */}
-
           {/* 右上の・・・ボタン */}
           <PostMenuButton
             post={post}
@@ -91,6 +84,17 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
           </>
         )}
       </div>
+
+      {/* コメント */}
+      {post.replyComments.length ? (
+        <Link href=''>
+          <p className='cursor-pointer text-secondary'>
+            {post.replyComments.length}件の返信
+          </p>
+        </Link>
+      ) : (
+        ''
+      )}
     </article>
   )
 }
