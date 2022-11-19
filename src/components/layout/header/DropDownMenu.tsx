@@ -28,11 +28,11 @@ export const DropDownMenu: FC = () => {
         <div className='relative'>
           <div
             onClick={() => setIsOpenMenu(false)}
-            className='h-100vh top-0 left-0 w-100vw z-1 fixed'
+            className='h-100vh top-0 left-0 w-100vw fixed'
             aria-hidden='true'
           />
 
-          <div className='bg-white shadow-xl top-10px right-[-15px] w-40 z-200 absolute'>
+          <div className='bg-white shadow-xl top-10px right-[-15px] w-40 absolute'>
             <Link href='/bookmark'>
               <a className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
                 <HiOutlineBookOpenIcon />
