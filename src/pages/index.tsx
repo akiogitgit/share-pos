@@ -4,7 +4,6 @@ import Head from 'next/head'
 import { useCallback } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
-import { Button } from 'components/shares/button'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
 import { deleteApi, postApi, putApi } from 'utils/api'
@@ -16,9 +15,8 @@ const Home: NextPage = () => {
   const addReplyComment = useCallback(async () => {
     try {
       const res = await postApi('/reply_comments', {
-        userId: 1,
-        postId: 2,
-        body: '222コメントです',
+        postId: 3,
+        body: 'コメントです',
       })
       console.log(res)
     } catch (e) {
@@ -50,15 +48,15 @@ const Home: NextPage = () => {
         <title>SharePos 投稿一覧ページ</title>
       </Head>
       <Layout>
-        <Button onClick={addReplyComment}>追加</Button>
+        {/* <Button onClick={addReplyComment}>追加</Button>
         <Button onClick={() => updateReplyComment(13)}>更新</Button>
-        <Button onClick={() => deleteReplyComment(15)}>削除</Button>
+        <Button onClick={() => deleteReplyComment(15)}>削除</Button> */}
 
         {posts && (
           <div className='mt-4'>
             <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
-              {posts.map(post => (
-                <div key={post.id} className='mb-1'>
+              {posts.map((post, i) => (
+                <div key={i} className='mb-1'>
                   <PostItem post={post} />
                 </div>
               ))}

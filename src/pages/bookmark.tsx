@@ -30,7 +30,9 @@ const Bookmark: NextPage = () => {
       <Layout>
         <div className='flex ml-4 justify-between'>
           <h1 className='font-bold text-2xl'>ブックマーク</h1>
-          <CreateFolderButton />
+          <div>
+            <CreateFolderButton />
+          </div>
         </div>
         <div className='mx-auto mt-20 w-300px'>
           <p>1. フォルダを作成してみよう！</p>

@@ -122,7 +122,7 @@ export const PostMenuButton: FC<Props> = ({
             {(isOpenFolder || isOpenFolderList) && (
               <div
                 className={`shadow-md shadow-primary-light right-80px absolute sm:right-80px  ${
-                  user?.id !== post.userId ? 'top-40px' : 'top-120px'
+                  user?.id !== post.userId ? 'top-44px' : 'top-120px'
                 }`}
                 onMouseEnter={() => setIsOpenFolderList(true)}
                 onMouseLeave={() => setIsOpenFolderList(false)}

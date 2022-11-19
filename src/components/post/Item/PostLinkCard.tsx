@@ -17,7 +17,6 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
       ? post.metaInfo.image
       : `https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`
   }, [post.metaInfo.image])
-  console.log(displayURL)
 
   return (
     <>
