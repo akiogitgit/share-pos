@@ -86,14 +86,12 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
       </div>
 
       {/* コメント */}
-      {post.replyComments?.length ? (
+      {post.replyComments?.length !== 0 && (
         <Link href=''>
-          <p className='cursor-pointer text-secondary'>
+          <p className='cursor-pointer mt-1 text-secondary'>
             {post.replyComments.length}件の返信
           </p>
         </Link>
-      ) : (
-        ''
       )}
     </article>
   )
