@@ -11,7 +11,7 @@ type Props = {
   animate?: boolean
   compact?: boolean
   fullWidth?: boolean
-  component?: 'button' | 'a' // ここやる-------------
+  component?: 'button' | 'a'
   href?: string
   rightIcon?: React.ReactElement
   leftIcon?: React.ReactElement
@@ -106,6 +106,8 @@ export const Button: FC<Props> = ({
 
   const RadiusClass = useMemo(() => {
     switch (radius) {
+      case 'xs':
+        return ''
       case 'sm':
         return 'rounded-3px'
       case 'md':
