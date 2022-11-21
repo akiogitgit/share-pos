@@ -23,7 +23,7 @@ const Bookmark: NextPage = () => {
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
     `/folders/${folders && folders[selectedFolderIndex]?.id}`,
   )
-
+  console.log(bookmarkPosts)
   // フォルダが無い
   if (!folders?.length) {
     return (

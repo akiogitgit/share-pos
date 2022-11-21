@@ -10,7 +10,6 @@ import { deleteApi, postApi, putApi } from 'utils/api'
 
 const Home: NextPage = () => {
   const { data: posts, error } = useGetApi<Post[]>('/posts')
-  console.log(posts)
 
   const addReplyComment = useCallback(async () => {
     try {
