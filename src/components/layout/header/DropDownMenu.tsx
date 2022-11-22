@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fi'
 import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
+import { Avatar } from 'components/shares/Avatar'
 import { useLogOut } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
@@ -20,8 +21,15 @@ export const DropDownMenu: FC = () => {
 
   return (
     <div>
-      <div className='flex' onClick={() => setIsOpenMenu(s => !s)}>
-        <FaUserCircleIcon className='cursor-pointer h-8 w-8' />
+      <div
+        className='cursor-pointer flex'
+        onClick={() => setIsOpenMenu(s => !s)}
+      >
+        {user ? (
+          <Avatar id={user.id} />
+        ) : (
+          <FaUserCircleIcon className='h-9 w-9' />
+        )}
       </div>
 
       {isOpenMenu && (
