@@ -19,13 +19,13 @@ const User: NextPage = () => {
   const [selectedPublished, setSelectedPublished] = useState(true)
   const isMyPage: boolean = user?.id === Number(id)
 
-  // if (!userPosts) {
-  //   return (
-  //     <Layout>
-  //       <div>このページは存在しません</div>
-  //     </Layout>
-  //   )
-  // }
+  if (!userPosts) {
+    return (
+      <Layout>
+        <div>このページは存在しません</div>
+      </Layout>
+    )
+  }
 
   return (
     <Layout>
