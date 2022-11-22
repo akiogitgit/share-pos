@@ -50,7 +50,7 @@ export const Button: FC<Props> = ({
       case 'outline':
         return `bg-white text-${color}-500 border-1 border-${color}-500`
       case 'default':
-        return `shadow-md shadow-${color}-500/20 ring-1 ring-${color}-300/40 text-red-500`
+        return `shadow-md shadow-${color}-500/20 ring-1 ring-${color}-300/40 text-${color}-500`
     }
   }, [color, variant])
 

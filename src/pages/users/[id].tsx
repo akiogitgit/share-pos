@@ -19,55 +19,52 @@ const User: NextPage = () => {
   const [selectedPublished, setSelectedPublished] = useState(true)
   const isMyPage: boolean = user?.id === Number(id)
 
-  if (!userPosts) {
-    return (
-      <Layout>
-        <div>このページは存在しません</div>
-      </Layout>
-    )
-  }
+  // if (!userPosts) {
+  //   return (
+  //     <Layout>
+  //       <div>このページは存在しません</div>
+  //     </Layout>
+  //   )
+  // }
 
   return (
     <Layout>
       <section className='ml-4'>
-        {/* <div className='flex justify-between'>
-          <div className='flex gap-3 items-center'>
-            <h1 className='flex font-bold text-xl gap-2 items-center'>
-              <Avatar id={Number(userPosts?.user.id)} size='xl' />
-              {userPosts?.user.username}
-            </h1>
-          </div>
-          <Button radius='md'>
-            {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
-          </Button>
-        </div> */}
-
         <div className='flex justify-between items-center'>
-          <Avatar id={Number(userPosts?.user.id)} size='xl' />
-
-          {isMyPage ? (
-            <Button size='md' radius='xs' variant='default'>
-              ユーザー情報を編集
-            </Button>
-          ) : (
-            <Button size='md' radius='xl' variant='outline'>
-              フォローする
-            </Button>
-          )}
-          {/* <Button size='md' radius='xl' variant='outline'>
-            {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
-          </Button> */}
-        </div>
-        <h1 className='font-bold mt-2 text-xl'>{userPosts?.user.username}</h1>
-
-        <div className='flex mt-4 gap-3'>
-          <p>
-            フォロワー数 : <span className='font-bold'>○○</span>
-          </p>
-          <p>
-            投稿数 :{' '}
-            <span className='font-bold'>{userPosts?.posts.length}</span>
-          </p>
+          <div>
+            <div className='w-23 whitespace-nowrap sm:(flex gap-5 w-full) '>
+              <Avatar id={Number(userPosts?.user.id)} size='xl' />
+              <div>
+                <h1 className='font-bold mt-2 text-2xl'>
+                  {userPosts?.user.username}
+                </h1>
+                <div className='flex mt-4 gap-3'>
+                  <p>
+                    フォロワー数 : <span className='font-bold'>○</span>
+                  </p>
+                  <p>
+                    投稿数 :{' '}
+                    <span className='font-bold'>{userPosts?.posts.length}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='transform translate-y-[-42px] sm:translate-y-0'>
+            {isMyPage ? (
+              <Button
+                radius='xs'
+                variant='default'
+                className='whitespace-nowrap'
+              >
+                プロフィールを編集
+              </Button>
+            ) : (
+              <Button size='md' radius='xl' animate variant='outline'>
+                フォローする
+              </Button>
+            )}
+          </div>
         </div>
       </section>
 
