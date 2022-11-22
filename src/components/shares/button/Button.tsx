@@ -36,7 +36,7 @@ export const Button: FC<Props> = ({
   onClick,
 }) => {
   // tailwindで使うためコメントで書く
-  // bg-red-50 bg-blue-50 bg-gray-50 bg-red-100 bg-blue-100 bg-gray-100 bg-red-500 bg-blue-500 bg-gray-500 text-red-500 text-blue-500 text-gray-500 border-red-500 border-blue-500 border-gray-500 hover:bg-red-50 hover:bg-blue-50 hover:bg-gray-50 hover:bg-red-100 hover:bg-blue-100 hover:bg-gray-100 hover:bg-red-500 hover:bg-blue-500 hover:bg-gray-500 hover:text-red-500 hover:text-blue-500 hover:text-gray-500 hover:border-red-500 hover:border-blue-500 hover:border-gray-500
+  // bg-red-50 bg-blue-50 bg-gray-50 bg-red-100 bg-blue-100 bg-gray-100 bg-red-500 bg-blue-500 bg-gray-500 text-red-500 text-blue-500 text-gray-500 border-red-500 border-blue-500 border-gray-500 hover:bg-red-50 hover:bg-blue-50 hover:bg-gray-50 hover:bg-red-100 hover:bg-blue-100 hover:bg-gray-100 hover:bg-red-500 hover:bg-blue-500 hover:bg-gray-500 hover:text-red-500 hover:text-blue-500 hover:text-gray-500 hover:border-red-500 hover:border-blue-500 hover:border-gray-500 shadow-red-500/20 shadow-blue-500/20 shadow-gray-500/20 ring-red-300/40 ring-blue-300/40 ring-gray-300/40
 
   const defaultClass =
     'font-bold flex items-center justify-center gap-1 cursor-pointer'
@@ -49,6 +49,8 @@ export const Button: FC<Props> = ({
         return `bg-${color}-50 text-${color}-500 border-1 border-${color}-50`
       case 'outline':
         return `bg-white text-${color}-500 border-1 border-${color}-500`
+      case 'default':
+        return `shadow-md shadow-${color}-500/20 ring-1 ring-${color}-300/40 text-red-500`
     }
   }, [color, variant])
 

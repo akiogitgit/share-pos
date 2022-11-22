@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
+import { Avatar } from 'components/shares/Avatar'
 import { Button } from 'components/shares/button'
 import { useGetApi } from 'hooks/useApi'
 import { UserPosts } from 'types/post'
@@ -30,17 +30,35 @@ const User: NextPage = () => {
   return (
     <Layout>
       <section className='ml-4'>
-        <div className='flex justify-between'>
+        {/* <div className='flex justify-between'>
           <div className='flex gap-3 items-center'>
-            <AiOutlineUserIcon className='transform scale-200' />
-            <h1 className='font-bold text-xl'>
-              <h1>{userPosts?.user.username}</h1>
+            <h1 className='flex font-bold text-xl gap-2 items-center'>
+              <Avatar id={Number(userPosts?.user.id)} size='xl' />
+              {userPosts?.user.username}
             </h1>
           </div>
           <Button radius='md'>
             {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
           </Button>
+        </div> */}
+
+        <div className='flex justify-between items-center'>
+          <Avatar id={Number(userPosts?.user.id)} size='xl' />
+
+          {isMyPage ? (
+            <Button size='md' radius='xs' variant='default'>
+              ユーザー情報を編集
+            </Button>
+          ) : (
+            <Button size='md' radius='xl' variant='outline'>
+              フォローする
+            </Button>
+          )}
+          {/* <Button size='md' radius='xl' variant='outline'>
+            {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
+          </Button> */}
         </div>
+        <h1 className='font-bold mt-2 text-xl'>{userPosts?.user.username}</h1>
 
         <div className='flex mt-4 gap-3'>
           <p>
