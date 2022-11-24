@@ -40,9 +40,9 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
         <PostMenuButton
           post={post}
           onEdit={() => setIsEditing(true)}
-          onDelete={() => deletePost()}
+          onDelete={deletePost}
           onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
-          onRemoveBookmark={() => removeBookmark()}
+          onRemoveBookmark={removeBookmark}
         />
       </div>
 
