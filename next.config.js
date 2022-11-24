@@ -10,7 +10,11 @@ module.exports = {
   },
   images: {
     // qiita, zenn 以外は res.cloudinary.com
-    domains: ['res.cloudinary.com', 'qiita-user-contents.imgix.net'],
+    domains: [
+      'res.cloudinary.com',
+      'qiita-user-contents.imgix.net',
+      'www.gravatar.com',
+    ],
   },
   optimizeFonts: true,
 }
