@@ -5,6 +5,7 @@ import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostItemComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
+import { Avatar } from 'components/shares/Avatar'
 import { Button } from 'components/shares/button'
 import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
 import { useDeletePost, useUpdatePost } from 'hooks/usePost'
@@ -29,7 +30,8 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
     <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
       <div className='flex justify-between items-center'>
         <Link href={`/users/${post.user.id}`}>
-          <a className='cursor-pointer font-bold text-20px'>
+          <a className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
+            <Avatar id={post.userId} />
             {post.user.username}
           </a>
         </Link>

@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
+import { Avatar } from 'components/shares/Avatar'
 import { Button } from 'components/shares/button'
 import { useGetApi } from 'hooks/useApi'
 import { UserPosts } from 'types/post'
@@ -30,26 +30,41 @@ const User: NextPage = () => {
   return (
     <Layout>
       <section className='ml-4'>
-        <div className='flex justify-between'>
-          <div className='flex gap-3 items-center'>
-            <AiOutlineUserIcon className='transform scale-200' />
-            <h1 className='font-bold text-xl'>
-              <h1>{userPosts?.user.username}</h1>
-            </h1>
+        <div className='flex justify-between items-center'>
+          <div>
+            <div className='w-23 whitespace-nowrap sm:(flex gap-5 w-full) '>
+              <Avatar id={Number(userPosts?.user.id)} size='xl' />
+              <div>
+                <h1 className='font-bold mt-2 text-2xl'>
+                  {userPosts?.user.username}
+                </h1>
+                <div className='flex mt-4 gap-3'>
+                  <p>
+                    フォロワー数 : <span className='font-bold'>○</span>
+                  </p>
+                  <p>
+                    投稿数 :{' '}
+                    <span className='font-bold'>{userPosts?.posts.length}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <Button radius='md'>
-            {isMyPage ? 'ユーザー情報を編集' : 'フォローする'}
-          </Button>
-        </div>
-
-        <div className='flex mt-4 gap-3'>
-          <p>
-            フォロワー数 : <span className='font-bold'>○○</span>
-          </p>
-          <p>
-            投稿数 :{' '}
-            <span className='font-bold'>{userPosts?.posts.length}</span>
-          </p>
+          <div className='transform translate-y-[-42px] sm:translate-y-0'>
+            {isMyPage ? (
+              <Button
+                radius='xs'
+                variant='default'
+                className='whitespace-nowrap'
+              >
+                プロフィールを編集
+              </Button>
+            ) : (
+              <Button size='md' radius='xl' animate variant='outline'>
+                フォローする
+              </Button>
+            )}
+          </div>
         </div>
       </section>
 
