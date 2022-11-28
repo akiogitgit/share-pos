@@ -49,7 +49,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
         {isEditing ? (
-          <div>
+          <div className='mx-1'>
             <PostForm
               onSubmit={async params => {
                 await updatePost(params)
