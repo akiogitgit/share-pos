@@ -13,7 +13,7 @@ export const JumpToCreatePostButton: FC = () => {
 
   return (
     <Link href='/create'>
-      <a className='bg-primary rounded-full flex font-bold text-white py-10px px-11.5px right-20px bottom-50px text-30px z-2 fixed'>
+      <div className='bg-primary rounded-full flex font-bold text-white py-10px px-11.5px right-20px bottom-50px text-30px z-2 fixed'>
         <div className='my-auto'>
           <div
             className={`${
@@ -24,7 +24,7 @@ export const JumpToCreatePostButton: FC = () => {
           </div>
         </div>
         <HiPaperAirplaneIcon className='h-7 transform w-7 rotate-90' />
-      </a>
+      </div>
     </Link>
   )
 }

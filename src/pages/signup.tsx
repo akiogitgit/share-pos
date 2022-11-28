@@ -44,7 +44,7 @@ const SignUp: NextPage = () => {
         <p className='mt-4 text-center'>
           ログインは
           <Link href='/login'>
-            <a className='font-bold text-secondary'>こちら</a>
+            <span className='font-bold text-secondary'>こちら</span>
           </Link>
         </p>
       </Layout>

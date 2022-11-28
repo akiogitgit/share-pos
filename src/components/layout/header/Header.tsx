@@ -51,7 +51,7 @@ export const Header: FC = () => {
             ) : (
               <div className='flex gap-2 items-center'>
                 <Link href='/login'>
-                  <a className='cursor-pointer'>ログイン</a>
+                  <div className='cursor-pointer'>ログイン</div>
                 </Link>
                 <Link href='/signup'>
                   <Button radius='md' component='a'>

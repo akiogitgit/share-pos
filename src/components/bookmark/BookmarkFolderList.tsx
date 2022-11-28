@@ -47,7 +47,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
               }`}
             >
               <Link href={{ pathname: 'bookmark', query: { id: index } }}>
-                <a
+                <div
                   className={`block mt-2 w-full text-left ${
                     router.query.id == folder.id && 'font-bold'
                   }`}
@@ -55,7 +55,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
                 >
                   <BsFolderIcon className='mr-1' />
                   {folder.name}
-                </a>
+                </div>
               </Link>
             </div>
           ))}

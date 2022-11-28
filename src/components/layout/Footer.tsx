@@ -32,7 +32,6 @@ export const Footer: FC = () => {
               radius='xl'
               size='md'
               compact
-              component='a'
               className='border border-white rounded-full'
             >
               ログイン
@@ -84,7 +83,7 @@ export const Footer: FC = () => {
       <nav className='bg-white flex w-full bottom-0 text-25px z-2 justify-around fixed'>
         {menuIcons.map(menuIcon => (
           <Link href={menuIcon.href} key={menuIcon.href}>
-            <a
+            <span
               className={`cursor-pointer py-2 px-3 ${
                 router.asPath === menuIcon.href && 'text-primary'
               }`}
@@ -92,7 +91,7 @@ export const Footer: FC = () => {
               {router.asPath === menuIcon.href
                 ? menuIcon.selected
                 : menuIcon.default}
-            </a>
+            </span>
           </Link>
         ))}
       </nav>
