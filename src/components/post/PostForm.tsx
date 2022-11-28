@@ -51,9 +51,28 @@ export const PostForm: FC<Props> = ({
           onSubmit(formParams)
           e.preventDefault()
         }}
-        className='w-full max-w-430px relative'
+        className='w-full max-w-420px relative'
       >
-        <div>
+        <div className='relative'>
+          <label htmlFor='username' className='font-bold text-sm block '>
+            記事のURL
+          </label>
+          <input
+            type='text'
+            value={formParams.url}
+            placeholder='https://example.com'
+            required
+            name='url'
+            onChange={onChange}
+            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+          />
+
+          <div className='flex justify-end'>
+            <RiArticleLineIcon className='top-33px right-10px absolute' />
+          </div>
+        </div>
+
+        <div className='mt-2 relative'>
           <label htmlFor='username' className='font-bold text-sm block '>
             コメント
           </label>
@@ -72,42 +91,6 @@ export const PostForm: FC<Props> = ({
           </div>
           <div className='flex justify-end'>
             <BiCommentDetailIcon className='top-33px right-10px absolute' />
-          </div>
-        </div>
-        <div className='mt-2 relative'>
-          <label htmlFor='username' className='font-bold text-sm block '>
-            記事のURL
-          </label>
-          <input
-            type='text'
-            value={formParams.url}
-            placeholder='https://example.com'
-            required
-            name='url'
-            onChange={onChange}
-            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
-          />
-
-          <div className='flex justify-end'>
-            <RiArticleLineIcon className='top-33px right-10px absolute' />
-          </div>
-        </div>
-        <div className='h-80px mt-2 relative'>
-          <label htmlFor='username' className='font-bold text-sm block '>
-            オススメ度
-          </label>
-          <input
-            type='range'
-            id='evaluation'
-            min='1'
-            max='5'
-            value={formParams.evaluation}
-            className='bg-black h-0.5 mt-10 w-full appearance-none'
-            name='evaluation'
-            onChange={e => onChange(e)}
-          />
-          <div className='transform w-2 translate-y-[-40px] translate-x-40vw sm:translate-x-125px'>
-            {formParams.evaluation}
           </div>
         </div>
 

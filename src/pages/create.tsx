@@ -16,7 +16,7 @@ const Create: NextPage = () => {
       </Head>
       <Layout>
         <h1 className='text-center text-lg'>記事投稿</h1>
-        <div className='mt-4'>
+        <div className='mt-8'>
           <PostForm onSubmit={createPost} />
         </div>
       </Layout>
