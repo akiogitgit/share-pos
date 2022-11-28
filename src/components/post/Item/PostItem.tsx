@@ -27,7 +27,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
   const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
 
   return (
-    <article className='bg-white rounded-xl max-w-460px p-4 w-90vw sm:w-291px'>
+    <article className='bg-white rounded-xl max-w-460px p-4 w-100% sm:w-291px'>
       <div className='flex justify-between items-center'>
         <Link href={`/users/${post.user.id}`}>
           <a className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
