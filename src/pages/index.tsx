@@ -23,10 +23,6 @@ const Home: NextPage = () => {
         <title>SharePos 投稿一覧ページ</title>
       </Head>
       <Layout>
-        {/* <PostStars
-          evaluation={stars}
-          onClick={(newStar) => setStars(newStar)}
-        /> */}
         {posts && (
           <div className='mt-4'>
             <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
