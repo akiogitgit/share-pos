@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 import { Layout } from 'components/layout/Layout'
@@ -11,8 +11,8 @@ import { UserPosts } from 'types/post'
 import { User } from 'types/user/user'
 
 const User: NextPage = () => {
-  const router = useRouter()
-  const { id } = router.query
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
   const { data: user } = useGetApi<User>('/users/me')
   const { data: userPosts } = useGetApi<UserPosts>(`/users/${id}`)
 

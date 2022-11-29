@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
 import { BookmarkFolderList } from 'components/bookmark/BookmarkFolderList'
 import { CreateFolderButton } from 'components/bookmark/CreateFolderButton'
@@ -11,13 +11,13 @@ import { Folder, BookmarkPosts } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
   useRequireLogin()
-  const router = useRouter()
+  const searchParams = useSearchParams()
   const { data: folders } = useGetApi<Folder[]>('/folders')
 
   // 選択したフォルダをURLパラメータから取得
   const selectedFolderIndex = useMemo(
-    () => Number(router.query.id) || 0,
-    [router.query.id],
+    () => Number(searchParams.get('id')) || 0,
+    [searchParams],
   )
 
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(

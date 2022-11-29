@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FC, useCallback, useMemo, useState } from 'react'
 
 import { BsFolder as BsFolderIcon } from 'react-icons/bs'
@@ -14,9 +14,10 @@ type Props = {
 export const BookmarkFolderList: FC<Props> = ({ folders }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const routerFolderIndex = useMemo(
-    () => Number(router.query.id) || 0,
-    [router.query.id],
+    () => Number(searchParams.get('id')) || 0,
+    [searchParams],
   )
 
   const { updateFolder } = useUpdateFolder()
@@ -49,7 +50,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
               <Link href={{ pathname: 'bookmark', query: { id: index } }}>
                 <div
                   className={`block mt-2 w-full text-left ${
-                    router.query.id == folder.id && 'font-bold'
+                    searchParams.get('id') == folder.id && 'font-bold'
                   }`}
                   onClick={() => onClickFolder(index)}
                 >

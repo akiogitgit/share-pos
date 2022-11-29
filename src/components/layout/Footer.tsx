@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
+
 import { FC } from 'react'
 
 import {
@@ -19,7 +20,7 @@ import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
 
 export const Footer: FC = () => {
-  const router = useRouter()
+  const pathname = usePathname()
   const { data: user, error } = useGetApi<User>('/users/me')
 
   // ログインしていない時だけ表示
@@ -78,20 +79,20 @@ export const Footer: FC = () => {
 
   return (
     <footer className='sm:hidden'>
-      {router.pathname !== '/create' && <JumpToCreatePostButton />}
+      {pathname !== '/create' && <JumpToCreatePostButton />}
 
       <nav className='bg-white flex w-full bottom-0 text-25px z-2 justify-around fixed'>
         {menuIcons.map(menuIcon => (
           <Link href={menuIcon.href} key={menuIcon.href}>
-            <span
+            <div
               className={`cursor-pointer py-2 px-3 ${
-                router.asPath === menuIcon.href && 'text-primary'
+                pathname === menuIcon.href && 'text-primary'
               }`}
             >
-              {router.asPath === menuIcon.href
+              {pathname === menuIcon.href
                 ? menuIcon.selected
                 : menuIcon.default}
-            </span>
+            </div>
           </Link>
         ))}
       </nav>
