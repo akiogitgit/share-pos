@@ -1,45 +1,44 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
-import { useCallback } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
-import { deleteApi, postApi, putApi } from 'utils/api'
 
 const Home: NextPage = () => {
   const { data: posts, error } = useGetApi<Post[]>('/posts')
 
-  const addReplyComment = useCallback(async () => {
-    try {
-      const res = await postApi('/reply_comments', {
-        postId: 3,
-        body: 'コメントです',
-      })
-      console.log(res)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [])
-  const updateReplyComment = useCallback(async (id: number) => {
-    try {
-      const res = await putApi(`/reply_comments/${id}`, {
-        body: 'update',
-      })
-      console.log(res)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [])
-  const deleteReplyComment = useCallback(async (id: number) => {
-    try {
-      const res = await deleteApi(`/reply_comments/${id}`)
-      console.log(res)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [])
+  // コメント機能
+  // const addReplyComment = useCallback(async () => {
+  //   try {
+  //     const res = await postApi('/reply_comments', {
+  //       postId: 3,
+  //       body: 'コメントです',
+  //     })
+  //     console.log(res)
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [])
+  // const updateReplyComment = useCallback(async (id: number) => {
+  //   try {
+  //     const res = await putApi(`/reply_comments/${id}`, {
+  //       body: 'update',
+  //     })
+  //     console.log(res)
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [])
+  // const deleteReplyComment = useCallback(async (id: number) => {
+  //   try {
+  //     const res = await deleteApi(`/reply_comments/${id}`)
+  //     console.log(res)
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [])
 
   return (
     <>
