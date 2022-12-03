@@ -35,15 +35,16 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
             {post.user.username}
           </div>
         </Link>
-
-        {/* 右上の・・・ボタン */}
-        <PostMenuButton
-          post={post}
-          onEdit={() => setIsEditing(true)}
-          onDelete={deletePost}
-          onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
-          onRemoveBookmark={removeBookmark}
-        />
+        <div className='flex gap-2'>
+          {/* 右上の・・・ボタン */}
+          <PostMenuButton
+            post={post}
+            onEdit={() => setIsEditing(true)}
+            onDelete={deletePost}
+            onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
+            onRemoveBookmark={removeBookmark}
+          />
+        </div>
       </div>
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
@@ -71,16 +72,20 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
           <>
             <PostItemComment comment={post.comment} />
 
-            {/* urlのサムネイル画像等 */}
             <PostLinkCard post={post} />
 
-            <div className='flex mt-1 items-center justify-between'>
-              <div className='flex'>
-                {[...Array(post.evaluation)].map(v => (
-                  <div key={v}>☆</div>
-                ))}
-              </div>
-              <div className='text-13px'>{post.createdAt.substring(0, 10)}</div>
+            {/* 返信 */}
+            <div className='flex h-6 mt-2 items-center justify-between'>
+              {post.replyComments.length ? (
+                <Link href=''>
+                  <p className='cursor-pointer text-secondary'>
+                    {post.replyComments?.length}件の返信
+                  </p>
+                </Link>
+              ) : (
+                <p />
+              )}
+              <p className='text-13px'>{post.createdAt.substring(0, 10)}</p>
             </div>
           </>
         )}

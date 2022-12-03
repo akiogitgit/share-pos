@@ -9,6 +9,7 @@ type Props = {
 export const PostLinkCard: FC<Props> = ({ post }) => {
   // ドメインによって、表示するURLを変える
   const displayURL = useMemo(() => {
+    if (!post.metaInfo.image) return ''
     return ['qiita-user', 'res.cloudinary', 'data:image/png;base64'].some(v =>
       post.metaInfo.image?.includes(v),
     )
@@ -18,12 +19,12 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
 
   return (
     <>
-      <figure className='border-2 rounded-10px mt-2 duration-300 group hover:bg-gray-100 '>
+      <figure className='border-2 rounded-10px mt-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
         <a href={post.url} target='_blank' rel='noreferrer'>
-          <div className='flex rounded-t-10px h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
-            {post.metaInfo.image ? (
+          <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
+            {displayURL ? (
               <Image
-                src={displayURL || ''}
+                src={displayURL}
                 alt=''
                 className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
                 width={430}
@@ -31,11 +32,12 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
                 objectFit='contain'
               />
             ) : (
-              <div className='flex h-full bg-gray-300 rounded-t-10px text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
+              <div className='flex h-full bg-gray-300 text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
                 No image
               </div>
             )}
           </div>
+
           <figcaption className='p-2'>
             <p className='text-13px text-gray-500'>
               {post.url.split('//')[1].split('/')[0]}

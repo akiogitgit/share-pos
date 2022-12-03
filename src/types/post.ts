@@ -15,6 +15,14 @@ export type Post = {
     image: string | undefined
     title: string
   }
+  replyComments: {
+    id: number
+    body: string
+    user: {
+      id: number
+      username: string
+    }
+  }[]
   bookmark?: {
     id: string
   }
