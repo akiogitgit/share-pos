@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
 import { useIsLoggedIn } from './useIsLoggedIn'
 
@@ -15,8 +15,6 @@ export const useRequireLogin = () => {
   }, [isLoggedIn, router])
 
   useEffect(() => {
-    if (router.isReady) {
-      moveToLogin()
-    }
-  }, [moveToLogin, router.isReady])
+    moveToLogin()
+  }, [moveToLogin])
 }

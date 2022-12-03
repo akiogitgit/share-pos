@@ -42,16 +42,16 @@ export const DropDownMenu: FC = () => {
 
           <div className='bg-white shadow-xl top-10px right-[-15px] w-40 absolute'>
             <Link href='/bookmark'>
-              <a className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
+              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
                 <HiOutlineBookOpenIcon />
                 ブックマーク
-              </a>
+              </div>
             </Link>
             <Link href={`/users/${user?.id}`}>
-              <a className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
+              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
                 <AiOutlineUserIcon />
                 マイページ
-              </a>
+              </div>
             </Link>
             <a className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-base'>
               <FiSettingsIcon />

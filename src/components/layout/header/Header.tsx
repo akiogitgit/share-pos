@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 
 import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
@@ -11,7 +11,7 @@ import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
-  const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <>
@@ -30,7 +30,7 @@ export const Header: FC = () => {
               <div className='flex gap-3 items-center'>
                 <DropDownMenu />
 
-                {router.pathname !== '/create' && (
+                {pathname !== '/create' && (
                   <Link href='/create'>
                     <Button
                       className='hidden sm:block'
@@ -38,7 +38,6 @@ export const Header: FC = () => {
                       size='lg'
                       compact
                       animate
-                      component='a'
                       rightIcon={
                         <HiPaperAirplaneIcon className='transform rotate-90' />
                       }
@@ -51,7 +50,7 @@ export const Header: FC = () => {
             ) : (
               <div className='flex gap-2 items-center'>
                 <Link href='/login'>
-                  <a className='cursor-pointer'>ログイン</a>
+                  <div className='cursor-pointer'>ログイン</div>
                 </Link>
                 <Link href='/signup'>
                   <Button radius='md' component='a'>

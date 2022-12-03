@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'

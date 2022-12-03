@@ -30,10 +30,10 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
     <article className='bg-white rounded-xl max-w-460px p-4 w-100% sm:w-291px'>
       <div className='flex justify-between items-center'>
         <Link href={`/users/${post.user.id}`}>
-          <a className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
+          <div className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
             <Avatar id={post.userId} />
             {post.user.username}
-          </a>
+          </div>
         </Link>
         <div className='flex gap-2'>
           {/* 右上の・・・ボタン */}
