@@ -32,21 +32,20 @@ export const FolderList: FC<Props> = ({
         <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
           <CreateFolderButton radius='xs' />
 
-          {folders?.length &&
-            folders.map((folder, index) => (
-              <button
-                key={index}
-                className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-primary-light'
-                onClick={async () => {
-                  console.log('click! : ')
-                  onClickFolderName?.()
-                  await onAddBookmark?.(folder.id, post)
-                }}
-              >
-                <BsFolderIcon />
-                <p>{folder.name}</p>
-              </button>
-            ))}
+          {folders?.map((folder, index) => (
+            <button
+              key={index}
+              className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-primary-light'
+              onClick={async () => {
+                console.log('click! : ')
+                onClickFolderName?.()
+                await onAddBookmark?.(folder.id, post)
+              }}
+            >
+              <BsFolderIcon />
+              <p>{folder.name}</p>
+            </button>
+          ))}
         </div>
       </div>
     </div>
