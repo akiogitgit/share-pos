@@ -14,8 +14,8 @@ import {
   IoBookOutline as IoBookOutlineIcon,
 } from 'react-icons/io5'
 
-import { Button } from 'components/shares/button'
-import { JumpToCreatePostButton } from 'components/shares/button/JumpToCreatePostButton'
+import { Button, JumpToCreatePostButton } from 'components/shares/button'
+
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
 
