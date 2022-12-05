@@ -15,6 +15,9 @@ export default defineConfig({
         },
         secondary: 'rgb(59 130 246)',
       },
+      fontFamily: {
+        cantoreOne: ['var(--font-cantoreOne)'],
+      },
     },
   },
 })
