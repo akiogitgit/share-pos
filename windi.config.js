@@ -15,6 +15,23 @@ export default defineConfig({
         },
         secondary: 'rgb(59 130 246)',
       },
+      fontFamily: {
+        anpan0: 'monospace',
+        anpan1: ['Fira Code'],
+        anpan2: ['Dancing Script'],
+        anpan: ['Lora'],
+        lora: ['var(--font-lora)'],
+        kenia: ['var(--font-kenia)'],
+        dancing: ['var(--font-dancing)'],
+      },
     },
   },
 })
+
+// fontFamily: {
+//   primary: ['var(--lora-font)', ...fontFamily.sans],
+//   serif: ['var(--lora-font)', ...fontFamily.serif],
+//   anpan:
+//     'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+//   anpan2: '"Fira Code", monospace',
+// },
