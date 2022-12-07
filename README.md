@@ -4,8 +4,19 @@
 ## 使用技術
 - Next.js v13
 - React v18
+- TypeScript
 - Rails v7
 - DB: postgres
+
+## 使用ライブラリ・フレームワーク
+- next.js v13
+- react v18
+- typescript v4.7
+- windicss
+- react-icons
+- crypto-js
+- headlessui
+- use-scroll-position
 
 ## 作成理由
 私は友達と読んで良かった記事を、Slackで共有することを習慣づけています。
