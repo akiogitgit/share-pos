@@ -15,9 +15,11 @@ URL: https://share-pos.vercel.app/
 - DB: postgreSQL
 - Windi CSS v1.7.7
 - React Icons v4.4.0
-- CryptoJS v4.1.1
+- @next/font v13.0.6
 - Headless UI v1.7.3
 - Use scroll position v2.0.3
+- CryptoJS v4.1.1
+- SWR v1.3.0
 
 ## 作成理由
 私は友達と読んで良かった記事を、Slackで共有することを習慣づけています。
