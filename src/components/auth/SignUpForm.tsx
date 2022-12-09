@@ -49,7 +49,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             name='username'
             onChange={e => onChange(e)}
-            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineUserIcon className='top-33px left-270px absolute' />
         </div>
@@ -65,7 +65,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             required
             name='email'
             onChange={e => onChange(e)}
-            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <AiOutlineMailIcon className='top-33px left-270px absolute' />
         </div>
@@ -82,7 +82,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             minLength={6}
             name='password'
             onChange={e => onChange(e)}
-            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
@@ -102,7 +102,7 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
             placeholder='password'
             name='passwordConfirmation'
             onChange={e => onChange(e)}
-            className='border outline-none ring-secondary w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>

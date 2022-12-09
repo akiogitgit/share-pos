@@ -60,7 +60,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
               submitButtonText='更新'
             />
             <Button
-              color='gray'
+              color='secondary'
               fullWidth
               className='mt-2'
               onClick={() => setIsEditing(false)}
@@ -78,7 +78,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
             <div className='flex h-6 mt-2 items-center justify-between'>
               {post.replyComments.length ? (
                 <Link href=''>
-                  <p className='cursor-pointer text-secondary'>
+                  <p className='cursor-pointer text-primary-dark'>
                     {post.replyComments?.length}件の返信
                   </p>
                 </Link>

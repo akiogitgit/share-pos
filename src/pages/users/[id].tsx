@@ -81,7 +81,7 @@ const User: NextPage = () => {
                   onClick={() => setSelectedPublished(tab.published)}
                   className={`${
                     selectedPublished === tab.published
-                      ? 'font-bold border-b-2 border-primary text-primary'
+                      ? 'font-bold border-b-2 border-primary-dark text-primary-dark'
                       : ' cursor-pointer'
                   }`}
                 >
