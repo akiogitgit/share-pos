@@ -28,7 +28,7 @@ export const FolderList: FC<Props> = ({
         }
       `}</style>
 
-      <div className='bg-base border border-primary rounded-10px w-160px overflow-hidden'>
+      <div className='bg-primary-light border border-primary rounded-10px w-160px overflow-hidden'>
         <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
           <CreateFolderButton radius='xs' />
 

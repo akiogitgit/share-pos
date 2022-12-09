@@ -1,5 +1,5 @@
 import { defineConfig } from 'windicss/helpers'
-import { accent, primary } from './src/utils/theme'
+import { accent, danger, primary } from './src/utils/theme'
 
 export default defineConfig({
   extract: {
@@ -18,6 +18,11 @@ export default defineConfig({
           light: accent.light,
           dark: accent.dark,
           DEFAULT: accent.dark,
+        },
+        danger: {
+          light: danger.light,
+          dark: danger.dark,
+          DEFAULT: danger.dark,
         },
       },
       fontFamily: {

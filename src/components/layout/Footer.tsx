@@ -26,7 +26,7 @@ export const Footer: FC = () => {
   // ログインしていない時だけ表示
   if (error) {
     return (
-      <footer className=' bg-primary w-full py-2 bottom-0 z-2 fixed'>
+      <footer className=' bg-primary-dark w-full py-2 bottom-0 z-2 fixed'>
         <div className='flex pr-4 gap-3 justify-end sm:justify-center'>
           <Link href='/login'>
             <Button

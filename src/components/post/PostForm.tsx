@@ -101,7 +101,7 @@ export const PostForm: FC<Props> = ({
           <div>
             <div
               className={`rounded-full cursor-pointer ${
-                formParams.published ? 'bg-primary' : 'bg-secondary'
+                formParams.published ? 'bg-accent-dark' : 'bg-primary-dark'
               } h-28px mt-2 text-white w-90px relative inline-block`}
               onClick={() =>
                 setFormParams(state => {

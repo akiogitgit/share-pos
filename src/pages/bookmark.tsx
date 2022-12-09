@@ -54,7 +54,7 @@ const Bookmark: NextPage = () => {
 
       <div className='sm:(flex gap-3 items-start) '>
         {/* 自分のフォルダ一覧 */}
-        <div className='bg-base pl-4 top-0px z-2 sticky sm:top-100px'>
+        <div className='bg-primary-light pl-4 top-0px z-2 sticky sm:top-100px'>
           <div className='mt-4 w-190px hidden sm:block'>
             <CreateFolderButton />
           </div>
