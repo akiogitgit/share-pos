@@ -7,7 +7,6 @@ const base = {
   lightRed: '#fee2e2',
   gray: '#6b7280',
   lightGray: '#f3f4f6',
-  // secondaryも作る 投稿編集のキャンセルボタン
 } as const
 
 export const primary = {

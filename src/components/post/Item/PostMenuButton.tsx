@@ -50,7 +50,7 @@ export const PostMenuButton: FC<Props> = ({
 
           {/* モーダル */}
           <div className='top-0 right-40px z-1 absolute sm:top-0 '>
-            <div className='bg-primary-light border border-primary-dark cursor-pointer rounded-10px shadow-lg shadow-primary-light transform w-170px overflow-hidden sm:w-150px'>
+            <div className='bg-white border border-primary-dark cursor-pointer rounded-10px shadow-lg shadow-primary-light transform w-170px overflow-hidden sm:w-150px'>
               {user?.id === post.userId && (
                 <>
                   <button
