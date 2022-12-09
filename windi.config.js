@@ -1,4 +1,5 @@
 import { defineConfig } from 'windicss/helpers'
+import { accent, primary } from './src/utils/theme'
 
 export default defineConfig({
   extract: {
@@ -8,12 +9,15 @@ export default defineConfig({
   theme: {
     extend: {
       colors: {
-        base: 'rgb(254 226 226)',
         primary: {
-          light: 'rgb(252 165 165)',
-          DEFAULT: 'rgb(239 68 68)',
+          light: primary.light,
+          dark: primary.dark,
+          DEFAULT: primary.dark,
         },
-        secondary: 'rgb(59 130 246)',
+        accent: {
+          light: accent.light,
+          dark: accent.dark,
+        },
       },
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],
@@ -21,3 +25,20 @@ export default defineConfig({
     },
   },
 })
+
+// base: 'rgb(254 226 226)',  92%, コントラスト 17.19, 1.19 #fee2e2
+// primary: {
+//   light: 'rgb(252 165 165)',
+//   DEFAULT: 'rgb(239 68 68)',
+// },
+// secondary: 'rgb(59 130 246)',
+// base: '#d1fae5',
+// base: '#e6f2f2', // zennと同じ明るさ95%
+// base: '#c6dce0', // 見やすい 86%
+//
+// base: '#dfecee', // 93%, 1.18
+// primary: {
+//   light: '#a4cfcf',
+//   DEFAULT: '#0b7e7f',
+// },
+// secondary: 'rgb(59 130 246)',

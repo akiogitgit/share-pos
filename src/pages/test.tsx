@@ -5,105 +5,60 @@ import { Button } from 'components/shares/button'
 const Test: NextPage = () => {
   return (
     <Layout>
+      <button className='bg-primary-dark border border-primary-dark text-white py-1 px-2 duration-300 hover:(bg-white text-primary-dark) '>
+        aa
+      </button>
       <div className='flex gap-2 items-start'>
         <Button size='xs'>Settings</Button>
         <Button size='sm'>Settings</Button>
-        <Button size='md' color='gray'>
-          Settings
-        </Button>
-        <Button size='lg' color='blue'>
-          Settings
-        </Button>
+        <Button size='md'>Settings</Button>
+        <Button size='lg'>Settings</Button>
         <Button size='xl' radius='sm'>
           Settings
         </Button>
       </div>
 
       <div className='flex gap-2 items-start'>
-        <Button color='blue'>filled</Button>
-        <Button color='blue' variant='light'>
-          light
-        </Button>
-        <Button color='blue' variant='outline'>
-          outline
-        </Button>
+        <Button>filled</Button>
+        <Button variant='light'>light</Button>
+        <Button variant='outline'>outline</Button>
       </div>
       <div className='flex mt-4 gap-2 items-start'>
-        <Button color='blue' animate>
-          filled
-        </Button>
-        <Button color='blue' animate variant='light'>
+        <Button animate>filled</Button>
+        <Button animate variant='light'>
           light
         </Button>
-        <Button color='blue' animate variant='outline'>
-          outline
-        </Button>
-      </div>
-      <div className='flex mt-4 gap-2 items-start'>
-        <Button color='red' animate>
-          filled
-        </Button>
-        <Button color='red' animate variant='light'>
-          light
-        </Button>
-        <Button color='red' animate variant='outline'>
-          outline
-        </Button>
-      </div>
-      <div className='flex mt-4 gap-2 items-start'>
-        <Button color='gray' animate>
-          filled
-        </Button>
-        <Button color='gray' animate variant='light'>
-          light
-        </Button>
-        <Button color='gray' animate variant='outline'>
+        <Button animate variant='outline'>
           outline
         </Button>
       </div>
 
       <div className='flex mt-4 gap-2 items-start'>
-        <Button color='gray' size='xs'>
-          Settings
-        </Button>
-        <Button color='gray' size='sm'>
-          Settings
-        </Button>
-        <Button color='gray' size='md'>
-          Settings
-        </Button>
-        <Button color='gray' size='lg'>
-          Settings
-        </Button>
-        <Button color='gray' size='xl'>
-          Settings
-        </Button>
+        <Button size='xs'>Settings</Button>
+        <Button size='sm'>Settings</Button>
+        <Button size='md'>Settings</Button>
+        <Button size='lg'>Settings</Button>
+        <Button size='xl'>Settings</Button>
       </div>
       <div className='flex mt-4 gap-2 items-start'>
-        <Button color='gray' compact size='xs'>
+        <Button compact size='xs'>
           Settings
         </Button>
-        <Button color='gray' compact size='sm'>
+        <Button compact size='sm'>
           Settings
         </Button>
-        <Button color='gray' compact size='md'>
+        <Button compact size='md'>
           Settings
         </Button>
-        <Button color='gray' compact size='lg'>
+        <Button compact size='lg'>
           Settings
         </Button>
-        <Button color='gray' compact size='xl'>
+        <Button compact size='xl'>
           Settings
         </Button>
       </div>
 
-      <Button
-        color='blue'
-        compact
-        size='xl'
-        animate
-        className='border-white border-4'
-      >
+      <Button compact size='xl' animate className='border-white border-4'>
         Settia
       </Button>
 
@@ -124,10 +79,10 @@ const Test: NextPage = () => {
           required
           className='border outline-none w-full p-2 pr-9 ring-blue-500 duration-300 focus:rounded-10px focus:ring-1'
         />
-        <Button color='blue' type='button' animate>
+        <Button  type='button' animate>
           作成
         </Button>
-        <Button color='red' type='button' animate>
+        <Button type='button' animate>
           作成
         </Button>
       </form> */}

@@ -64,9 +64,7 @@ export const Header: FC = () => {
                 <div className='cursor-pointer'>ログイン</div>
               </Link>
               <Link href='/signup'>
-                <Button radius='md' component='a'>
-                  新規登録
-                </Button>
+                <Button radius='md'>新規登録</Button>
               </Link>
             </div>
           )}
