@@ -17,6 +17,7 @@ export default defineConfig({
         accent: {
           light: accent.light,
           dark: accent.dark,
+          DEFAULT: accent.dark,
         },
       },
       fontFamily: {

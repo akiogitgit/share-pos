@@ -12,6 +12,6 @@ export const primary = {
 } as const
 
 export const accent = {
-  light: base.lightGreen,
+  light: base.lightYellow,
   dark: base.yellow,
 } as const

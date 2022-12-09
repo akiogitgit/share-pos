@@ -8,6 +8,9 @@ const Test: NextPage = () => {
       <button className='bg-primary-dark border border-primary-dark text-white py-1 px-2 duration-300 hover:(bg-white text-primary-dark) '>
         aa
       </button>
+      <button className='bg-primary-light border border-primary-light text-white py-1 px-2 duration-300 hover:(bg-white text-primary-light) '>
+        aa
+      </button>
       <div className='flex gap-2 items-start'>
         <Button size='xs'>Settings</Button>
         <Button size='sm'>Settings</Button>
@@ -33,34 +36,44 @@ const Test: NextPage = () => {
         </Button>
       </div>
 
-      <div className='flex mt-4 gap-2 items-start'>
-        <Button size='xs'>Settings</Button>
-        <Button size='sm'>Settings</Button>
-        <Button size='md'>Settings</Button>
-        <Button size='lg'>Settings</Button>
-        <Button size='xl'>Settings</Button>
-      </div>
-      <div className='flex mt-4 gap-2 items-start'>
-        <Button compact size='xs'>
+      <div className='flex mt-10 gap-2 items-start'>
+        <Button size='xs' color='accent'>
           Settings
         </Button>
-        <Button compact size='sm'>
+        <Button size='sm' color='accent'>
           Settings
         </Button>
-        <Button compact size='md'>
+        <Button size='md' color='accent'>
           Settings
         </Button>
-        <Button compact size='lg'>
+        <Button size='lg' color='accent'>
           Settings
         </Button>
-        <Button compact size='xl'>
+        <Button size='xl' color='accent' radius='sm'>
           Settings
         </Button>
       </div>
 
-      <Button compact size='xl' animate className='border-white border-4'>
-        Settia
-      </Button>
+      <div className='flex gap-2 items-start'>
+        <Button color='accent'>filled</Button>
+        <Button color='accent' variant='light'>
+          light
+        </Button>
+        <Button color='accent' variant='outline'>
+          outline
+        </Button>
+      </div>
+      <div className='flex mt-4 gap-2 items-start'>
+        <Button color='accent' animate>
+          filled
+        </Button>
+        <Button color='accent' animate variant='light'>
+          light
+        </Button>
+        <Button color='accent' animate variant='outline'>
+          outline
+        </Button>
+      </div>
 
       {/* <form
         onSubmit={e => {
