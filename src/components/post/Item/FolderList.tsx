@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { BsFolder as BsFolderIcon } from 'react-icons/bs'
+import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
 
 import { CreateFolderButton } from 'components/bookmark/CreateFolderButton'
 import { useGetApi } from 'hooks/useApi'
@@ -35,14 +35,14 @@ export const FolderList: FC<Props> = ({
           {folders?.map((folder, index) => (
             <button
               key={index}
-              className='flex text-left w-full py-1 px-4 gap-1 items-center hover:bg-primary-light'
+              className='flex text-left w-full py-1 px-2 gap-1 items-center hover:bg-primary-light'
               onClick={async () => {
                 console.log('click! : ')
                 onClickFolderName?.()
                 await onAddBookmark?.(folder.id, post)
               }}
             >
-              <BsFolderIcon />
+              <AiFillFolderIcon className='h-6 mr-1 text-accent-dark min-w-6 w-6' />
               <p>{folder.name}</p>
             </button>
           ))}

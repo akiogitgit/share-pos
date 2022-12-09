@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FC, useCallback, useMemo, useState } from 'react'
 
-import { BsFolder as BsFolderIcon } from 'react-icons/bs'
+import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
+import { primary, accent } from '../../utils/theme'
 import { FolderEditModal } from './FolderEditModal'
 import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
@@ -49,12 +50,12 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
             >
               <Link href={{ pathname: 'bookmark', query: { id: index } }}>
                 <div
-                  className={`block mt-2 w-full text-left ${
+                  className={`flex items-center mt-2 w-full text-left  ${
                     searchParams.get('id') == folder.id && 'font-bold'
                   }`}
                   onClick={() => onClickFolder(index)}
                 >
-                  <BsFolderIcon className='mr-1' />
+                  <AiFillFolderIcon className='h-6 mr-1 text-accent-dark min-w-6 w-6' />
                   {folder.name}
                 </div>
               </Link>
@@ -89,12 +90,12 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
         }
         .scroll-bar::-webkit-scrollbar-track {
           border-radius: 100px;
-          background-color: rgba(254, 226, 226, var(--tw-bg-opacity));
+          background-color: ${accent.dark};
           height: 100px;
         }
         .scroll-bar::-webkit-scrollbar-thumb {
           border-radius: 100px;
-          background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+          background-color: ${primary.dark};
         }
       `}</style>
     </div>

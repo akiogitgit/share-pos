@@ -61,7 +61,7 @@ export const FolderEditModal: FC<Props> = ({
             </button>
             <button
               type='submit'
-              className='font-bold border-t-2 border-gray-200 mt-4 text-accent-dark w-full py-2 duration-150 hover:bg-black/10 '
+              className='font-bold border-t-2 border-gray-200 mt-4 text-primary-dark w-full py-2 duration-150 hover:bg-black/10 '
             >
               更新
             </button>

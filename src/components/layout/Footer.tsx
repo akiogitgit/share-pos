@@ -80,7 +80,7 @@ export const Footer: FC = () => {
           <Link href={menuIcon.href} key={menuIcon.href}>
             <div
               className={`cursor-pointer py-2 px-3 ${
-                pathname === menuIcon.href && 'text-primary-dark'
+                pathname === menuIcon.href && 'text-accent-dark'
               }`}
             >
               {pathname === menuIcon.href

@@ -1,8 +1,8 @@
 const base = {
   green: '#0b7e7f',
   lightGreen: '#dfecee',
-  yellow: '#F6C445',
-  lightYellow: '#fce9b9',
+  yellow: '#f6ac45', //'#F6C445',
+  lightYellow: '#fdefcb', //'#fce9b9',
   red: '#ef4444',
   lightRed: '#fee2e2',
   gray: '#6b7280',
