@@ -87,7 +87,7 @@ const User: NextPage = () => {
                   onClick={() => setSelectedPublished(tab.published)}
                   className={`text-xl pb-1 w-50vw sm:w-100px ${
                     selectedPublished === tab.published &&
-                    'font-bold border-b-3 border-accent-dark text-accent-dark'
+                    'font-bold border-b-3 border-primary-dark text-primary-dark'
                   }`}
                 >
                   {tab.label}
