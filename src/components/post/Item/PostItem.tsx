@@ -11,7 +11,7 @@ import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
 import { useDeletePost, useUpdatePost } from 'hooks/usePost'
 
 import { Post } from 'types/post'
-import { postedDaysAgo } from 'utils/postedDaysAgo'
+import { calcHowManyDaysAgo } from 'utils/calcHowManyDaysAgo'
 
 // bookmarkページの時、bookmarkFolderIdを受け取る
 type Props = {
@@ -86,7 +86,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
               ) : (
                 <p />
               )}
-              <p className='text-13px'>{postedDaysAgo(post.createdAt)}</p>
+              <p className='text-13px'>{calcHowManyDaysAgo(post.createdAt)}</p>
             </div>
           </>
         )}
