@@ -44,7 +44,7 @@ export const FolderEditModal: FC<Props> = ({
               onChange={e => setEditFolderName(e.target.value)}
             />
             <div
-              className='bg-primary cursor-pointer font-bold rounded-3px text-white ml-1 py-1 px-2.5'
+              className='bg-danger-dark cursor-pointer font-bold rounded-3px text-white ml-1 py-1 px-2.5'
               onClick={() => setIsShowDeleteMessage(true)}
             >
               ✕
@@ -55,13 +55,13 @@ export const FolderEditModal: FC<Props> = ({
             <button
               type='button'
               onClick={onClose}
-              className='cursor-pointer font-bold border-t-2 border-gray-200 mt-4 text-center text-secondary w-full py-2 duration-150 hover:bg-black/10 '
+              className='cursor-pointer border-t-2 border-gray-200 mt-4 text-center text-primary-dark w-full py-2 duration-150 hover:bg-black/10 '
             >
               閉じる
             </button>
             <button
               type='submit'
-              className='font-bold border-t-2 border-gray-200 mt-4 text-secondary w-full py-2 duration-150 hover:bg-black/10 '
+              className='font-bold border-t-2 border-gray-200 mt-4 text-primary-dark w-full py-2 duration-150 hover:bg-black/10 '
             >
               更新
             </button>
@@ -83,7 +83,7 @@ export const FolderEditModal: FC<Props> = ({
         <div className='flex justify-between'>
           <button
             onClick={onClose}
-            className='border-r-2 border-t-2 mt-4 text-secondary w-full py-2 duration-150 hover:bg-black/10'
+            className='border-r-2 border-t-2 mt-4 text-primary-dark w-full py-2 duration-150 hover:bg-black/10'
           >
             閉じる
           </button>
@@ -93,7 +93,7 @@ export const FolderEditModal: FC<Props> = ({
               onClose()
               await onDeleteFolder()
             }}
-            className='font-bold border-t-2 mt-4 text-primary w-full py-2  duration-150 hover:bg-black/10'
+            className='font-bold border-t-2 mt-4 text-danger-dark w-full py-2  duration-150 hover:bg-black/10'
           >
             削除
           </button>

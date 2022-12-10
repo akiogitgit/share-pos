@@ -60,7 +60,13 @@ const User: NextPage = () => {
                 プロフィールを編集
               </Button>
             ) : (
-              <Button size='md' radius='xl' animate variant='outline'>
+              <Button
+                color='accent'
+                size='md'
+                radius='xl'
+                animate
+                variant='outline'
+              >
                 フォローする
               </Button>
             )}
@@ -71,18 +77,17 @@ const User: NextPage = () => {
       <section className='mt-10'>
         <div className='ml-4'>
           {isMyPage && (
-            <div className='border-b flex border-gray-300 h-30px mt-5 w-full gap-3'>
+            <div className='border-b flex border-gray-300 mt-5 w-full gap-3'>
               {[
-                { label: '公開している投稿', published: true },
-                { label: '非公開の投稿', published: false },
+                { label: '公開', published: true },
+                { label: '非公開', published: false },
               ].map(tab => (
                 <button
                   key={tab.label}
                   onClick={() => setSelectedPublished(tab.published)}
-                  className={`${
-                    selectedPublished === tab.published
-                      ? 'font-bold border-b-2 border-primary text-primary'
-                      : ' cursor-pointer'
+                  className={`text-xl pb-1 w-50vw sm:w-100px ${
+                    selectedPublished === tab.published &&
+                    'font-bold border-b-3 border-primary-dark text-primary-dark'
                   }`}
                 >
                   {tab.label}
@@ -93,7 +98,7 @@ const User: NextPage = () => {
         </div>
 
         {userPosts?.posts.length ? (
-          <div className='flex flex-wrap mt-4 gap-4 justify-center items-start sm:justify-start'>
+          <div className='flex flex-wrap mt-10 gap-4 justify-center items-start sm:justify-start'>
             {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
             {userPosts.posts.map(
               post =>

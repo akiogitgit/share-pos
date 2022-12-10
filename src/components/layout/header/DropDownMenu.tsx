@@ -42,23 +42,23 @@ export const DropDownMenu: FC = () => {
 
           <div className='bg-white shadow-xl top-10px right-[-15px] w-40 absolute'>
             <Link href='/bookmark'>
-              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
+              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
                 <HiOutlineBookOpenIcon />
                 ブックマーク
               </div>
             </Link>
             <Link href={`/users/${user?.id}`}>
-              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-base'>
+              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
                 <AiOutlineUserIcon />
                 マイページ
               </div>
             </Link>
-            <a className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-base'>
+            <a className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'>
               <FiSettingsIcon />
               ユーザー情報
             </a>
             <button
-              className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-base'
+              className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'
               onClick={logOut}
             >
               <FiLogOutIcon />

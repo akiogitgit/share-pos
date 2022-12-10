@@ -4,14 +4,14 @@ type Props = {
   children: React.ReactNode
   className?: string
   type?: 'button' | 'reset' | 'submit'
-  color?: 'red' | 'blue' | 'gray'
+  color?: 'primary' | 'accent' | 'danger' | 'secondary'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   variant?: 'outline' | 'light' | 'filled' | 'default'
   animate?: boolean
   compact?: boolean
   fullWidth?: boolean
-  component?: 'button' | 'a'
+  component?: 'button'
   href?: string
   rightIcon?: React.ReactElement
   leftIcon?: React.ReactElement
@@ -22,21 +22,29 @@ export const Button: FC<Props> = ({
   children,
   className,
   type,
-  color = 'red',
+  color = 'primary',
   size = 'sm',
   radius = 'md',
   variant = 'filled',
   animate,
   compact,
   fullWidth,
-  component = 'button',
-  href,
   rightIcon,
   leftIcon,
   onClick,
 }) => {
   // tailwindで使うためコメントで書く
-  // bg-red-50 bg-blue-50 bg-gray-50 bg-red-100 bg-blue-100 bg-gray-100 bg-red-500 bg-blue-500 bg-gray-500 text-red-500 text-blue-500 text-gray-500 border-red-500 border-blue-500 border-gray-500 hover:bg-red-50 hover:bg-blue-50 hover:bg-gray-50 hover:bg-red-100 hover:bg-blue-100 hover:bg-gray-100 hover:bg-red-500 hover:bg-blue-500 hover:bg-gray-500 hover:text-red-500 hover:text-blue-500 hover:text-gray-500 hover:border-red-500 hover:border-blue-500 hover:border-gray-500 shadow-red-500/20 shadow-blue-500/20 shadow-gray-500/20 ring-red-300/40 ring-blue-300/40 ring-gray-300/40
+  // bg-primary-dark border-primary-dark text-primary-dark bg-primary-light
+  // hover:text-primary-dark hover:bg-primary-light hover:bg-primary-dark
+
+  // bg-accent-dark border-accent-dark text-accent-dark bg-accent-light
+  // hover:text-accent-dark hover:bg-accent-light hover:bg-accent-dark
+
+  // bg-danger-dark border-danger-dark text-danger-dark bg-danger-light
+  // hover:text-danger-dark hover:bg-danger-light hover:bg-danger-dark
+
+  // bg-secondary-dark border-secondary-dark text-secondary-dark bg-secondary-light
+  // hover:text-secondary-dark hover:bg-secondary-light hover:bg-secondary-dark
 
   const defaultClass =
     'font-bold flex items-center justify-center gap-1 cursor-pointer'
@@ -44,13 +52,13 @@ export const Button: FC<Props> = ({
   const colorClass = useMemo(() => {
     switch (variant) {
       case 'filled':
-        return `bg-${color}-500 text-white border-1 border-${color}-500`
+        return `bg-${color}-dark text-white border-1 border-${color}-dark`
       case 'light':
-        return `bg-${color}-50 text-${color}-500 border-1 border-${color}-50`
+        return `bg-${color}-light text-${color}-dark border-1 border-${color}-light`
       case 'outline':
-        return `bg-white text-${color}-500 border-1 border-${color}-500`
+        return `bg-white text-${color}-dark border-1 border-${color}-dark`
       case 'default':
-        return `shadow-md shadow-${color}-500/20 ring-1 ring-${color}-300/40 text-${color}-500`
+        return `shadow-md shadow-${color}-dark/20 ring-1 ring-${color}-light/40 text-${color}-dark`
     }
   }, [color, variant])
 
@@ -60,18 +68,18 @@ export const Button: FC<Props> = ({
         case 'filled':
           return `hover:bg-opacity-80`
         case 'light':
-          return `hover:bg-${color}-100`
+          return `hover:bg-${color}-light`
         case 'outline':
-          return `hover:bg-${color}-50`
+          return `hover:bg-${color}-light`
       }
     }
     switch (variant) {
       case 'filled':
-        return `duration-300 hover:text-${color}-500 hover:bg-white`
+        return `duration-300 hover:text-${color}-dark hover:bg-white`
       case 'light':
-        return `duration-300 hover:bg-${color}-500 hover:text-white`
+        return `duration-300 hover:bg-${color}-dark hover:text-white`
       case 'outline':
-        return `duration-300 hover:bg-${color}-500 hover:text-white`
+        return `duration-300 hover:bg-${color}-dark hover:text-white`
     }
   }, [animate, color, variant])
 
@@ -124,19 +132,6 @@ export const Button: FC<Props> = ({
   const buttonClass = `${className} ${fullWidthClass}`
   const spanClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} `
 
-  // border border-white出来る
-  // padding margin 出来ない
-  if (component === 'a') {
-    return (
-      <a className={buttonClass} href={href} onClick={onClick} type={type}>
-        <span className={spanClass}>
-          {leftIcon}
-          {children}
-          {rightIcon}
-        </span>
-      </a>
-    )
-  }
   return (
     <button className={buttonClass} onClick={onClick} type={type}>
       <span className={spanClass}>

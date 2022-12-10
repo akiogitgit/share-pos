@@ -29,7 +29,7 @@ export const Header: FC = () => {
     >
       <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>
         <Link href='/'>
-          <h1 className='cursor-pointer font-cantoreOne mt-0 text-primary mb-1 text-4xl'>
+          <h1 className='cursor-pointer font-cantoreOne mt-0 text-primary-dark mb-1 text-4xl'>
             SharePos
           </h1>
         </Link>
@@ -47,6 +47,7 @@ export const Header: FC = () => {
                     className='hidden sm:block'
                     radius='md'
                     size='lg'
+                    color='accent'
                     compact
                     animate
                     rightIcon={
@@ -64,9 +65,7 @@ export const Header: FC = () => {
                 <div className='cursor-pointer'>ログイン</div>
               </Link>
               <Link href='/signup'>
-                <Button radius='md' component='a'>
-                  新規登録
-                </Button>
+                <Button radius='md'>新規登録</Button>
               </Link>
             </div>
           )}

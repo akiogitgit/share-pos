@@ -13,7 +13,7 @@ export const JumpToCreatePostButton: FC = () => {
 
   return (
     <Link href='/create'>
-      <div className='bg-primary rounded-full flex font-bold text-white py-10px px-11.5px right-20px bottom-50px text-30px z-2 fixed'>
+      <div className='bg-accent-dark rounded-full flex font-bold text-white py-10px px-11.5px right-20px bottom-50px text-30px z-2 fixed'>
         <div className='my-auto'>
           <div
             className={`${

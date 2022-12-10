@@ -1,4 +1,5 @@
 import { defineConfig } from 'windicss/helpers'
+import { accent, danger, primary, secondary } from './src/utils/theme'
 
 export default defineConfig({
   extract: {
@@ -8,12 +9,22 @@ export default defineConfig({
   theme: {
     extend: {
       colors: {
-        base: 'rgb(254 226 226)',
         primary: {
-          light: 'rgb(252 165 165)',
-          DEFAULT: 'rgb(239 68 68)',
+          light: primary.light,
+          dark: primary.dark,
         },
-        secondary: 'rgb(59 130 246)',
+        accent: {
+          light: accent.light,
+          dark: accent.dark,
+        },
+        danger: {
+          light: danger.light,
+          dark: danger.dark,
+        },
+        secondary: {
+          light: secondary.light,
+          dark: secondary.dark,
+        },
       },
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],
