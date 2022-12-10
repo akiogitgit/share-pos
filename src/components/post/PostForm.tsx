@@ -21,7 +21,7 @@ export const PostForm: FC<Props> = ({
     evaluation: 1,
     published: false,
   },
-  submitButtonText = '作成',
+  submitButtonText = 'シェアする',
 }) => {
   const [formParams, setFormParams] =
     useState<PostRequestParams>(formParamsProps)

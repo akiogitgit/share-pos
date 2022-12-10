@@ -60,7 +60,13 @@ const User: NextPage = () => {
                 プロフィールを編集
               </Button>
             ) : (
-              <Button size='md' radius='xl' animate variant='outline'>
+              <Button
+                color='accent'
+                size='md'
+                radius='xl'
+                animate
+                variant='outline'
+              >
                 フォローする
               </Button>
             )}
