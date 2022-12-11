@@ -78,8 +78,11 @@ export const PostForm: FC<Props> = ({
           </label>
 
           <div className='min-h-[50px] leading-1.4rem relative'>
-            <div className='py-3 px-2 invisible whitespace-pre-wrap break-words'>
-              {formParams.comment}
+            <div
+              className='py-3 invisible whitespace-pre-wrap'
+              aria-hidden='true'
+            >
+              この文字で　編集時の　PostItemの横幅を　最大に　保っている
             </div>
             <textarea
               name='comment'
