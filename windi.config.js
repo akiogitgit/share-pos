@@ -29,6 +29,9 @@ export default defineConfig({
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],
       },
+      boxShadow: {
+        outline: '0 3px 12px -1px #04253f40',
+      },
     },
   },
 })
