@@ -29,15 +29,6 @@ export const DropDownMenu: FC<Props> = ({
                         bg-white cursor-pointer rounded-3px shadow-outline w-160px overflow-hidden`}
           >
             {children}
-            {/* {React.Children.map(children, (value, index) => (
-              <div
-                key={index}
-                // className='cursor-pointer text-left w-full py-2 px-4 hover:bg-primary-light'
-                className='text-left w-full'
-              >
-                {value}
-              </div>
-            ))} */}
           </div>
         </>
       )}

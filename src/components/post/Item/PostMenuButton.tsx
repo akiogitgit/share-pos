@@ -115,24 +115,8 @@ export const PostMenuButton: FC<Props> = ({
             )}
           </>
         )}
-
-        {/* 自分のフォルダ一覧  */}
-        {/* {(isClickedAddBookmark || isMouseEnteredAddBookmark) && (
-          <div
-            className={`shadow-md shadow-primary-light right-80px absolute sm:right-80px  ${
-              user?.id !== post.userId ? 'top-44px' : 'top-124px'
-            }`}
-            onMouseEnter={() => setIsMouseEnteredAddBookmark(true)}
-            onMouseLeave={() => setIsMouseEnteredAddBookmark(false)}
-          >
-            <FolderList
-              post={post}
-              onClickFolderName={onCloseMenu}
-              onAddBookmark={onAddBookmark}
-            />
-          </div>
-        )} */}
       </DropDownMenu>
+
       {/* 自分のフォルダ一覧  */}
       {isOpenedFolder && (
         <div
@@ -147,107 +131,6 @@ export const PostMenuButton: FC<Props> = ({
             onClickFolderName={onCloseMenu}
             onAddBookmark={onAddBookmark}
           />
-        </div>
-      )}
-
-      {isOpenedMenu && (
-        <div className='h-0 w-0 relative hidden'>
-          {/* モーダルの周り押したら消えるやつ */}
-          <div
-            onClick={onCloseMenu}
-            className='h-100vh top-0 left-0 w-100vw z-1 fixed'
-            aria-hidden='true'
-          />
-
-          {/* モーダル */}
-          <div className='top-0 right-40px z-1 absolute'>
-            <div className='bg-white cursor-pointer rounded-3px shadow-outline w-170px overflow-hidden sm:w-150px'>
-              {user?.id === post.userId && (
-                <>
-                  <button
-                    className='text-left w-full py-2 px-4  hover:bg-primary-light'
-                    onClick={() => {
-                      onEdit?.()
-                      setIsOpenedMenu(false)
-                    }}
-                  >
-                    投稿を編集する
-                  </button>
-                  <button
-                    className='text-left w-full py-2 px-4 hover:bg-primary-light'
-                    onClick={async () => {
-                      onCloseMenu()
-                      await onDelete?.()
-                    }}
-                  >
-                    投稿を
-                    <span className='font-bold text-danger-dark text-18px'>
-                      削除
-                    </span>
-                    する
-                  </button>
-                </>
-              )}
-
-              <button
-                className='text-left w-full py-2 px-4 hover:bg-primary-light'
-                onClick={() => {
-                  navigator.clipboard.writeText(post.url)
-                  alert('リンクをコピーしました')
-                  onCloseMenu()
-                }}
-              >
-                記事リンクをコピー
-              </button>
-
-              {user && (
-                <>
-                  <button
-                    className='text-left w-full py-2 px-4 hover:bg-primary-light'
-                    onClick={() =>
-                      setIsClickedAddBookmark(!isClickedAddBookmark)
-                    }
-                    onMouseEnter={() => setIsMouseEnteredAddBookmark(true)}
-                    onMouseLeave={() => setIsMouseEnteredAddBookmark(false)}
-                  >
-                    ブックマークに追加
-                  </button>
-
-                  {post.bookmark && (
-                    <button
-                      className='text-left w-full py-2 px-4 hover:bg-primary-light'
-                      onClick={() => {
-                        onRemoveBookmark?.()
-                        onCloseMenu()
-                      }}
-                    >
-                      ブックマークを
-                      <span className='font-bold text-danger-dark text-18px'>
-                        削除
-                      </span>
-                    </button>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* 自分のフォルダ一覧  */}
-            {(isClickedAddBookmark || isMouseEnteredAddBookmark) && (
-              <div
-                className={`shadow-md shadow-primary-light right-80px absolute sm:right-80px  ${
-                  user?.id !== post.userId ? 'top-44px' : 'top-124px'
-                }`}
-                onMouseEnter={() => setIsMouseEnteredAddBookmark(true)}
-                // onMouseLeave={() => setIsMouseEnteredAddBookmark(false)}
-              >
-                <FolderList
-                  post={post}
-                  onClickFolderName={onCloseMenu}
-                  onAddBookmark={onAddBookmark}
-                />
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

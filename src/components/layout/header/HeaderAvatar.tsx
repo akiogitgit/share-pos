@@ -64,42 +64,6 @@ export const HeaderDropDownMenu: FC = () => {
           </button>
         </DropDownMenu>
       </div>
-
-      {/* {isOpenMenu && (
-        <div className='relative hidden'>
-          <div
-            onClick={() => setIsOpenMenu(false)}
-            className='h-100vh top-0 left-0 w-100vw fixed'
-            aria-hidden='true'
-          />
-
-          <div className='bg-white rounded-3px shadow-outline top-10px right-[-15px] w-160px absolute'>
-            <Link href='/bookmark'>
-              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
-                <HiOutlineBookOpenIcon />
-                ブックマーク
-              </div>
-            </Link>
-            <Link href={`/users/${user?.id}`}>
-              <div className='cursor-pointer py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
-                <AiOutlineUserIcon />
-                マイページ
-              </div>
-            </Link>
-            <a className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'>
-              <FiSettingsIcon />
-              ユーザー情報
-            </a>
-            <button
-              className='cursor-pointer flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'
-              onClick={logOut}
-            >
-              <FiLogOutIcon />
-              ログアウト
-            </button>
-          </div>
-        </div>
-      )} */}
     </div>
   )
 }

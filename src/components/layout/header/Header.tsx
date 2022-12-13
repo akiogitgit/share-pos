@@ -6,7 +6,7 @@ import { FC, useState } from 'react'
 import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
 import { HiPaperAirplane as HiPaperAirplaneIcon } from 'react-icons/hi'
 
-import { HeaderDropDownMenu } from './HeaderDropDownMenu'
+import { HeaderDropDownMenu } from './HeaderAvatar'
 import { Button } from 'components/shares/button'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
