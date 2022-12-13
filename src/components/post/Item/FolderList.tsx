@@ -22,11 +22,13 @@ export const FolderList: FC<Props> = ({
 
   return (
     <div>
-      <style jsx>{`
-        .scroll-bar-none::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      <style jsx>
+        {`
+          .scroll-bar-none::-webkit-scrollbar {
+            display: none;
+          }
+        `}
+      </style>
 
       <div className='bg-white rounded-10px shadow-outline w-160px overflow-hidden'>
         <CreateFolderButton radius='xs' />
