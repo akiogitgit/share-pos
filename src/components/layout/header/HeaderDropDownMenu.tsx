@@ -9,14 +9,14 @@ import {
 import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
 import { Avatar } from 'components/shares/Avatar'
+import { DropDownMenu } from 'components/shares/DropDownMenu'
 import { useLogOut } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'
 
-export const DropDownMenu: FC = () => {
+export const HeaderDropDownMenu: FC = () => {
   const { logOut } = useLogOut()
   const { data: user } = useGetApi<User>('/users/me')
-
   const [isOpenMenu, setIsOpenMenu] = useState(false)
 
   return (
@@ -33,9 +33,40 @@ export const DropDownMenu: FC = () => {
         )}
       </div>
 
-      {isOpenMenu && (
-        <div className='relative'>
-          {/* モーダルの周り押したら消えるやつ */}
+      <div className='relative'>
+        <DropDownMenu
+          open={isOpenMenu}
+          onClose={() => setIsOpenMenu(false)}
+          className='top-10px right-[-15px]'
+        >
+          <Link href='/bookmark'>
+            <div className='py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
+              <HiOutlineBookOpenIcon />
+              ブックマーク
+            </div>
+          </Link>
+          <Link href={`/users/${user?.id}`}>
+            <div className='py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
+              <AiOutlineUserIcon />
+              マイページ
+            </div>
+          </Link>
+          <a className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'>
+            <FiSettingsIcon />
+            ユーザー情報
+          </a>
+          <button
+            className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'
+            onClick={logOut}
+          >
+            <FiLogOutIcon />
+            ログアウト
+          </button>
+        </DropDownMenu>
+      </div>
+
+      {/* {isOpenMenu && (
+        <div className='relative hidden'>
           <div
             onClick={() => setIsOpenMenu(false)}
             className='h-100vh top-0 left-0 w-100vw fixed'
@@ -68,7 +99,7 @@ export const DropDownMenu: FC = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
