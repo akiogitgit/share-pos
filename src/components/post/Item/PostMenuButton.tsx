@@ -90,14 +90,14 @@ export const PostMenuButton: FC<Props> = ({
 
         {user && (
           <>
-            <button
+            <div
               className='text-left w-full py-2 px-4 hover:bg-primary-light'
               onClick={() => setIsClickedAddBookmark(!isClickedAddBookmark)}
               onMouseEnter={() => setIsMouseEnteredAddBookmark(true)}
               onMouseLeave={() => setIsMouseEnteredAddBookmark(false)}
             >
               ブックマークに追加
-            </button>
+            </div>
 
             {post.bookmark && (
               <button
