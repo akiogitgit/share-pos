@@ -22,16 +22,18 @@ export const FolderList: FC<Props> = ({
 
   return (
     <div>
-      <style jsx>{`
-        .scroll-bar-none::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      <style jsx>
+        {`
+          .scroll-bar-none::-webkit-scrollbar {
+            display: none;
+          }
+        `}
+      </style>
 
-      <div className='bg-white border border-primary-dark rounded-10px w-160px overflow-hidden'>
-        <div className='max-h-250px overflow-y-scroll scroll-bar-none sm:max-h-450px'>
-          <CreateFolderButton radius='xs' />
+      <div className='bg-white rounded-10px shadow-outline w-160px overflow-hidden'>
+        <CreateFolderButton radius='xs' />
 
+        <div className='max-h-250px overflow-y-scroll scroll-bar-none'>
           {folders?.map((folder, index) => (
             <button
               key={index}

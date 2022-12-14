@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { FC, useState } from 'react'
 
 import { PostForm } from '../PostForm'
-import { PostItemComment } from './PostItemComment'
+import { PostItemComment } from './PostComment'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
 import { Avatar } from 'components/shares/Avatar'

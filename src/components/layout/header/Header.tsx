@@ -6,7 +6,7 @@ import { FC, useState } from 'react'
 import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
 import { HiPaperAirplane as HiPaperAirplaneIcon } from 'react-icons/hi'
 
-import { DropDownMenu } from './DropDownMenu'
+import { HeaderDropDownMenu } from './HeaderAvatar'
 import { Button } from 'components/shares/button'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
 
@@ -39,7 +39,7 @@ export const Header: FC = () => {
 
           {isLoggedIn ? (
             <div className='flex gap-3 items-center'>
-              <DropDownMenu />
+              <HeaderDropDownMenu />
 
               {pathname !== '/create' && (
                 <Link href='/create'>
