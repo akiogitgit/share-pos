@@ -27,7 +27,7 @@ export const Header: FC = () => {
         !isShow && 'translate-y-[-100%]'
       } sm:translate-y-0 sticky duration-300`}
     >
-      <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>
+      <nav className='flex mx-auto max-w-1000px px-4 items-center justify-between'>
         <Link href='/'>
           <h1 className='cursor-pointer font-cantoreOne mt-0 text-primary-dark mb-1 text-4xl'>
             SharePos

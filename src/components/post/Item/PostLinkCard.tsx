@@ -1,4 +1,5 @@
 import Image from 'next/legacy/image'
+// import Image from 'next/image'
 import { FC, useMemo } from 'react'
 import { Post } from 'types/post'
 
@@ -21,7 +22,15 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
     <>
       <figure className='border-2 rounded-10px mt-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
         <a href={post.url} target='_blank' rel='noreferrer'>
-          <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
+          {/* <div className='flex h-40vw max-h-220px overflow-hidden items-center sm:h-19.5vw md:h-[20vw] lg:(h-13vw max-h-135px) '> */}
+          {/* <div className={`${post.bookmark?.id? 'sm:h-[20vw] md:(h-26vw) lg:(max-h-155px)': 'sm:h-19.6vw md:h-21vw lg:h-136px'} w-full relative h-42vw max-h-225px`}> */}
+          <div
+            className={`flex h-40vw max-h-220px overflow-hidden items-center ${
+              post.bookmark?.id
+                ? 'sm:h-26vw md:(h-26vw) lg:(max-h-155px)'
+                : 'sm:h-19.5vw md:h-20vw lg:(h-13vw max-h-135px)'
+            }`}
+          >
             {displayURL ? (
               <Image
                 src={displayURL}
@@ -29,10 +38,16 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
                 className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
                 width={430}
                 height={2000}
+                // fill
                 objectFit='contain'
               />
             ) : (
-              <div className='flex h-full bg-gray-300 text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
+              <div
+                className='flex h-full bg-gray-300 text-mono
+                          w-full max-h-225px transform text-30px duration-300 overflow-hidden
+                          items-center justify-center group-hover:scale-110
+                          '
+              >
                 No image
               </div>
             )}
