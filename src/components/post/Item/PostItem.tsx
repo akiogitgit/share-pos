@@ -51,6 +51,9 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
+        {/* <div className='h-0 invisible'>
+              Imageを next/image なら横幅を保つために必要
+            </div>　*/}
         {isEditing ? (
           <div className='mx-1'>
             <PostForm

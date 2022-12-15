@@ -65,9 +65,9 @@ const Bookmark: NextPage = () => {
 
         {/* 選択しているフォルダの記事一覧 */}
         {bookmarkPosts?.posts.length && folders ? (
-          <div className='mt-4 w-full sm:(mr-4 ml-8) '>
-            <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
-              {/* <div className='grid gap-6 justify-center items-start md:grid-cols-2'> */}
+          <div className='mt-10 sm:(mr-4 ml-8) '>
+            {/* <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '> */}
+            <div className='grid gap-6 items-start justify-center lg:grid-cols-2'>
               {bookmarkPosts.posts.map((post, index) => (
                 <PostItem
                   key={index}
