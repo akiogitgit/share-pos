@@ -37,7 +37,7 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
                 alt=''
                 className='bg-gray-100 rounded-10px transform duration-300 group-hover:scale-110'
                 width={430}
-                height={20000}
+                height={2000}
                 // fill
                 objectFit='contain'
               />
