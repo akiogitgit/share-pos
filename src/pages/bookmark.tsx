@@ -52,7 +52,7 @@ const Bookmark: NextPage = () => {
         </div>
       </div>
 
-      <div className='sm:(flex gap-3 items-start) '>
+      <div className='sm:(flex items-start) '>
         {/* 自分のフォルダ一覧 */}
         <div className='bg-primary-light mx-[-16px] pb-[10px] pl-4 top-0px z-2 sticky sm:(z-1 mx-0 top-100px) '>
           <div className='mt-4 hidden sm:block'>
@@ -65,8 +65,9 @@ const Bookmark: NextPage = () => {
 
         {/* 選択しているフォルダの記事一覧 */}
         {bookmarkPosts?.posts.length && folders ? (
-          <div className='mt-4 w-full'>
-            <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
+          <div className='mt-4 w-full sm:(mr-4 ml-8) '>
+            <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
+              {/* <div className='grid gap-6 justify-center items-start md:grid-cols-2'> */}
               {bookmarkPosts.posts.map((post, index) => (
                 <PostItem
                   key={index}
