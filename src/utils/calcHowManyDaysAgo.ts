@@ -6,14 +6,12 @@ export const calcHowManyDaysAgo = (date: string) => {
   const nowM = ~~(now / 1000 / 60)
   const nowH = ~~(nowM / 60)
   const nowD = ~~(nowH / 24)
-  const nowY = ~~(nowD / 365)
 
   const targetM = ~~(targetTime / 1000 / 60)
   const targetH = ~~(targetM / 60)
   const targetD = ~~(targetH / 24)
-  const targetY = ~~(targetD / 365)
 
-  if (nowY !== targetY) {
+  if (nowD - targetD > 365) {
     return targetDate.toLocaleDateString().replace(/\//g, '-')
   }
   if (nowD - targetD > 31) {
