@@ -83,6 +83,7 @@ export const PostForm: FC<Props> = ({
               aria-hidden='true'
             >
               この文字で　編集時の　PostItemの横幅を　最大に　保っている
+              {formParams.comment}
             </div>
             <textarea
               name='comment'
