@@ -17,10 +17,10 @@ export const calcHowManyDaysAgo = (date: string) => {
   if (nowD - targetD > 31) {
     return `${~~((nowD - targetD) / 31)}ヶ月前`
   }
-  if (nowD !== targetD) {
+  if (nowH - targetH > 24) {
     return `${nowD - targetD}日前`
   }
-  if (nowH !== targetH) {
+  if (nowM - targetM > 60) {
     return `${nowH - targetH}時間前`
   }
   return `${nowM - targetM}分前`
