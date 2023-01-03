@@ -3,7 +3,8 @@ import { FC, useState } from 'react'
 
 import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostComment'
-import { PostLinkCard } from './PostLinkCard'
+import { PostLinkCaption } from './PostLinkCaption'
+import { PostLinkImage } from './PostLinkImage'
 import { PostMenuButton } from './PostMenuButton'
 import { Avatar } from 'components/shares/Avatar'
 import { Button } from 'components/shares/button'
@@ -27,34 +28,19 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
   const { addBookmark } = useAddBookmark()
   const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
 
-  return (
-    // <article className='bg-white rounded-lg shadow-xl max-w-460px p-4 w-100% sm:w-291px'>
-    <article className='bg-white rounded-lg shadow-xl max-w-460px p-4 w-100%'>
-      <div className='flex justify-between items-center'>
-        <Link href={`/users/${post.user.id}`}>
-          <div className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
-            <Avatar id={post.userId} />
-            {post.user.username}
-          </div>
-        </Link>
-        <div className='flex gap-2'>
-          {/* 右上の・・・ボタン */}
-          <PostMenuButton
-            post={post}
-            onEdit={() => setIsEditing(true)}
-            onDelete={deletePost}
-            onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
-            onRemoveBookmark={removeBookmark}
-          />
+  if (isEditing) {
+    return (
+      <article className='bg-white rounded-lg shadow-xl max-w-460px p-4 w-100%'>
+        <div className='flex justify-between items-center'>
+          <Link href={`/users/${post.user.id}`}>
+            <div className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
+              <Avatar id={post.userId} />
+              {post.user.username}
+            </div>
+          </Link>
         </div>
-      </div>
 
-      {/* 編集中ならtextarea それ以外は コメント表示 */}
-      <div className='mt-3'>
-        {/* <div className='h-0 invisible'>
-              Imageを next/image なら横幅を保つために必要
-            </div>　*/}
-        {isEditing ? (
+        <div className='mt-3'>
           <div className='mx-1'>
             <PostForm
               onSubmit={async params => {
@@ -73,27 +59,64 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
               キャンセル
             </Button>
           </div>
-        ) : (
-          <>
-            <PostItemComment comment={post.comment} />
+        </div>
+      </article>
+    )
+  }
 
-            <PostLinkCard post={post} />
+  return (
+    <article className='bg-white rounded-lg shadow-xl max-w-460px p-4 w-100%'>
+      <div className='flex justify-between items-center'>
+        <Link href={`/users/${post.user.id}`}>
+          <div className='cursor-pointer flex font-bold text-20px gap-2 items-center'>
+            <Avatar id={post.userId} />
+            {post.user.username}
+          </div>
+        </Link>
+        {/* 右上の・・・ボタン */}
+        <PostMenuButton
+          post={post}
+          onEdit={() => setIsEditing(true)}
+          onDelete={deletePost}
+          onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
+          onRemoveBookmark={removeBookmark}
+        />
+      </div>
 
-            {/* 返信 */}
-            <div className='flex h-6 mt-2 items-center justify-between'>
-              {post.replyComments.length ? (
-                <Link href=''>
-                  <p className='cursor-pointer text-primary-dark'>
-                    {post.replyComments?.length}件の返信
-                  </p>
-                </Link>
-              ) : (
-                <p />
-              )}
-              <p className='text-13px'>{calcHowManyDaysAgo(post.createdAt)}</p>
-            </div>
-          </>
-        )}
+      <div className='mt-3'>
+        <PostItemComment comment={post.comment} />
+        {/* LinkCard */}
+        <div className='mt-2'>
+          <figure className='border-2 rounded-10px mt-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
+            <a href={post.url} target='_blank' rel='noreferrer'>
+              <div
+                className={`flex h-40vw max-h-220px overflow-hidden items-center ${
+                  post.bookmark?.id
+                    ? 'sm:h-26vw md:(h-26vw) lg:(max-h-155px)'
+                    : 'sm:h-19.5vw md:h-20vw lg:(h-13vw max-h-135px)'
+                }`}
+              >
+                <PostLinkImage post={post} />
+              </div>
+
+              <PostLinkCaption post={post} />
+            </a>
+          </figure>
+        </div>
+
+        {/* 返信 */}
+        <div className='flex h-6 mt-2 items-center justify-between'>
+          {post.replyComments.length ? (
+            <Link href=''>
+              <p className='cursor-pointer text-primary-dark'>
+                {post.replyComments?.length}件の返信
+              </p>
+            </Link>
+          ) : (
+            <p />
+          )}
+          <p className='text-13px'>{calcHowManyDaysAgo(post.createdAt)}</p>
+        </div>
       </div>
     </article>
   )
