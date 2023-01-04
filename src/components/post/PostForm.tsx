@@ -19,7 +19,7 @@ export const PostForm: FC<Props> = ({
     comment: '',
     url: '',
     evaluation: 1,
-    published: false,
+    published: true,
   },
   submitButtonText = 'シェアする',
 }) => {
@@ -116,9 +116,9 @@ export const PostForm: FC<Props> = ({
                 })
               }
             >
-              <div className=' font-bold text-white text-md transform top-[2px] left-[5px] absolute'>
+              <div className='font-bold text-white text-md transform top-[2px] left-[5px] absolute'>
                 公開
-                <span className='transform scale-x-80 inline-block'>
+                <span className='ml-3px transform scale-x-80 inline-block'>
                   非公開
                 </span>
               </div>
@@ -126,7 +126,10 @@ export const PostForm: FC<Props> = ({
                 className={`bg-white h-20px rounded-full top-4px ${
                   formParams.published ? 'left-40px w-46px' : 'left-3px w-38px'
                 } duration-150 absolute`}
-              ></div>
+              >
+                <input type='radio' name='a' className='opacity-0' />
+                <input type='radio' name='a' className='opacity-0' />
+              </div>
             </div>
           </div>
         </div>
