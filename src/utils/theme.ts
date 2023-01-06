@@ -1,3 +1,5 @@
+// color
+
 const base = {
   green: '#0b7e7f',
   lightGreen: '#dfecee',
@@ -28,3 +30,12 @@ export const secondary = {
   light: base.lightGray,
   dark: base.gray,
 } as const
+
+// rounded
+export const rounded = {
+  xs: '0x',
+  sm: '3px',
+  md: '7px',
+  lg: '15px',
+  xl: '100%',
+}
