@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import { IoTrashOutline as IoTrashOutlineIcon } from 'react-icons/io5'
 import { Modal } from 'components/shares/Modal'
 import { Folder } from 'types/bookmark'
 
@@ -34,21 +35,21 @@ export const FolderEditModal: FC<Props> = ({
             await onUpdateFolder(editFolderName)
           }}
         >
-          <div className='flex px-4 justify-center items-center'>
+          <div className='flex px-4 gap-2 justify-center items-center'>
             <input
               type='text'
-              className='border outline-none rounded-3px w-full p-1 ring-gray-300 duration-300 focus:ring-1'
+              // className='border outline-none rounded-3px w-full p-1 ring-gray-300 duration-300 focus:ring-1'
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               maxLength={15}
               required
               value={editFolderName}
               onChange={e => setEditFolderName(e.target.value)}
             />
-            <div
-              className='bg-danger-dark cursor-pointer font-bold rounded-3px text-white ml-1 py-1 px-2.5'
+
+            <IoTrashOutlineIcon
               onClick={() => setIsShowDeleteMessage(true)}
-            >
-              ✕
-            </div>
+              className='bg-danger-dark border-danger-dark rounded-md cursor-pointer border-2 h-10 text-white p-1.5 w-12'
+            />
           </div>
 
           <div className='flex justify-between'>
