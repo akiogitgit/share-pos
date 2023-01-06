@@ -34,7 +34,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             placeholder='example@example.com'
             required
             onChange={v => setEmail(v.target.value)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
           />
           <AiOutlineMailIcon className='top-33px left-270px absolute' />
         </div>
@@ -49,7 +49,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             placeholder='password'
             required
             onChange={v => setPassword(v.target.value)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
           />
           <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
         </div>
