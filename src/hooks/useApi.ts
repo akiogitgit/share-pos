@@ -15,6 +15,8 @@ export const useGetApi = <Data = any>(
 
   return useSWR<Data, HttpError>(`${url}${JSON.stringify(params)}`, fetcher, {
     revalidateOnReconnect: false,
+    revalidateIfStale: false, //古いデータがあっても自動的に再検証
+    revalidateOnFocus: false, //ウィンドウがフォーカスされると自動的に再有効化
     fallbackData,
   })
 }
