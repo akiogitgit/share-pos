@@ -1,5 +1,5 @@
 import { defineConfig } from 'windicss/helpers'
-import { accent, danger, primary, secondary } from './src/utils/theme'
+import { accent, danger, primary, rounded, secondary } from './src/utils/theme'
 
 export default defineConfig({
   extract: {
@@ -31,6 +31,11 @@ export default defineConfig({
       },
       boxShadow: {
         outline: '0 3px 12px -1px #04253f40',
+      },
+      borderRadius: {
+        sm: rounded.sm,
+        md: rounded.md,
+        lg: rounded.lg,
       },
     },
   },

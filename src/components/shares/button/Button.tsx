@@ -116,14 +116,12 @@ export const Button: FC<Props> = ({
 
   const RadiusClass = useMemo(() => {
     switch (radius) {
-      case 'xs':
-        return ''
       case 'sm':
-        return 'rounded-3px'
+        return 'rounded-sm'
       case 'md':
-        return 'rounded-7px'
+        return 'rounded-md'
       case 'lg':
-        return 'rounded-15px'
+        return 'rounded-lg'
       case 'xl':
         return 'rounded-full'
     }

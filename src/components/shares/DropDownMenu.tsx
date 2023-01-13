@@ -26,7 +26,7 @@ export const DropDownMenu: FC<Props> = ({
           {/* メニュー */}
           <div
             className={`z-1 absolute ${className}
-                        bg-white cursor-pointer rounded-3px shadow-outline w-160px overflow-hidden`}
+                        bg-white cursor-pointer rounded-sm shadow-outline w-160px overflow-hidden`}
           >
             {children}
           </div>

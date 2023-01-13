@@ -64,7 +64,7 @@ export const PostForm: FC<Props> = ({
             required
             name='url'
             onChange={onChange}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-10px focus:ring-1'
+            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
           />
 
           <div className='flex justify-end'>
@@ -87,7 +87,7 @@ export const PostForm: FC<Props> = ({
             </div>
             <textarea
               name='comment'
-              className='border h-full outline-none ring-primary-dark w-full p-2 pr-9 top-0 left-0 duration-300 scroll-bar-none absolute focus:rounded-10px focus:ring-1'
+              className='border h-full outline-none ring-primary-dark w-full p-2 pr-9 top-0 left-0 duration-300 scroll-bar-none absolute focus:rounded-md focus:ring-1'
               value={formParams.comment}
               placeholder='この記事オススメ！'
               onChange={onChange}

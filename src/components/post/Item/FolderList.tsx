@@ -30,7 +30,7 @@ export const FolderList: FC<Props> = ({
         `}
       </style>
 
-      <div className='bg-white rounded-10px shadow-outline w-160px overflow-hidden'>
+      <div className='bg-white rounded-md shadow-outline w-160px overflow-hidden'>
         <CreateFolderButton radius='xs' />
 
         <div className='max-h-250px overflow-y-scroll scroll-bar-none'>
