@@ -41,7 +41,7 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
               required
               value={name}
               onChange={e => setName(e.target.value)}
-              className='border outline-none rounded-3px w-full p-1 ring-gray-300 duration-300 focus:ring-1'
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
             />
           </div>
           <button

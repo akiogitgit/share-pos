@@ -40,11 +40,11 @@ export const Avatar: FC<Props> = ({
   const radiusClass = useMemo(() => {
     switch (radius) {
       case 'sm':
-        return 'rounded-3px'
+        return 'rounded-sm'
       case 'md':
-        return 'rounded-7px'
+        return 'rounded-md'
       case 'lg':
-        return 'rounded-15px'
+        return 'rounded-lg'
       case 'xl':
         return 'rounded-full'
     }
