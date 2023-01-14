@@ -4,10 +4,12 @@ import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
 import { postApi, HttpError, deleteApi } from 'utils/api'
 
+// SWRの再取得無いから、ブックマークが変更されない
+// 結論。ブックマークページだけ毎回取得する(SWRの再取得ありか、SSRする)
 export const useAddBookmark = () => {
   const addBookmark = useCallback(async (folderId: string, post: Post) => {
     try {
-      const res = await postApi('/folders/bookmarks', {
+      const res = await postApi<Post>('/folders/bookmarks', {
         folderId,
         postId: post.id,
       })
@@ -38,7 +40,7 @@ export const useRemoveBookmark = (folderId: string, post: Post) => {
         id: bookmarkPosts?.id,
         name: bookmarkPosts?.name,
         posts: bookmarkPosts?.posts.filter(
-          (v) => v.bookmark?.id !== post.bookmark?.id,
+          v => v.bookmark?.id !== post.bookmark?.id,
         ),
       }
       postsMutate(newBookmarkPosts, false)

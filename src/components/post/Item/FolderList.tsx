@@ -39,7 +39,6 @@ export const FolderList: FC<Props> = ({
               key={index}
               className='flex text-left w-full py-1 px-2 gap-1 items-center hover:bg-primary-light'
               onClick={async () => {
-                console.log('click! : ')
                 onClickFolderName?.()
                 await onAddBookmark?.(folder.id, post)
               }}

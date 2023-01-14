@@ -21,9 +21,9 @@ export const useCreatePost = () => {
           return
         }
 
-        mutatePosts([...posts, newPost], false)
+        mutatePosts([newPost, ...posts], false)
         mutateMyPosts(
-          { user: myPosts.user, posts: [...myPosts.posts, newPost] },
+          { user: myPosts.user, posts: [newPost, ...myPosts.posts] },
           false,
         )
         console.log('投稿の作成に成功 ', newPost)
