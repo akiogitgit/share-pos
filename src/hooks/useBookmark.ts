@@ -7,7 +7,7 @@ import { postApi, HttpError, deleteApi } from 'utils/api'
 // SWRの再取得無いから、ブックマークが変更されない
 // 結論。ブックマークページだけ毎回取得する(SWRの再取得ありか、SSRする)
 export const useAddBookmark = () => {
-  const addBookmark = async (folderId: string, post: Post) => {
+  const addBookmark = useCallback(async (folderId: string, post: Post) => {
     try {
       const res = await postApi<Post>('/folders/bookmarks', {
         folderId,
@@ -19,7 +19,7 @@ export const useAddBookmark = () => {
         console.error(e.message)
       }
     }
-  }
+  }, [])
 
   return { addBookmark }
 }
