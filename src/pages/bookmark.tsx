@@ -22,7 +22,7 @@ const Bookmark: NextPage = () => {
 
   // 古いデータがあれば、自動的に再取得
   const { data: bookmarkPosts } = useGetApi<BookmarkPosts>(
-    `/folders/${folders && folders[selectedFolderIndex]?.id}`,
+    `/folders/${(folders && folders[selectedFolderIndex]?.id) || ''}`,
     { options: { revalidateIfStale: true } },
   )
   console.log(bookmarkPosts)
