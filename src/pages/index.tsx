@@ -1,12 +1,25 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
+import { SWRConfig } from 'swr'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/Item/PostItem'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
+import { getApi } from 'utils/api'
 
-const Home: NextPage = () => {
+export async function getStaticProps() {
+  const posts = await getApi('/posts')
+  return {
+    props: {
+      fallback: {
+        '/posts': posts,
+      },
+    },
+  }
+}
+
+const Index: NextPage = () => {
   const { data: posts, error } = useGetApi<Post[]>('/posts')
 
   // コメント機能
@@ -46,10 +59,6 @@ const Home: NextPage = () => {
         <title>SharePos 投稿一覧ページ</title>
       </Head>
       <Layout>
-        {/* <Button onClick={addReplyComment}>追加</Button>
-        <Button onClick={() => updateReplyComment(13)}>更新</Button>
-        <Button onClick={() => deleteReplyComment(15)}>削除</Button> */}
-
         {posts && (
           <div className='mt-4'>
             <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
@@ -66,4 +75,10 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default function Page({ fallback }: { fallback: { '/posts': Post[] } }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  )
+}
