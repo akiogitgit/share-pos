@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import { FC, useState } from 'react'
 
-import { PostForm } from '../PostForm'
 import { PostItemComment } from './PostComment'
+import { PostForm } from './PostForm'
 import { PostLinkCard } from './PostLinkCard'
 import { PostMenuButton } from './PostMenuButton'
-import { Avatar } from 'components/shares/Avatar'
-import { Button } from 'components/shares/button'
+import { Avatar } from 'components/shares/base/Avatar'
+import { Button } from 'components/shares/base/Button'
 import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
 import { useDeletePost, useUpdatePost } from 'hooks/usePost'
 

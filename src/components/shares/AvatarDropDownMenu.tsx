@@ -8,8 +8,8 @@ import {
 } from 'react-icons/fi'
 import { HiOutlineBookOpen as HiOutlineBookOpenIcon } from 'react-icons/hi'
 
-import { Avatar } from 'components/shares/Avatar'
-import { DropDownMenu } from 'components/shares/DropDownMenu'
+import { Avatar } from 'components/shares/base/Avatar'
+import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useLogOut } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user/user'

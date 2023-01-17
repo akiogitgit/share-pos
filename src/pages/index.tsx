@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 
 import { Layout } from 'components/layout/Layout'
-import { PostItem } from 'components/post/Item/PostItem'
+import { PostItem } from 'components/post/PostItem'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
 
