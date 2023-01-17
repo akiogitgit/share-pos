@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
 import { Layout } from 'components/layout/Layout'
-import { DropDownMenu } from 'components/shares/DropDownMenu'
-import { Button } from 'components/shares/button'
+import { Button } from 'components/shares/base/Button'
+import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 
 const Test: NextPage = () => {
   const colors: ('primary' | 'accent' | 'danger' | 'secondary')[] = [

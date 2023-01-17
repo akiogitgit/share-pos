@@ -5,7 +5,7 @@ import {
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
-import { Button } from 'components/shares/button'
+import { Button } from 'components/shares/base/Button'
 
 import { SignUpRequestParams } from 'types/user/auth'
 

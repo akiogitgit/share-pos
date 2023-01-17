@@ -1,6 +1,6 @@
 import { ComponentProps, FC, useCallback, useState } from 'react'
-import { Modal } from 'components/shares/Modal'
-import { Button } from 'components/shares/button'
+import { Button } from './base/Button'
+import { Modal } from 'components/shares/base/Modal'
 import { useCreateFolder } from 'hooks/useFolder'
 
 // bookmark, FolderListで使うときradiusを変える

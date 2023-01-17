@@ -4,7 +4,7 @@ import { FC, useCallback, useMemo, useState } from 'react'
 
 import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
 import { primary, accent } from '../../utils/theme'
-import { FolderEditModal } from './FolderEditModal'
+import { FolderEditModal } from './BookmarkFolderEditModal'
 import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 

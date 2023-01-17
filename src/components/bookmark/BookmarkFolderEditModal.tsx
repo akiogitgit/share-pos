@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { IoTrashOutline as IoTrashOutlineIcon } from 'react-icons/io5'
-import { Modal } from 'components/shares/Modal'
+import { Modal } from 'components/shares/base/Modal'
 import { Folder } from 'types/bookmark'
 
 type Props = {
