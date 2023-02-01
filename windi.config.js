@@ -1,5 +1,12 @@
 import { defineConfig } from 'windicss/helpers'
-import { accent, danger, primary, rounded, secondary } from './src/utils/theme'
+import {
+  accent,
+  danger,
+  primary,
+  rounded,
+  secondary,
+  fontSize,
+} from './src/utils/theme'
 
 export default defineConfig({
   extract: {
@@ -27,11 +34,11 @@ export default defineConfig({
         },
       },
       fontSize: {
-        sm: '14px',
-        md: '16px',
-        lg: '20px',
-        xl: '24px',
-        '2xl': '30px',
+        sm: fontSize.sm,
+        md: fontSize.md,
+        lg: fontSize.lg,
+        xl: fontSize.xl,
+        '2xl': fontSize['2xl'],
       },
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],
