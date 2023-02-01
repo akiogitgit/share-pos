@@ -89,7 +89,7 @@ export const Button: FC<Props> = ({
         case 'xs':
           return 'text-12px py-4px px-7px'
         case 'sm':
-          return 'text-14px py-5px px-8px'
+          return 'text-16px py-5px px-8px'
         case 'md':
           return 'text-16px py-6px px-10px'
         case 'lg':
@@ -102,7 +102,7 @@ export const Button: FC<Props> = ({
       case 'xs':
         return 'text-12px py-8px px-14px'
       case 'sm':
-        return 'text-14px py-10px px-18px'
+        return 'text-16px py-10px px-18px'
       case 'md':
         return 'text-16px py-12px px-22px'
       case 'lg':
