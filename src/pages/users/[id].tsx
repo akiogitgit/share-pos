@@ -54,7 +54,7 @@ const User: NextPage = () => {
             {isMyPage ? (
               <Button
                 radius='xs'
-                variant='default'
+                variant='neumorphism'
                 className='whitespace-nowrap'
               >
                 プロフィールを編集
