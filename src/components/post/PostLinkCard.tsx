@@ -32,17 +32,17 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
                 objectFit='contain'
               />
             ) : (
-              <div className='flex h-full bg-gray-300 text-mono w-full max-h-225px transform text-30px duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
+              <div className='flex h-full bg-gray-300 text-mono w-full max-h-225px transform text-2xl duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
                 No image
               </div>
             )}
           </div>
 
-          <figcaption className='p-2'>
-            <p className='text-13px text-gray-500'>
+          <figcaption className='text-sm p-2'>
+            <p className='text-gray-500'>
               {post.url.split('//')[1].split('/')[0]}
             </p>
-            <div className='h-37px mt-2 text-sm overflow-hidden'>
+            <div className='h-39px mt-1 overflow-hidden'>
               {post.metaInfo.title}
             </div>
           </figcaption>
