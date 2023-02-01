@@ -26,6 +26,13 @@ export default defineConfig({
           dark: secondary.dark,
         },
       },
+      fontSize: {
+        sm: '14px',
+        md: '16px',
+        lg: '20px',
+        xl: '24px',
+        '2xl': '30px',
+      },
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],
       },
