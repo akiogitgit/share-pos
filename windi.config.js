@@ -34,11 +34,11 @@ export default defineConfig({
         },
       },
       fontSize: {
-        sm: fontSize.sm,
-        md: fontSize.md,
-        lg: fontSize.lg,
-        xl: fontSize.xl,
-        '2xl': fontSize['2xl'],
+        sm: [fontSize.sm, fontSize.sm],
+        md: [fontSize.md, fontSize.md],
+        lg: [fontSize.lg, fontSize.lg],
+        xl: [fontSize.xl, fontSize.xl],
+        '2xl': [fontSize['2xl'], fontSize['2xl']],
       },
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],
