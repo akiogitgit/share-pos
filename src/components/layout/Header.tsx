@@ -29,7 +29,7 @@ export const Header: FC = () => {
     >
       <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>
         <Link href='/'>
-          <h1 className='cursor-pointer font-cantoreOne text-primary-dark mb-1 text-2xl leading-30px'>
+          <h1 className='cursor-pointer font-cantoreOne text-primary-dark mb-1 text-2xl'>
             SharePos
           </h1>
         </Link>
