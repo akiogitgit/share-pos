@@ -55,6 +55,7 @@ const User: NextPage = () => {
               <Button
                 radius='xs'
                 variant='neumorphism'
+                size='sm'
                 className='whitespace-nowrap'
               >
                 プロフィールを編集
@@ -85,7 +86,7 @@ const User: NextPage = () => {
                 <button
                   key={tab.label}
                   onClick={() => setSelectedPublished(tab.published)}
-                  className={`text-xl pb-1 w-50vw sm:w-100px ${
+                  className={`text-lg pb-1 w-50vw sm:w-100px ${
                     selectedPublished === tab.published &&
                     'font-bold border-b-3 border-primary-dark text-primary-dark'
                   }`}

@@ -12,11 +12,11 @@ const Create: NextPage = () => {
   return (
     <>
       <Head>
-        <title>SharePos 記事投稿ページ</title>
+        <title>SharePos 記事シェアページ</title>
       </Head>
       <Layout>
-        <h1 className='text-center text-lg'>記事投稿</h1>
-        <div className='mt-8'>
+        <h1 className='font-bold text-center text-xl'>記事をシェア</h1>
+        <div className='mt-12'>
           <PostForm onSubmit={createPost} />
         </div>
       </Layout>

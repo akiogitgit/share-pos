@@ -43,7 +43,7 @@ export const PostMenuButton: FC<Props> = ({
   return (
     <div className='flex relative'>
       <BsThreeDotsIcon
-        className='cursor-pointer text-30px duration-100 hover:opacity-50'
+        className='cursor-pointer text-2xl duration-100 hover:opacity-50'
         onClick={() => setIsOpenedMenu(!isOpenedMenu)}
       />
 
@@ -71,7 +71,7 @@ export const PostMenuButton: FC<Props> = ({
               }}
             >
               投稿を
-              <span className='font-bold text-danger-dark text-18px'>削除</span>
+              <span className='font-bold text-danger-dark'>削除</span>
               する
             </button>
           </>
@@ -108,9 +108,7 @@ export const PostMenuButton: FC<Props> = ({
                 }}
               >
                 ブックマークを
-                <span className='font-bold text-danger-dark text-18px'>
-                  削除
-                </span>
+                <span className='font-bold text-danger-dark'>削除</span>
               </button>
             )}
           </>

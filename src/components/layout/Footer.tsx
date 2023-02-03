@@ -31,7 +31,6 @@ export const Footer: FC = () => {
           <Link href='/login'>
             <Button
               radius='xl'
-              size='md'
               compact
               className='border border-white rounded-full'
             >
@@ -39,7 +38,7 @@ export const Footer: FC = () => {
             </Button>
           </Link>
           <Link href='/signup'>
-            <Button variant='outline' radius='xl' size='md' compact>
+            <Button variant='outline' radius='xl' compact>
               新規登録
             </Button>
           </Link>
@@ -55,19 +54,19 @@ export const Footer: FC = () => {
   }[] = [
     {
       href: '/',
-      default: <AiOutlineHomeIcon />,
-      selected: <AiFillHomeIcon />,
+      default: <AiOutlineHomeIcon className='h-6 w-6' />,
+      selected: <AiFillHomeIcon className='h-6 w-6' />,
     },
     {
       href: '/bookmark',
-      default: <IoBookOutlineIcon />,
-      selected: <IoBookIcon />,
+      default: <IoBookOutlineIcon className='h-6 w-6' />,
+      selected: <IoBookIcon className='h-6 w-6' />,
     },
     {
       // href: 'myPage',
       href: `/users/${user?.id}`,
-      default: <AiOutlineUserIcon />,
-      selected: <FaUserIcon />,
+      default: <AiOutlineUserIcon className='h-6 w-6' />,
+      selected: <FaUserIcon className='h-6 w-6' />,
     },
   ]
 
@@ -75,11 +74,11 @@ export const Footer: FC = () => {
     <footer className='sm:hidden'>
       {pathname !== '/create' && <JumpToCreatePostButton />}
 
-      <nav className='bg-white flex w-full bottom-0 text-25px z-2 justify-around fixed'>
+      <nav className='bg-white flex w-full bottom-0 z-2 justify-around fixed'>
         {menuIcons.map(menuIcon => (
           <Link href={menuIcon.href} key={menuIcon.href}>
             <div
-              className={`cursor-pointer py-2 px-3 ${
+              className={`cursor-pointer pt-2 py-1 px-3 ${
                 pathname === menuIcon.href && 'text-primary-dark'
               }`}
             >

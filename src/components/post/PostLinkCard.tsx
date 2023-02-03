@@ -38,8 +38,8 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
             )}
           </div>
 
-          <figcaption className='p-2'>
-            <p className='text-13px text-gray-500'>
+          <figcaption className='text-sm p-2'>
+            <p className='text-gray-500'>
               {post.url.split('//')[1].split('/')[0]}
             </p>
             <div className='h-37px mt-2 text-sm overflow-hidden'>

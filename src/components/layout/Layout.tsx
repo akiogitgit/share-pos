@@ -11,9 +11,7 @@ export const Layout: FC<Props> = ({ children }) => {
     <div className='bg-primary-light min-h-screen'>
       <Header />
       <main>
-        <div className='mx-auto max-w-1150px px-4 pt-50px pb-150px'>
-          {children}
-        </div>
+        <div className='mx-auto max-w-1150px px-4 pt-12 pb-36'>{children}</div>
       </main>
       <Footer />
     </div>
