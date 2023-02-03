@@ -22,17 +22,23 @@ export const useFollow = (id: number) => {
       if (!userProfile || !currentUser || !currentUserProfile) return
 
       // フォローされたユーザーの、userProfile 更新
-      mutateUserProfile({
-        ...userProfile,
-        isFollowed: true,
-        followerCount: userProfile.followerCount++,
-      })
+      mutateUserProfile(
+        {
+          ...userProfile,
+          isFollowed: true,
+          followerCount: userProfile.followerCount + 1,
+        },
+        false,
+      )
 
       // 自分のuserProfile 更新
-      mutateCurrentUserProfile({
-        ...currentUserProfile,
-        followingCount: currentUserProfile.followingCount++,
-      })
+      mutateCurrentUserProfile(
+        {
+          ...currentUserProfile,
+          followingCount: currentUserProfile.followingCount + 1,
+        },
+        false,
+      )
     } catch (e) {
       if (e instanceof HttpError) {
         console.log(e)
@@ -54,16 +60,22 @@ export const useFollow = (id: number) => {
 
       if (!userProfile || !currentUser || !currentUserProfile) return
 
-      mutateUserProfile({
-        ...userProfile,
-        isFollowed: false,
-        followerCount: userProfile.followerCount--,
-      })
+      mutateUserProfile(
+        {
+          ...userProfile,
+          isFollowed: false,
+          followerCount: userProfile.followerCount - 1,
+        },
+        false,
+      )
 
-      mutateCurrentUserProfile({
-        ...currentUserProfile,
-        followingCount: currentUserProfile.followingCount--,
-      })
+      mutateCurrentUserProfile(
+        {
+          ...currentUserProfile,
+          followingCount: currentUserProfile.followingCount - 1,
+        },
+        false,
+      )
     } catch (e) {
       if (e instanceof HttpError) {
         console.log(e)
