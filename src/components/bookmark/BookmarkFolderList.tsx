@@ -37,30 +37,39 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
   return (
     <div>
       {/* ブックマーク名一覧 */}
-      <div className='h-50px overflow-x-scroll scroll-bar sm:(h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '>
-        <div className='flex gap-2 sm:(flex-col-reverse gap-1) '>
-          {folders.map((folder, index) => (
-            <div
-              key={folder.id}
-              className={`whitespace-nowrap h-40px ${
-                routerFolderIndex == index
-                  ? 'border-b-3 border-primary-dark text-primary-dark font-bold'
-                  : 'text-gray-500 border-b-2'
-              }`}
-            >
-              <Link href={{ pathname: 'bookmark', query: { id: index } }}>
-                <div
-                  className={`flex items-center mt-2 w-full text-left  ${
-                    searchParams.get('id') == folder.id && 'font-bold'
-                  }`}
-                  onClick={() => onClickFolder(index)}
-                >
-                  <AiFillFolderIcon className='h-6 mr-1 text-accent-dark min-w-6 w-6' />
-                  {folder.name}
-                </div>
-              </Link>
-            </div>
-          ))}
+      <div
+        className='h-50px bg-primary-light overflow-x-scroll scroll-bar flex gap-2
+                  sm:(flex-col-reverse gap-1 h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll)'
+      >
+        {/* スマホ横スクロールで左右に余分を空けている */}
+        <div className='ml-2 sm:hidden' />
+
+        {folders.map((folder, index) => (
+          <div
+            key={folder.id}
+            className={`whitespace-nowrap h-40px ${
+              routerFolderIndex == index
+                ? 'border-b-3 border-primary-dark text-primary-dark font-bold'
+                : 'text-gray-500 border-b-2'
+            }`}
+          >
+            <Link href={{ pathname: 'bookmark', query: { id: index } }}>
+              <div
+                className={`flex items-center mt-2 w-full text-left  ${
+                  searchParams.get('id') == folder.id && 'font-bold'
+                }`}
+                onClick={() => onClickFolder(index)}
+              >
+                <AiFillFolderIcon className='h-6 mr-1 text-accent-dark min-w-6 w-6' />
+                {folder.name}
+              </div>
+            </Link>
+          </div>
+        ))}
+
+        {/* スマホ横スクロールで左右に余分を空けている */}
+        <div className='invisible sm:hidden' alia-hidden='true'>
+          a
         </div>
       </div>
 

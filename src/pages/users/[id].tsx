@@ -54,6 +54,7 @@ const User: NextPage = () => {
             {isMyPage ? (
               <Button
                 radius='xs'
+                size='sm'
                 variant='default'
                 className='whitespace-nowrap'
               >
@@ -85,7 +86,7 @@ const User: NextPage = () => {
                 <button
                   key={tab.label}
                   onClick={() => setSelectedPublished(tab.published)}
-                  className={`text-xl pb-1 w-50vw sm:w-100px ${
+                  className={`text-lg pb-1 w-50vw sm:w-100px ${
                     selectedPublished === tab.published &&
                     'font-bold border-b-3 border-primary-dark text-primary-dark'
                   }`}

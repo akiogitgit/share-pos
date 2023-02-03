@@ -87,28 +87,28 @@ export const Button: FC<Props> = ({
     if (compact) {
       switch (size) {
         case 'xs':
-          return 'text-12px py-4px px-7px'
+          return 'text-sm py-4px px-7px'
         case 'sm':
-          return 'text-14px py-5px px-8px'
+          return 'text-md py-5px px-8px'
         case 'md':
-          return 'text-16px py-6px px-10px'
+          return 'text-md py-6px px-10px'
         case 'lg':
-          return 'text-18px py-7px px-12px'
+          return 'text-lg py-7px px-12px'
         case 'xl':
-          return 'text-20px py-9px px-14px'
+          return 'text-lg py-9px px-14px'
       }
     }
     switch (size) {
       case 'xs':
-        return 'text-12px py-8px px-14px'
+        return 'text-sm py-8px px-14px'
       case 'sm':
-        return 'text-14px py-10px px-18px'
+        return 'text-md py-10px px-18px'
       case 'md':
-        return 'text-16px py-12px px-22px'
+        return 'text-md py-12px px-22px'
       case 'lg':
-        return 'text-18px py-15px px-26px'
+        return 'text-lg py-15px px-26px'
       case 'xl':
-        return 'text-20px py-19px px-32px'
+        return 'text-lg py-19px px-32px'
     }
   }, [compact, size])
 
