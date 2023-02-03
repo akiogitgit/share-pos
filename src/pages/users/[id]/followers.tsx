@@ -13,12 +13,12 @@ const Followers: NextPage = () => {
   const id = searchParams.get('id')
 
   const { data: currentUser } = useGetApi<User>('/users/me')
-  const { data: userInfo } = useGetApi<UserProfile>(`/users/${id}`)
+  const { data: userProfile } = useGetApi<UserProfile>(`/users/${id}`)
   const { data: followers } = useGetApi<UserInfo[]>(`/users/${id}/followers`, {
     options: { revalidateIfStale: true },
   })
 
-  if (!userInfo) {
+  if (!userProfile) {
     return (
       <Layout>
         <div>このページは存在しません</div>
@@ -33,7 +33,7 @@ const Followers: NextPage = () => {
           <Link href={`/users/${id}`} className='h-5'>
             <BsArrowLeftIcon className='h-5 text-gray-500 w-5' />
           </Link>
-          <h1 className='text-2xl'>{userInfo?.user.username}</h1>
+          <h1 className='text-2xl'>{userProfile?.user.username}</h1>
         </div>
         <div className='border-b flex border-gray-300 mt-8 w-full gap-3'>
           <Link

@@ -15,12 +15,12 @@ const User: NextPage = () => {
   const id = searchParams.get('id')
 
   const { data: currentUser } = useGetApi<User>('/users/me')
-  const { data: userInfo } = useGetApi<UserProfile>(`/users/${id}`)
-  const { follow, unFollow } = useFollow(userInfo?.user.id || 0)
+  const { data: userProfile } = useGetApi<UserProfile>(`/users/${id}`)
+  const { follow, unFollow } = useFollow(userProfile?.user.id || 0)
 
   const isMyPage: boolean = currentUser?.id === Number(id)
 
-  if (!userInfo) {
+  if (!userProfile) {
     return (
       <Layout>
         <div>このページは存在しません</div>
@@ -34,22 +34,28 @@ const User: NextPage = () => {
         <div className='flex justify-between items-center'>
           <div>
             <div className='w-23 whitespace-nowrap sm:(flex gap-5 w-full) '>
-              <Avatar id={Number(userInfo?.user.id)} size='xl' />
+              <Avatar id={Number(userProfile?.user.id)} size='xl' />
               <div>
                 <h1 className='font-bold mt-2 text-2xl'>
-                  {userInfo?.user.username}
+                  {userProfile?.user.username}
                 </h1>
                 <div className='flex mt-4 gap-3'>
-                  <Link href={`/users/${userInfo.user.id}/followings`}>
-                    <span className='font-bold'>{userInfo.followingCount}</span>{' '}
+                  <Link href={`/users/${userProfile.user.id}/followings`}>
+                    <span className='font-bold'>
+                      {userProfile.followingCount}
+                    </span>{' '}
                     <span className='text-gray-500'>フォロー</span>
                   </Link>
-                  <Link href={`/users/${userInfo.user.id}/followers`}>
-                    <span className='font-bold'>{userInfo.followerCount}</span>{' '}
+                  <Link href={`/users/${userProfile.user.id}/followers`}>
+                    <span className='font-bold'>
+                      {userProfile.followerCount}
+                    </span>{' '}
                     <span className='text-gray-500'>フォロワー</span>
                   </Link>
                   <p>
-                    <span className='font-bold'>{userInfo?.posts.length}</span>{' '}
+                    <span className='font-bold'>
+                      {userProfile?.posts.length}
+                    </span>{' '}
                     <span className='text-gray-500'>シェア</span>
                   </p>
                 </div>
@@ -66,7 +72,7 @@ const User: NextPage = () => {
                 >
                   プロフィールを編集
                 </Button>
-              ) : userInfo.isFollowed ? (
+              ) : userProfile.isFollowed ? (
                 <Button
                   color='primary'
                   size='sm'
@@ -94,7 +100,7 @@ const User: NextPage = () => {
         </div>
       </section>
 
-      <UserPosts isMyPage={isMyPage} posts={userInfo.posts} />
+      <UserPosts isMyPage={isMyPage} posts={userProfile.posts} />
     </Layout>
   )
 }

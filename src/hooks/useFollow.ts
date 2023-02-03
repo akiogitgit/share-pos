@@ -4,10 +4,9 @@ import { User, UserProfile } from 'types/user/user'
 import { postApi, HttpError, deleteApi } from 'utils/api'
 
 export const useFollow = (id: number) => {
-  // フォローされたユーザー、自分のuserInfo
-  const { data: userInfo, mutate: mutateUserProfile } = useGetApi<UserProfile>(
-    `/users/${id}`,
-  )
+  // フォローされたユーザー、自分のuserProfile
+  const { data: userProfile, mutate: mutateUserProfile } =
+    useGetApi<UserProfile>(`/users/${id}`)
   const { data: currentUser } = useGetApi<User>('/users/me')
   const { data: currentUserProfile, mutate: mutateCurrentUserProfile } =
     useGetApi<UserProfile>(`/users/${currentUser?.id}`)
@@ -20,16 +19,16 @@ export const useFollow = (id: number) => {
       // 他の人のフォロー、フォロワー一覧で、フォローするのは無理
       // フォロー一覧、フォロワー一覧は毎回fetchする
 
-      if (!userInfo || !currentUser || !currentUserProfile) return
+      if (!userProfile || !currentUser || !currentUserProfile) return
 
-      // フォローされたユーザーの、userInfo 更新
+      // フォローされたユーザーの、userProfile 更新
       mutateUserProfile({
-        ...userInfo,
+        ...userProfile,
         isFollowed: true,
-        followerCount: userInfo.followerCount++,
+        followerCount: userProfile.followerCount++,
       })
 
-      // 自分のuserInfo 更新
+      // 自分のuserProfile 更新
       mutateCurrentUserProfile({
         ...currentUserProfile,
         followingCount: currentUserProfile.followingCount++,
@@ -45,7 +44,7 @@ export const useFollow = (id: number) => {
     id,
     mutateCurrentUserProfile,
     mutateUserProfile,
-    userInfo,
+    userProfile,
   ])
 
   const unFollow = useCallback(async () => {
@@ -53,12 +52,12 @@ export const useFollow = (id: number) => {
       const res = await deleteApi(`/users/${id}/follow`)
       console.log('unFollow: ', res)
 
-      if (!userInfo || !currentUser || !currentUserProfile) return
+      if (!userProfile || !currentUser || !currentUserProfile) return
 
       mutateUserProfile({
-        ...userInfo,
+        ...userProfile,
         isFollowed: false,
-        followerCount: userInfo.followerCount--,
+        followerCount: userProfile.followerCount--,
       })
 
       mutateCurrentUserProfile({
@@ -76,7 +75,7 @@ export const useFollow = (id: number) => {
     id,
     mutateCurrentUserProfile,
     mutateUserProfile,
-    userInfo,
+    userProfile,
   ])
 
   return { follow, unFollow }
