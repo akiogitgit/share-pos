@@ -1,44 +1,26 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
+import { useInView } from 'react-intersection-observer'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/PostItem'
-import { useGetApi } from 'hooks/useApi'
+import { Loader } from 'components/shares/base/Loader'
+import { useGetInfinite } from 'hooks/useApi'
 import { Post } from 'types/post'
 
 const Home: NextPage = () => {
-  const { data: posts, error } = useGetApi<Post[]>('/posts')
+  const {
+    data: posts,
+    isValidating,
+    isReachingEnd,
+    fetchMore,
+  } = useGetInfinite<Post>('/posts')
 
-  // コメント機能
-  // const addReplyComment = useCallback(async () => {
-  //   try {
-  //     const res = await postApi('/reply_comments', {
-  //       postId: 3,
-  //       body: 'コメントです',
-  //     })
-  //     console.log(res)
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [])
-  // const updateReplyComment = useCallback(async (id: number) => {
-  //   try {
-  //     const res = await putApi(`/reply_comments/${id}`, {
-  //       body: 'update',
-  //     })
-  //     console.log(res)
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [])
-  // const deleteReplyComment = useCallback(async (id: number) => {
-  //   try {
-  //     const res = await deleteApi(`/reply_comments/${id}`)
-  //     console.log(res)
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [])
+  const { ref, inView: isScrollEnd } = useInView()
+
+  if (isScrollEnd && !isValidating && !isReachingEnd) {
+    fetchMore()
+  }
 
   return (
     <>
@@ -46,10 +28,6 @@ const Home: NextPage = () => {
         <title>SharePos 投稿一覧ページ</title>
       </Head>
       <Layout>
-        {/* <Button onClick={addReplyComment}>追加</Button>
-        <Button onClick={() => updateReplyComment(13)}>更新</Button>
-        <Button onClick={() => deleteReplyComment(15)}>削除</Button> */}
-
         {posts && (
           <div className='mt-4'>
             <div className='grid gap-6 justify-center items-start sm:(grid-cols-[repeat(auto-fill,minmax(291px,auto))])'>
@@ -59,6 +37,13 @@ const Home: NextPage = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {!isValidating && <div ref={ref} aria-hidden='true' />}
+        {isValidating && (
+          <div className='mt-7 text-center'>
+            <Loader size='xl' />
           </div>
         )}
       </Layout>

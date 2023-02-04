@@ -31,7 +31,7 @@ const Bookmark: NextPage = () => {
     return (
       <Layout>
         <div className='flex ml-4 justify-between'>
-          <h1 className='font-bold text-2xl'>ブックマーク</h1>
+          <h1 className='font-bold text-xl'>ブックマーク</h1>
           <div>
             <CreateFolderButton />
           </div>
@@ -47,27 +47,33 @@ const Bookmark: NextPage = () => {
 
   return (
     <Layout>
-      <div className='flex ml-4 justify-between'>
-        <h1 className='font-bold text-2xl'>ブックマーク</h1>
-        <div className='sm:hidden'>
+      {/* スマホ */}
+      <div className='sm:hidden flex items-center justify-between'>
+        <h1 className='font-bold text-xl'>ブックマーク</h1>
+        <div>
           <CreateFolderButton />
         </div>
       </div>
 
       <div className='sm:(flex gap-3 items-start) '>
         {/* 自分のフォルダ一覧 */}
-        <div className='bg-primary-light mx-[-16px] pb-[10px] pl-4 top-0px z-2 sticky sm:(z-1 mx-0 top-100px) '>
-          <div className='mt-4 hidden sm:block'>
-            <CreateFolderButton />
+        <div className='bg-primary-light top-0px ml-0 z-2 sticky sm:(z-1 top-20 ml-4) '>
+          {/* PC */}
+          <div className='hidden sm:block'>
+            <h1 className='font-bold text-xl'>ブックマーク</h1>
+            <div className='mt-12'>
+              <CreateFolderButton />
+            </div>
           </div>
-          <div className='mt-5'>
+
+          <div className='mt-4 sm:(mt-4 mx-0) mx-[-16px]'>
             <BookmarkFolderList folders={folders} />
           </div>
         </div>
 
         {/* 選択しているフォルダの記事一覧 */}
         {bookmarkPosts?.posts.length && folders ? (
-          <div className='mt-4 w-full'>
+          <div className='mt-12 sm:mt-21 w-full'>
             <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
               {bookmarkPosts.posts.map((post, index) => (
                 <PostItem

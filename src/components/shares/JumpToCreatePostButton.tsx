@@ -13,12 +13,12 @@ export const JumpToCreatePostButton: FC = () => {
 
   return (
     <Link href='/create'>
-      <div className='bg-accent-dark rounded-full flex font-bold text-white py-10px px-11.5px right-20px bottom-50px text-30px z-2 fixed'>
+      <div className='bg-accent-dark rounded-full flex font-bold text-white py-10px px-11.5px right-20px text-lg leading-1.1rem bottom-50px z-2 fixed'>
         <div className='my-auto'>
           <div
             className={`${
               isShowText ? 'w-25' : 'translate-x-100% w-0'
-            } h-5 transform text-20px overflow-hidden duration-500`}
+            } h-5 transform overflow-hidden duration-500`}
           >
             シェアする
           </div>

@@ -21,37 +21,34 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
           onSubmit({ email, password })
           e.preventDefault()
         }}
-        className='mt-4'
       >
         <div className='max-w-300px w-80vw relative'>
-          <label htmlFor='email' className='font-bold text-sm block '>
+          <label>
             Eメール
+            <input
+              type='text'
+              value={email}
+              placeholder='example@example.com'
+              required
+              onChange={v => setEmail(v.target.value)}
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+            />
           </label>
-          <input
-            id='email'
-            type='text'
-            value={email}
-            placeholder='example@example.com'
-            required
-            onChange={v => setEmail(v.target.value)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-          />
-          <AiOutlineMailIcon className='top-33px left-270px absolute' />
+          <AiOutlineMailIcon className='top-37px left-270px absolute' />
         </div>
         <div className='mt-2 relative '>
-          <label htmlFor='password' className='font-bold text-sm block'>
+          <label>
             パスワード
+            <input
+              type='password'
+              value={password}
+              placeholder='password'
+              required
+              onChange={v => setPassword(v.target.value)}
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+            />
           </label>
-          <input
-            id='password'
-            type='password'
-            value={password}
-            placeholder='password'
-            required
-            onChange={v => setPassword(v.target.value)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-          />
-          <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
+          <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
         </div>
 
         <Button type='submit' fullWidth animate className='mt-4'>

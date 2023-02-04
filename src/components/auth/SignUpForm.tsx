@@ -37,82 +37,74 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
           onSubmit(formParams)
           e.preventDefault()
         }}
+        className='max-w-300px w-80vw'
       >
-        <div className='max-w-300px w-80vw relative'>
-          <label htmlFor='username' className='font-bold text-sm block '>
+        <div className='relative'>
+          <label>
             ユーザー名
+            <input
+              type='text'
+              value={formParams.username}
+              placeholder='シェアポス太郎'
+              required
+              name='username'
+              onChange={e => onChange(e)}
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+            />
           </label>
-          <input
-            type='text'
-            value={formParams.username}
-            placeholder='シェアポス太郎'
-            required
-            name='username'
-            onChange={e => onChange(e)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-          />
-          <AiOutlineUserIcon className='top-33px left-270px absolute' />
+          <AiOutlineUserIcon className='top-37px left-270px absolute' />
         </div>
         <div className='mt-2 relative'>
-          <label htmlFor='email' className='font-bold text-sm block '>
+          <label>
             Eメール
+            <input
+              type='email'
+              id='email'
+              value={formParams.email}
+              placeholder='example@example.com'
+              required
+              name='email'
+              onChange={e => onChange(e)}
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+            />
           </label>
-          <input
-            type='email'
-            id='email'
-            value={formParams.email}
-            placeholder='example@example.com'
-            required
-            name='email'
-            onChange={e => onChange(e)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-          />
-          <AiOutlineMailIcon className='top-33px left-270px absolute' />
+          <AiOutlineMailIcon className='top-37px left-270px absolute' />
         </div>
         <div className='mt-2 relative'>
-          <label htmlFor='password' className='font-bold text-sm block '>
+          <label>
             パスワード
+            <input
+              type='password'
+              id='password'
+              value={formParams.password}
+              placeholder='password'
+              required
+              minLength={6}
+              name='password'
+              onChange={e => onChange(e)}
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+            />
           </label>
-          <input
-            type='password'
-            id='password'
-            value={formParams.password}
-            placeholder='password'
-            required
-            minLength={6}
-            name='password'
-            onChange={e => onChange(e)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-          />
-          <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
+          <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
         </div>
         <div className='mt-2 relative'>
-          <label
-            htmlFor='passwordConfirmation'
-            className='font-bold text-sm block '
-          >
+          <label>
             確認用パスワード
+            <input
+              type='password'
+              id='passwordConfirmation'
+              value={formParams.passwordConfirmation}
+              required
+              minLength={6}
+              placeholder='password'
+              name='passwordConfirmation'
+              onChange={e => onChange(e)}
+              className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+            />
           </label>
-          <input
-            type='password'
-            id='passwordConfirmation'
-            value={formParams.passwordConfirmation}
-            required
-            minLength={6}
-            placeholder='password'
-            name='passwordConfirmation'
-            onChange={e => onChange(e)}
-            className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-          />
-          <RiLockPasswordLineIcon className='top-33px left-270px absolute' />
+          <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
         </div>
-        <Button
-          type='submit'
-          color='primary'
-          fullWidth
-          className='mt-4'
-          animate
-        >
+        <Button type='submit' fullWidth className='mt-4' animate>
           登録
         </Button>
       </form>

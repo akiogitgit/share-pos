@@ -36,15 +36,15 @@ const SignUp: NextPage = () => {
         <title>SharePos 新規登録ページ</title>
       </Head>
       <Layout>
-        <h1 className='text-center text-lg'>新規登録</h1>
-        <div className='mt-4'>
+        <h1 className='text-center text-xl font-bold'>新規登録</h1>
+        <div className='mt-12'>
           <SignUpForm onSubmit={onSubmit} />
         </div>
 
         <p className='mt-4 text-center'>
           ログインは
           <Link href='/login'>
-            <span className='font-bold text-accent-dark text-lg'>こちら</span>
+            <span className='font-bold text-accent-dark'>こちら</span>
           </Link>
         </p>
       </Layout>

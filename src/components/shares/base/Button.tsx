@@ -7,7 +7,7 @@ type Props = {
   color?: 'primary' | 'accent' | 'danger' | 'secondary'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'outline' | 'light' | 'filled' | 'default'
+  variant?: 'outline' | 'light' | 'filled' | 'neumorphism'
   animate?: boolean
   compact?: boolean
   fullWidth?: boolean
@@ -46,6 +46,9 @@ export const Button: FC<Props> = ({
   // bg-secondary-dark border-secondary-dark text-secondary-dark bg-secondary-light
   // hover:text-secondary-dark hover:bg-secondary-light hover:bg-secondary-dark
 
+  // shadow-primary-dark/30 shadow-accent-dark/20 shadow-danger-dark/20 shadow-secondary-dark/20
+  // ring-primary-light/40 ring-accent-light/40 ring-danger-light/40 ring-secondary-light/40
+
   const defaultClass =
     'font-bold flex items-center justify-center gap-1 cursor-pointer'
 
@@ -57,8 +60,8 @@ export const Button: FC<Props> = ({
         return `bg-${color}-light text-${color}-dark border-1 border-${color}-light`
       case 'outline':
         return `bg-white text-${color}-dark border-1 border-${color}-dark`
-      case 'default':
-        return `shadow-md shadow-${color}-dark/20 ring-1 ring-${color}-light/40 text-${color}-dark`
+      case 'neumorphism':
+        return `shadow-md shadow-${color}-dark/20 border-t border-white text-${color}-dark`
     }
   }, [color, variant])
 
@@ -87,28 +90,28 @@ export const Button: FC<Props> = ({
     if (compact) {
       switch (size) {
         case 'xs':
-          return 'text-12px py-4px px-7px'
+          return 'text-sm py-4px px-7px'
         case 'sm':
-          return 'text-14px py-5px px-8px'
+          return 'text-md py-5px px-8px'
         case 'md':
-          return 'text-16px py-6px px-10px'
+          return 'text-md py-6px px-10px'
         case 'lg':
-          return 'text-18px py-7px px-12px'
+          return 'text-lg py-7px px-12px'
         case 'xl':
-          return 'text-20px py-9px px-14px'
+          return 'text-lg py-9px px-14px'
       }
     }
     switch (size) {
       case 'xs':
-        return 'text-12px py-8px px-14px'
+        return 'text-sm py-8px px-14px'
       case 'sm':
-        return 'text-14px py-10px px-18px'
+        return 'text-md py-10px px-18px'
       case 'md':
-        return 'text-16px py-12px px-22px'
+        return 'text-md py-12px px-22px'
       case 'lg':
-        return 'text-18px py-15px px-26px'
+        return 'text-lg py-15px px-26px'
       case 'xl':
-        return 'text-20px py-19px px-32px'
+        return 'text-lg py-19px px-32px'
     }
   }, [compact, size])
 

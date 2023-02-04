@@ -21,7 +21,7 @@ export const Modal: FC<Props> = ({ open, onClose, title, children }) => {
 
             <Dialog.Panel className='transform top-[50%] left-[50%] z-2 translate-x-[-50%] translate-y-[-50%] fixed'>
               <div className='bg-white bg-opacity-97 rounded-md shadow-2xl w-300px '>
-                <Dialog.Title className='font-bold text-center text-xl px-2 pt-4'>
+                <Dialog.Title className='font-bold text-center text-lg px-2 pt-4'>
                   {title}
                 </Dialog.Title>
                 <Dialog.Description className='mt-2'>
