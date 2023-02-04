@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { useInView } from 'react-intersection-observer'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/PostItem'
-import { Button } from 'components/shares/base/Button'
+import { Loader } from 'components/shares/base/Loader'
 import { useGetInfinite } from 'hooks/useApi'
 import { Post } from 'types/post'
 
@@ -16,14 +16,11 @@ const Home: NextPage = () => {
     fetchMore,
   } = useGetInfinite<Post>('/posts')
 
-  const { ref, inView } = useInView()
+  const { ref, inView: isScrollEnd } = useInView()
 
-  if (inView && !isValidating && !isReachingEnd) {
-    console.log('fetch!!!!!!!')
+  if (isScrollEnd && !isValidating && !isReachingEnd) {
     fetchMore()
   }
-
-  console.log('isValidating: ', isValidating, posts?.length)
 
   return (
     <>
@@ -43,15 +40,12 @@ const Home: NextPage = () => {
           </div>
         )}
 
-        {!isReachingEnd && (
-          <div className='mt-10 text-center'>
-            <Button variant='neumorphism' size='lg' onClick={fetchMore}>
-              もっと見る
-            </Button>
+        {!isValidating && <div ref={ref} aria-hidden='true' />}
+        {isValidating && (
+          <div className='mt-7 text-center'>
+            <Loader size='xl' />
           </div>
         )}
-
-        {posts && !isValidating && <div className='' ref={ref} />}
       </Layout>
     </>
   )
