@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
+import { useInView } from 'react-intersection-observer'
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/PostItem'
 import { Button } from 'components/shares/base/Button'
@@ -10,9 +11,19 @@ import { Post } from 'types/post'
 const Home: NextPage = () => {
   const {
     data: posts,
+    isValidating,
     isReachingEnd,
     fetchMore,
   } = useGetInfinite<Post>('/posts')
+
+  const { ref, inView } = useInView()
+
+  if (inView && !isValidating && !isReachingEnd) {
+    console.log('fetch!!!!!!!')
+    fetchMore()
+  }
+
+  console.log('isValidating: ', isValidating, posts?.length)
 
   return (
     <>
@@ -39,6 +50,8 @@ const Home: NextPage = () => {
             </Button>
           </div>
         )}
+
+        {posts && !isValidating && <div className='' ref={ref} />}
       </Layout>
     </>
   )

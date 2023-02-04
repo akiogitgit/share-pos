@@ -7,7 +7,7 @@ import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
+  const { mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
@@ -17,11 +17,10 @@ export const useCreatePost = () => {
     async (params: PostRequestParams) => {
       try {
         const newPost = await postApi<Post>('/posts', params)
-        if (!newPost || !posts || !myPosts) {
+        if (!newPost || !myPosts) {
           return
         }
 
-        // mutatePosts([[newPost, ...posts]], false)
         mutatePosts(undefined)
         mutateMyPosts(
           { user: myPosts.user, posts: [newPost, ...myPosts.posts] },
@@ -35,7 +34,7 @@ export const useCreatePost = () => {
         }
       }
     },
-    [mutateMyPosts, mutatePosts, myPosts, posts, router],
+    [mutateMyPosts, mutatePosts, myPosts, router],
   )
 
   return { createPost }
@@ -88,7 +87,7 @@ export const useUpdatePost = (post: Post) => {
 
 export const useDeletePost = (post: Post) => {
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
+  const { mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
@@ -96,10 +95,9 @@ export const useDeletePost = (post: Post) => {
   const deletePost = useCallback(() => {
     try {
       const res = deleteApi(`/posts/${post.id}`)
-      if (!posts || !myPosts) {
+      if (!myPosts) {
         return
       }
-      const newPosts = posts.filter(v => v.id !== post.id)
 
       const newMyPosts = {
         user: myPosts.user,
@@ -116,7 +114,7 @@ export const useDeletePost = (post: Post) => {
         console.error(e.message)
       }
     }
-  }, [mutateMyPosts, mutatePosts, myPosts, post.id, posts])
+  }, [mutateMyPosts, mutatePosts, myPosts, post.id])
 
   return { deletePost }
 }
