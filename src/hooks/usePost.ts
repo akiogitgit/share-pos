@@ -1,13 +1,13 @@
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
-import { useGetApi } from 'hooks/useApi'
+import { useGetApi, useGetInfinite } from 'hooks/useApi'
 import { UserPosts, Post, PostRequestParams } from 'types/post'
 import { User } from 'types/user/user'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
+  const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
@@ -21,7 +21,8 @@ export const useCreatePost = () => {
           return
         }
 
-        mutatePosts([newPost, ...posts], false)
+        // mutatePosts([[newPost, ...posts]], false)
+        mutatePosts(undefined)
         mutateMyPosts(
           { user: myPosts.user, posts: [newPost, ...myPosts.posts] },
           false,
@@ -42,35 +43,35 @@ export const useCreatePost = () => {
 
 export const useUpdatePost = (post: Post) => {
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
+  const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
 
   const updatePost = useCallback(
-    async (params: PostRequestParams) => {
+    (params: PostRequestParams) => {
       try {
-        const res = await putApi<Post>(`/posts/${post.id}`, params)
-        if (!res || !posts || !myPosts) {
+        const res = putApi<Post>(`/posts/${post.id}`, params)
+        if (!posts || !myPosts) {
           return
         }
-        const newPosts = posts.map(post => {
-          if (post.id === res.id) {
-            return res
+        const newPosts = posts.map(v => {
+          if (v.id === post.id) {
+            return { ...post, ...params }
           }
-          return post
+          return v
         })
         const newMyPosts = {
           user: myPosts.user,
-          posts: myPosts.posts.map(post => {
-            if (post.id === res.id) {
-              return res
+          posts: myPosts.posts.map(v => {
+            if (v.id === post.id) {
+              return { ...post, ...params }
             }
-            return post
+            return v
           }),
         }
 
-        mutatePosts(newPosts, false)
+        mutatePosts([newPosts], false)
         mutateMyPosts(newMyPosts, false)
         console.log('投稿の修正に成功しました。 ', params)
       } catch (e) {
@@ -79,7 +80,7 @@ export const useUpdatePost = (post: Post) => {
         }
       }
     },
-    [mutateMyPosts, mutatePosts, myPosts, post.id, posts],
+    [mutateMyPosts, mutatePosts, myPosts, post, posts],
   )
 
   return { updatePost }
@@ -87,14 +88,14 @@ export const useUpdatePost = (post: Post) => {
 
 export const useDeletePost = (post: Post) => {
   const { data: user } = useGetApi<User>('/users/me')
-  const { data: posts, mutate: mutatePosts } = useGetApi<Post[]>('/posts')
+  const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: myPosts, mutate: mutateMyPosts } = useGetApi<UserPosts>(
     `/users/${user?.id}`,
   )
 
-  const deletePost = useCallback(async () => {
+  const deletePost = useCallback(() => {
     try {
-      const res = await deleteApi(`/posts/${post.id}`)
+      const res = deleteApi(`/posts/${post.id}`)
       if (!posts || !myPosts) {
         return
       }
@@ -105,7 +106,8 @@ export const useDeletePost = (post: Post) => {
         posts: myPosts.posts.filter(v => v.id !== post.id),
       }
 
-      mutatePosts(newPosts, false)
+      // mutatePosts([newPosts], false)
+      mutatePosts(undefined)
       mutateMyPosts(newMyPosts, false)
 
       console.log(res)
