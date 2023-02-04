@@ -39,10 +39,13 @@ export const useGetInfinite = <Data = any>(
   },
   limit = 24,
 ) => {
-  const getKey = (pageIndex: number, previousPageData: Data[][]) => {
-    if (previousPageData && !previousPageData.length) return null // 最後に到達した
-    return `${url}?page=${pageIndex + 1}` // SWR キー
-  }
+  const getKey = useCallback(
+    (pageIndex: number, previousPageData: Data[][]) => {
+      if (previousPageData && !previousPageData.length) return null // 最後に到達した
+      return `${url}?page=${pageIndex + 1}` // SWR キー
+    },
+    [url],
+  )
 
   const fetcher = useCallback(
     async (url: string) =>
@@ -72,5 +75,10 @@ export const useGetInfinite = <Data = any>(
     setSize(size + 1)
   }, [setSize, size])
 
-  return { ...SWRInfiniteResponse, isReachingEnd, fetchMore }
+  return {
+    ...SWRInfiniteResponse,
+    data: data?.flat(),
+    isReachingEnd,
+    fetchMore,
+  }
 }
