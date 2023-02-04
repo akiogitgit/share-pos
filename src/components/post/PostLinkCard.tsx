@@ -9,13 +9,13 @@ type Props = {
 export const PostLinkCard: FC<Props> = ({ post }) => {
   // ドメインによって、表示するURLを変える
   const displayURL = useMemo(() => {
-    if (!post.metaInfo.image) return ''
+    if (!post.metaInfo?.image) return ''
     return ['qiita-user', 'res.cloudinary', 'data:image/png;base64'].some(v =>
       post.metaInfo.image?.includes(v),
     )
       ? post.metaInfo.image
       : `https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`
-  }, [post.metaInfo.image])
+  }, [post.metaInfo?.image])
 
   return (
     <>
@@ -42,8 +42,8 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
             <p className='text-gray-500'>
               {post.url.split('//')[1].split('/')[0]}
             </p>
-            <div className='h-39px mt-1 overflow-hidden'>
-              {post.metaInfo.title}
+            <div className='h-37px mt-2 text-sm overflow-hidden'>
+              {post.metaInfo?.title}
             </div>
           </figcaption>
         </a>

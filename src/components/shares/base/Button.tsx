@@ -7,7 +7,7 @@ type Props = {
   color?: 'primary' | 'accent' | 'danger' | 'secondary'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   radius?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'outline' | 'light' | 'filled' | 'default'
+  variant?: 'outline' | 'light' | 'filled' | 'neumorphism'
   animate?: boolean
   compact?: boolean
   fullWidth?: boolean
@@ -46,6 +46,9 @@ export const Button: FC<Props> = ({
   // bg-secondary-dark border-secondary-dark text-secondary-dark bg-secondary-light
   // hover:text-secondary-dark hover:bg-secondary-light hover:bg-secondary-dark
 
+  // shadow-primary-dark/30 shadow-accent-dark/20 shadow-danger-dark/20 shadow-secondary-dark/20
+  // ring-primary-light/40 ring-accent-light/40 ring-danger-light/40 ring-secondary-light/40
+
   const defaultClass =
     'font-bold flex items-center justify-center gap-1 cursor-pointer'
 
@@ -57,8 +60,8 @@ export const Button: FC<Props> = ({
         return `bg-${color}-light text-${color}-dark border-1 border-${color}-light`
       case 'outline':
         return `bg-white text-${color}-dark border-1 border-${color}-dark`
-      case 'default':
-        return `shadow-md shadow-${color}-dark/20 ring-1 ring-${color}-light/40 text-${color}-dark`
+      case 'neumorphism':
+        return `shadow-md shadow-${color}-dark/20 border-t border-white text-${color}-dark`
     }
   }, [color, variant])
 

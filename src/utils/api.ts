@@ -4,9 +4,8 @@ import { isEmptyObj } from './isEmptyObj'
 import { toCamelCaseObj } from './toCamelCaseObj'
 import { Res } from 'types/response'
 
-// export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 // export const BASE_URL = 'http://localhost:3001/api/v1'
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL2
 
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
