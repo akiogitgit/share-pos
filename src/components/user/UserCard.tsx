@@ -9,6 +9,7 @@ type Props = {
   username: string
   isFollowing: boolean
   currentUserId: number | undefined
+  onClickUser?: () => void
 }
 
 export const UserCard: FC<Props> = ({
@@ -16,13 +17,19 @@ export const UserCard: FC<Props> = ({
   username,
   isFollowing: isFollowingProps,
   currentUserId,
+  onClickUser,
 }) => {
   const { follow, unFollow } = useFollow(id)
   const [isFollowing, setIsFollowed] = useState(isFollowingProps) // ボタン押した瞬間変える
 
   return (
     <div className='flex justify-between items-center'>
-      <Link href={`/users/${id}`}>
+      <Link
+        href={`/users/${id}`}
+        onClick={() => {
+          onClickUser?.()
+        }}
+      >
         <div className='flex gap-2 items-center '>
           <Avatar id={Number(id)} size='md' />
           <p className='font-bold text-lg'>{username}</p>
