@@ -25,7 +25,7 @@ export const useFollow = (id: number) => {
       mutateUserProfile(
         {
           ...userProfile,
-          isFollowed: true,
+          isFollowing: true,
           followerCount: userProfile.followerCount + 1,
         },
         false,
@@ -63,7 +63,7 @@ export const useFollow = (id: number) => {
       mutateUserProfile(
         {
           ...userProfile,
-          isFollowed: false,
+          isFollowing: false,
           followerCount: userProfile.followerCount - 1,
         },
         false,

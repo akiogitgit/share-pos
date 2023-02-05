@@ -7,18 +7,18 @@ import { useFollow } from 'hooks/useFollow'
 type Props = {
   id: number
   username: string
-  isFollowed: boolean
+  isFollowing: boolean
   currentUserId: number | undefined
 }
 
 export const UserCard: FC<Props> = ({
   id,
   username,
-  isFollowed: isFollowedProps,
+  isFollowing: isFollowingProps,
   currentUserId,
 }) => {
   const { follow, unFollow } = useFollow(id)
-  const [isFollowed, setIsFollowed] = useState(isFollowedProps) // ボタン押した瞬間変える
+  const [isFollowing, setIsFollowed] = useState(isFollowingProps) // ボタン押した瞬間変える
 
   return (
     <div className='flex justify-between items-center'>
@@ -29,7 +29,7 @@ export const UserCard: FC<Props> = ({
         </div>
       </Link>
       {currentUserId && currentUserId !== id ? (
-        isFollowed ? (
+        isFollowing ? (
           <Button
             color='primary'
             size='sm'

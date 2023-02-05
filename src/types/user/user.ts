@@ -13,11 +13,11 @@ export type UserWithToken = User & { token: string }
 
 export type UserProfile = {
   user: Pick<User, 'id' | 'username'>
-  isFollowed: boolean
+  isFollowing: boolean
   followerCount: number
   followingCount: number
   posts: Post[]
 }
 
 // UserCardで使う
-export type UserInfo = Pick<User, 'id' | 'username'> & { isFollowed: boolean }
+export type UserInfo = Pick<User, 'id' | 'username'> & { isFollowing: boolean }

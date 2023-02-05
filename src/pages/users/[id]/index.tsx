@@ -67,12 +67,12 @@ const User: NextPage = () => {
               isMyPage ? (
                 <Button
                   radius='xs'
-                  variant='default'
+                  variant='neumorphism'
                   className='whitespace-nowrap'
                 >
                   プロフィールを編集
                 </Button>
-              ) : userProfile.isFollowed ? (
+              ) : userProfile.isFollowing ? (
                 <Button
                   color='primary'
                   size='sm'

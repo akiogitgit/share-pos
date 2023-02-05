@@ -55,7 +55,7 @@ const Followers: NextPage = () => {
           {followers?.length
             ? followers.map(user => (
                 <UserCard
-                  key={`${user.id} ${user.isFollowed}`}
+                  key={`${user.id} ${user.isFollowing}`}
                   {...user}
                   currentUserId={currentUser?.id}
                 />
