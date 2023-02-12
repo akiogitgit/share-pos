@@ -73,7 +73,9 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
           <>
             <PostItemComment comment={post.comment} />
 
-            <PostLinkCard post={post} />
+            <div className='mt-2'>
+              <PostLinkCard post={post} />
+            </div>
 
             {/* 返信 */}
             <div className='flex h-6 mt-2 items-center justify-between'>

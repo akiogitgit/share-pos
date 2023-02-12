@@ -19,7 +19,7 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
 
   return (
     <>
-      <figure className='rounded-md border-2 mt-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
+      <figure className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
         <a href={post.url} target='_blank' rel='noreferrer'>
           <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
             {displayURL ? (
