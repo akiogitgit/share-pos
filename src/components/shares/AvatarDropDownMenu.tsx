@@ -12,7 +12,7 @@ import { Avatar } from 'components/shares/base/Avatar'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useLogOut } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
-import { User } from 'types/user/user'
+import { User } from 'types/user'
 
 export const HeaderDropDownMenu: FC = () => {
   const { logOut } = useLogOut()

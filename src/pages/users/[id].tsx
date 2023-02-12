@@ -10,7 +10,7 @@ import { UserCard } from 'components/user/UserCard'
 import { UserPosts } from 'components/user/UserPosts'
 import { useGetApi } from 'hooks/useApi'
 import { useFollow } from 'hooks/useFollow'
-import { User, UserInfo, UserProfile } from 'types/user/user'
+import { User, UserInfo, UserProfile } from 'types/user'
 
 const User: NextPage = () => {
   const searchParams = useSearchParams()

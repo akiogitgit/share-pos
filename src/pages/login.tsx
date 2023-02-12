@@ -6,7 +6,7 @@ import { useCallback } from 'react'
 import { useLogin } from '../hooks/login/useAuth'
 import { LoginForm } from 'components/auth/LoginForm'
 import { Layout } from 'components/layout/Layout'
-import { LoginRequestParams } from 'types/user/auth'
+import { LoginRequestParams } from 'types/auth'
 import { HttpError } from 'utils/api'
 
 const Login: NextPage = () => {
@@ -31,7 +31,7 @@ const Login: NextPage = () => {
         <title>SharePos ログインページ</title>
       </Head>
       <Layout>
-        <h1 className='text-center text-xl font-bold'>ログイン</h1>
+        <h1 className='font-bold text-center text-xl'>ログイン</h1>
         <div className='mt-12'>
           <LoginForm onSubmit={onSubmit} />
         </div>

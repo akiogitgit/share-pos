@@ -6,7 +6,7 @@ import { FolderList } from './PostFolderList'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
-import { User } from 'types/user/user'
+import { User } from 'types/user'
 
 type Props = {
   post: Post

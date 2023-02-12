@@ -5,7 +5,7 @@ import { useCallback } from 'react'
 import { SignUpForm } from 'components/auth/SignUpForm'
 import { Layout } from 'components/layout/Layout'
 import { useSignUp } from 'hooks/login/useAuth'
-import { SignUpRequestParams } from 'types/user/auth'
+import { SignUpRequestParams } from 'types/auth'
 import { HttpError } from 'utils/api'
 
 const SignUp: NextPage = () => {
@@ -36,7 +36,7 @@ const SignUp: NextPage = () => {
         <title>SharePos 新規登録ページ</title>
       </Head>
       <Layout>
-        <h1 className='text-center text-xl font-bold'>新規登録</h1>
+        <h1 className='font-bold text-center text-xl'>新規登録</h1>
         <div className='mt-12'>
           <SignUpForm onSubmit={onSubmit} />
         </div>

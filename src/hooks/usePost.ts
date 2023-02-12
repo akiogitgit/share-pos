@@ -2,11 +2,12 @@ import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { useGetApi, useGetInfinite } from 'hooks/useApi'
 import { Post, PostRequestParams } from 'types/post'
-import { UserProfile, User } from 'types/user/user'
+import { UserProfile, User } from 'types/user'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
   const { data: user } = useGetApi<User>('/users/me')
+  // const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: profile, mutate: mutateProfile } = useGetApi<UserProfile>(
     `/users/${user?.id}`,
@@ -17,11 +18,13 @@ export const useCreatePost = () => {
     async (params: PostRequestParams) => {
       try {
         const newPost = await postApi<Post>('/posts', params)
+        // if (!newPost || !posts || !profile) {
         if (!newPost || !profile) {
           return
         }
 
-        mutatePosts(undefined)
+        // mutatePosts([[newPost, ...posts]]) // いい感じに思えたが、2ページ目の最初のデータが消える
+        mutatePosts(undefined) // 全再取得 整合性は完璧
         mutateProfile({ ...profile, posts: [newPost, ...profile.posts] }, false)
         console.log('投稿の作成に成功 ', newPost)
         router.push('/')
@@ -31,7 +34,8 @@ export const useCreatePost = () => {
         }
       }
     },
-    [mutateProfile, mutatePosts, profile, router],
+    [profile, mutatePosts, mutateProfile, router],
+    // [posts, profile, mutatePosts, mutateProfile, router],
   )
 
   return { createPost }

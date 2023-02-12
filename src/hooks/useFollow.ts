@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useGetApi } from './useApi'
-import { User, UserProfile } from 'types/user/user'
+import { User, UserProfile } from 'types/user'
 import { postApi, HttpError, deleteApi } from 'utils/api'
 
 export const useFollow = (id: number) => {

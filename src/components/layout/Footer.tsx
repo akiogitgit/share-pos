@@ -17,7 +17,7 @@ import { JumpToCreatePostButton } from 'components/shares/JumpToCreatePostButton
 
 import { Button } from 'components/shares/base/Button'
 import { useGetApi } from 'hooks/useApi'
-import { User } from 'types/user/user'
+import { User } from 'types/user'
 
 export const Footer: FC = () => {
   const pathname = usePathname()
