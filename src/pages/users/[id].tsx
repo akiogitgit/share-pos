@@ -9,8 +9,10 @@ import { Modal } from 'components/shares/base/Modal'
 import { UserCard } from 'components/user/UserCard'
 import { UserPosts } from 'components/user/UserPosts'
 import { useGetApi } from 'hooks/useApi'
-import { useFollow } from 'hooks/useFollow'
+import { useFollow, useUnFollow } from 'hooks/useFollow'
 import { User, UserInfo, UserProfile } from 'types/user'
+
+const modalTabs = ['フォロー一覧', 'フォロワー一覧'] as const
 
 const User: NextPage = () => {
   const searchParams = useSearchParams()
@@ -18,12 +20,14 @@ const User: NextPage = () => {
 
   const { data: currentUser } = useGetApi<User>('/users/me')
   const { data: userProfile } = useGetApi<UserProfile>(`/users/${id}`)
-  const { follow, unFollow } = useFollow(userProfile?.user.id || 0)
-
+  const { follow } = useFollow(userProfile?.user.id || 0)
+  const { unFollow } = useUnFollow(userProfile?.user.id || 0)
   // モーダル
-  const [opened, setOpened] = useState(false)
+  const [open, setOpen] = useState(false)
   // モーダルで表示のがフォロワー一覧
-  const [isShowFollowers, setIsShowFollowers] = useState(true)
+  const [selected, setSelected] = useState<'フォロー一覧' | 'フォロワー一覧'>(
+    'フォロー一覧',
+  )
   const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
     `/users/${id}/followers`,
     {
@@ -62,8 +66,8 @@ const User: NextPage = () => {
                 <div className='flex mt-4 gap-3'>
                   <div
                     onClick={() => {
-                      setOpened(true)
-                      setIsShowFollowers(false)
+                      setOpen(true)
+                      setSelected('フォロー一覧')
                       mutateFollowings(followings)
                     }}
                     className='cursor-pointer'
@@ -75,8 +79,8 @@ const User: NextPage = () => {
                   </div>
                   <div
                     onClick={() => {
-                      setOpened(true)
-                      setIsShowFollowers(true)
+                      setOpen(true)
+                      setSelected('フォロワー一覧')
                       mutateFollowers(followers)
                     }}
                     className='cursor-pointer'
@@ -136,68 +140,42 @@ const User: NextPage = () => {
 
       {/* いい感じに共通化したい */}
       <Modal
-        open={opened}
-        onClose={() => setOpened(false)}
+        open={open}
+        onClose={() => setOpen(false)}
         title={
           <div className='border-b flex border-gray-300 w-full gap-3'>
-            <div
-              className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                !isShowFollowers &&
-                'border-primary-dark border-b-3  text-primary-dark'
-              }`}
-              onClick={() => {
-                setIsShowFollowers(false)
-                mutateFollowings(followings)
-              }}
-            >
-              フォロー一覧
-            </div>
-            <div
-              className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                isShowFollowers &&
-                'border-primary-dark border-b-3  text-primary-dark'
-              }`}
-              onClick={() => {
-                setIsShowFollowers(true)
-                mutateFollowers(followers)
-              }}
-            >
-              フォロワー一覧
-            </div>
+            {modalTabs.map(tab => (
+              <div
+                key={tab}
+                className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
+                  tab === selected &&
+                  'border-primary-dark border-b-3 text-primary-dark'
+                }`}
+                onClick={() => {
+                  // タブを移動する毎に再検証
+                  setSelected(s => {
+                    if (s === tab) return tab
+                    if (tab === 'フォロー一覧') mutateFollowings(followings)
+                    if (tab === 'フォロワー一覧') mutateFollowers(followers)
+                    return tab
+                  })
+                }}
+              >
+                {tab}
+              </div>
+            ))}
           </div>
         }
-        // title={
-        //   <div className='border-b flex border-gray-300 w-full gap-3'>
-        //     {['フォロー一覧', 'フォロワー一覧'].map(v => (
-        //       <div
-        //         key={v}
-        //         className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-        //           (v === 'フォロー一覧' && !isShowFollowers) ||
-        //           (v === 'フォロワー一覧' &&
-        //             isShowFollowers &&
-        //             'border-primary-dark border-b-3  text-primary-dark')
-        //         }`}
-        //         onClick={() =>
-        //           v === 'フォロー一覧'
-        //             ? setIsShowFollowers(false)
-        //             : setIsShowFollowers(true)
-        //         }
-        //       >
-        //         {v}
-        //       </div>
-        //     ))}
-        //   </div>
-        // }
       >
         <div className='bg-white rounded-lg flex flex-col p-8 gap-8'>
-          {isShowFollowers
+          {selected === 'フォロワー一覧'
             ? followers?.length
               ? followers.map(user => (
                   <UserCard
                     key={`${user.id} ${user.isFollowing}`}
                     {...user}
                     currentUserId={currentUser?.id}
-                    onClickUser={() => setOpened(false)}
+                    onClickUser={() => setOpen(false)}
                   />
                 ))
               : 'フォロワーはいません'
@@ -207,7 +185,7 @@ const User: NextPage = () => {
                   key={`${user.id} ${user.isFollowing}`}
                   {...user}
                   currentUserId={currentUser?.id}
-                  onClickUser={() => setOpened(false)}
+                  onClickUser={() => setOpen(false)}
                 />
               ))
             : 'フォローしているユーザーはいません'}
