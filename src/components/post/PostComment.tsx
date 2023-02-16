@@ -7,23 +7,23 @@ type Props = {
 
 export const PostItemComment: FC<Props> = ({ comment }) => {
   const { ref, height } = useElementSize()
-  const [isOpenComment, setIsOpenComment] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  // 要素の高さを取得
-  const hasElementMoreThan3Lines = useMemo(() => height > 60, [height])
+  // コメントが3行以上
+  const isLongComment = useMemo(() => height > 60, [height])
 
-  const showSeeMore = useMemo(
-    () => hasElementMoreThan3Lines && !isOpenComment,
-    [hasElementMoreThan3Lines, isOpenComment],
+  // 「もっと見る」が見えている状態
+  const isVisibleShowMore = useMemo(
+    () => isLongComment && !open,
+    [isLongComment, open],
   )
+
   return (
     <>
       <div
-        onClick={() =>
-          hasElementMoreThan3Lines && setIsOpenComment(!isOpenComment)
-        }
+        onClick={() => isLongComment && setOpen(!open)}
         className={`${
-          !isOpenComment && 'h-50px'
+          !open && 'h-50px'
         } overflow-hidden whitespace-pre-wrap group relative`}
       >
         <div ref={ref} className='h-auto'>
@@ -31,7 +31,7 @@ export const PostItemComment: FC<Props> = ({ comment }) => {
         </div>
         <div
           className={`bg-primary-light bg-opacity-80 text-center w-full py-1 top-20px absolute ${
-            showSeeMore
+            isVisibleShowMore
               ? 'visible sm:invisible sm:group-hover:visible'
               : 'invisible'
           }`}

@@ -7,7 +7,6 @@ import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
 
 export const useCreatePost = () => {
   const { data: user } = useGetApi<User>('/users/me')
-  // const { data: posts, mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { mutate: mutatePosts } = useGetInfinite<Post>('/posts')
   const { data: profile, mutate: mutateProfile } = useGetApi<UserProfile>(
     `/users/${user?.id}`,
@@ -18,12 +17,10 @@ export const useCreatePost = () => {
     async (params: PostRequestParams) => {
       try {
         const newPost = await postApi<Post>('/posts', params)
-        // if (!newPost || !posts || !profile) {
         if (!newPost || !profile) {
           return
         }
 
-        // mutatePosts([[newPost, ...posts]]) // いい感じに思えたが、2ページ目の最初のデータが消える
         mutatePosts(undefined) // 全再取得 整合性は完璧
         mutateProfile({ ...profile, posts: [newPost, ...profile.posts] }, false)
         console.log('投稿の作成に成功 ', newPost)
@@ -35,7 +32,6 @@ export const useCreatePost = () => {
       }
     },
     [profile, mutatePosts, mutateProfile, router],
-    // [posts, profile, mutatePosts, mutateProfile, router],
   )
 
   return { createPost }
@@ -105,7 +101,6 @@ export const useDeletePost = (post: Post) => {
         posts: profile.posts.filter(v => v.id !== post.id),
       }
 
-      // mutatePosts([newPosts], false)
       mutatePosts(undefined)
       mutateProfile(newMyPosts, false)
 

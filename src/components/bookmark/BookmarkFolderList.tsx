@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const BookmarkFolderList: FC<Props> = ({ folders }) => {
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isModalOpened, setModalOpened] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const routerFolderIndex = useMemo(
@@ -28,7 +28,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
     (folderIndex: number) => {
       // 2連続で同じフォルダを押したときに、編集モードにする
       if (routerFolderIndex === folderIndex) {
-        setIsOpenModal(true)
+        setModalOpened(true)
       }
     },
     [routerFolderIndex],
@@ -38,8 +38,8 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
     <div>
       {/* ブックマーク名一覧 */}
       <div
-        className='h-50px bg-primary-light overflow-x-scroll scroll-bar flex gap-2
-                  sm:(flex-col-reverse gap-1 h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll)'
+        className='bg-primary-light flex h-50px gap-2 overflow-x-scroll scroll-bar
+                  sm:(flex-col-reverse gap-1 h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '
       >
         {/* スマホ横スクロールで左右に余分を空けている */}
         <div className='ml-2 sm:hidden' />
@@ -74,9 +74,9 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
       </div>
 
       {/* フォルダ編集・削除モーダル */}
-      {isOpenModal && (
+      {isModalOpened && (
         <FolderEditModal
-          onClose={() => setIsOpenModal(false)}
+          onClose={() => setModalOpened(false)}
           folder={folders[routerFolderIndex]}
           onUpdateFolder={async (folderName: string) =>
             await updateFolder(folders[routerFolderIndex].id, folderName)

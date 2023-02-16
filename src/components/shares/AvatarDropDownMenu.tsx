@@ -17,15 +17,12 @@ import { User } from 'types/user'
 export const HeaderDropDownMenu: FC = () => {
   const { logOut } = useLogOut()
   const { data: user } = useGetApi<User>('/users/me')
-  const [isOpenedMenu, setIsOpenedMenu] = useState(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <div>
       {/* アバターアイコン */}
-      <div
-        className='cursor-pointer flex'
-        onClick={() => setIsOpenedMenu(s => !s)}
-      >
+      <div className='cursor-pointer flex' onClick={() => setOpen(s => !s)}>
         {user ? (
           <Avatar id={user.id} />
         ) : (
@@ -35,8 +32,8 @@ export const HeaderDropDownMenu: FC = () => {
 
       <div className='relative'>
         <DropDownMenu
-          open={isOpenedMenu}
-          onClose={() => setIsOpenedMenu(false)}
+          open={open}
+          onClose={() => setOpen(false)}
           className='top-10px right-[-15px]'
         >
           <Link href='/bookmark'>

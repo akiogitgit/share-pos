@@ -7,27 +7,26 @@ type Props = {
   posts: Post[]
 }
 
+const tabs = ['公開', '非公開'] as const
+
 export const UserPosts: FC<Props> = ({ isMyPage, posts }) => {
-  const [selectedPublished, setSelectedPublished] = useState(true)
+  const [selected, setSelected] = useState<'公開' | '非公開'>('公開')
 
   return (
     <section className='mt-10'>
       <div className='ml-4'>
         {isMyPage && (
           <div className='border-b flex border-gray-300 mt-5 w-full gap-3'>
-            {[
-              { label: '公開', published: true },
-              { label: '非公開', published: false },
-            ].map(tab => (
+            {tabs.map(tab => (
               <button
-                key={tab.label}
-                onClick={() => setSelectedPublished(tab.published)}
+                key={tab}
+                onClick={() => setSelected(tab)}
                 className={`text-xl pb-1 w-50vw sm:w-100px ${
-                  selectedPublished === tab.published &&
+                  selected === tab &&
                   'font-bold border-b-3 border-primary-dark text-primary-dark'
                 }`}
               >
-                {tab.label}
+                {tab}
               </button>
             ))}
           </div>
@@ -39,7 +38,7 @@ export const UserPosts: FC<Props> = ({ isMyPage, posts }) => {
           {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
           {posts.map(
             post =>
-              selectedPublished === post.published && (
+              (selected === '公開') === post.published && (
                 <PostItem post={post} key={post.id} />
               ),
           )}

@@ -5,9 +5,9 @@ import { Folder } from 'types/bookmark'
 
 type Props = {
   folder: Folder
-  onClose: () => void
-  onUpdateFolder: (folderName: string) => void
-  onDeleteFolder: () => void
+  onClose?: () => void
+  onUpdateFolder?: (folderName: string) => void
+  onDeleteFolder?: () => void
 }
 
 export const FolderEditModal: FC<Props> = ({
@@ -16,23 +16,23 @@ export const FolderEditModal: FC<Props> = ({
   onUpdateFolder,
   onDeleteFolder,
 }) => {
-  const [editFolderName, setEditFolderName] = useState(folder.name)
-  const [isShowDeleteMessage, setIsShowDeleteMessage] = useState(false)
+  const [folderName, setFolderName] = useState(folder.name)
+  const [isVisibleDeleteModal, setVisibleDeleteModal] = useState(false)
 
   return (
     <div>
       {/* フォルダ編集モーダル */}
       <Modal
-        open={!isShowDeleteMessage}
-        onClose={onClose}
+        open={!isVisibleDeleteModal}
+        onClose={() => onClose?.()}
         title='フォルダを編集'
       >
         <form
           onSubmit={async e => {
             e.preventDefault()
-            console.log(`update: `, folder.id, editFolderName)
-            onClose()
-            await onUpdateFolder(editFolderName)
+            console.log(`update: `, folder.id, folderName)
+            onClose?.()
+            await onUpdateFolder?.(folderName)
           }}
         >
           <div className='flex px-4 gap-2 justify-center items-center'>
@@ -41,12 +41,12 @@ export const FolderEditModal: FC<Props> = ({
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               maxLength={15}
               required
-              value={editFolderName}
-              onChange={e => setEditFolderName(e.target.value)}
+              value={folderName}
+              onChange={e => setFolderName(e.target.value)}
             />
 
             <IoTrashOutlineIcon
-              onClick={() => setIsShowDeleteMessage(true)}
+              onClick={() => setVisibleDeleteModal(true)}
               className='bg-danger-dark border-danger-dark rounded-md cursor-pointer border-2 h-10 text-white p-1.5 w-12'
             />
           </div>
@@ -71,9 +71,9 @@ export const FolderEditModal: FC<Props> = ({
 
       {/* フォルダ削除モーダル */}
       <Modal
-        open={isShowDeleteMessage}
-        onClose={onClose}
-        title={`\"${editFolderName}\" を削除しますか？`}
+        open={isVisibleDeleteModal}
+        onClose={() => onClose?.()}
+        title={`\"${folderName}\" を削除しますか？`}
       >
         <p className='text-center px-2'>
           フォルダ内の記事は全て削除されます。
@@ -90,8 +90,8 @@ export const FolderEditModal: FC<Props> = ({
           <button
             type='submit'
             onClick={async () => {
-              onClose()
-              await onDeleteFolder()
+              onClose?.()
+              await onDeleteFolder?.()
             }}
             className='font-bold border-t-2 mt-4 text-danger-dark w-full py-2  duration-150 hover:bg-black/10'
           >
