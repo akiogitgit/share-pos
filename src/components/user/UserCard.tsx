@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { FC, useState } from 'react'
 import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
-import { useFollow } from 'hooks/useFollow'
+import { useFollow, useUnFollow } from 'hooks/useFollow'
 
 type Props = {
   id: number
@@ -19,8 +19,9 @@ export const UserCard: FC<Props> = ({
   currentUserId,
   onClickUser,
 }) => {
-  const { follow, unFollow } = useFollow(id)
-  const [isFollowing, setIsFollowed] = useState(isFollowingProps) // ボタン押した瞬間変える
+  const { follow } = useFollow(id)
+  const { unFollow } = useUnFollow(id)
+  const [isFollowing, setFollowing] = useState(isFollowingProps) // ボタン押した瞬間変える
 
   return (
     <div className='flex justify-between items-center'>
@@ -43,7 +44,7 @@ export const UserCard: FC<Props> = ({
             radius='xl'
             variant='outline'
             onClick={() => {
-              setIsFollowed(false)
+              setFollowing(false)
               unFollow()
             }}
           >
@@ -56,7 +57,7 @@ export const UserCard: FC<Props> = ({
             radius='xl'
             animate
             onClick={() => {
-              setIsFollowed(true)
+              setFollowing(true)
               follow()
             }}
           >

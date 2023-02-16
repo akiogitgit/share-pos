@@ -53,6 +53,17 @@ export const useFollow = (id: number) => {
     userProfile,
   ])
 
+  return { follow }
+}
+
+export const useUnFollow = (id: number) => {
+  // フォローされたユーザー、自分のuserProfile
+  const { data: userProfile, mutate: mutateUserProfile } =
+    useGetApi<UserProfile>(`/users/${id}`)
+  const { data: currentUser } = useGetApi<User>('/users/me')
+  const { data: currentUserProfile, mutate: mutateCurrentUserProfile } =
+    useGetApi<UserProfile>(`/users/${currentUser?.id}`)
+
   const unFollow = useCallback(async () => {
     try {
       const res = await deleteApi(`/users/${id}/follow`)
@@ -90,5 +101,5 @@ export const useFollow = (id: number) => {
     userProfile,
   ])
 
-  return { follow, unFollow }
+  return { unFollow }
 }
