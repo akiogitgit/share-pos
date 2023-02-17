@@ -1,47 +1,28 @@
 import { NextPage } from 'next'
 import { useSearchParams } from 'next/navigation'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Layout } from 'components/layout/Layout'
-import { Avatar } from 'components/shares/base/Avatar'
-import { Button } from 'components/shares/base/Button'
-import { Modal } from 'components/shares/base/Modal'
-import { UserCard } from 'components/user/UserCard'
-import { UserPosts } from 'components/user/UserPosts'
+import { PostItem } from 'components/post/PostItem'
+import { UserProfile } from 'components/user/UserProfile'
 import { useGetApi } from 'hooks/useApi'
-import { useFollow, useUnFollow } from 'hooks/useFollow'
-import { User, UserInfo, UserProfile } from 'types/user'
+import { User, UserProfile as UserProfileType } from 'types/user'
 
-const modalTabs = ['フォロー一覧', 'フォロワー一覧'] as const
+const tabs = ['公開', '非公開'] as const
 
 const User: NextPage = () => {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 
-  const { data: currentUser } = useGetApi<User>('/users/me')
-  const { data: userProfile } = useGetApi<UserProfile>(`/users/${id}`)
-  const { follow } = useFollow(userProfile?.user.id || 0)
-  const { unFollow } = useUnFollow(userProfile?.user.id || 0)
-  // モーダル
-  const [open, setOpen] = useState(false)
-  // モーダルで表示のがフォロワー一覧
-  const [selected, setSelected] = useState<'フォロー一覧' | 'フォロワー一覧'>(
-    'フォロー一覧',
-  )
-  const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
-    `/users/${id}/followers`,
-    {
-      options: { revalidateIfStale: true },
-    },
-  )
-  const { data: followings, mutate: mutateFollowings } = useGetApi<UserInfo[]>(
-    `/users/${id}/followings`,
-    {
-      options: { revalidateIfStale: true },
-    },
-  )
+  const [selected, setSelected] = useState<'公開' | '非公開'>('公開')
 
-  const isMyPage: boolean = currentUser?.id === Number(id)
+  const { data: currentUser } = useGetApi<User>('/users/me')
+  const { data: userProfile } = useGetApi<UserProfileType>(`/users/${id}`)
+
+  const isMyPage: boolean = useMemo(
+    () => currentUser?.id === Number(id),
+    [currentUser?.id, id],
+  )
 
   if (!userProfile) {
     return (
@@ -53,149 +34,39 @@ const User: NextPage = () => {
 
   return (
     <Layout>
-      {/* コンポーネント分割する UserProfile */}
-      <section className='ml-4'>
-        <div className='flex justify-between items-center'>
-          <div>
-            <div className='w-23 whitespace-nowrap sm:(flex gap-5 w-full) '>
-              <Avatar id={Number(userProfile?.user.id)} size='xl' />
-              <div>
-                <h1 className='font-bold mt-2 text-2xl'>
-                  {userProfile?.user.username}
-                </h1>
-                <div className='flex mt-4 gap-3'>
-                  <div
-                    onClick={() => {
-                      setOpen(true)
-                      setSelected('フォロー一覧')
-                      mutateFollowings(followings)
-                    }}
-                    className='cursor-pointer'
-                  >
-                    <span className='font-bold'>
-                      {userProfile.followingCount}
-                    </span>{' '}
-                    <span className='text-gray-500'>フォロー</span>
-                  </div>
-                  <div
-                    onClick={() => {
-                      setOpen(true)
-                      setSelected('フォロワー一覧')
-                      mutateFollowers(followers)
-                    }}
-                    className='cursor-pointer'
-                  >
-                    <span className='font-bold'>
-                      {userProfile.followerCount}
-                    </span>{' '}
-                    <span className='text-gray-500'>フォロワー</span>
-                  </div>
-                  <p>
-                    <span className='font-bold'>
-                      {userProfile?.posts.length}
-                    </span>{' '}
-                    <span className='text-gray-500'>シェア</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='transform translate-y-[-42px] sm:translate-y-0'>
-            {currentUser ? (
-              isMyPage ? (
-                <Button
-                  radius='xs'
-                  variant='neumorphism'
-                  className='whitespace-nowrap'
-                >
-                  プロフィールを編集
-                </Button>
-              ) : userProfile.isFollowing ? (
-                <Button
-                  color='primary'
-                  size='sm'
-                  radius='xl'
-                  variant='outline'
-                  onClick={unFollow}
-                >
-                  フォロー解除
-                </Button>
-              ) : (
-                <Button
-                  color='primary'
-                  size='sm'
-                  radius='xl'
-                  animate
-                  onClick={follow}
-                >
-                  フォローする
-                </Button>
-              )
-            ) : (
-              ''
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* いい感じに共通化したい */}
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        title={
-          <div className='border-b flex border-gray-300 w-full gap-3'>
-            {modalTabs.map(tab => (
-              <div
+      <UserProfile userProfile={userProfile} isMyPage={isMyPage} />
+      <section className='mt-10'>
+        {isMyPage && (
+          <div className='border-b flex border-gray-300 mt-5 w-full gap-3'>
+            {tabs.map(tab => (
+              <button
                 key={tab}
-                className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                  tab === selected &&
-                  'border-primary-dark border-b-3 text-primary-dark'
+                onClick={() => setSelected(tab)}
+                className={`text-xl pb-1 w-50vw sm:w-100px ${
+                  selected === tab &&
+                  'font-bold border-b-3 border-primary-dark text-primary-dark'
                 }`}
-                onClick={() => {
-                  // タブを移動する毎に再検証
-                  setSelected(s => {
-                    if (s === tab) return tab
-                    if (tab === 'フォロー一覧') mutateFollowings(followings)
-                    if (tab === 'フォロワー一覧') mutateFollowers(followers)
-                    return tab
-                  })
-                }}
               >
                 {tab}
-              </div>
+              </button>
             ))}
           </div>
-        }
-      >
-        <div className='bg-white rounded-lg flex flex-col p-8 gap-8'>
-          {selected === 'フォロワー一覧'
-            ? followers?.length
-              ? followers.map(user => (
-                  <UserCard
-                    key={`${user.id} ${user.isFollowing}`}
-                    {...user}
-                    currentUserId={currentUser?.id}
-                    onClickUser={() => setOpen(false)}
-                  />
-                ))
-              : 'フォロワーはいません'
-            : followings?.length
-            ? followings.map(user => (
-                <UserCard
-                  key={`${user.id} ${user.isFollowing}`}
-                  {...user}
-                  currentUserId={currentUser?.id}
-                  onClickUser={() => setOpen(false)}
-                />
-              ))
-            : 'フォローしているユーザーはいません'}
-        </div>
-      </Modal>
+        )}
 
-      {/* 逆にこっちはコンポーネント分割いらない
-      stateが、公開・非公開くらいしかない
-       */}
-      <UserPosts isMyPage={isMyPage} posts={userProfile.posts} />
+        {userProfile.posts.length ? (
+          <div className='flex flex-wrap mt-10 gap-4 justify-center items-start sm:justify-start'>
+            {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
+            {userProfile.posts.map(
+              post =>
+                (selected === '公開') === post.published && (
+                  <PostItem post={post} key={post.id} />
+                ),
+            )}
+          </div>
+        ) : (
+          ''
+        )}
+      </section>
     </Layout>
   )
 }
