@@ -100,22 +100,22 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
               ) : userProfile.isFollowing ? (
                 <Button
                   color='primary'
-                  size='sm'
+                  size='md'
                   radius='xl'
                   variant='outline'
                   onClick={unFollow}
                 >
-                  フォロー解除
+                  フォロー中
                 </Button>
               ) : (
                 <Button
                   color='primary'
-                  size='sm'
+                  size='md'
                   radius='xl'
                   animate
                   onClick={follow}
                 >
-                  フォローする
+                  フォロー
                 </Button>
               )
             ) : (

@@ -28,7 +28,7 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
       >
         <div className='flex gap-2 items-center '>
           <Avatar id={Number(user.id)} size='md' />
-          <p className='font-bold text-md text-overflow max-w-180px w-[calc(100vw-180px)]'>
+          <p className='font-bold text-md text-overflow max-w-170px w-[calc(100vw-185px)]'>
             {user.username}
           </p>
         </div>
@@ -46,7 +46,7 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
             }}
             className='whitespace-nowrap'
           >
-            フォロー解除
+            フォロー中
           </Button>
         ) : (
           <Button
@@ -60,7 +60,7 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
             }}
             className='whitespace-nowrap'
           >
-            フォローする
+            フォロー
           </Button>
         )
       ) : (
