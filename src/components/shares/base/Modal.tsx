@@ -1,14 +1,33 @@
 import { Dialog } from '@headlessui/react'
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useMemo } from 'react'
 
 type Props = {
   open: boolean
   onClose: () => void
   title?: ReactNode
   children?: ReactNode
+  size?: 'sm' | 'md'
 }
 
-export const Modal: FC<Props> = ({ open, onClose, title, children }) => {
+const baseClass =
+  'bg-white rounded-md bg-opacity-97 transform top-[50%] left-[50%] shadow-black/50 shadow-2xl z-2 translate-y-[-50%] translate-x-[-50%] fixed'
+
+export const Modal: FC<Props> = ({
+  open,
+  onClose,
+  title,
+  children,
+  size = 'sm',
+}) => {
+  const sizeClass = useMemo(() => {
+    switch (size) {
+      case 'sm':
+        return 'w-full sm:w-80vw max-w-300px'
+      case 'md':
+        return 'w-full sm:w-80vw max-w-360px'
+    }
+  }, [size])
+
   return (
     <>
       {open && (
@@ -19,17 +38,25 @@ export const Modal: FC<Props> = ({ open, onClose, title, children }) => {
               aria-hidden='true'
             />
 
-            <Dialog.Panel className='transform top-[50%] left-[50%] z-2 translate-x-[-50%] translate-y-[-50%] fixed'>
-              <div className='bg-white bg-opacity-97 rounded-md shadow-2xl w-300px '>
-                <Dialog.Title className='font-bold text-center text-lg px-2 pt-4'>
-                  {title}
-                </Dialog.Title>
-                <Dialog.Description className='mt-2'>
+            <Dialog.Panel className={`${baseClass} ${sizeClass}`}>
+              <Dialog.Title className='font-bold m-0 text-center text-lg px-2 pt-4'>
+                {title}
+              </Dialog.Title>
+
+              <Dialog.Description>
+                <div className='max-h-360px overflow-y-scroll scroll-bar-none'>
                   {children}
-                </Dialog.Description>
-              </div>
+                </div>
+              </Dialog.Description>
             </Dialog.Panel>
           </Dialog>
+
+          <style jsx>{`
+            .scroll-bar-none::-webkit-scrollbar {
+              width: 0;
+              height: 0;
+            }
+          `}</style>
         </>
       )}
     </>

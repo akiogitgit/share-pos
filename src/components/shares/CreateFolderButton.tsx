@@ -27,7 +27,7 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
 
       <Modal open={open} onClose={onClose} title='新規フォルダ作成'>
         <form
-          className='pt-2'
+          className='mt-4'
           onSubmit={async e => {
             e.preventDefault()
             onClose()
