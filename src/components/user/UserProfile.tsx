@@ -125,6 +125,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         </div>
       </section>
 
+      {/* フォロー・フォロワー一覧モーダル */}
       <Modal
         size='md'
         open={open}
@@ -168,22 +169,13 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
               <p className='text-center'>フォロワーはいません</p>
             )
           ) : followings?.length ? (
-            <>
-              {followings.map(user => (
-                <UserCard
-                  key={`${user.id} ${user.isFollowing}`}
-                  user={user}
-                  onClickUser={() => setOpen(false)}
-                />
-              ))}
-              {followings.map(user => (
-                <UserCard
-                  key={`${user.id} ${user.isFollowing}`}
-                  user={user}
-                  onClickUser={() => setOpen(false)}
-                />
-              ))}
-            </>
+            followings.map(user => (
+              <UserCard
+                key={`${user.id} ${user.isFollowing}`}
+                user={user}
+                onClickUser={() => setOpen(false)}
+              />
+            ))
           ) : (
             <p className='text-center'>フォローしているユーザーはいません</p>
           )}

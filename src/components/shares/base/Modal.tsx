@@ -44,19 +44,10 @@ export const Modal: FC<Props> = ({
               </Dialog.Title>
 
               <Dialog.Description>
-                <div className='max-h-360px overflow-y-scroll scroll-bar-none'>
-                  {children}
-                </div>
+                <div className='max-h-360px overflow-y-auto'>{children}</div>
               </Dialog.Description>
             </Dialog.Panel>
           </Dialog>
-
-          <style jsx>{`
-            .scroll-bar-none::-webkit-scrollbar {
-              width: 0;
-              height: 0;
-            }
-          `}</style>
         </>
       )}
     </>
