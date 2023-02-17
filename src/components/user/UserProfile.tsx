@@ -1,13 +1,13 @@
 import { FC, useState } from 'react'
-import { UserFollowListModal } from './UserFollowListModal'
+import { UserCard } from './UserCard'
 import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
+import { Modal } from 'components/shares/base/Modal'
 import { useGetApi } from 'hooks/useApi'
 import { useFollow, useUnFollow } from 'hooks/useFollow'
-import { User, UserProfile as UserProfileType } from 'types/user'
+import { User, UserInfo, UserProfile as UserProfileType } from 'types/user'
 
-// UserProfile = {id, username, isFollowing, followerCount, followingCount}
-// UserPosts = Postsにする
+const modalTabs = ['フォロー一覧', 'フォロワー一覧'] as const
 
 type Props = {
   userProfile: UserProfileType
@@ -22,9 +22,20 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
 
   // モーダル
   const [open, setOpen] = useState(false)
-  // モーダルで表示のがフォロワー一覧
   const [selected, setSelected] = useState<'フォロー一覧' | 'フォロワー一覧'>(
     'フォロー一覧',
+  )
+  const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
+    `/users/${userProfile?.user.id}/followers`,
+    {
+      options: { revalidateIfStale: true },
+    },
+  )
+  const { data: followings, mutate: mutateFollowings } = useGetApi<UserInfo[]>(
+    `/users/${userProfile?.user.id}/followings`,
+    {
+      options: { revalidateIfStale: true },
+    },
   )
 
   return (
@@ -43,7 +54,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                     onClick={() => {
                       setOpen(true)
                       setSelected('フォロー一覧')
-                      // mutateFollowings(followings)
+                      mutateFollowings(followings)
                     }}
                     className='cursor-pointer'
                   >
@@ -56,7 +67,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                     onClick={() => {
                       setOpen(true)
                       setSelected('フォロワー一覧')
-                      // mutateFollowers(followers)
+                      mutateFollowers(followers)
                     }}
                     className='cursor-pointer'
                   >
@@ -75,6 +86,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
               </div>
             </div>
           </div>
+
           <div className='transform translate-y-[-42px] sm:translate-y-0'>
             {currentUser ? (
               isMyPage ? (
@@ -113,17 +125,58 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         </div>
       </section>
 
-      {/* selectedはここで定義して、渡す */}
-      {/* 開くたびに再検証したい */}
-      {/* keyにopenだと、閉じる時も再生成しちゃう */}
-      <UserFollowListModal
-        key={String(open)}
-        userId={userProfile.user.id}
+      <Modal
         open={open}
         onClose={() => setOpen(false)}
-        selected={selected}
-        setSelected={setSelected}
-      />
+        title={
+          <div className='border-b flex border-gray-300 w-full gap-3'>
+            {modalTabs.map(tab => (
+              <div
+                key={tab}
+                className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
+                  tab === selected &&
+                  'border-primary-dark border-b-3 text-primary-dark'
+                }`}
+                onClick={() => {
+                  setSelected(tab)
+                  // タブを移動する毎に再検証
+                  if (selected === tab) return
+                  if (tab === 'フォロー一覧') mutateFollowings(followings)
+                  if (tab === 'フォロワー一覧') mutateFollowers(followers)
+                }}
+              >
+                {tab}
+              </div>
+            ))}
+          </div>
+        }
+      >
+        <div className='bg-white rounded-lg flex flex-col p-8 gap-8'>
+          {selected === 'フォロワー一覧' ? (
+            followers?.length ? (
+              followers.map(user => (
+                <UserCard
+                  key={`${user.id} ${user.isFollowing}`}
+                  user={user}
+                  onClickUser={() => setOpen(false)}
+                />
+              ))
+            ) : (
+              <p className='text-center'>フォロワーはいません</p>
+            )
+          ) : followings?.length ? (
+            followings.map(user => (
+              <UserCard
+                key={`${user.id} ${user.isFollowing}`}
+                user={user}
+                onClickUser={() => setOpen(false)}
+              />
+            ))
+          ) : (
+            <p className='text-center'>フォローしているユーザーはいません</p>
+          )}
+        </div>
+      </Modal>
     </div>
   )
 }
