@@ -130,29 +130,31 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         open={open}
         onClose={() => setOpen(false)}
         title={
-          <div className='border-b flex border-gray-300 w-full gap-3'>
-            {modalTabs.map(tab => (
-              <div
-                key={tab}
-                className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                  tab === selected &&
-                  'border-primary-dark border-b-3 text-primary-dark'
-                }`}
-                onClick={() => {
-                  setSelected(tab)
-                  // タブを移動する毎に再検証
-                  if (selected === tab) return
-                  if (tab === 'フォロー一覧') mutateFollowings(followings)
-                  if (tab === 'フォロワー一覧') mutateFollowers(followers)
-                }}
-              >
-                {tab}
-              </div>
-            ))}
+          <div className='w-full px-2 gap-3'>
+            <div className='border-b flex border-gray-300'>
+              {modalTabs.map(tab => (
+                <div
+                  key={tab}
+                  className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
+                    tab === selected &&
+                    'border-primary-dark border-b-3 text-primary-dark'
+                  }`}
+                  onClick={() => {
+                    setSelected(tab)
+                    // タブを移動する毎に再検証
+                    if (selected === tab) return
+                    if (tab === 'フォロー一覧') mutateFollowings(followings)
+                    if (tab === 'フォロワー一覧') mutateFollowers(followers)
+                  }}
+                >
+                  {tab}
+                </div>
+              ))}
+            </div>
           </div>
         }
       >
-        <div className='bg-white rounded-lg flex flex-col p-8 gap-8'>
+        <div className='bg-white rounded-lg flex flex-col py-6 px-4 gap-6'>
           {selected === 'フォロワー一覧' ? (
             followers?.length ? (
               followers.map(user => (

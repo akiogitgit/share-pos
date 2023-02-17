@@ -28,33 +28,37 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
       >
         <div className='flex gap-2 items-center '>
           <Avatar id={Number(user.id)} size='md' />
-          <p className='font-bold text-lg'>{user.username}</p>
+          <p className='font-bold text-md text-overflow max-w-180px w-[calc(100vw-180px)]'>
+            {user.username}
+          </p>
         </div>
       </Link>
       {currentUser && currentUser.id !== user.id ? (
         isFollowing ? (
           <Button
             color='primary'
-            size='sm'
+            size='xs'
             radius='xl'
             variant='outline'
             onClick={() => {
               setFollowing(false)
               unFollow()
             }}
+            className='whitespace-nowrap'
           >
             フォロー解除
           </Button>
         ) : (
           <Button
             color='primary'
-            size='sm'
+            size='xs'
             radius='xl'
             animate
             onClick={() => {
               setFollowing(true)
               follow()
             }}
+            className='whitespace-nowrap'
           >
             フォローする
           </Button>
@@ -62,6 +66,15 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
       ) : (
         ''
       )}
+
+      {/* 長い文字を...にする */}
+      <style jsx>{`
+        .text-overflow {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      `}</style>
     </div>
   )
 }
