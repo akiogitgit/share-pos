@@ -43,9 +43,7 @@ export const Modal: FC<Props> = ({
                 {title}
               </Dialog.Title>
 
-              <Dialog.Description>
-                <div className='max-h-360px overflow-y-auto'>{children}</div>
-              </Dialog.Description>
+              <div className='max-h-360px overflow-y-auto'>{children}</div>
             </Dialog.Panel>
           </Dialog>
         </>
