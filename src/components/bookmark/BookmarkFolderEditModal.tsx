@@ -28,6 +28,7 @@ export const FolderEditModal: FC<Props> = ({
         title='フォルダを編集'
       >
         <form
+          className='mt-4'
           onSubmit={async e => {
             e.preventDefault()
             console.log(`update: `, folder.id, folderName)
@@ -75,7 +76,7 @@ export const FolderEditModal: FC<Props> = ({
         onClose={() => onClose?.()}
         title={`\"${folderName}\" を削除しますか？`}
       >
-        <p className='text-center px-2'>
+        <p className='mt-4 text-center px-2'>
           フォルダ内の記事は全て削除されます。
           <br /> この操作は取り消せません
         </p>

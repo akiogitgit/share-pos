@@ -14,7 +14,7 @@ type Props = {
 export const UserCard: FC<Props> = ({ user, onClickUser }) => {
   const { follow } = useFollow(user.id)
   const { unFollow } = useUnFollow(user.id)
-  // フォロー状態の楽観的な挙動に使う
+  // フォロー状態の楽観的更新に使う
   const [isFollowing, setFollowing] = useState(user.isFollowing) // ボタン押した瞬間変える
   const { data: currentUser } = useGetApi<User>('/users/me')
 
