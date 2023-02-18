@@ -4,7 +4,7 @@ import { AiOutlineMail as AiOutlineMailIcon } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
 import { Button } from 'components/shares/base/Button'
 
-import { LoginRequestParams } from 'types/user/auth'
+import { LoginRequestParams } from 'types/auth'
 
 type Props = {
   onSubmit: (params: LoginRequestParams) => void

@@ -13,19 +13,19 @@ import { useDeletePost, useUpdatePost } from 'hooks/usePost'
 import { Post } from 'types/post'
 import { calcHowManyDaysAgo } from 'utils/calcHowManyDaysAgo'
 
-// bookmarkページの時、bookmarkFolderIdを受け取る
+// bookmarkページの時、folderIdを受け取る
 type Props = {
   post: Post
-  bookmarkFolderId?: string
+  folderId?: string
 }
 
-export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
-  const [isEditing, setIsEditing] = useState(false)
+export const PostItem: FC<Props> = ({ post, folderId = '' }) => {
+  const [isEditing, setEditing] = useState(false)
 
   const { updatePost } = useUpdatePost(post)
   const { deletePost } = useDeletePost(post)
   const { addBookmark } = useAddBookmark()
-  const { removeBookmark } = useRemoveBookmark(bookmarkFolderId, post)
+  const { removeBookmark } = useRemoveBookmark(folderId, post)
 
   return (
     <article className='bg-white rounded-md shadow-xl max-w-460px p-4 w-100% sm:w-291px'>
@@ -36,16 +36,14 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
             {post.user.username}
           </div>
         </Link>
-        <div className='flex gap-2'>
-          {/* 右上の・・・ボタン */}
-          <PostMenuButton
-            post={post}
-            onEdit={() => setIsEditing(true)}
-            onDelete={deletePost}
-            onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
-            onRemoveBookmark={removeBookmark}
-          />
-        </div>
+        {/* 右上の・・・ボタン */}
+        <PostMenuButton
+          post={post}
+          onEdit={() => setEditing(true)}
+          onDelete={deletePost}
+          onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
+          onRemoveBookmark={removeBookmark}
+        />
       </div>
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
@@ -55,7 +53,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
             <PostForm
               onSubmit={async params => {
                 await updatePost(params)
-                setIsEditing(false)
+                setEditing(false)
               }}
               formParamsProps={post}
               submitButtonText='更新'
@@ -64,7 +62,7 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
               color='secondary'
               fullWidth
               className='mt-2'
-              onClick={() => setIsEditing(false)}
+              onClick={() => setEditing(false)}
             >
               キャンセル
             </Button>
@@ -73,7 +71,9 @@ export const PostItem: FC<Props> = ({ post, bookmarkFolderId = '' }) => {
           <>
             <PostItemComment comment={post.comment} />
 
-            <PostLinkCard post={post} />
+            <div className='mt-2'>
+              <PostLinkCard post={post} />
+            </div>
 
             {/* 返信 */}
             <div className='flex h-6 mt-2 items-center justify-between'>

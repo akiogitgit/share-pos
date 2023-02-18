@@ -14,17 +14,16 @@ export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()
   const pathname = usePathname()
 
-  const [isShow, setIsShow] = useState(true)
+  const [isVisible, setVisible] = useState(true)
 
   useScrollPosition(({ prevPos, currPos }) => {
-    const isVisible = currPos.y > prevPos.y || currPos.y > -200
-    setIsShow(isVisible)
+    setVisible(currPos.y > prevPos.y || currPos.y > -200)
   }, [])
 
   return (
     <header
       className={`bg-white w-full py-2 top-0 z-2 transform ${
-        !isShow && 'translate-y-[-100%]'
+        !isVisible && 'translate-y-[-100%]'
       } sm:translate-y-0 sticky duration-300`}
     >
       <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>

@@ -1,3 +1,5 @@
+import { User } from './user'
+
 export type Post = {
   id: string
   comment: string
@@ -7,10 +9,7 @@ export type Post = {
   userId: number
   createdAt: string
   updatedAt: string
-  user: {
-    id: number
-    username: string
-  }
+  user: Pick<User, 'id' | 'username'>
   metaInfo: {
     image: string | undefined
     title: string
@@ -18,22 +17,11 @@ export type Post = {
   replyComments: {
     id: number
     body: string
-    user: {
-      id: number
-      username: string
-    }
+    user: Pick<User, 'id' | 'username'>
   }[]
   bookmark?: {
     id: string
   }
-}
-
-export type UserPosts = {
-  user: {
-    id: string
-    username: string
-  }
-  posts: Post[]
 }
 
 export type PostRequestParams = {

@@ -48,7 +48,7 @@ const Bookmark: NextPage = () => {
   return (
     <Layout>
       {/* スマホ */}
-      <div className='sm:hidden flex items-center justify-between'>
+      <div className='flex items-center justify-between sm:hidden'>
         <h1 className='font-bold text-xl'>ブックマーク</h1>
         <div>
           <CreateFolderButton />
@@ -57,7 +57,7 @@ const Bookmark: NextPage = () => {
 
       <div className='sm:(flex gap-3 items-start) '>
         {/* 自分のフォルダ一覧 */}
-        <div className='bg-primary-light top-0px ml-0 z-2 sticky sm:(z-1 top-20 ml-4) '>
+        <div className='bg-primary-light ml-0 top-0px z-2 sticky sm:(z-1 top-20 ml-4) '>
           {/* PC */}
           <div className='hidden sm:block'>
             <h1 className='font-bold text-xl'>ブックマーク</h1>
@@ -66,21 +66,21 @@ const Bookmark: NextPage = () => {
             </div>
           </div>
 
-          <div className='mt-4 sm:(mt-4 mx-0) mx-[-16px]'>
+          <div className='mx-[-16px] mt-4 sm:(mt-4 mx-0) '>
             <BookmarkFolderList folders={folders} />
           </div>
         </div>
 
         {/* 選択しているフォルダの記事一覧 */}
         {bookmarkPosts?.posts.length && folders ? (
-          <div className='mt-12 sm:mt-21 w-full'>
+          <div className='mt-12 w-full sm:mt-21'>
             <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
               {bookmarkPosts.posts.map((post, index) => (
                 <PostItem
                   key={index}
                   post={post}
                   // Postはどのフォルダに居るか知らない
-                  bookmarkFolderId={folders[selectedFolderIndex].id}
+                  folderId={folders[selectedFolderIndex].id}
                 />
               ))}
             </div>

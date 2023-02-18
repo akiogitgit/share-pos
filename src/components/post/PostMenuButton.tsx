@@ -6,7 +6,7 @@ import { FolderList } from './PostFolderList'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useGetApi } from 'hooks/useApi'
 import { Post } from 'types/post'
-import { User } from 'types/user/user'
+import { User } from 'types/user'
 
 type Props = {
   post: Post
@@ -25,30 +25,29 @@ export const PostMenuButton: FC<Props> = ({
 }) => {
   const { data: user } = useGetApi<User>('/users/me')
 
-  const [isOpenedMenu, setIsOpenedMenu] = useState(false) // menu自体
-  const [isClickedAddBookmark, setIsClickedAddBookmark] = useState(false) //
-  const [isMouseEnteredAddBookmark, setIsMouseEnteredAddBookmark] =
-    useState(false)
+  const [isMenuOpened, setMenuOpened] = useState(false) // menu自体
+  const [isAddBookmarkClicked, setAddBookmarkClicked] = useState(false) //
+  const [isHoveringAddBookmark, setHoveringAddBookmark] = useState(false)
 
-  const isOpenedFolder = useMemo(() => {
-    return isClickedAddBookmark || isMouseEnteredAddBookmark
-  }, [isClickedAddBookmark, isMouseEnteredAddBookmark])
+  const isFolderOpened = useMemo(() => {
+    return isAddBookmarkClicked || isHoveringAddBookmark
+  }, [isAddBookmarkClicked, isHoveringAddBookmark])
 
   const onCloseMenu = useCallback(() => {
-    setIsOpenedMenu(false)
-    setIsClickedAddBookmark(false)
-    setIsMouseEnteredAddBookmark(false)
+    setMenuOpened(false)
+    setAddBookmarkClicked(false)
+    setHoveringAddBookmark(false)
   }, [])
 
   return (
     <div className='flex relative'>
       <BsThreeDotsIcon
         className='cursor-pointer text-2xl duration-100 hover:opacity-50'
-        onClick={() => setIsOpenedMenu(!isOpenedMenu)}
+        onClick={() => setMenuOpened(v => !v)}
       />
 
       <DropDownMenu
-        open={isOpenedMenu}
+        open={isMenuOpened}
         onClose={onCloseMenu}
         className='top-0 right-40px'
       >
@@ -92,9 +91,9 @@ export const PostMenuButton: FC<Props> = ({
           <>
             <div
               className='text-left w-full py-2 px-4 hover:bg-primary-light'
-              onClick={() => setIsClickedAddBookmark(!isClickedAddBookmark)}
-              onMouseEnter={() => setIsMouseEnteredAddBookmark(true)}
-              onMouseLeave={() => setIsMouseEnteredAddBookmark(false)}
+              onClick={() => setAddBookmarkClicked(!isAddBookmarkClicked)}
+              onMouseEnter={() => setHoveringAddBookmark(true)}
+              onMouseLeave={() => setHoveringAddBookmark(false)}
             >
               ブックマークに追加
             </div>
@@ -116,13 +115,12 @@ export const PostMenuButton: FC<Props> = ({
       </DropDownMenu>
 
       {/* 自分のフォルダ一覧  */}
-      {isOpenedFolder && (
+      {isFolderOpened && (
         <div
           className={`right-120px absolute z-1 ${
             user?.id !== post.userId ? 'top-44px' : 'top-124px'
           }`}
-          onMouseEnter={() => setIsMouseEnteredAddBookmark(true)}
-          // onMouseLeave={() => setIsMouseEnteredAddBookmark(false)}
+          onMouseEnter={() => setHoveringAddBookmark(true)}
         >
           <FolderList
             post={post}

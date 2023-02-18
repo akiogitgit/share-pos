@@ -9,25 +9,25 @@ type Props = {
 }
 
 export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
 
   const { createFolder } = useCreateFolder()
 
   const onClose = useCallback(() => {
-    setIsOpen(false)
+    setOpen(false)
     setName('')
   }, [])
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} radius={radius} fullWidth>
+      <Button onClick={() => setOpen(true)} radius={radius} fullWidth>
         新規フォルダ作成
       </Button>
 
-      <Modal open={isOpen} onClose={onClose} title='新規フォルダ作成'>
+      <Modal open={open} onClose={onClose} title='新規フォルダ作成'>
         <form
-          className='pt-2'
+          className='mt-4'
           onSubmit={async e => {
             e.preventDefault()
             onClose()

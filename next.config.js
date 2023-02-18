@@ -14,6 +14,7 @@ module.exports = {
       'res.cloudinary.com',
       'qiita-user-contents.imgix.net',
       'www.gravatar.com',
+      'gossamer-tarsier-64a.notion.site',
     ],
   },
   optimizeFonts: true,

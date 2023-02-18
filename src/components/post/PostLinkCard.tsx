@@ -10,16 +10,19 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
   // ドメインによって、表示するURLを変える
   const displayURL = useMemo(() => {
     if (!post.metaInfo?.image) return ''
-    return ['qiita-user', 'res.cloudinary', 'data:image/png;base64'].some(v =>
-      post.metaInfo.image?.includes(v),
-    )
+    return [
+      'qiita-user',
+      'res.cloudinary',
+      'data:image/png;base64',
+      'gossamer-tarsier-64a.notion.site',
+    ].some(v => post.metaInfo.image?.includes(v))
       ? post.metaInfo.image
       : `https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`
   }, [post.metaInfo?.image])
 
   return (
     <>
-      <figure className='rounded-md border-2 mt-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
+      <figure className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
         <a href={post.url} target='_blank' rel='noreferrer'>
           <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
             {displayURL ? (
