@@ -1,6 +1,5 @@
 import { Post } from 'types/post'
 
-// ユーザー情報更新
 export type User = {
   id: number
   username: string
@@ -19,5 +18,4 @@ export type UserProfile = {
   posts: Post[]
 }
 
-// UserCardで使う
 export type UserInfo = Pick<User, 'id' | 'username'> & { isFollowing: boolean }

@@ -43,7 +43,7 @@ export const PostMenuButton: FC<Props> = ({
     <div className='flex relative'>
       <BsThreeDotsIcon
         className='cursor-pointer text-2xl duration-100 hover:opacity-50'
-        onClick={() => setMenuOpened(!isMenuOpened)}
+        onClick={() => setMenuOpened(v => !v)}
       />
 
       <DropDownMenu
