@@ -1,4 +1,5 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
+import { useBoolean } from 'hooks/useBoolean'
 import { useElementSize } from 'utils/useElementSize'
 
 type Props = {
@@ -7,23 +8,23 @@ type Props = {
 
 export const PostItemComment: FC<Props> = ({ comment }) => {
   const { ref, height } = useElementSize()
-  const [open, setOpen] = useState(false)
+  const open = useBoolean(false)
 
   // コメントが3行以上
   const isLongComment = useMemo(() => height > 60, [height])
 
   // 「もっと見る」が見えている状態
   const isVisibleShowMore = useMemo(
-    () => isLongComment && !open,
+    () => isLongComment && !open.v,
     [isLongComment, open],
   )
 
   return (
     <>
       <div
-        onClick={() => isLongComment && setOpen(!open)}
+        onClick={() => isLongComment && open.toggle()}
         className={`${
-          !open && 'h-50px'
+          !open.v && 'h-50px'
         } overflow-hidden whitespace-pre-wrap group relative`}
       >
         <div ref={ref} className='h-auto'>

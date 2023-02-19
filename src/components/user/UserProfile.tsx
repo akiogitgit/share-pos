@@ -4,6 +4,7 @@ import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
 import { Modal } from 'components/shares/base/Modal'
 import { useGetApi } from 'hooks/useApi'
+import { useBoolean } from 'hooks/useBoolean'
 import { useFollow, useUnFollow } from 'hooks/useFollow'
 import { User, UserInfo, UserProfile as UserProfileType } from 'types/user'
 
@@ -21,9 +22,10 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
   const { data: currentUser } = useGetApi<User>('/users/me')
 
   // モーダル
-  const [open, setOpen] = useState(false)
+  const open = useBoolean(false)
   const [selected, setSelected] =
     useState<typeof modalTabs[number]>('フォロー一覧')
+
   const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
     `/users/${userProfile?.user.id}/followers`,
     {
@@ -51,7 +53,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                 <div className='flex mt-4 gap-3'>
                   <div
                     onClick={() => {
-                      setOpen(true)
+                      open.setTrue()
                       setSelected('フォロー一覧')
                       mutateFollowings(followings)
                     }}
@@ -64,7 +66,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                   </div>
                   <div
                     onClick={() => {
-                      setOpen(true)
+                      open.setTrue()
                       setSelected('フォロワー一覧')
                       mutateFollowers(followers)
                     }}
@@ -127,8 +129,8 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
       {/* フォロー・フォロワー一覧モーダル */}
       <Modal
         size='md'
-        open={open}
-        onClose={() => setOpen(false)}
+        open={open.v}
+        onClose={open.setFalse}
         title={
           <div className='w-full px-2 gap-3'>
             <div className='border-b flex border-gray-300'>
@@ -161,7 +163,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                 <UserCard
                   key={`${user.id} ${user.isFollowing}`}
                   user={user}
-                  onClickUser={() => setOpen(false)}
+                  onClickUser={open.setFalse}
                 />
               ))
             ) : (
@@ -172,7 +174,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
               <UserCard
                 key={`${user.id} ${user.isFollowing}`}
                 user={user}
-                onClickUser={() => setOpen(false)}
+                onClickUser={open.setFalse}
               />
             ))
           ) : (

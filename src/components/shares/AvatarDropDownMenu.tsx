@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { AiOutlineUser as AiOutlineUserIcon } from 'react-icons/ai'
 import { FaUserCircle as FaUserCircleIcon } from 'react-icons/fa'
 import {
@@ -12,17 +12,18 @@ import { Avatar } from 'components/shares/base/Avatar'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useLogOut } from 'hooks/login/useAuth'
 import { useGetApi } from 'hooks/useApi'
+import { useBoolean } from 'hooks/useBoolean'
 import { User } from 'types/user'
 
 export const HeaderDropDownMenu: FC = () => {
   const { logOut } = useLogOut()
   const { data: user } = useGetApi<User>('/users/me')
-  const [open, setOpen] = useState(false)
+  const open = useBoolean(false)
 
   return (
     <div>
       {/* アバターアイコン */}
-      <div className='cursor-pointer flex' onClick={() => setOpen(s => !s)}>
+      <div className='cursor-pointer flex' onClick={open.toggle}>
         {user ? (
           <Avatar id={user.id} />
         ) : (
@@ -32,8 +33,8 @@ export const HeaderDropDownMenu: FC = () => {
 
       <div className='relative'>
         <DropDownMenu
-          open={open}
-          onClose={() => setOpen(false)}
+          open={open.v}
+          onClose={open.setFalse}
           className='top-10px right-[-15px]'
         >
           <Link href='/bookmark'>

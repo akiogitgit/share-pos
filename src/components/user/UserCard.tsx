@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
 import { useGetApi } from 'hooks/useApi'
+import { useBoolean } from 'hooks/useBoolean'
 import { useFollow, useUnFollow } from 'hooks/useFollow'
 import { User, UserInfo } from 'types/user'
 
@@ -14,8 +15,9 @@ type Props = {
 export const UserCard: FC<Props> = ({ user, onClickUser }) => {
   const { follow } = useFollow(user.id)
   const { unFollow } = useUnFollow(user.id)
+
   // フォロー状態の楽観的更新に使う
-  const [isFollowing, setFollowing] = useState(user.isFollowing) // ボタン押した瞬間変える
+  const isFollowing = useBoolean(user.isFollowing)
   const { data: currentUser } = useGetApi<User>('/users/me')
 
   return (
@@ -34,15 +36,15 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
         </div>
       </Link>
       {currentUser && currentUser.id !== user.id ? (
-        isFollowing ? (
+        isFollowing.v ? (
           <Button
             color='primary'
             size='xs'
             radius='xl'
             variant='outline'
-            onClick={() => {
-              setFollowing(false)
-              unFollow()
+            onClick={async () => {
+              isFollowing.setFalse()
+              await unFollow()
             }}
             className='whitespace-nowrap'
           >
@@ -54,9 +56,9 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
             size='xs'
             radius='xl'
             animate
-            onClick={() => {
-              setFollowing(true)
-              follow()
+            onClick={async () => {
+              isFollowing.setTrue()
+              await follow()
             }}
             className='whitespace-nowrap'
           >

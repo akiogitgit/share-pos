@@ -25,7 +25,6 @@ const Bookmark: NextPage = () => {
     `/folders/${folders && folders[selectedFolderIndex]?.id}`,
     { options: { revalidateIfStale: true } },
   )
-  console.log(bookmarkPosts)
   // フォルダが無い
   if (!folders?.length) {
     return (

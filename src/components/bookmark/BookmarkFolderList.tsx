@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
 import { primary, accent } from '../../utils/theme'
 import { FolderEditModal } from './BookmarkFolderEditModal'
+import { useBoolean } from 'hooks/useBoolean'
 import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 
@@ -13,7 +14,7 @@ type Props = {
 }
 
 export const BookmarkFolderList: FC<Props> = ({ folders }) => {
-  const [isModalOpened, setModalOpened] = useState(false)
+  const isModalOpened = useBoolean(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const routerFolderIndex = useMemo(
@@ -28,10 +29,10 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
     (folderIndex: number) => {
       // 2連続で同じフォルダを押したときに、編集モードにする
       if (routerFolderIndex === folderIndex) {
-        setModalOpened(true)
+        isModalOpened.setTrue()
       }
     },
-    [routerFolderIndex],
+    [isModalOpened, routerFolderIndex],
   )
 
   return (
@@ -74,19 +75,18 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
       </div>
 
       {/* フォルダ編集・削除モーダル */}
-      {isModalOpened && (
-        <FolderEditModal
-          onClose={() => setModalOpened(false)}
-          folder={folders[routerFolderIndex]}
-          onUpdateFolder={async (folderName: string) =>
-            await updateFolder(folders[routerFolderIndex].id, folderName)
-          }
-          onDeleteFolder={async () => {
-            await deleteFolder(folders[routerFolderIndex].id)
-            router.push('bookmark')
-          }}
-        />
-      )}
+      <FolderEditModal
+        open={isModalOpened.v}
+        onClose={isModalOpened.setFalse}
+        folder={folders[routerFolderIndex]}
+        onUpdateFolder={async (folderName: string) =>
+          await updateFolder(folders[routerFolderIndex].id, folderName)
+        }
+        onDeleteFolder={async () => {
+          await deleteFolder(folders[routerFolderIndex].id)
+          router.push('bookmark')
+        }}
+      />
 
       <style jsx>{`
         .scroll-bar::-webkit-scrollbar {

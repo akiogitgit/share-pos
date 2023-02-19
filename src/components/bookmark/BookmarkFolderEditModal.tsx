@@ -1,30 +1,36 @@
 import { FC, useState } from 'react'
 import { IoTrashOutline as IoTrashOutlineIcon } from 'react-icons/io5'
 import { Modal } from 'components/shares/base/Modal'
+import { useBoolean } from 'hooks/useBoolean'
 import { Folder } from 'types/bookmark'
 
 type Props = {
   folder: Folder
-  onClose?: () => void
+  open: boolean
+  onClose: () => void
   onUpdateFolder?: (folderName: string) => void
   onDeleteFolder?: () => void
 }
 
 export const FolderEditModal: FC<Props> = ({
   folder,
+  open,
   onClose,
   onUpdateFolder,
   onDeleteFolder,
 }) => {
   const [folderName, setFolderName] = useState(folder.name)
-  const [isVisibleDeleteModal, setVisibleDeleteModal] = useState(false)
+  const isVisibleDeleteModal = useBoolean(false)
 
   return (
     <div>
       {/* フォルダ編集モーダル */}
       <Modal
-        open={!isVisibleDeleteModal}
-        onClose={() => onClose?.()}
+        open={open && !isVisibleDeleteModal.v}
+        onClose={() => {
+          isVisibleDeleteModal.setFalse()
+          onClose?.()
+        }}
         title='フォルダを編集'
       >
         <form
@@ -47,7 +53,7 @@ export const FolderEditModal: FC<Props> = ({
             />
 
             <IoTrashOutlineIcon
-              onClick={() => setVisibleDeleteModal(true)}
+              onClick={isVisibleDeleteModal.setTrue}
               className='bg-danger-dark border-danger-dark rounded-md cursor-pointer border-2 h-10 text-white p-1.5 w-12'
             />
           </div>
@@ -72,8 +78,11 @@ export const FolderEditModal: FC<Props> = ({
 
       {/* フォルダ削除モーダル */}
       <Modal
-        open={isVisibleDeleteModal}
-        onClose={() => onClose?.()}
+        open={open && isVisibleDeleteModal.v}
+        onClose={() => {
+          isVisibleDeleteModal.setFalse()
+          onClose?.()
+        }}
         title={`\"${folderName}\" を削除しますか？`}
       >
         <p className='mt-4 text-center px-2'>
