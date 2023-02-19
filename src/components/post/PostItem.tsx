@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { PostItemComment } from './PostComment'
 import { PostForm } from './PostForm'
@@ -8,6 +8,7 @@ import { PostMenuButton } from './PostMenuButton'
 import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
 import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
+import { useBoolean } from 'hooks/useBoolean'
 import { useDeletePost, useUpdatePost } from 'hooks/usePost'
 
 import { Post } from 'types/post'
@@ -20,7 +21,7 @@ type Props = {
 }
 
 export const PostItem: FC<Props> = ({ post, folderId = '' }) => {
-  const [isEditing, setEditing] = useState(false)
+  const isEditing = useBoolean(false)
 
   const { updatePost } = useUpdatePost(post)
   const { deletePost } = useDeletePost(post)
@@ -39,7 +40,7 @@ export const PostItem: FC<Props> = ({ post, folderId = '' }) => {
         {/* 右上の・・・ボタン */}
         <PostMenuButton
           post={post}
-          onEdit={() => setEditing(true)}
+          onEdit={isEditing.setTrue}
           onDelete={deletePost}
           onAddBookmark={(folderId, post) => addBookmark(folderId, post)}
           onRemoveBookmark={removeBookmark}
@@ -48,12 +49,12 @@ export const PostItem: FC<Props> = ({ post, folderId = '' }) => {
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
-        {isEditing ? (
+        {isEditing.v ? (
           <div className='mx-1'>
             <PostForm
               onSubmit={async params => {
                 await updatePost(params)
-                setEditing(false)
+                isEditing.setFalse()
               }}
               formParamsProps={post}
               submitButtonText='更新'
@@ -62,7 +63,7 @@ export const PostItem: FC<Props> = ({ post, folderId = '' }) => {
               color='secondary'
               fullWidth
               className='mt-2'
-              onClick={() => setEditing(false)}
+              onClick={isEditing.setFalse}
             >
               キャンセル
             </Button>

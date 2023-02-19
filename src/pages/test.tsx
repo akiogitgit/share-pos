@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
-import { useState } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { Button } from 'components/shares/base/Button'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
+import { useBoolean } from 'hooks/useBoolean'
 
 const Test: NextPage = () => {
   const colors: ('primary' | 'accent' | 'danger' | 'secondary')[] = [
@@ -12,16 +12,16 @@ const Test: NextPage = () => {
     'secondary',
   ]
 
-  const [open, setOpen] = useState(false)
+  const open = useBoolean(false)
 
   return (
     <Layout>
       <div className='flex flex-col gap-5'>
         <div className='relative'>
-          <Button onClick={() => setOpen(s => !s)}>メニューボタン</Button>
+          <Button onClick={open.toggle}>メニューボタン</Button>
           <DropDownMenu
-            open={open}
-            onClose={() => setOpen(false)}
+            open={open.v}
+            onClose={open.setFalse}
             className='left-0'
           >
             <button className='py-2 hover:bg-primary-light'>1</button>

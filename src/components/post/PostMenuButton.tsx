@@ -1,10 +1,11 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import { BsThreeDots as BsThreeDotsIcon } from 'react-icons/bs'
 
 import { FolderList } from './PostFolderList'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useGetApi } from 'hooks/useApi'
+import { useBoolean } from 'hooks/useBoolean'
 import { Post } from 'types/post'
 import { User } from 'types/user'
 
@@ -25,29 +26,29 @@ export const PostMenuButton: FC<Props> = ({
 }) => {
   const { data: user } = useGetApi<User>('/users/me')
 
-  const [isMenuOpened, setMenuOpened] = useState(false) // menu自体
-  const [isAddBookmarkClicked, setAddBookmarkClicked] = useState(false) //
-  const [isHoveringAddBookmark, setHoveringAddBookmark] = useState(false)
+  const isMenuOpened = useBoolean(false) // menu自体
+  const isAddBookmarkClicked = useBoolean(false)
+  const isHoveringAddBookmark = useBoolean(false)
 
   const isFolderOpened = useMemo(() => {
-    return isAddBookmarkClicked || isHoveringAddBookmark
+    return isAddBookmarkClicked.v || isHoveringAddBookmark.v
   }, [isAddBookmarkClicked, isHoveringAddBookmark])
 
   const onCloseMenu = useCallback(() => {
-    setMenuOpened(false)
-    setAddBookmarkClicked(false)
-    setHoveringAddBookmark(false)
-  }, [])
+    isMenuOpened.setFalse()
+    isAddBookmarkClicked.setFalse()
+    isHoveringAddBookmark.setFalse()
+  }, [isAddBookmarkClicked, isHoveringAddBookmark, isMenuOpened])
 
   return (
     <div className='flex relative'>
       <BsThreeDotsIcon
         className='cursor-pointer text-2xl duration-100 hover:opacity-50'
-        onClick={() => setMenuOpened(v => !v)}
+        onClick={isMenuOpened.toggle}
       />
 
       <DropDownMenu
-        open={isMenuOpened}
+        open={isMenuOpened.v}
         onClose={onCloseMenu}
         className='top-0 right-40px'
       >
@@ -91,9 +92,9 @@ export const PostMenuButton: FC<Props> = ({
           <>
             <div
               className='text-left w-full py-2 px-4 hover:bg-primary-light'
-              onClick={() => setAddBookmarkClicked(!isAddBookmarkClicked)}
-              onMouseEnter={() => setHoveringAddBookmark(true)}
-              onMouseLeave={() => setHoveringAddBookmark(false)}
+              onClick={isAddBookmarkClicked.toggle}
+              onMouseEnter={isHoveringAddBookmark.setTrue}
+              onMouseLeave={isHoveringAddBookmark.setFalse}
             >
               ブックマークに追加
             </div>
@@ -120,7 +121,7 @@ export const PostMenuButton: FC<Props> = ({
           className={`right-120px absolute z-1 ${
             user?.id !== post.userId ? 'top-44px' : 'top-124px'
           }`}
-          onMouseEnter={() => setHoveringAddBookmark(true)}
+          onMouseEnter={isHoveringAddBookmark.setTrue}
         >
           <FolderList
             post={post}
