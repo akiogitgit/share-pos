@@ -28,15 +28,9 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
 
   const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
     `/users/${userProfile?.user.id}/followers`,
-    {
-      options: { revalidateIfStale: true },
-    },
   )
   const { data: followings, mutate: mutateFollowings } = useGetApi<UserInfo[]>(
     `/users/${userProfile?.user.id}/followings`,
-    {
-      options: { revalidateIfStale: true },
-    },
   )
 
   return (
