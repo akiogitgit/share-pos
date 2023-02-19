@@ -37,14 +37,14 @@ export const useGetInfinite = <Data = any>(
     body: Record<string, any>
     header: Record<string, string>
   },
-  limit = 24,
+  limit = 12,
 ) => {
   const getKey = useCallback(
     (pageIndex: number, previousPageData: Data[][]) => {
       if (previousPageData && !previousPageData.length) return null // 最後に到達した
-      return `${url}?page=${pageIndex + 1}` // SWR キー
+      return `${url}?page=${pageIndex + 1}&per=${limit}` // SWR キー
     },
-    [url],
+    [limit, url],
   )
 
   const fetcher = useCallback(
