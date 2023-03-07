@@ -27,7 +27,11 @@ export const useLogin = () => {
         router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
-          console.log(e)
+          console.error(e)
+          if (e.status === 400) {
+            throw 'Eメールかパスワードが正しくありません'
+          }
+          throw '処理中にエラーが発生しました。しばらく時間をおいてから再度お試しください。'
         }
       }
     },
