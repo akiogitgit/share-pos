@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 
-import { RxCross2 } from 'react-icons/rx'
+import { RxCross2 as RxCross2Icon } from 'react-icons/rx'
 import { useLogin } from '../hooks/login/useAuth'
 import { LoginForm, LoginRequestParams } from 'components/auth/LoginForm'
 import { Layout } from 'components/layout/Layout'
@@ -37,7 +37,7 @@ const Login: NextPage = () => {
           {errorMessage && (
             <div className='bg-danger-light flex mx-auto text-danger-dark max-w-300px py-3 px-3 justify-between items-center'>
               <div>{errorMessage}</div>
-              <RxCross2
+              <RxCross2Icon
                 className='cursor-pointer text-danger-dark ml-2 min-h-5 min-w-5'
                 onClick={() => setErrorMessage('')}
               />

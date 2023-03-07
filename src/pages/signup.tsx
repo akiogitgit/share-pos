@@ -1,31 +1,25 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useCallback } from 'react'
-import { SignUpForm } from 'components/auth/SignUpForm'
+import { useCallback, useState } from 'react'
+import { RxCross2 as RxCross2Icon } from 'react-icons/rx'
+import { SignUpForm, SignUpRequestParams } from 'components/auth/SignUpForm'
 import { Layout } from 'components/layout/Layout'
 import { useSignUp } from 'hooks/login/useAuth'
-import { SignUpRequestParams } from 'types/auth'
-import { HttpError } from 'utils/api'
 
 const SignUp: NextPage = () => {
+  const [errorMessage, setErrorMessage] = useState<string>()
   const { signUp } = useSignUp()
 
   const onSubmit = useCallback(
     async (params: SignUpRequestParams) => {
-      if (params.password !== params.passwordConfirmation) {
-        console.log('パスワードと確認用パスワードが一致しません。')
-        return
-      }
-
       try {
         await signUp(params)
       } catch (error) {
-        if (error instanceof HttpError) {
-          console.error(error)
+        if (typeof error === 'string') {
+          setErrorMessage(error)
         }
       }
-      // マイページに移動する
     },
     [signUp],
   )
@@ -37,9 +31,19 @@ const SignUp: NextPage = () => {
       </Head>
       <Layout>
         <h1 className='font-bold text-center text-xl'>新規登録</h1>
-        <div className='mt-12'>
-          <SignUpForm onSubmit={onSubmit} />
+
+        <div className='my-6'>
+          {errorMessage && (
+            <div className='bg-danger-light flex mx-auto text-danger-dark max-w-300px py-3 px-3 justify-between items-center'>
+              <div>{errorMessage}</div>
+              <RxCross2Icon
+                className='cursor-pointer text-danger-dark ml-2 min-h-5 min-w-5'
+                onClick={() => setErrorMessage('')}
+              />
+            </div>
+          )}
         </div>
+        <SignUpForm onSubmit={onSubmit} />
 
         <p className='mt-4 text-center'>
           ログインは

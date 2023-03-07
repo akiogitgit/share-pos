@@ -36,6 +36,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             <input
               type='text'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              placeholder='example@example.com'
               {...register('email')}
             />
           </label>
@@ -51,6 +52,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
             <input
               type='password'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              placeholder='password'
               {...register('password')}
             />
           </label>
