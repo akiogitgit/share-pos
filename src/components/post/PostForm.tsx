@@ -100,7 +100,8 @@ export const PostForm: FC<Props> = ({
           <label>
             公開設定
             <div>
-              <div
+              <button
+                type='button'
                 className={`rounded-full cursor-pointer ${
                   getValues('published') ? 'bg-accent-dark' : 'bg-primary-dark'
                 } h-28px text-white w-90px relative inline-block`}
