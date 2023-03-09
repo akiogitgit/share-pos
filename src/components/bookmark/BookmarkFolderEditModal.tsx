@@ -95,38 +95,12 @@ export const BookmarkFolderEditModal: FC<Props> = ({
       </Modal>
 
       {/* フォルダ削除モーダル */}
-      <Modal
-        open={open && isVisibleDeleteModal.v}
-        onClose={() => {
-          isVisibleDeleteModal.setFalse()
-          onClose?.()
-        }}
-        title={`\"${folderName}\" を削除しますか？`}
-      >
-        <p className='mt-4 text-center px-2'>
-          フォルダ内の記事は全て削除されます。
-          <br /> この操作は取り消せません
-        </p>
-
-        <div className='flex justify-between'>
-          <button
-            onClick={onClose}
-            className='border-r-2 border-t-2 mt-4 text-primary-dark w-full py-2 duration-150 hover:bg-black/10'
-          >
-            閉じる
-          </button>
-          <button
-            type='submit'
-            onClick={async () => {
-              onClose?.()
-              await onDeleteFolder?.()
-            }}
-            className='font-bold border-t-2 mt-4 text-danger-dark w-full py-2  duration-150 hover:bg-black/10'
-          >
-            削除
-          </button>
-        </div>
-      </Modal>
+      <BookmarkFolderDeleteModal
+        name={folder.name}
+        open={isVisibleDeleteModal.v}
+        onClose={onClose}
+        onDeleteFolder={onDeleteFolder}
+      />
     </div>
   )
 }
