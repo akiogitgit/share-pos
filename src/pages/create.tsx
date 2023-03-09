@@ -3,11 +3,14 @@ import Head from 'next/head'
 import { Layout } from 'components/layout/Layout'
 import { PostForm } from 'components/post/PostForm'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
+import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 import { useCreatePost } from 'hooks/usePost'
 
 const Create: NextPage = () => {
   useRequireLogin()
   const { createPost } = useCreatePost()
+  const { onSubmit, errorMessage, clearErrorMessage } =
+    useFormErrorHandling<PostRequestParams>(createPost)
 
   return (
     <>

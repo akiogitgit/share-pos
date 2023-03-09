@@ -7,23 +7,14 @@ import { RxCross2 as RxCross2Icon } from 'react-icons/rx'
 import { useLogin } from '../hooks/login/useAuth'
 import { LoginForm, LoginRequestParams } from 'components/auth/LoginForm'
 import { Layout } from 'components/layout/Layout'
+import { Alert } from 'components/shares/base/Alert'
+import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 
 const Login: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState<string>()
   const { login } = useLogin()
-
-  const onSubmit = useCallback(
-    async (params: LoginRequestParams) => {
-      try {
-        await login(params)
-      } catch (error) {
-        if (typeof error === 'string') {
-          setErrorMessage(error)
-        }
-      }
-    },
-    [login],
-  )
+  const { onSubmit, errorMessage, clearErrorMessage } =
+    useFormErrorHandling<LoginRequestParams>(login)
 
   return (
     <>

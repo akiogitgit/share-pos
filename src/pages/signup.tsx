@@ -6,23 +6,13 @@ import { RxCross2 as RxCross2Icon } from 'react-icons/rx'
 import { SignUpForm, SignUpRequestParams } from 'components/auth/SignUpForm'
 import { Layout } from 'components/layout/Layout'
 import { useSignUp } from 'hooks/login/useAuth'
+import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 
 const SignUp: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState<string>()
   const { signUp } = useSignUp()
-
-  const onSubmit = useCallback(
-    async (params: SignUpRequestParams) => {
-      try {
-        await signUp(params)
-      } catch (error) {
-        if (typeof error === 'string') {
-          setErrorMessage(error)
-        }
-      }
-    },
-    [signUp],
-  )
+  const { onSubmit, errorMessage, clearErrorMessage } =
+    useFormErrorHandling<SignUpRequestParams>(signUp)
 
   return (
     <>
