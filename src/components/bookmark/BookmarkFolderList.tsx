@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { FC, useCallback, useMemo } from 'react'
 
 import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
 import { primary, accent } from '../../utils/theme'
-import { FolderEditModal } from './BookmarkFolderEditModal'
+import { BookmarkFolderEditModal } from './BookmarkFolderEditModal'
 import { useBoolean } from 'hooks/useBoolean'
 import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
@@ -15,7 +15,6 @@ type Props = {
 
 export const BookmarkFolderList: FC<Props> = ({ folders }) => {
   const isModalOpened = useBoolean(false)
-  const router = useRouter()
   const searchParams = useSearchParams()
   const routerFolderIndex = useMemo(
     () => Number(searchParams.get('id')) || 0,
@@ -49,7 +48,7 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
           <div
             key={folder.id}
             className={`whitespace-nowrap h-40px ${
-              routerFolderIndex == index
+              routerFolderIndex === index
                 ? 'border-b-3 border-primary-dark text-primary-dark font-bold'
                 : 'text-gray-500 border-b-2'
             }`}
@@ -73,21 +72,20 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
           a
         </div>
       </div>
-
       {/* フォルダ編集・削除モーダル */}
-      <FolderEditModal
-        open={isModalOpened.v}
-        onClose={isModalOpened.setFalse}
-        folder={folders[routerFolderIndex]}
-        onUpdateFolder={async (folderName: string) =>
-          await updateFolder(folders[routerFolderIndex].id, folderName)
-        }
-        onDeleteFolder={async () => {
-          await deleteFolder(folders[routerFolderIndex].id)
-          router.push('bookmark')
-        }}
-      />
-
+      {/* Stateを毎回リセットする */}
+      {isModalOpened.v && (
+        <BookmarkFolderEditModal
+          onClose={isModalOpened.setFalse}
+          folder={folders[routerFolderIndex]}
+          onUpdateFolder={async (folderName: string) =>
+            await updateFolder(folders[routerFolderIndex].id, folderName)
+          }
+          onDeleteFolder={async () => {
+            await deleteFolder(folders[routerFolderIndex].id)
+          }}
+        />
+      )}
       <style jsx>{`
         .scroll-bar::-webkit-scrollbar {
           width: 0;
