@@ -45,9 +45,8 @@ export const PostForm: FC<Props> = ({
     resolver: zodResolver(schema),
     defaultValues: formParamsProps,
   })
-    },
-    [],
-  )
+
+  const watchComment = watch('comment')
 
   return (
     <div className='flex flex-col items-center justify-center'>
@@ -82,11 +81,10 @@ export const PostForm: FC<Props> = ({
             コメント
             <div className='min-h-[50px] leading-1.4rem relative'>
               <div
-                className='py-3 invisible whitespace-pre-wrap'
+                className='py-3 w-80vw break-words invisible sm:w-full'
                 aria-hidden='true'
               >
-                この文字で　編集時の　PostItemの横幅を　最大に　保っている
-                {formParams.comment}
+                {watchComment}
               </div>
               <textarea
                 className='border h-full outline-none ring-primary-dark w-full p-2 pr-9 top-0 left-0 duration-300 scroll-bar-none absolute focus:rounded-md focus:ring-1'
