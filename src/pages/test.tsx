@@ -1,8 +1,51 @@
 import { NextPage } from 'next'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { Layout } from 'components/layout/Layout'
 import { Button } from 'components/shares/base/Button'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useBoolean } from 'hooks/useBoolean'
+
+type Props = {
+  func?: () => void
+  text: string
+}
+const ComponentA: FC<Props> = ({ func, text }) => {
+  const [count, setCount] = useState(0)
+  const message = count + ' ' + text
+  console.log(text, '再レンダリング')
+  return (
+    <div>
+      コンポーネント{message}
+      <div>
+        <Button color='danger' onClick={() => setCount(s => s + 1)}>
+          {message}
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+const MyComponent = React.memo(function MyComponent({
+  text,
+}: {
+  text: string
+  func?: () => void
+  val?: any
+}) {
+  const [count, setCount] = useState(0)
+  const message = count + ' ' + text
+  console.log(text, '再レンダリングmemo')
+  return (
+    <div>
+      コンポーネント{message}
+      <div>
+        <Button color='danger' onClick={() => setCount(s => s + 1)}>
+          {message}
+        </Button>
+      </div>
+    </div>
+  )
+})
 
 const Test: NextPage = () => {
   const colors: ('primary' | 'accent' | 'danger' | 'secondary')[] = [
@@ -13,10 +56,31 @@ const Test: NextPage = () => {
   ]
 
   const open = useBoolean(false)
+  const bool = useBoolean(false)
+  const val = 1
+
+  const funcMemo = useCallback(() => {}, [])
+  const valMemo = useMemo(() => [val], [])
 
   return (
     <Layout>
       <div className='flex flex-col gap-5'>
+        {/* <ComponentA func={() => console.log('a')} /> */}
+        <ComponentA text='A1' />
+        <ComponentA key={String(open.v)} text={'A2'} />
+        <MyComponent text='B1' />
+        {/* memoでも、関数(値)をuseCallback(useMemo)しないから、再レンダリングする */}
+        {/* 関数、配列、オブジェクト型は同じ判定されない */}
+        <MyComponent text='B2' func={() => {}} />
+        {/* openはstateでPropsの値が変わるから再レンダリング */}
+        <MyComponent text='B3' val={[val]} />
+        <MyComponent text='B4' val={open.v} />
+        {/* 再レンダリングしない */}
+        <MyComponent text='B5' val={val} />
+        <MyComponent text='B6' val={bool.v} />
+        <MyComponent text='B7' func={funcMemo} />
+        <MyComponent text='B8' val={valMemo} />
+
         <div className='relative'>
           <Button onClick={open.toggle}>メニューボタン</Button>
           <DropDownMenu
