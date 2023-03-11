@@ -16,7 +16,7 @@ type Props = {
 const regex = new RegExp('^https?://.+$')
 
 const schema = z.object({
-  comment: z.string(),
+  comment: z.string().min(100),
   url: z.string().regex(regex, { message: 'URLの形式で入力して下さい' }),
   published: z.boolean(),
   evaluation: z.number(),

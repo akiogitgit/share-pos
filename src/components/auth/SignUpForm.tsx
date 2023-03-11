@@ -16,7 +16,10 @@ type Props = {
 
 const schema = z
   .object({
-    username: z.string().min(1, { message: '入力は必須です' }),
+    username: z
+      .string()
+      .min(1, { message: '入力は必須です' })
+      .max(30, { message: '30文字以下で入力して下さい' }),
     email: z.string().email('メールの形式で入力して下さい'),
     password: z.string().min(6, { message: '6文字以上で入力して下さい' }),
     passwordConfirmation: z.string(),

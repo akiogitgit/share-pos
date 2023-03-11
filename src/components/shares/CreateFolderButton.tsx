@@ -1,5 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ComponentProps, FC, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { Alert } from './base/Alert'
 import { Button } from './base/Button'
 import { Modal } from 'components/shares/base/Modal'
@@ -12,7 +14,14 @@ type Props = {
   radius?: ComponentProps<typeof Button>['radius']
 }
 
-type FormData = { name: string }
+const schema = z.object({
+  name: z
+    .string()
+    .min(1, { message: '入力は必須です' })
+    .max(15, { message: '15文字以下で入力して下さい' }),
+})
+
+type FormData = z.infer<typeof schema>
 
 export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const open = useBoolean(false)
@@ -23,7 +32,9 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>()
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  })
 
   const { onSubmit, errorMessage, clearErrorMessage } =
     useFormErrorHandling<FormData>(async (e: FormData) => {
@@ -55,10 +66,7 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
               type='text'
               placeholder='フォルダ名'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
-              {...register('name', {
-                required: { value: true, message: '入力は必須です' },
-                maxLength: { value: 15, message: '15文字以下で入力して下さい' },
-              })}
+              {...register('name')}
             />
             {errors?.name && (
               <div className='text-danger-dark'>{errors.name.message}</div>

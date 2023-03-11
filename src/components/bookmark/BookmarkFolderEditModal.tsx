@@ -1,6 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoTrashOutline as IoTrashOutlineIcon } from 'react-icons/io5'
+import { z } from 'zod'
 import { BookmarkFolderDeleteModal } from './BookmarkFolderDeleteModal'
 import { Alert } from 'components/shares/base/Alert'
 import { Modal } from 'components/shares/base/Modal'
@@ -15,7 +17,14 @@ type Props = {
   onDeleteFolder?: () => void
 }
 
-type FormData = { name: string }
+const schema = z.object({
+  name: z
+    .string()
+    .min(1, { message: '入力は必須です' })
+    .max(15, { message: '15文字以下で入力して下さい' }),
+})
+
+type FormData = z.infer<typeof schema>
 
 export const BookmarkFolderEditModal: FC<Props> = ({
   folder,
@@ -29,7 +38,10 @@ export const BookmarkFolderEditModal: FC<Props> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ defaultValues: { name: folder.name } })
+  } = useForm<FormData>({
+    defaultValues: { name: folder.name },
+    resolver: zodResolver(schema),
+  })
 
   const { onSubmit, errorMessage, clearErrorMessage } =
     useFormErrorHandling<FormData>(async (e: FormData) => {
@@ -57,13 +69,7 @@ export const BookmarkFolderEditModal: FC<Props> = ({
                 type='text'
                 className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
                 placeholder='フォルダ名'
-                {...register('name', {
-                  required: { value: true, message: '入力は必須です' },
-                  maxLength: {
-                    value: 15,
-                    message: '15文字以下で入力して下さい',
-                  },
-                })}
+                {...register('name')}
               />
 
               <IoTrashOutlineIcon
