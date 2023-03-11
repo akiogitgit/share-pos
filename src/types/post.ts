@@ -23,10 +23,3 @@ export type Post = {
     id: string
   }
 }
-
-export type PostRequestParams = {
-  comment: string
-  url: string
-  published: boolean
-  evaluation: number
-}

@@ -1,34 +1,16 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useCallback } from 'react'
-import { SignUpForm } from 'components/auth/SignUpForm'
+import { SignUpForm, SignUpRequestParams } from 'components/auth/SignUpForm'
 import { Layout } from 'components/layout/Layout'
+import { Alert } from 'components/shares/base/Alert'
 import { useSignUp } from 'hooks/login/useAuth'
-import { SignUpRequestParams } from 'types/auth'
-import { HttpError } from 'utils/api'
+import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 
 const SignUp: NextPage = () => {
   const { signUp } = useSignUp()
-
-  const onSubmit = useCallback(
-    async (params: SignUpRequestParams) => {
-      if (params.password !== params.passwordConfirmation) {
-        console.log('パスワードと確認用パスワードが一致しません。')
-        return
-      }
-
-      try {
-        await signUp(params)
-      } catch (error) {
-        if (error instanceof HttpError) {
-          console.error(error)
-        }
-      }
-      // マイページに移動する
-    },
-    [signUp],
-  )
+  const { onSubmit, errorMessage, clearErrorMessage } =
+    useFormErrorHandling<SignUpRequestParams>(signUp)
 
   return (
     <>
@@ -37,9 +19,15 @@ const SignUp: NextPage = () => {
       </Head>
       <Layout>
         <h1 className='font-bold text-center text-xl'>新規登録</h1>
-        <div className='mt-12'>
-          <SignUpForm onSubmit={onSubmit} />
+
+        <div className='my-6'>
+          {errorMessage && (
+            <Alert className='mx-auto max-w-300px' onClose={clearErrorMessage}>
+              {errorMessage}
+            </Alert>
+          )}
         </div>
+        <SignUpForm onSubmit={onSubmit} />
 
         <p className='mt-4 text-center'>
           ログインは

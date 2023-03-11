@@ -1,9 +1,11 @@
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { PostRequestParams } from 'components/post/PostForm'
 import { useGetApi, useGetInfinite } from 'hooks/useApi'
-import { Post, PostRequestParams } from 'types/post'
+import { Post } from 'types/post'
 import { UserProfile, User } from 'types/user'
 import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
+import { getStatusErrorMessage } from 'utils/getStatusErrorMessage'
 
 export const useCreatePost = () => {
   const { data: user } = useGetApi<User>('/users/me')
@@ -28,6 +30,7 @@ export const useCreatePost = () => {
       } catch (e) {
         if (e instanceof HttpError) {
           console.error(e.message)
+          throw getStatusErrorMessage(e.status)
         }
       }
     },

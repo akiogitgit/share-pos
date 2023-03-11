@@ -1,108 +1,112 @@
-import { FC, useCallback, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC } from 'react'
 
+import { useForm } from 'react-hook-form'
 import {
   AiOutlineMail as AiOutlineMailIcon,
   AiOutlineUser as AiOutlineUserIcon,
 } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
+import { z } from 'zod'
 import { Button } from 'components/shares/base/Button'
-
-import { SignUpRequestParams } from 'types/auth'
 
 type Props = {
   onSubmit: (params: SignUpRequestParams) => void
 }
 
-export const SignUpForm: FC<Props> = ({ onSubmit }) => {
-  const [formParams, setFormParams] = useState<SignUpRequestParams>({
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
+const schema = z
+  .object({
+    username: z
+      .string()
+      .min(1, { message: '入力は必須です' })
+      .max(30, { message: '30文字以下で入力して下さい' }),
+    email: z.string().email('メールの形式で入力して下さい'),
+    password: z.string().min(6, { message: '6文字以上で入力して下さい' }),
+    passwordConfirmation: z.string(),
+  })
+  .superRefine((arg, ctx) => {
+    if (arg.password !== arg.passwordConfirmation) {
+      ctx.addIssue({
+        path: ['passwordConfirmation'],
+        code: 'custom',
+        message: '確認用パスワードが一致しません',
+      })
+    }
   })
 
-  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormParams(state => {
-      return {
-        ...state,
-        [e.target.name]: e.target.value,
-      }
-    })
-  }, [])
+export type SignUpRequestParams = z.infer<typeof schema>
+
+export const SignUpForm: FC<Props> = ({ onSubmit }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpRequestParams>({ resolver: zodResolver(schema) })
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <form
-        onSubmit={e => {
-          onSubmit(formParams)
-          e.preventDefault()
-        }}
-        className='max-w-300px w-80vw'
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className='max-w-300px w-80vw'>
         <div className='relative'>
           <label>
             ユーザー名
             <input
               type='text'
-              value={formParams.username}
               placeholder='シェアポス太郎'
-              required
-              name='username'
-              onChange={e => onChange(e)}
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              {...register('username')}
             />
           </label>
           <AiOutlineUserIcon className='top-37px left-270px absolute' />
+          {errors?.username && (
+            <div className='text-danger-dark'>{errors.username.message}</div>
+          )}
         </div>
         <div className='mt-2 relative'>
           <label>
             Eメール
             <input
               type='email'
-              id='email'
-              value={formParams.email}
               placeholder='example@example.com'
-              required
-              name='email'
-              onChange={e => onChange(e)}
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              {...register('email')}
             />
           </label>
           <AiOutlineMailIcon className='top-37px left-270px absolute' />
+          {errors?.email && (
+            <div className='text-danger-dark'>{errors.email.message}</div>
+          )}
         </div>
         <div className='mt-2 relative'>
           <label>
             パスワード
             <input
               type='password'
-              id='password'
-              value={formParams.password}
               placeholder='password'
-              required
-              minLength={6}
-              name='password'
-              onChange={e => onChange(e)}
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              {...register('password')}
             />
           </label>
           <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
+          {errors?.password && (
+            <div className='text-danger-dark'>{errors.password.message}</div>
+          )}
         </div>
         <div className='mt-2 relative'>
           <label>
             確認用パスワード
             <input
               type='password'
-              id='passwordConfirmation'
-              value={formParams.passwordConfirmation}
-              required
-              minLength={6}
               placeholder='password'
-              name='passwordConfirmation'
-              onChange={e => onChange(e)}
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              {...register('passwordConfirmation')}
             />
           </label>
           <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
+          {errors?.passwordConfirmation && (
+            <div className='text-danger-dark'>
+              {errors.passwordConfirmation.message}
+            </div>
+          )}
         </div>
         <Button type='submit' fullWidth className='mt-4' animate>
           登録

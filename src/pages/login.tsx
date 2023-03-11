@@ -1,29 +1,17 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useCallback } from 'react'
 
 import { useLogin } from '../hooks/login/useAuth'
-import { LoginForm } from 'components/auth/LoginForm'
+import { LoginForm, LoginRequestParams } from 'components/auth/LoginForm'
 import { Layout } from 'components/layout/Layout'
-import { LoginRequestParams } from 'types/auth'
-import { HttpError } from 'utils/api'
+import { Alert } from 'components/shares/base/Alert'
+import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 
 const Login: NextPage = () => {
   const { login } = useLogin()
-
-  const onSubmit = useCallback(
-    async (params: LoginRequestParams) => {
-      try {
-        await login(params)
-      } catch (error) {
-        if (error instanceof HttpError) {
-          console.error(error.message)
-        }
-      }
-    },
-    [login],
-  )
+  const { onSubmit, errorMessage, clearErrorMessage } =
+    useFormErrorHandling<LoginRequestParams>(login)
 
   return (
     <>
@@ -32,9 +20,16 @@ const Login: NextPage = () => {
       </Head>
       <Layout>
         <h1 className='font-bold text-center text-xl'>ログイン</h1>
-        <div className='mt-12'>
-          <LoginForm onSubmit={onSubmit} />
+
+        <div className='my-6'>
+          {errorMessage && (
+            <Alert className='mx-auto max-w-300px' onClose={clearErrorMessage}>
+              {errorMessage}
+            </Alert>
+          )}
         </div>
+
+        <LoginForm onSubmit={onSubmit} />
 
         <p className='mt-4 text-center'>
           新規登録は

@@ -27,7 +27,8 @@ export const PostItemComment: FC<Props> = ({ comment }) => {
           !open.v && 'h-50px'
         } overflow-hidden whitespace-pre-wrap group relative`}
       >
-        <div ref={ref} className='h-auto'>
+        {/* 横幅を最大に保つ */}
+        <div ref={ref} className='w-80vw sm:w-full'>
           {comment}
         </div>
         <div

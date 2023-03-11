@@ -1,24 +1,52 @@
-import { ComponentProps, FC, useCallback, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ComponentProps, FC, useCallback } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Alert } from './base/Alert'
 import { Button } from './base/Button'
 import { Modal } from 'components/shares/base/Modal'
 import { useBoolean } from 'hooks/useBoolean'
 import { useCreateFolder } from 'hooks/useFolder'
+import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 
 // bookmark, FolderListで使うときradiusを変える
 type Props = {
   radius?: ComponentProps<typeof Button>['radius']
 }
 
+const schema = z.object({
+  name: z
+    .string()
+    .min(1, { message: '入力は必須です' })
+    .max(15, { message: '15文字以下で入力して下さい' }),
+})
+
+type FormData = z.infer<typeof schema>
+
 export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const open = useBoolean(false)
-  const [name, setName] = useState('')
-
   const { createFolder } = useCreateFolder()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  })
+
+  const { onSubmit, errorMessage, clearErrorMessage } =
+    useFormErrorHandling<FormData>(async (e: FormData) => {
+      await createFolder(e.name)
+      onClose()
+    })
 
   const onClose = useCallback(() => {
     open.setFalse()
-    setName('')
-  }, [open])
+    clearErrorMessage()
+    reset()
+  }, [clearErrorMessage, open, reset])
 
   return (
     <>
@@ -27,23 +55,22 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
       </Button>
 
       <Modal open={open.v} onClose={onClose} title='新規フォルダ作成'>
-        <form
-          className='mt-4'
-          onSubmit={async e => {
-            e.preventDefault()
-            onClose()
-            await createFolder(name)
-          }}
-        >
+        {errorMessage && (
+          <Alert className='mx-4 mt-4' onClose={clearErrorMessage}>
+            {errorMessage}
+          </Alert>
+        )}
+        <form className='mt-4' onSubmit={handleSubmit(onSubmit)}>
           <div className='px-4'>
             <input
               type='text'
               placeholder='フォルダ名'
-              required
-              value={name}
-              onChange={e => setName(e.target.value)}
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              {...register('name')}
             />
+            {errors?.name && (
+              <div className='text-danger-dark'>{errors.name.message}</div>
+            )}
           </div>
           <button
             type='submit'

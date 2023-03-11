@@ -1,17 +1,28 @@
-import { FC, useCallback, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC } from 'react'
 
+import { useForm } from 'react-hook-form'
 import { BiCommentDetail as BiCommentDetailIcon } from 'react-icons/bi'
 import { RiArticleLine as RiArticleLineIcon } from 'react-icons/ri'
+import { z } from 'zod'
 import { Button } from 'components/shares/base/Button'
 
-import { PostRequestParams } from 'types/post'
-
-// Props多すぎ？
 type Props = {
   onSubmit: (params: PostRequestParams) => void
   formParamsProps?: PostRequestParams
   submitButtonText?: string
 }
+
+const regex = new RegExp('^https?://.+$')
+
+const schema = z.object({
+  comment: z.string().min(100),
+  url: z.string().regex(regex, { message: 'URLの形式で入力して下さい' }),
+  published: z.boolean(),
+  evaluation: z.number(),
+})
+
+export type PostRequestParams = z.infer<typeof schema>
 
 export const PostForm: FC<Props> = ({
   onSubmit,
@@ -23,20 +34,19 @@ export const PostForm: FC<Props> = ({
   },
   submitButtonText = 'シェアする',
 }) => {
-  const [formParams, setFormParams] =
-    useState<PostRequestParams>(formParamsProps)
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    getValues,
+    setValue,
+    watch,
+  } = useForm<PostRequestParams>({
+    resolver: zodResolver(schema),
+    defaultValues: formParamsProps,
+  })
 
-  const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormParams(state => {
-        return {
-          ...state,
-          [e.target.name]: e.target.value,
-        }
-      })
-    },
-    [],
-  )
+  const watchComment = watch('comment')
 
   return (
     <div className='flex flex-col items-center justify-center'>
@@ -47,10 +57,7 @@ export const PostForm: FC<Props> = ({
       `}</style>
 
       <form
-        onSubmit={e => {
-          onSubmit(formParams)
-          e.preventDefault()
-        }}
+        onSubmit={handleSubmit(onSubmit)}
         className='w-full max-w-420px relative'
       >
         <div className='relative'>
@@ -58,18 +65,15 @@ export const PostForm: FC<Props> = ({
             記事のURL
             <input
               type='text'
-              value={formParams.url}
               placeholder='https://example.com'
-              required
-              name='url'
-              onChange={onChange}
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
+              {...register('url')}
             />
           </label>
-
-          <div className='flex justify-end'>
-            <RiArticleLineIcon className='top-33px right-10px absolute' />
-          </div>
+          <RiArticleLineIcon className='top-33px right-10px absolute' />
+          {errors?.url && (
+            <div className='text-danger-dark'>{errors.url.message}</div>
+          )}
         </div>
 
         <div className='mt-2 relative'>
@@ -77,40 +81,33 @@ export const PostForm: FC<Props> = ({
             コメント
             <div className='min-h-[50px] leading-1.4rem relative'>
               <div
-                className='py-3 invisible whitespace-pre-wrap'
+                className='py-3 w-80vw break-words invisible sm:w-full'
                 aria-hidden='true'
               >
-                この文字で　編集時の　PostItemの横幅を　最大に　保っている
-                {formParams.comment}
+                {watchComment}
               </div>
               <textarea
-                name='comment'
                 className='border h-full outline-none ring-primary-dark w-full p-2 pr-9 top-0 left-0 duration-300 scroll-bar-none absolute focus:rounded-md focus:ring-1'
-                value={formParams.comment}
                 placeholder='この記事オススメ！'
-                onChange={onChange}
+                {...register('comment')}
               />
             </div>
           </label>
-          <div className='flex justify-end'>
-            <BiCommentDetailIcon className='top-33px right-10px absolute' />
-          </div>
+          <BiCommentDetailIcon className='top-33px right-10px absolute' />
         </div>
 
         <div className='mt-2 relative'>
           <label>
             公開設定
             <div>
-              <div
+              <button
+                type='button'
                 className={`rounded-full cursor-pointer ${
-                  formParams.published ? 'bg-accent-dark' : 'bg-primary-dark'
+                  getValues('published') ? 'bg-accent-dark' : 'bg-primary-dark'
                 } h-28px text-white w-90px relative inline-block`}
                 onClick={() =>
-                  setFormParams(state => {
-                    return {
-                      ...state,
-                      published: !formParams.published,
-                    }
+                  setValue('published', !getValues('published'), {
+                    shouldValidate: true,
                   })
                 }
               >
@@ -122,18 +119,16 @@ export const PostForm: FC<Props> = ({
                 </div>
                 <div
                   className={`bg-white h-20px rounded-full top-4px ${
-                    formParams.published
+                    getValues('published')
                       ? 'left-40px w-46px'
                       : 'left-3px w-38px'
                   } duration-150 absolute`}
-                >
-                  <input type='radio' name='a' className='opacity-0' />
-                  <input type='radio' name='a' className='opacity-0' />
-                </div>
-              </div>
+                ></div>
+              </button>
             </div>
           </label>
         </div>
+
         <Button type='submit' fullWidth animate className='mt-4'>
           {submitButtonText}
         </Button>

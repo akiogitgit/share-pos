@@ -1,11 +1,13 @@
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { LoginRequestParams } from 'components/auth/LoginForm'
+import { SignUpRequestParams } from 'components/auth/SignUpForm'
 import { useGetApi } from 'hooks/useApi'
 import { useCookies } from 'stores/useCookies'
-import { LoginRequestParams, SignUpRequestParams } from 'types/auth'
 import { UserWithToken } from 'types/user'
 import { HttpError, postApi } from 'utils/api'
 import { encrypted } from 'utils/encrypt'
+import { getStatusErrorMessage } from 'utils/getStatusErrorMessage'
 
 export const useLogin = () => {
   const router = useRouter()
@@ -16,9 +18,6 @@ export const useLogin = () => {
     async (params: LoginRequestParams) => {
       try {
         const res = await postApi<UserWithToken>('/auth/login', params)
-        if (!res) {
-          return
-        }
 
         set('token', encrypted(res.token), { secure: true })
         mutateUser(undefined)
@@ -27,7 +26,10 @@ export const useLogin = () => {
         router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
-          console.log(e)
+          console.error(e)
+          throw getStatusErrorMessage(e.status, {
+            400: 'Eメールかパスワードが正しくありません',
+          })
         }
       }
     },
@@ -43,12 +45,8 @@ export const useSignUp = () => {
 
   const signUp = useCallback(
     async (params: SignUpRequestParams) => {
-      // ユーザー作成に成功したら、そのままログイン
       try {
         const res = await postApi<UserWithToken>('/auth/sign_up', params)
-        if (!res) {
-          return
-        }
 
         set('token', encrypted(res.token), { secure: true })
         mutateUser(undefined)
@@ -57,7 +55,10 @@ export const useSignUp = () => {
         router.push('/')
       } catch (e) {
         if (e instanceof HttpError) {
-          console.log(e)
+          console.error(e)
+          throw getStatusErrorMessage(e.status, {
+            400: 'このEメールは既に使用されています',
+          })
         }
       }
     },

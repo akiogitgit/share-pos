@@ -51,6 +51,9 @@ export default defineConfig({
         md: rounded.md,
         lg: rounded.lg,
       },
+      width: {
+        fit: 'fit-content',
+      },
     },
   },
 })
