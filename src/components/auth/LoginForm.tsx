@@ -29,8 +29,8 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='max-w-300px w-80vw relative'>
+      <form onSubmit={handleSubmit(onSubmit)} className='max-w-300px w-80vw'>
+        <div className='relative'>
           <label>
             Eメール
             <input
