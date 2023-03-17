@@ -36,7 +36,12 @@ export const Footer: FC = () => {
             </Button>
           </Link>
           <Link href='/signup'>
-            <Button variant='outline' radius='xl' compact>
+            <Button
+              variant='outline'
+              radius='xl'
+              compact
+              className='border border-white rounded-full'
+            >
               新規登録
             </Button>
           </Link>
@@ -61,7 +66,6 @@ export const Footer: FC = () => {
       selected: <IoBookIcon className='h-6 w-6' />,
     },
     {
-      // href: 'myPage',
       href: `/users/${user?.id}`,
       default: <AiOutlineUserIcon className='h-6 w-6' />,
       selected: <FaUserIcon className='h-6 w-6' />,
