@@ -79,7 +79,7 @@ export const PostForm: FC<Props> = ({
         <div className='mt-2 relative'>
           <label>
             コメント
-            <div className='min-h-[50px] leading-1.4rem relative'>
+            <div className='min-h-[50px] relative'>
               <div
                 className='py-3 w-80vw break-words invisible sm:w-full'
                 aria-hidden='true'
