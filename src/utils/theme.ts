@@ -30,7 +30,6 @@ export const secondary = {
   dark: base.gray,
 } as const
 
-// rounded
 export const rounded = {
   xs: '0x',
   sm: '3px',
@@ -39,11 +38,18 @@ export const rounded = {
   xl: '100%',
 }
 
-// fontSize
 export const fontSize = {
   sm: '14px',
   md: '16px',
   lg: '20px',
   xl: '24px',
   '2xl': '30px',
+}
+
+export const lineHeight = {
+  sm: '20px',
+  md: '24px',
+  lg: '28px',
+  xl: '32px',
+  '2xl': '43px',
 }
