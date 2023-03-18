@@ -66,6 +66,65 @@ const Test: NextPage = () => {
   return (
     <Layout>
       <div className='flex flex-col gap-5'>
+        {colors.map(color => (
+          <div key={color}>
+            <div className='flex gap-2 items-start'>
+              <Button color={color} size='xs'>
+                シェアする
+              </Button>
+              <Button color={color} size='sm'>
+                シェアする
+              </Button>
+              <Button color={color} size='md'>
+                シェアする
+              </Button>
+              <Button color={color} size='lg'>
+                シェアする
+              </Button>
+              <Button color={color} size='xl' radius='sm'>
+                シェアする
+              </Button>
+            </div>
+            <div className='flex mt-2 gap-2 items-start'>
+              <Button color={color} size='xs' compact>
+                Settings
+              </Button>
+              <Button color={color} size='sm' compact>
+                Settings
+              </Button>
+              <Button color={color} size='md' compact>
+                Settings
+              </Button>
+              <Button color={color} size='lg' compact>
+                Settings
+              </Button>
+              <Button color={color} size='xl' compact radius='sm'>
+                Settings
+              </Button>
+            </div>
+
+            <div className='flex gap-2 items-start'>
+              <Button color={color}>filled</Button>
+              <Button color={color} variant='light'>
+                light
+              </Button>
+              <Button color={color} variant='outline'>
+                outline
+              </Button>
+            </div>
+            <div className='flex mt-4 gap-2 items-start'>
+              <Button color={color} animate>
+                filled
+              </Button>
+              <Button color={color} animate variant='light'>
+                light
+              </Button>
+              <Button color={color} animate variant='outline'>
+                outline
+              </Button>
+            </div>
+          </div>
+        ))}
         {/* <ComponentA func={() => console.log('a')} /> */}
         <ComponentA text='A1' />
         <ComponentA key={String(open.v)} text={'A2'} />
@@ -109,48 +168,11 @@ const Test: NextPage = () => {
           </DropDownMenu>
         </div>
 
-        {colors.map(color => (
-          <div key={color}>
-            <div className='flex gap-2 items-start'>
-              <Button color={color} size='xs'>
-                Settings
-              </Button>
-              <Button color={color} size='sm'>
-                Settings
-              </Button>
-              <Button color={color} size='md'>
-                Settings
-              </Button>
-              <Button color={color} size='lg'>
-                Settings
-              </Button>
-              <Button color={color} size='xl' radius='sm'>
-                Settings
-              </Button>
-            </div>
-
-            <div className='flex gap-2 items-start'>
-              <Button color={color}>filled</Button>
-              <Button color={color} variant='light'>
-                light
-              </Button>
-              <Button color={color} variant='outline'>
-                outline
-              </Button>
-            </div>
-            <div className='flex mt-4 gap-2 items-start'>
-              <Button color={color} animate>
-                filled
-              </Button>
-              <Button color={color} animate variant='light'>
-                light
-              </Button>
-              <Button color={color} animate variant='outline'>
-                outline
-              </Button>
-            </div>
-          </div>
-        ))}
+        <div className='bg-white text-sm w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-md w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-lg w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-xl w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-2xl w-100px'>aaaaa ffff aaa aa</div>
       </div>
     </Layout>
   )
