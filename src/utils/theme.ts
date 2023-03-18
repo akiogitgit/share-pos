@@ -36,7 +36,7 @@ export const rounded = {
   md: '7px',
   lg: '15px',
   xl: '100%',
-}
+} as const
 
 export const fontSize = {
   sm: '14px',
@@ -44,7 +44,7 @@ export const fontSize = {
   lg: '20px',
   xl: '24px',
   '2xl': '30px',
-}
+} as const
 
 export const lineHeight = {
   sm: '20px',
@@ -52,4 +52,4 @@ export const lineHeight = {
   lg: '28px',
   xl: '32px',
   '2xl': '43px',
-}
+} as const
