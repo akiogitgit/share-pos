@@ -21,6 +21,14 @@
     "import/order": [
       "error",
       {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["sibling", "parent"],
+          "object"
+        ],
+        "newlines-between": "always", // グループ間で改行
         "alphabetize": {
           "order": "asc"
         }
