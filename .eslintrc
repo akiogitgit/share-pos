@@ -1,6 +1,6 @@
 {
-  "plugins": ["unused-imports"],
-  // extendsは上から適応されるため順番に注意
+  "plugins": ["unused-imports", "import", "filenames", "@typescript-eslint"],
+  // .eslintrcは下に書くほど優先が高い(上書きされていく)
   // prettierは最後に書く
   "extends": [
     "next",
@@ -9,7 +9,39 @@
     "plugin:react-hooks/recommended",
     "prettier"
   ],
-
+  "overrides": [
+    {
+      // componentsはパスカルケース
+      "files": ["src/components/**"],
+      "rules": { "filenames/match-regex": ["error", "^([A-Z][a-z0-9]*)+$"] }
+    },
+    {
+      // hooksはuse + パスカルケース
+      "files": ["src/hooks/**"],
+      "rules": { "filenames/match-regex": ["error", "^use([A-Z][a-z0-9]*)+$"] }
+    },
+    {
+      // pagesはケバブケース、[], _にも対応
+      "files": ["src/pages/**"],
+      "rules": {
+        "filenames/match-regex": ["error", "^([a-z_[])([a-z]+-?)+(])?$"]
+      }
+    },
+    {
+      // typesはキャメルケース
+      "files": ["src/types/**"],
+      "rules": {
+        "filenames/match-regex": ["error", "^[a-z][a-zA-Z]+$"]
+      }
+    },
+    {
+      // utilsはキャメルケース。useから始めない
+      "files": ["src/utils/**"],
+      "rules": {
+        "filenames/match-regex": ["error", "^(?!use)[a-z][a-zA-Z]+$"]
+      }
+    }
+  ],
   "ignorePatterns": ["*.config.js"],
   "rules": {
     "@typescript-eslint/no-unused-vars": "warn", // 未使用の変数
