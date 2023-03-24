@@ -23,13 +23,16 @@ export const HeaderDropDownMenu: FC = () => {
   return (
     <div>
       {/* アバターアイコン */}
-      <div className='cursor-pointer flex' onClick={open.toggle}>
+      <button
+        className='cursor-pointer flex'
+        onClick={open.toggle}
+      >
         {user ? (
           <Avatar id={user.id} />
         ) : (
           <FaUserCircleIcon className='h-9 w-9' />
         )}
-      </div>
+      </button>
 
       <div className='relative'>
         <DropDownMenu

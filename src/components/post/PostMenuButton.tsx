@@ -42,10 +42,12 @@ export const PostMenuButton: FC<Props> = ({
 
   return (
     <div className='flex relative'>
-      <BsThreeDotsIcon
-        className='cursor-pointer text-2xl duration-100 hover:opacity-50'
+      <button
+        className='cursor-pointer flex'
         onClick={isMenuOpened.toggle}
-      />
+      >
+        <BsThreeDotsIcon className='text-2xl duration-100 hover:opacity-50' />
+      </button>
 
       <DropDownMenu
         open={isMenuOpened.v}
@@ -90,14 +92,14 @@ export const PostMenuButton: FC<Props> = ({
 
         {user && (
           <>
-            <div
+            <button
               className='text-left w-full py-2 px-4 hover:bg-primary-light'
               onClick={isAddBookmarkClicked.toggle}
               onMouseEnter={isHoveringAddBookmark.setTrue}
               onMouseLeave={isHoveringAddBookmark.setFalse}
             >
               ブックマークに追加
-            </div>
+            </button>
 
             {post.bookmark && (
               <button
