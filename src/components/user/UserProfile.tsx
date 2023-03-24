@@ -41,13 +41,16 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         <div className='flex justify-between items-center'>
           <div>
             <div className='w-23 whitespace-nowrap sm:(flex gap-5 w-full) '>
-              <Avatar id={Number(userProfile?.user.id)} size='xl' />
+              <Avatar
+                id={Number(userProfile?.user.id)}
+                size='xl'
+              />
               <div>
                 <h1 className='font-bold mt-2 text-2xl'>
                   {userProfile?.user.username}
                 </h1>
                 <div className='flex mt-4 gap-3'>
-                  <div
+                  <button
                     onClick={() => {
                       open.setTrue()
                       setSelected('フォロー一覧')
@@ -59,8 +62,8 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                       {userProfile.followingCount}
                     </span>{' '}
                     <span className='text-gray-500'>フォロー</span>
-                  </div>
-                  <div
+                  </button>
+                  <button
                     onClick={() => {
                       open.setTrue()
                       setSelected('フォロワー一覧')
@@ -72,7 +75,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                       {userProfile.followerCount}
                     </span>{' '}
                     <span className='text-gray-500'>フォロワー</span>
-                  </div>
+                  </button>
                   <p>
                     <span className='font-bold'>
                       {userProfile?.posts.length}
@@ -131,7 +134,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
           <div className='w-full px-2 gap-3'>
             <div className='border-b flex border-gray-300'>
               {modalTabs.map(tab => (
-                <div
+                <button
                   key={tab}
                   className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
                     tab === selected &&
@@ -146,7 +149,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                   }}
                 >
                   {tab}
-                </div>
+                </button>
               ))}
             </div>
           </div>
