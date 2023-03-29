@@ -69,9 +69,13 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
               placeholder='フォルダ名'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('name')}
+              aria-required='true'
+              aria-invalid={!!errors?.name}
             />
             {errors?.name && (
-              <div className='text-danger-dark'>{errors.name.message}</div>
+              <p role='alert' className='text-danger-dark'>
+                {errors?.name.message}
+              </p>
             )}
           </div>
           <button
