@@ -45,6 +45,8 @@ export const PostMenuButton: FC<Props> = ({
       <button
         className='cursor-pointer flex'
         onClick={isMenuOpened.toggle}
+        aria-label='メニューを開く'
+        aria-pressed={isMenuOpened.v}
       >
         <BsThreeDotsIcon className='text-2xl duration-100 hover:opacity-50' />
       </button>

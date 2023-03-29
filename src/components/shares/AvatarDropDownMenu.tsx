@@ -26,6 +26,8 @@ export const HeaderDropDownMenu: FC = () => {
       <button
         className='cursor-pointer flex'
         onClick={open.toggle}
+        aria-label='メニューを開く'
+        aria-pressed={open.v}
       >
         {user ? (
           <Avatar id={user.id} />
