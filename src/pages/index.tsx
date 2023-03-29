@@ -41,11 +41,10 @@ const Home: NextPage = () => {
         )}
 
         {!isValidating && <div ref={ref} aria-hidden='true' />}
-        {isValidating && (
-          <div className='mt-7 text-center'>
-            <Loader size='xl' />
-          </div>
-        )}
+
+        <div aria-live='polite' className='mt-7 text-center'>
+          {isValidating && <Loader size='xl' />}
+        </div>
       </Layout>
     </>
   )
