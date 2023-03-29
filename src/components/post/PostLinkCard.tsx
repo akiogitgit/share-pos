@@ -23,17 +23,13 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
 
   return (
     <figure>
-      <a
-        href={post.url}
-        target='_blank'
-        rel='noreferrer'
-      >
+      <a href={post.url} target='_blank' rel='noreferrer'>
         <div className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
           <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
             {displayURL ? (
               <Image
                 src={displayURL}
-                alt='記事のサムネイル画像'
+                alt='記事のサムネイル'
                 title={`${post.metaInfo?.title}へ移動します`}
                 className='bg-gray-100 transform duration-300 group-hover:scale-110'
                 width={430}
