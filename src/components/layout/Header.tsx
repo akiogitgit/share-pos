@@ -27,14 +27,21 @@ export const Header: FC = () => {
       } sm:translate-y-0 sticky duration-300`}
     >
       <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>
-        <Link href='/'>
-          <h1 className='cursor-pointer font-cantoreOne text-primary-dark mb-1 text-2xl leading-2xl'>
+        <Link
+          href='/'
+          aria-label='シェアポス、読んで良かった記事をシェアするサービス'
+        >
+          <h1 className='cursor-pointer font-cantoreOne text-primary-dark mb-1 text-2xl'>
             SharePos
           </h1>
         </Link>
 
         <div className='flex gap-3 justify-end items-center'>
-          <AiOutlineSearchIcon className='cursor-pointer h-6 mt-1 w-6' />
+          <AiOutlineSearchIcon
+            className='cursor-pointer h-6 mt-1 w-6'
+            role='search'
+            tabIndex={0}
+          />
 
           {isLoggedIn ? (
             <div className='flex gap-3 items-center'>
