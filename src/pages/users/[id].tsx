@@ -37,10 +37,15 @@ const User: NextPage = () => {
       <UserProfile userProfile={userProfile} isMyPage={isMyPage} />
       <section className='mt-10'>
         {isMyPage && (
-          <div className='border-b flex border-gray-300 mt-5 w-full gap-3'>
+          <div
+            className='border-b flex border-gray-300 mt-5 w-full gap-3'
+            role='tablist'
+          >
             {tabs.map(tab => (
               <button
                 key={tab}
+                role='tab'
+                aria-selected={selected === tab}
                 onClick={() => setSelected(tab)}
                 className={`text-xl pb-1 w-50vw sm:w-100px ${
                   selected === tab &&
