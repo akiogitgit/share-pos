@@ -68,11 +68,15 @@ export const PostForm: FC<Props> = ({
               placeholder='https://example.com'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('url')}
+              aria-required='true'
+              aria-invalid={!!errors?.url}
             />
           </label>
           <RiArticleLineIcon className='top-33px right-10px absolute' />
           {errors?.url && (
-            <div className='text-danger-dark'>{errors.url.message}</div>
+            <p role='alert' className='text-danger-dark'>
+              {errors?.url.message}
+            </p>
           )}
         </div>
 

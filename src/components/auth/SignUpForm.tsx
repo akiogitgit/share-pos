@@ -54,11 +54,15 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
               placeholder='シェアポス太郎'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('username')}
+              aria-required='true'
+              aria-invalid={!!errors?.username}
             />
           </label>
           <AiOutlineUserIcon className='top-37px left-270px absolute' />
           {errors?.username && (
-            <div className='text-danger-dark'>{errors.username.message}</div>
+            <p role='alert' className='text-danger-dark'>
+              {errors.username.message}
+            </p>
           )}
         </div>
         <div className='mt-2 relative'>
@@ -69,11 +73,15 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
               placeholder='example@example.com'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('email')}
+              aria-required='true'
+              aria-invalid={!!errors?.email}
             />
           </label>
           <AiOutlineMailIcon className='top-37px left-270px absolute' />
           {errors?.email && (
-            <div className='text-danger-dark'>{errors.email.message}</div>
+            <p role='alert' className='text-danger-dark'>
+              {errors.email.message}
+            </p>
           )}
         </div>
         <div className='mt-2 relative'>
@@ -84,11 +92,15 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
               placeholder='password'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('password')}
+              aria-required='true'
+              aria-invalid={!!errors?.password}
             />
           </label>
           <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
           {errors?.password && (
-            <div className='text-danger-dark'>{errors.password.message}</div>
+            <p role='alert' className='text-danger-dark'>
+              {errors.password.message}
+            </p>
           )}
         </div>
         <div className='mt-2 relative'>
@@ -99,13 +111,15 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
               placeholder='password'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('passwordConfirmation')}
+              aria-required='true'
+              aria-invalid={!!errors?.passwordConfirmation}
             />
           </label>
           <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
           {errors?.passwordConfirmation && (
-            <div className='text-danger-dark'>
+            <p role='alert' className='text-danger-dark'>
               {errors.passwordConfirmation.message}
-            </div>
+            </p>
           )}
         </div>
         <Button type='submit' fullWidth className='mt-4' animate>
