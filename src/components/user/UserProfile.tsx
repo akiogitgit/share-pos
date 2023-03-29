@@ -129,26 +129,30 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         open={open.v}
         onClose={open.setFalse}
         title={
-          <div className='w-full px-2 gap-3'>
-            <div className='border-b flex border-gray-300'>
-              {modalTabs.map(tab => (
-                <button
-                  key={tab}
-                  className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                    tab === selected &&
-                    'border-primary-dark border-b-3 text-primary-dark'
-                  }`}
-                  onClick={() => {
-                    setSelected(tab)
-                    // タブを移動する毎に再検証
-                    if (selected === tab) return
-                    if (tab === 'フォロー一覧') mutateFollowings(followings)
-                    if (tab === 'フォロワー一覧') mutateFollowers(followers)
-                  }}
-                >
-                  {tab}
-                </button>
-              ))}
+          <div
+            role='tablist'
+            className='border-b flex border-gray-300 w-full px-2 gap-3'
+          >
+            {modalTabs.map(tab => (
+              <button
+                key={tab}
+                role='tab'
+                aria-selected={selected === tab}
+                className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
+                  tab === selected &&
+                  'border-primary-dark border-b-3 text-primary-dark'
+                }`}
+                onClick={() => {
+                  setSelected(tab)
+                  // タブを移動する毎に再検証
+                  if (selected === tab) return
+                  if (tab === 'フォロー一覧') mutateFollowings(followings)
+                  if (tab === 'フォロワー一覧') mutateFollowers(followers)
+                }}
+              >
+                {tab}
+              </button>
+            ))}
             </div>
           </div>
         }
