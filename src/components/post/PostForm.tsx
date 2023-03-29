@@ -106,16 +106,19 @@ export const PostForm: FC<Props> = ({
             <div>
               <button
                 type='button'
+                role='switch'
+                aria-label='公開設定'
+                aria-checked={getValues('published')}
                 className={`rounded-full cursor-pointer ${
                   getValues('published') ? 'bg-accent-dark' : 'bg-primary-dark'
-                } h-28px text-white w-90px relative inline-block`}
+                } h-28px text-white w-90px relative`}
                 onClick={() =>
                   setValue('published', !getValues('published'), {
                     shouldValidate: true,
                   })
                 }
               >
-                <div className='font-bold text-white transform top-[2px] left-[5px] absolute'>
+                <div className='font-bold text-white top-[2px] left-[5px] absolute'>
                   公開
                   <span className='ml-3px transform scale-x-80 inline-block'>
                     非公開
