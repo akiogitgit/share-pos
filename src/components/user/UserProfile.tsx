@@ -39,10 +39,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         <div className='flex justify-between items-center'>
           <div>
             <div className='w-23 whitespace-nowrap sm:(flex gap-5 w-full) '>
-              <Avatar
-                id={Number(userProfile?.user.id)}
-                size='xl'
-              />
+              <Avatar id={Number(userProfile?.user.id)} size='xl' />
               <div>
                 <h1 className='font-bold mt-2 text-2xl'>
                   {userProfile?.user.username}
@@ -86,6 +83,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
           </div>
 
           <div className='transform translate-y-[-42px] sm:translate-y-0'>
+            {/* aria-live付けたい */}
             {currentUser ? (
               isMyPage ? (
                 <Button
@@ -95,25 +93,17 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                 >
                   プロフィールを編集
                 </Button>
-              ) : userProfile.isFollowing ? (
-                <Button
-                  color='primary'
-                  size='md'
-                  radius='xl'
-                  variant='outline'
-                  onClick={unFollow}
-                >
-                  フォロー中
-                </Button>
               ) : (
                 <Button
-                  color='primary'
                   size='md'
                   radius='xl'
-                  animate
-                  onClick={follow}
+                  variant={userProfile.isFollowing ? 'outline' : 'filled'}
+                  animate={userProfile.isFollowing ? false : true}
+                  onClick={userProfile.isFollowing ? unFollow : follow}
                 >
-                  フォロー
+                  <span aria-live='polite'>
+                    {userProfile.isFollowing ? 'フォロー中' : 'フォロー'}
+                  </span>
                 </Button>
               )
             ) : (
@@ -153,7 +143,6 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                 {tab}
               </button>
             ))}
-            </div>
           </div>
         }
       >
