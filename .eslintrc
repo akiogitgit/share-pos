@@ -5,7 +5,7 @@
   "extends": [
     "next",
     "next/core-web-vitals",
-    "plugin:import/recommended", // 同じimport自動修正等
+    "plugin:import/recommended",
     "plugin:react-hooks/recommended",
     "prettier"
   ],
@@ -44,10 +44,10 @@
   ],
   "ignorePatterns": ["*.config.js"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "warn", // 未使用の変数
-    "@typescript-eslint/no-empty-function": "error", // 空の関数
-    "unused-imports/no-unused-imports": "error", // 未使用のインポート
-    "react-hooks/rules-of-hooks": "error", // フックスのルール
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-empty-function": "error",
+    "unused-imports/no-unused-imports": "error",
+    "react-hooks/rules-of-hooks": "error",
     "import/order": [
       "error",
       {
@@ -62,6 +62,23 @@
         "alphabetize": {
           "order": "asc"
         }
+      }
+    ],
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          // shares以外は、sharesで呼び出すとエラー
+          {
+            "from": "src/components/!(shares)/**",
+            "target": "src/components/shares/**"
+          },
+          // shares直下を、shares/baseで呼び出すとエラー
+          {
+            "from": "src/components/shares/*",
+            "target": "src/components/shares/base/**"
+          }
+        ]
       }
     ]
   }
