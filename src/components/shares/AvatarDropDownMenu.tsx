@@ -42,29 +42,39 @@ export const HeaderDropDownMenu: FC = () => {
           onClose={open.setFalse}
           className='top-10px right-[-15px]'
         >
-          <Link href='/bookmark'>
-            <div className='py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
+          <li className='hidden sm:block'>
+            <Link
+              href='/bookmark'
+              className='flex py-2 pl-4 gap-2 items-center hover:bg-primary-light'
+            >
               <HiOutlineBookOpenIcon />
               ブックマーク
-            </div>
-          </Link>
-          <Link href={`/users/${user?.id}`}>
-            <div className='py-2 pl-4 gap-2 hidden items-center sm:flex hover:bg-primary-light'>
+            </Link>
+          </li>
+          <li className='hidden sm:block'>
+            <Link
+              href={`/users/${user?.id}`}
+              className='flex py-2 pl-4 gap-2 items-center hover:bg-primary-light'
+            >
               <AiOutlineUserIcon />
               マイページ
+            </Link>
+          </li>
+          <li>
+            <div className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'>
+              <FiSettingsIcon />
+              ユーザー情報
             </div>
-          </Link>
-          <a className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'>
-            <FiSettingsIcon />
-            ユーザー情報
-          </a>
-          <button
-            className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'
-            onClick={logOut}
-          >
-            <FiLogOutIcon />
-            ログアウト
-          </button>
+          </li>
+          <li>
+            <button
+              className='flex text-left w-full py-2 pl-4 gap-2 items-center hover:bg-primary-light'
+              onClick={logOut}
+            >
+              <FiLogOutIcon />
+              ログアウト
+            </button>
+          </li>
         </DropDownMenu>
       </div>
     </div>
