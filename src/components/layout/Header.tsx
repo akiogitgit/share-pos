@@ -48,7 +48,7 @@ export const Header: FC = () => {
               <HeaderDropDownMenu />
 
               {pathname !== '/create' && (
-                <Link href='/create'>
+                <Link href='/create' aria-label='記事をシェアする'>
                   <Button
                     className='hidden sm:block'
                     radius='md'
@@ -67,9 +67,7 @@ export const Header: FC = () => {
             </div>
           ) : (
             <div className='flex gap-2 items-center'>
-              <Link href='/login'>
-                <div className='cursor-pointer'>ログイン</div>
-              </Link>
+              <Link href='/login'>ログイン</Link>
               <Link href='/signup'>
                 <Button>新規登録</Button>
               </Link>

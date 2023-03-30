@@ -34,8 +34,12 @@ const Login: NextPage = () => {
 
         <p className='mt-4 text-center'>
           新規登録は
-          <Link href='/signup'>
-            <span className='font-bold text-accent-dark'>こちら</span>
+          <Link
+            href='/signup'
+            className='font-bold text-accent-dark'
+            aria-label='新規登録'
+          >
+            こちら
           </Link>
         </p>
       </Layout>

@@ -11,7 +11,7 @@ export const JumpToCreatePostButton: FC = () => {
   }, [])
 
   return (
-    <Link href='/create'>
+    <Link href='/create' aria-label='記事をシェアする'>
       <div className='bg-accent-dark rounded-full flex font-bold text-white text-lg py-10px px-11.5px right-20px bottom-50px leading-1.1rem z-2 fixed'>
         <div className='my-auto'>
           <div

@@ -23,7 +23,12 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
 
   return (
     <figure>
-      <a href={post.url} target='_blank' rel='noreferrer'>
+      <a
+        href={post.url}
+        target='_blank'
+        rel='noreferrer'
+        aria-label={`${post.metaInfo?.title}へ移動する`}
+      >
         <div className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
           <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
             {displayURL ? (
