@@ -24,12 +24,12 @@ export const DropDownMenu: FC<Props> = ({
           />
 
           {/* メニュー */}
-          <div
+          <ul
             className={`z-1 absolute ${className}
                         bg-white cursor-pointer rounded-sm shadow-outline w-160px overflow-hidden`}
           >
             {children}
-          </div>
+          </ul>
         </>
       )}
     </>

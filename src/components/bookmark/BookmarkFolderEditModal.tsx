@@ -70,15 +70,23 @@ export const BookmarkFolderEditModal: FC<Props> = ({
                 className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
                 placeholder='フォルダ名'
                 {...register('name')}
+                aria-invalid={!!errors?.name}
               />
 
-              <IoTrashOutlineIcon
+              <button
+                className='flex'
+                aria-label='フォルダ削除'
+                type='button'
+                role='link'
                 onClick={isVisibleDeleteModal.setTrue}
-                className='bg-danger-dark border-danger-dark rounded-md cursor-pointer border-2 h-10 text-white p-1.5 w-12'
-              />
+              >
+                <IoTrashOutlineIcon className='bg-danger-dark border-danger-dark rounded-md cursor-pointer border-2 h-10 text-white p-1.5 w-10' />
+              </button>
             </div>
             {errors?.name && (
-              <div className='text-danger-dark'>{errors.name.message}</div>
+              <p role='alert' className='text-danger-dark'>
+                {errors?.name.message}
+              </p>
             )}
           </div>
 

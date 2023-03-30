@@ -27,21 +27,28 @@ export const Header: FC = () => {
       } sm:translate-y-0 sticky duration-300`}
     >
       <nav className='flex mx-auto max-w-1150px px-4 items-center justify-between'>
-        <Link href='/'>
+        <Link
+          href='/'
+          aria-label='シェアポス、読んで良かった記事をシェアするサービス'
+        >
           <h1 className='cursor-pointer font-cantoreOne text-primary-dark mb-1 text-2xl'>
             SharePos
           </h1>
         </Link>
 
         <div className='flex gap-3 justify-end items-center'>
-          <AiOutlineSearchIcon className='cursor-pointer h-6 mt-1 w-6' />
+          <AiOutlineSearchIcon
+            className='cursor-pointer h-6 mt-1 w-6'
+            role='search'
+            tabIndex={0}
+          />
 
           {isLoggedIn ? (
             <div className='flex gap-3 items-center'>
               <HeaderDropDownMenu />
 
               {pathname !== '/create' && (
-                <Link href='/create'>
+                <Link href='/create' aria-label='記事をシェアする'>
                   <Button
                     className='hidden sm:block'
                     radius='md'
@@ -60,9 +67,7 @@ export const Header: FC = () => {
             </div>
           ) : (
             <div className='flex gap-2 items-center'>
-              <Link href='/login'>
-                <div className='cursor-pointer'>ログイン</div>
-              </Link>
+              <Link href='/login'>ログイン</Link>
               <Link href='/signup'>
                 <Button>新規登録</Button>
               </Link>
