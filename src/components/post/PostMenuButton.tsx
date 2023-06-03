@@ -42,10 +42,14 @@ export const PostMenuButton: FC<Props> = ({
 
   return (
     <div className='flex relative'>
-      <BsThreeDotsIcon
-        className='cursor-pointer text-2xl duration-100 hover:opacity-50'
+      <button
+        className='cursor-pointer flex'
         onClick={isMenuOpened.toggle}
-      />
+        aria-label='メニューを開く'
+        aria-pressed={isMenuOpened.v}
+      >
+        <BsThreeDotsIcon className='text-2xl duration-100 hover:opacity-50' />
+      </button>
 
       <DropDownMenu
         open={isMenuOpened.v}
@@ -54,62 +58,75 @@ export const PostMenuButton: FC<Props> = ({
       >
         {user?.id === post.userId && (
           <>
-            <button
-              className='text-left w-full py-2 px-4  hover:bg-primary-light'
-              onClick={() => {
-                onEdit?.()
-                onCloseMenu()
-              }}
-            >
-              投稿を編集する
-            </button>
-            <button
-              className='text-left w-full py-2 px-4 hover:bg-primary-light'
-              onClick={async () => {
-                onCloseMenu()
-                await onDelete?.()
-              }}
-            >
-              投稿を
-              <span className='font-bold text-danger-dark'>削除</span>
-              する
-            </button>
-          </>
-        )}
-
-        <button
-          className='text-left w-full py-2 px-4 hover:bg-primary-light'
-          onClick={() => {
-            navigator.clipboard.writeText(post.url)
-            alert('リンクをコピーしました')
-            onCloseMenu()
-          }}
-        >
-          記事リンクをコピー
-        </button>
-
-        {user && (
-          <>
-            <div
-              className='text-left w-full py-2 px-4 hover:bg-primary-light'
-              onClick={isAddBookmarkClicked.toggle}
-              onMouseEnter={isHoveringAddBookmark.setTrue}
-              onMouseLeave={isHoveringAddBookmark.setFalse}
-            >
-              ブックマークに追加
-            </div>
-
-            {post.bookmark && (
+            <li>
               <button
-                className='text-left w-full py-2 px-4 hover:bg-primary-light'
+                className='text-left w-full py-2 px-4  hover:bg-primary-light'
                 onClick={() => {
-                  onRemoveBookmark?.()
+                  onEdit?.()
                   onCloseMenu()
                 }}
               >
-                ブックマークを
-                <span className='font-bold text-danger-dark'>削除</span>
+                投稿を編集する
               </button>
+            </li>
+            <li>
+              <button
+                className='text-left w-full py-2 px-4 hover:bg-primary-light'
+                onClick={async () => {
+                  onCloseMenu()
+                  await onDelete?.()
+                }}
+              >
+                投稿を
+                <span className='font-bold text-danger-dark'>削除</span>
+                する
+              </button>
+            </li>
+          </>
+        )}
+
+        <li>
+          <button
+            className='text-left w-full py-2 px-4 hover:bg-primary-light'
+            onClick={() => {
+              navigator.clipboard.writeText(post.url)
+              alert('リンクをコピーしました')
+              onCloseMenu()
+            }}
+            aria-label='記事のリンクをコピーする'
+          >
+            記事リンクをコピー
+          </button>
+        </li>
+
+        {user && (
+          <>
+            <li>
+              <button
+                className='text-left w-full py-2 px-4 hover:bg-primary-light'
+                onClick={isAddBookmarkClicked.toggle}
+                onMouseEnter={isHoveringAddBookmark.setTrue}
+                onMouseLeave={isHoveringAddBookmark.setFalse}
+                aria-label='記事をブックマークに追加する'
+              >
+                ブックマークに追加
+              </button>
+            </li>
+
+            {post.bookmark && (
+              <li>
+                <button
+                  className='text-left w-full py-2 px-4 hover:bg-primary-light'
+                  onClick={() => {
+                    onRemoveBookmark?.()
+                    onCloseMenu()
+                  }}
+                  aria-label='記事をブックマークから削除する'
+                >
+                  ブックマークを
+                  <span className='font-bold text-danger-dark'>削除</span>
+                </button>
+              </li>
             )}
           </>
         )}

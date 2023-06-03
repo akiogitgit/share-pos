@@ -45,7 +45,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                   {userProfile?.user.username}
                 </h1>
                 <div className='flex mt-4 gap-3'>
-                  <div
+                  <button
                     onClick={() => {
                       open.setTrue()
                       setSelected('フォロー一覧')
@@ -57,8 +57,8 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                       {userProfile.followingCount}
                     </span>{' '}
                     <span className='text-gray-500'>フォロー</span>
-                  </div>
-                  <div
+                  </button>
+                  <button
                     onClick={() => {
                       open.setTrue()
                       setSelected('フォロワー一覧')
@@ -70,7 +70,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                       {userProfile.followerCount}
                     </span>{' '}
                     <span className='text-gray-500'>フォロワー</span>
-                  </div>
+                  </button>
                   <p>
                     <span className='font-bold'>
                       {userProfile?.posts.length}
@@ -83,6 +83,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
           </div>
 
           <div className='transform translate-y-[-42px] sm:translate-y-0'>
+            {/* aria-live付けたい */}
             {currentUser ? (
               isMyPage ? (
                 <Button
@@ -92,25 +93,17 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                 >
                   プロフィールを編集
                 </Button>
-              ) : userProfile.isFollowing ? (
-                <Button
-                  color='primary'
-                  size='md'
-                  radius='xl'
-                  variant='outline'
-                  onClick={unFollow}
-                >
-                  フォロー中
-                </Button>
               ) : (
                 <Button
-                  color='primary'
                   size='md'
                   radius='xl'
-                  animate
-                  onClick={follow}
+                  variant={userProfile.isFollowing ? 'outline' : 'filled'}
+                  animate={userProfile.isFollowing ? false : true}
+                  onClick={userProfile.isFollowing ? unFollow : follow}
                 >
-                  フォロー
+                  <span aria-live='polite'>
+                    {userProfile.isFollowing ? 'フォロー中' : 'フォロー'}
+                  </span>
                 </Button>
               )
             ) : (
@@ -126,27 +119,30 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         open={open.v}
         onClose={open.setFalse}
         title={
-          <div className='w-full px-2 gap-3'>
-            <div className='border-b flex border-gray-300'>
-              {modalTabs.map(tab => (
-                <div
-                  key={tab}
-                  className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                    tab === selected &&
-                    'border-primary-dark border-b-3 text-primary-dark'
-                  }`}
-                  onClick={() => {
-                    setSelected(tab)
-                    // タブを移動する毎に再検証
-                    if (selected === tab) return
-                    if (tab === 'フォロー一覧') mutateFollowings(followings)
-                    if (tab === 'フォロワー一覧') mutateFollowers(followers)
-                  }}
-                >
-                  {tab}
-                </div>
-              ))}
-            </div>
+          <div
+            role='tablist'
+            className='border-b flex border-gray-300 w-full px-2 gap-3'
+          >
+            {modalTabs.map(tab => (
+              <button
+                key={tab}
+                role='tab'
+                aria-selected={selected === tab}
+                className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
+                  tab === selected &&
+                  'border-primary-dark border-b-3 text-primary-dark'
+                }`}
+                onClick={() => {
+                  setSelected(tab)
+                  // タブを移動する毎に再検証
+                  if (selected === tab) return
+                  if (tab === 'フォロー一覧') mutateFollowings(followings)
+                  if (tab === 'フォロワー一覧') mutateFollowers(followers)
+                }}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
         }
       >

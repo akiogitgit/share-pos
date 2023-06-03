@@ -60,6 +60,7 @@ export const useGetInfinite = <Data = any>(
       revalidateOnReconnect: false,
       revalidateIfStale: false,
       revalidateOnFocus: false,
+      revalidateFirstPage: false,
     },
   )
 
@@ -77,7 +78,7 @@ export const useGetInfinite = <Data = any>(
 
   return {
     ...SWRInfiniteResponse,
-    data: data?.flat(),
+    data: data?.flat(), // Data[][]を、Data[]に変換する
     isReachingEnd,
     fetchMore,
   }

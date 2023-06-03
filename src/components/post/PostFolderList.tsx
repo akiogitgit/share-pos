@@ -33,21 +33,23 @@ export const FolderList: FC<Props> = ({
       <div className='bg-white rounded-md shadow-outline w-160px overflow-hidden'>
         <CreateFolderButton radius='xs' />
 
-        <div className='max-h-250px overflow-y-scroll scroll-bar-none'>
+        <ul className='max-h-250px overflow-y-scroll scroll-bar-none'>
           {folders?.map((folder, index) => (
-            <button
-              key={index}
-              className='flex text-left w-full py-1 px-2 gap-1 items-center hover:bg-primary-light'
-              onClick={async () => {
-                onClickFolderName?.()
-                await onAddBookmark?.(folder.id, post)
-              }}
-            >
-              <AiFillFolderIcon className='h-6 mr-1 text-accent-dark min-w-6 w-6' />
-              <p>{folder.name}</p>
-            </button>
+            <li key={index}>
+              <button
+                className='flex text-left w-full py-1 px-2 gap-1 items-center hover:bg-primary-light'
+                onClick={async () => {
+                  onClickFolderName?.()
+                  await onAddBookmark?.(folder.id, post)
+                }}
+                aria-label={`${folder.name}フォルダ`}
+              >
+                <AiFillFolderIcon className='h-6 mr-1 text-accent-dark min-w-6 w-6' />
+                <p>{folder.name}</p>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   )

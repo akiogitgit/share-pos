@@ -139,15 +139,34 @@ const Test: NextPage = () => {
         <MyComponent text='B6' val={bool.v} />
         <MyComponent text='B7' func={funcMemo} />
         <MyComponent text='B8' val={valMemo} />
-
         <div className='relative'>
+          <div>{open.v && '読み上げられない'}</div>
+          <div aria-live='assertive' aria-relevant='additions'>
+            {open.v && '読み上げられない'}
+          </div>
+
+          <div role='log'>{open.v ? 'logですよ、6' : 'aa'}</div>
+
+          {open.v && <div role='alert'>alertですよ、1</div>}
+
+          <div role='status'>{open.v && 'statusですよ、5'}</div>
+
+          <div role='status' aria-live='assertive' aria-relevant='additions'>
+            {open.v && 'statusとassertiveですよ、3'}
+          </div>
+
+          <div aria-live='polite'>{open.v && <p>politeです、4</p>}</div>
+          <div aria-live='assertive'>{open.v && <p>assertiveです、2</p>}</div>
+
           <Button onClick={open.toggle}>メニューボタン</Button>
           <DropDownMenu
             open={open.v}
             onClose={open.setFalse}
             className='left-0'
           >
-            <button className='py-2 hover:bg-primary-light'>1</button>
+            <div role='status' className='py-2 hover:bg-primary-light'>
+              1
+            </div>
             <button className='w-full py-2 hover:bg-primary-light'>2</button>
             <button className='text-left w-full py-2 hover:bg-primary-light'>
               2
