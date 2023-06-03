@@ -38,7 +38,12 @@ export const Footer: FC = () => {
             </Button>
           </Link>
           <Link href='/signup'>
-            <Button variant='outline' radius='xl' compact>
+            <Button
+              variant='outline'
+              radius='xl'
+              compact
+              className='border border-white rounded-full'
+            >
               新規登録
             </Button>
           </Link>
