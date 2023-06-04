@@ -6,6 +6,7 @@ import {
   rounded,
   secondary,
   fontSize,
+  lineHeight,
 } from './src/utils/theme'
 
 export default defineConfig({
@@ -34,11 +35,18 @@ export default defineConfig({
         },
       },
       fontSize: {
-        sm: [fontSize.sm, fontSize.sm],
-        md: [fontSize.md, fontSize.md],
-        lg: [fontSize.lg, fontSize.lg],
-        xl: [fontSize.xl, fontSize.xl],
-        '2xl': [fontSize['2xl'], fontSize['2xl']],
+        sm: [fontSize.sm, lineHeight.sm],
+        md: [fontSize.md, lineHeight.md],
+        lg: [fontSize.lg, lineHeight.lg],
+        xl: [fontSize.xl, lineHeight.xl],
+        '2xl': [fontSize['2xl'], lineHeight['2xl']],
+      },
+      lineHeight: {
+        sm: fontSize.sm,
+        md: fontSize.md,
+        lg: fontSize.lg,
+        xl: fontSize.xl,
+        '2xl': fontSize['2xl'],
       },
       fontFamily: {
         cantoreOne: ['var(--font-cantoreOne)'],

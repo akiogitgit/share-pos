@@ -113,18 +113,35 @@ const Test: NextPage = () => {
           <div key={color}>
             <div className='flex gap-2 items-start'>
               <Button color={color} size='xs'>
-                Settings
+                シェアする
               </Button>
               <Button color={color} size='sm'>
-                Settings
+                シェアする
               </Button>
               <Button color={color} size='md'>
-                Settings
+                シェアする
               </Button>
               <Button color={color} size='lg'>
-                Settings
+                シェアする
               </Button>
               <Button color={color} size='xl' radius='sm'>
+                シェアする
+              </Button>
+            </div>
+            <div className='flex mt-2 gap-2 items-start'>
+              <Button color={color} size='xs' compact>
+                Settings
+              </Button>
+              <Button color={color} size='sm' compact>
+                Settings
+              </Button>
+              <Button color={color} size='md' compact>
+                Settings
+              </Button>
+              <Button color={color} size='lg' compact>
+                Settings
+              </Button>
+              <Button color={color} size='xl' compact radius='sm'>
                 Settings
               </Button>
             </div>
@@ -151,6 +168,73 @@ const Test: NextPage = () => {
             </div>
           </div>
         ))}
+        {/* <ComponentA func={() => console.log('a')} /> */}
+        <ComponentA text='A1' />
+        <ComponentA key={String(open.v)} text={'A2'} />
+        <MyComponent text='B1' />
+        {/* memoでも、関数(値)をuseCallback(useMemo)しないから、再レンダリングする */}
+        {/* 関数、配列、オブジェクト型は同じ判定されない */}
+        <MyComponent text='B2' func={() => {}} />
+        {/* openはstateでPropsの値が変わるから再レンダリング */}
+        <MyComponent text='B3' val={[val]} />
+        <MyComponent text='B4' val={open.v} />
+        {/* 再レンダリングしない */}
+        <MyComponent text='B5' val={val} />
+        <MyComponent text='B6' val={bool.v} />
+        <MyComponent text='B7' func={funcMemo} />
+        <MyComponent text='B8' val={valMemo} />
+        <div className='relative'>
+          <div>{open.v && '読み上げられない'}</div>
+          <div aria-live='assertive' aria-relevant='additions'>
+            {open.v && '読み上げられない'}
+          </div>
+
+          <div role='log'>{open.v ? 'logですよ、6' : 'aa'}</div>
+
+          {open.v && <div role='alert'>alertですよ、1</div>}
+
+          <div role='status'>{open.v && 'statusですよ、5'}</div>
+
+          <div role='status' aria-live='assertive' aria-relevant='additions'>
+            {open.v && 'statusとassertiveですよ、3'}
+          </div>
+
+          <div aria-live='polite'>{open.v && <p>politeです、4</p>}</div>
+          <div aria-live='assertive'>{open.v && <p>assertiveです、2</p>}</div>
+
+          <Button onClick={open.toggle}>メニューボタン</Button>
+          <DropDownMenu
+            open={open.v}
+            onClose={open.setFalse}
+            className='left-0'
+          >
+            <div role='status' className='py-2 hover:bg-primary-light'>
+              1
+            </div>
+            <button className='w-full py-2 hover:bg-primary-light'>2</button>
+            <button className='text-left w-full py-2 hover:bg-primary-light'>
+              2
+            </button>
+            <button
+              className=' py-2 hover:bg-primary-light'
+              onClick={() => alert('22')}
+            >
+              記事リンクをコピー
+            </button>
+            <button
+              className='text-left w-full py-2 hover:bg-primary-light'
+              onClick={() => alert('22')}
+            >
+              記事リンクをコピー
+            </button>
+          </DropDownMenu>
+        </div>
+
+        <div className='bg-white text-sm w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-md w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-lg w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-xl w-100px'>aaaaa ffff aaa aa</div>
+        <div className='bg-white text-2xl w-100px'>aaaaa ffff aaa aa</div>
       </div>
     </Layout>
   )

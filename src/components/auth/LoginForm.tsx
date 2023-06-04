@@ -29,8 +29,8 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='max-w-300px w-80vw relative'>
+      <form onSubmit={handleSubmit(onSubmit)} className='max-w-300px w-80vw'>
+        <div className='relative'>
           <label>
             Eメール
             <input
@@ -38,12 +38,16 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               placeholder='example@example.com'
               {...register('email')}
+              aria-required='true'
+              aria-invalid={!!errors?.email}
             />
           </label>
           <AiOutlineMailIcon className='top-37px left-270px absolute' />
         </div>
         {errors?.email && (
-          <div className='text-danger-dark'>{errors?.email.message}</div>
+          <p role='alert' className='text-danger-dark'>
+            {errors?.email.message}
+          </p>
         )}
 
         <div className='mt-2 relative '>
@@ -54,11 +58,15 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               placeholder='password'
               {...register('password')}
+              aria-required='true'
+              aria-invalid={!!errors?.password}
             />
           </label>
           <RiLockPasswordLineIcon className='top-37px left-270px absolute' />
           {errors?.password && (
-            <div className='text-danger-dark'>{errors?.password.message}</div>
+            <p role='alert' className='text-danger-dark'>
+              {errors?.password.message}
+            </p>
           )}
         </div>
         <Button type='submit' fullWidth animate className='mt-4'>

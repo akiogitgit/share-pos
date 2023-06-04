@@ -21,5 +21,10 @@ export const Loader: FC<Props> = ({ size = 'md' }) => {
     }
   }, [size])
 
-  return <RiLoader4FillIcon className={`animate-spin ${sizeClass}`} />
+  return (
+    <RiLoader4FillIcon
+      className={`animate-spin ${sizeClass}`}
+      aria-label='ローディングちゅう'
+    />
+  )
 }

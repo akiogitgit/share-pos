@@ -22,14 +22,20 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
   }, [post.metaInfo?.image])
 
   return (
-    <>
-      <figure className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
-        <a href={post.url} target='_blank' rel='noreferrer'>
+    <figure>
+      <a
+        href={post.url}
+        target='_blank'
+        rel='noreferrer'
+        aria-label={`${post.metaInfo?.title}へ移動する`}
+      >
+        <div className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
           <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
             {displayURL ? (
               <Image
                 src={displayURL}
-                alt=''
+                alt='記事のサムネイル'
+                title={`${post.metaInfo?.title}へ移動します`}
                 className='bg-gray-100 transform duration-300 group-hover:scale-110'
                 width={430}
                 height={2000}
@@ -43,15 +49,15 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
           </div>
 
           <figcaption className='text-sm p-2'>
-            <p className='text-gray-500'>
+            <p className='leading-sm text-gray-500'>
               {post.url.split('//')[1].split('/')[0]}
             </p>
-            <div className='h-37px mt-2 text-sm overflow-hidden'>
+            <div className='h-38px mt-2 overflow-hidden'>
               {post.metaInfo?.title}
             </div>
           </figcaption>
-        </a>
-      </figure>
-    </>
+        </div>
+      </a>
+    </figure>
   )
 }

@@ -36,7 +36,12 @@ export const Footer: FC = () => {
             </Button>
           </Link>
           <Link href='/signup'>
-            <Button variant='outline' radius='xl' compact>
+            <Button
+              variant='outline'
+              radius='xl'
+              compact
+              className='border border-white rounded-full'
+            >
               新規登録
             </Button>
           </Link>
@@ -45,24 +50,27 @@ export const Footer: FC = () => {
     )
   }
 
-  const menuIcons: {
+  const menus: {
     href: string
+    label: string
     default: JSX.Element
     selected: JSX.Element
   }[] = [
     {
       href: '/',
+      label: 'トップ',
       default: <AiOutlineHomeIcon className='h-6 w-6' />,
       selected: <AiFillHomeIcon className='h-6 w-6' />,
     },
     {
       href: '/bookmark',
+      label: 'ブックマーク',
       default: <IoBookOutlineIcon className='h-6 w-6' />,
       selected: <IoBookIcon className='h-6 w-6' />,
     },
     {
-      // href: 'myPage',
       href: `/users/${user?.id}`,
+      label: 'マイページ',
       default: <AiOutlineUserIcon className='h-6 w-6' />,
       selected: <FaUserIcon className='h-6 w-6' />,
     },
@@ -72,20 +80,23 @@ export const Footer: FC = () => {
     <footer className='sm:hidden'>
       {pathname !== '/create' && <JumpToCreatePostButton />}
 
-      <nav className='bg-white flex w-full bottom-0 z-2 justify-around fixed'>
-        {menuIcons.map(menuIcon => (
-          <Link href={menuIcon.href} key={menuIcon.href}>
-            <div
-              className={`cursor-pointer pt-2 py-1 px-3 ${
-                pathname === menuIcon.href && 'text-primary-dark'
-              }`}
-            >
-              {pathname === menuIcon.href
-                ? menuIcon.selected
-                : menuIcon.default}
-            </div>
-          </Link>
-        ))}
+      <nav className='bg-white w-full bottom-0 z-2 fixed'>
+        <ul className='flex justify-around' role='menu'>
+          {menus.map(menu => (
+            <li key={menu.href} role='menuitem'>
+              <Link
+                href={menu.href}
+                aria-current={pathname === menu.href && 'page'}
+                className={`cursor-pointer pt-2 py-1 px-3 flex flex-col items-center ${
+                  pathname === menu.href && 'text-primary-dark'
+                }`}
+                aria-label={menu.label}
+              >
+                {pathname === menu.href ? menu.selected : menu.default}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </nav>
     </footer>
   )

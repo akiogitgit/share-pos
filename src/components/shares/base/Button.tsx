@@ -90,28 +90,28 @@ export const Button: FC<Props> = ({
     if (compact) {
       switch (size) {
         case 'xs':
-          return 'text-sm py-4px px-7px'
+          return 'text-sm leading-sm py-4px px-7px'
         case 'sm':
-          return 'text-md py-5px px-8px'
+          return 'text-md leading-md py-5px px-8px'
         case 'md':
-          return 'text-md py-6px px-10px'
+          return 'text-md leading-md py-6px px-10px'
         case 'lg':
-          return 'text-lg py-7px px-12px'
+          return 'text-lg leading-lg py-7px px-12px'
         case 'xl':
-          return 'text-lg py-9px px-14px'
+          return 'text-lg leading-lg py-9px px-14px'
       }
     }
     switch (size) {
       case 'xs':
-        return 'text-sm py-8px px-14px'
+        return 'text-sm leading-sm py-8px px-14px'
       case 'sm':
-        return 'text-md py-10px px-18px'
+        return 'text-md leading-md py-10px px-18px'
       case 'md':
-        return 'text-md py-12px px-22px'
+        return 'text-md leading-md py-12px px-22px'
       case 'lg':
-        return 'text-lg py-15px px-26px'
+        return 'text-lg leading-lg py-15px px-26px'
       case 'xl':
-        return 'text-lg py-19px px-32px'
+        return 'text-lg leading-lg py-19px px-32px'
     }
   }, [compact, size])
 
@@ -143,17 +143,3 @@ export const Button: FC<Props> = ({
     </button>
   )
 }
-
-// const allClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} ${borderWhiteClass}`
-
-// // border border-white出来る
-// // padding margin 出来ない
-// return (
-//   <button className={className} onClick={onClick} type={type}>
-//     <span className={allClass}>
-//       {leftIcon}
-//       {children}
-//       {rightIcon}
-//     </span>
-//   </button>
-// )

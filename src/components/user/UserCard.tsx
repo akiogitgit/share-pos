@@ -37,35 +37,28 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
         </div>
       </Link>
       {currentUser && currentUser.id !== user.id ? (
-        isFollowing.v ? (
-          <Button
-            color='primary'
-            size='xs'
-            radius='xl'
-            variant='outline'
-            onClick={async () => {
-              isFollowing.setFalse()
-              await unFollow()
-            }}
-            className='whitespace-nowrap'
-          >
-            フォロー中
-          </Button>
-        ) : (
-          <Button
-            color='primary'
-            size='xs'
-            radius='xl'
-            animate
-            onClick={async () => {
-              isFollowing.setTrue()
-              await follow()
-            }}
-            className='whitespace-nowrap'
-          >
-            フォロー
-          </Button>
-        )
+        <Button
+          size='xs'
+          radius='xl'
+          variant={isFollowing.v ? 'outline' : 'filled'}
+          animate={isFollowing.v ? false : true}
+          // FollowButtonコンポーネントでいい感じに渡す
+          onClick={
+            isFollowing.v
+              ? async () => {
+                  isFollowing.setFalse()
+                  await unFollow()
+                }
+              : async () => {
+                  isFollowing.setTrue()
+                  await follow()
+                }
+          }
+        >
+          <span aria-live='polite'>
+            {isFollowing.v ? 'フォロー中' : 'フォロー'}
+          </span>
+        </Button>
       ) : (
         ''
       )}

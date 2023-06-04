@@ -68,18 +68,22 @@ export const PostForm: FC<Props> = ({
               placeholder='https://example.com'
               className='border outline-none ring-primary-dark w-full p-2 pr-9 duration-300 focus:rounded-md focus:ring-1'
               {...register('url')}
+              aria-required='true'
+              aria-invalid={!!errors?.url}
             />
           </label>
           <RiArticleLineIcon className='top-33px right-10px absolute' />
           {errors?.url && (
-            <div className='text-danger-dark'>{errors.url.message}</div>
+            <p role='alert' className='text-danger-dark'>
+              {errors?.url.message}
+            </p>
           )}
         </div>
 
         <div className='mt-2 relative'>
           <label>
             コメント
-            <div className='min-h-[50px] leading-1.4rem relative'>
+            <div className='min-h-[50px] relative'>
               <div
                 className='py-3 w-80vw break-words invisible sm:w-full'
                 aria-hidden='true'
@@ -102,16 +106,19 @@ export const PostForm: FC<Props> = ({
             <div>
               <button
                 type='button'
+                role='switch'
+                aria-label='公開設定'
+                aria-checked={getValues('published')}
                 className={`rounded-full cursor-pointer ${
                   getValues('published') ? 'bg-accent-dark' : 'bg-primary-dark'
-                } h-28px text-white w-90px relative inline-block`}
+                } h-28px text-white w-90px relative`}
                 onClick={() =>
                   setValue('published', !getValues('published'), {
                     shouldValidate: true,
                   })
                 }
               >
-                <div className='font-bold text-white transform top-[2px] left-[5px] absolute'>
+                <div className='font-bold text-white top-[2px] left-[5px] absolute'>
                   公開
                   <span className='ml-3px transform scale-x-80 inline-block'>
                     非公開
