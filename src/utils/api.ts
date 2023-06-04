@@ -1,8 +1,10 @@
 import { Cookies } from 'react-cookie'
+
+import { Res } from 'types/response'
+
 import { decrypted } from './encrypt'
 import { isEmptyObj } from './isEmptyObj'
 import { toCamelCaseObj } from './toCamelCaseObj'
-import { Res } from 'types/response'
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 // export const BASE_URL = 'http://localhost:3001/api/v1'
@@ -102,4 +104,4 @@ export const deleteApi = async <Data>(
   url: string,
   params?: any,
   headers?: Record<string, string>,
-) => fetchApi<undefined>(url, 'DELETE', params, headers)
+) => fetchApi<Data>(url, 'DELETE', params, headers)

@@ -2,13 +2,13 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FC, useState } from 'react'
-
 import { AiOutlineSearch as AiOutlineSearchIcon } from 'react-icons/ai'
 import { HiPaperAirplane as HiPaperAirplaneIcon } from 'react-icons/hi'
 
-import { HeaderDropDownMenu } from '../shares/AvatarDropDownMenu'
 import { Button } from 'components/shares/base/Button'
 import { useIsLoggedIn } from 'hooks/login/useIsLoggedIn'
+
+import { HeaderDropDownMenu } from '../shares/AvatarDropDownMenu'
 
 export const Header: FC = () => {
   const isLoggedIn = useIsLoggedIn()

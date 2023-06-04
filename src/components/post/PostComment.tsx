@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
+
 import { useBoolean } from 'hooks/useBoolean'
-import { useElementSize } from 'utils/useElementSize'
+import { useElementSize } from 'hooks/useElementSize'
 
 type Props = {
   comment: string

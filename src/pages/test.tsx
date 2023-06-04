@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import React, { FC, useCallback, useMemo, useState } from 'react'
+
 import { Layout } from 'components/layout/Layout'
 import { Button } from 'components/shares/base/Button'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
@@ -9,7 +10,7 @@ type Props = {
   func?: () => void
   text: string
 }
-const ComponentA: FC<Props> = ({ func, text }) => {
+const ComponentA: FC<Props> = ({ text }) => {
   const [count, setCount] = useState(0)
   const message = count + ' ' + text
   console.log(text, '再レンダリング')
@@ -59,7 +60,7 @@ const Test: NextPage = () => {
   const bool = useBoolean(false)
   const val = 1
 
-  const funcMemo = useCallback(() => {}, [])
+  const funcMemo = useCallback(() => 1, [])
   const valMemo = useMemo(() => [val], [])
 
   return (
@@ -71,7 +72,7 @@ const Test: NextPage = () => {
         <MyComponent text='B1' />
         {/* memoでも、関数(値)をuseCallback(useMemo)しないから、再レンダリングする */}
         {/* 関数、配列、オブジェクト型は同じ判定されない */}
-        <MyComponent text='B2' func={() => {}} />
+        <MyComponent text='B2' func={() => 1} />
         {/* openはstateでPropsの値が変わるから再レンダリング */}
         <MyComponent text='B3' val={[val]} />
         <MyComponent text='B4' val={open.v} />

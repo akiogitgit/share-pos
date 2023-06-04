@@ -1,4 +1,4 @@
-import useSWR, { KeyedMutator } from 'swr'
+import useSWR, { type KeyedMutator } from 'swr'
 
 type GlobalState = {}
 

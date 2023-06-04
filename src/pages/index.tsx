@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-
 import { useInView } from 'react-intersection-observer'
+
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/PostItem'
 import { Loader } from 'components/shares/base/Loader'

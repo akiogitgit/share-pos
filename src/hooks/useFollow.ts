@@ -1,7 +1,9 @@
 import { useCallback } from 'react'
-import { useGetApi } from './useApi'
+
 import { User, UserProfile } from 'types/user'
 import { postApi, HttpError, deleteApi } from 'utils/api'
+
+import { useGetApi } from './useApi'
 
 export const useFollow = (id: number) => {
   // フォローされたユーザー、自分のuserProfile

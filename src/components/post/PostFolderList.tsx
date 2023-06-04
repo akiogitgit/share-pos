@@ -1,8 +1,7 @@
 import { FC } from 'react'
-
 import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
-import { CreateFolderButton } from 'components/shares/CreateFolderButton'
 
+import { CreateFolderButton } from 'components/shares/CreateFolderButton'
 import { useGetApi } from 'hooks/useApi'
 import { Folder } from 'types/bookmark'
 import { Post } from 'types/post'
