@@ -1,18 +1,18 @@
 import Link from 'next/link'
 import { FC } from 'react'
 
-import { PostItemComment } from './PostComment'
-import { PostForm } from './PostForm'
-import { PostLinkCard } from './PostLinkCard'
-import { PostMenuButton } from './PostMenuButton'
 import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
 import { useAddBookmark, useRemoveBookmark } from 'hooks/useBookmark'
 import { useBoolean } from 'hooks/useBoolean'
 import { useDeletePost, useUpdatePost } from 'hooks/usePost'
-
 import { Post } from 'types/post'
 import { calcHowManyDaysAgo } from 'utils/calcHowManyDaysAgo'
+
+import { PostItemComment } from './PostComment'
+import { PostForm } from './PostForm'
+import { PostLinkCard } from './PostLinkCard'
+import { PostMenuButton } from './PostMenuButton'
 
 // bookmarkページの時、folderIdを受け取る
 type Props = {

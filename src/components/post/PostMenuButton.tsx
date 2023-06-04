@@ -1,13 +1,13 @@
 import { FC, useCallback, useMemo } from 'react'
-
 import { BsThreeDots as BsThreeDotsIcon } from 'react-icons/bs'
 
-import { FolderList } from './PostFolderList'
 import { DropDownMenu } from 'components/shares/base/DropDownMenu'
 import { useGetApi } from 'hooks/useApi'
 import { useBoolean } from 'hooks/useBoolean'
 import { Post } from 'types/post'
 import { User } from 'types/user'
+
+import { FolderList } from './PostFolderList'
 
 type Props = {
   post: Post

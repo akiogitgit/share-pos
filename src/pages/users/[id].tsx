@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useSearchParams } from 'next/navigation'
-
 import { useMemo, useState } from 'react'
+
 import { Layout } from 'components/layout/Layout'
 import { PostItem } from 'components/post/PostItem'
 import { UserProfile } from 'components/user/UserProfile'
@@ -14,7 +14,7 @@ const User: NextPage = () => {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 
-  const [selected, setSelected] = useState<typeof tabs[number]>('公開')
+  const [selected, setSelected] = useState<(typeof tabs)[number]>('公開')
 
   const { data: currentUser } = useGetApi<User>('/users/me')
   const { data: userProfile } = useGetApi<UserProfileType>(`/users/${id}`)

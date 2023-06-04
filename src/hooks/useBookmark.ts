@@ -1,8 +1,10 @@
 import { useCallback } from 'react'
-import { useGetApi } from './useApi'
+
 import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
 import { postApi, HttpError, deleteApi } from 'utils/api'
+
+import { useGetApi } from './useApi'
 
 // SWRの再取得無いから、ブックマークが変更されない
 // 結論。ブックマークページだけ毎回取得する(SWRの再取得ありか、SSRする)

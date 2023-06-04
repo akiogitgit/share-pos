@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+
 import { Layout } from 'components/layout/Layout'
 import { PostForm, PostRequestParams } from 'components/post/PostForm'
 import { Alert } from 'components/shares/base/Alert'

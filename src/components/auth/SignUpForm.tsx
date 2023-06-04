@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC } from 'react'
-
 import { useForm } from 'react-hook-form'
 import {
   AiOutlineMail as AiOutlineMailIcon,
@@ -8,6 +7,7 @@ import {
 } from 'react-icons/ai'
 import { RiLockPasswordLine as RiLockPasswordLineIcon } from 'react-icons/ri'
 import { z } from 'zod'
+
 import { Button } from 'components/shares/base/Button'
 
 type Props = {

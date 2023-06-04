@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+
 import { PostRequestParams } from 'components/post/PostForm'
 import { useGetApi, useGetInfinite } from 'hooks/useApi'
 import { Post } from 'types/post'
@@ -50,7 +51,7 @@ export const useUpdatePost = (post: Post) => {
   const updatePost = useCallback(
     (params: PostRequestParams) => {
       try {
-        const res = putApi<Post>(`/posts/${post.id}`, params)
+        putApi<Post>(`/posts/${post.id}`, params)
         if (!posts || !profile) {
           return
         }

@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+
 import { SignUpForm, SignUpRequestParams } from 'components/auth/SignUpForm'
 import { Layout } from 'components/layout/Layout'
 import { Alert } from 'components/shares/base/Alert'

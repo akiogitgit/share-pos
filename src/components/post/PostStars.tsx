@@ -21,7 +21,7 @@ export const PostStars: FC<PostStarProps> = ({ evaluation, onClick }) => {
   const [isHovering, setIsHovering] = useState(false)
   return (
     <div className='flex'>
-      {[1, 2, 3, 4, 5].map((v) => (
+      {[1, 2, 3, 4, 5].map(v => (
         <div
           key={v}
           className='p-2 group'

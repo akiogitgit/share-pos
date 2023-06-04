@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
 import { FC } from 'react'
-
 import {
   AiFillHome as AiFillHomeIcon,
   AiOutlineHome as AiOutlineHomeIcon,
@@ -13,8 +11,8 @@ import {
   IoBook as IoBookIcon,
   IoBookOutline as IoBookOutlineIcon,
 } from 'react-icons/io5'
-import { JumpToCreatePostButton } from 'components/shares/JumpToCreatePostButton'
 
+import { JumpToCreatePostButton } from 'components/shares/JumpToCreatePostButton'
 import { Button } from 'components/shares/base/Button'
 import { useGetApi } from 'hooks/useApi'
 import { User } from 'types/user'

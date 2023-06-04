@@ -3,12 +3,14 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoTrashOutline as IoTrashOutlineIcon } from 'react-icons/io5'
 import { z } from 'zod'
-import { BookmarkFolderDeleteModal } from './BookmarkFolderDeleteModal'
+
 import { Alert } from 'components/shares/base/Alert'
 import { Modal } from 'components/shares/base/Modal'
 import { useBoolean } from 'hooks/useBoolean'
 import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 import { Folder } from 'types/bookmark'
+
+import { BookmarkFolderDeleteModal } from './BookmarkFolderDeleteModal'
 
 type Props = {
   folder: Folder

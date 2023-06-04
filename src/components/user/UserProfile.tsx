@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { UserCard } from './UserCard'
+
 import { Avatar } from 'components/shares/base/Avatar'
 import { Button } from 'components/shares/base/Button'
 import { Modal } from 'components/shares/base/Modal'
@@ -7,6 +7,8 @@ import { useGetApi } from 'hooks/useApi'
 import { useBoolean } from 'hooks/useBoolean'
 import { useFollow, useUnFollow } from 'hooks/useFollow'
 import { User, UserInfo, UserProfile as UserProfileType } from 'types/user'
+
+import { UserCard } from './UserCard'
 
 const modalTabs = ['フォロー一覧', 'フォロワー一覧'] as const
 
@@ -24,7 +26,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
   // モーダル
   const open = useBoolean(false)
   const [selected, setSelected] =
-    useState<typeof modalTabs[number]>('フォロー一覧')
+    useState<(typeof modalTabs)[number]>('フォロー一覧')
 
   const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
     `/users/${userProfile?.user.id}/followers`,

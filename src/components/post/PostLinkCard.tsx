@@ -1,5 +1,6 @@
 import Image from 'next/legacy/image'
 import { FC, useMemo } from 'react'
+
 import { Post } from 'types/post'
 
 type Props = {
