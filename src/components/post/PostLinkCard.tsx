@@ -1,5 +1,4 @@
-import Image from 'next/legacy/image'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 
 import { Post } from 'types/post'
 
@@ -8,19 +7,6 @@ type Props = {
 }
 
 export const PostLinkCard: FC<Props> = ({ post }) => {
-  // ドメインによって、表示するURLを変える
-  const displayURL = useMemo(() => {
-    if (!post.metaInfo?.image) return ''
-    return [
-      'qiita-user',
-      'res.cloudinary',
-      'data:image/png;base64',
-      'gossamer-tarsier-64a.notion.site',
-    ].some(v => post.metaInfo.image?.includes(v))
-      ? post.metaInfo.image
-      : `https://res.cloudinary.com/demo/image/fetch/${post.metaInfo.image}`
-  }, [post.metaInfo?.image])
-
   return (
     <figure>
       <a
@@ -31,15 +17,13 @@ export const PostLinkCard: FC<Props> = ({ post }) => {
       >
         <div className='rounded-md border-2 duration-300 overflow-hidden group hover:bg-gray-100 '>
           <div className='flex h-42vw max-h-215px overflow-hidden items-center sm:h-133px'>
-            {displayURL ? (
-              <Image
-                src={displayURL}
+            {post.metaInfo.image ? (
+              // eslint-disable-next-line
+              <img
+                src={post.metaInfo.image}
                 alt='記事のサムネイル'
                 title={`${post.metaInfo?.title}へ移動します`}
                 className='bg-gray-100 transform duration-300 group-hover:scale-110'
-                width={430}
-                height={2000}
-                objectFit='contain'
               />
             ) : (
               <div className='flex h-full bg-gray-300 text-mono w-full max-h-225px transform text-2xl duration-300 overflow-hidden items-center justify-center group-hover:scale-110'>
