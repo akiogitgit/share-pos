@@ -9,13 +9,8 @@ module.exports = {
     return config
   },
   images: {
-    // qiita, zenn 以外は res.cloudinary.com
-    domains: [
-      'res.cloudinary.com',
-      'qiita-user-contents.imgix.net',
-      'www.gravatar.com',
-      'gossamer-tarsier-64a.notion.site',
-    ],
+    // アイコンの画像
+    domains: ['www.gravatar.com'],
   },
   optimizeFonts: true,
 }
