@@ -12,7 +12,6 @@
     "files.trimTrailingWhitespace": false
   },
   "windicss.sortOnSave": true,
-  "editor.minimap.enabled": false, // 右のマップ消す
   "explorer.compactFolders": false, // フォルダの省略を防ぐ
   "search.smartCase": true // 検索候補を出しやすく
 }
