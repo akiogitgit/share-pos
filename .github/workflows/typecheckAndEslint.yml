@@ -1,15 +1,22 @@
-on: [push]
-name: type-check and eslint
+name: test
+on: push
+
 jobs:
-  type-check-and-eslint:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "test"
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
-          cache: 'yarn'
-
-      - run: yarn install
-      - run: yarn type-check
-      - run: yarn lint
+          node-version: 18
+      - name: use pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 8.2.0
+      - name: install
+        run: pnpm install
+      - name: lint check
+        run: pnpm lint
+      - name: type check
+        run: pnpm type-check
