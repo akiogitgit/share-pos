@@ -1,15 +1,37 @@
-on: [push]
-name: type-check and eslint
+name: test
+on: push
+
 jobs:
-  type-check-and-eslint:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "test"
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
-          cache: 'yarn'
+          node-version: 18
+      - name: use pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 8.2.0
+          run_install: false
 
-      - run: yarn install
-      - run: yarn type-check
-      - run: yarn lint
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: install
+        run: pnpm install
+      - name: lint check
+        run: pnpm lint
+      - name: type check
+        run: pnpm type-check
