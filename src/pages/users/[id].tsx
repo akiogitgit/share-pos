@@ -58,7 +58,7 @@ const User: NextPage = () => {
           </div>
         )}
 
-        {userProfile.posts.length ? (
+        {userProfile.posts.length !== 0 && (
           <div className='flex flex-wrap mt-10 gap-4 justify-center items-start sm:justify-start'>
             {/* <div className='mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(291px,auto))] justify-center items-start'> */}
             {userProfile.posts.map(
@@ -68,8 +68,6 @@ const User: NextPage = () => {
                 ),
             )}
           </div>
-        ) : (
-          ''
         )}
       </section>
     </Layout>
