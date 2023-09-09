@@ -1,0 +1,22 @@
+{
+  "React useState Hook": {
+    "prefix": "useState",
+    "body": ["const [$1, set$1] = useState$2($3);"],
+    "description": "React useState Hook"
+  },
+  "React useEffect Hook": {
+    "prefix": "useEffect",
+    "body": ["useEffect$1(() => {", "    $2", "}, []);"],
+    "description": "React useEffect Hook"
+  },
+  "React useMemo Hook": {
+    "prefix": "useMemo",
+    "body": ["const $1 = useMemo$2(() => {", "    return $3", "}, []);"],
+    "description": "React useMemo Hook"
+  },
+  "React useCallback Hook": {
+    "prefix": "useCallback",
+    "body": ["const $1 = useCallback$2(($3) => {", "    return $4", "}, []);"],
+    "description": "React useCallback Hook"
+  }
+}
