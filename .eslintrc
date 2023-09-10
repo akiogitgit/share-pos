@@ -1,5 +1,11 @@
 {
-  "plugins": ["unused-imports", "import", "filenames", "@typescript-eslint"],
+  "plugins": [
+    "unused-imports",
+    "import",
+    "filenames",
+    "@typescript-eslint",
+    "local-rules"
+  ],
   // .eslintrcは下に書くほど優先が高い(上書きされていく)
   // prettierは最後に書く
   "extends": [
@@ -46,10 +52,10 @@
   ],
   "ignorePatterns": ["*.config.js"],
   "rules": {
-    "sample-rule": 2,
-    "no-hoge": 2,
-    "taboo-vars": [2, ["fuga", "bar"]],
-    "no-anpan": 2,
+    // "local-rules/sample-rule": 2,
+    "local-rules/no-hoge": 2,
+    "local-rules/taboo-vars": [2, ["fuga", "bar"]],
+    "local-rules/no-anpan": 2,
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-empty-function": "error",
     "unused-imports/no-unused-imports": "error",

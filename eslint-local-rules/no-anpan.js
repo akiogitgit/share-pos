@@ -1,21 +1,21 @@
-import { TSESLint } from '@typescript-eslint/experimental-utils'
-
-const rule: TSESLint.RuleModule<'no-anpan', []> = {
+'use strict'
+exports.__esModule = true
+var rule = {
   defaultOptions: [],
   meta: {
     type: 'problem',
     messages: { 'no-anpan': '{{ message }}' },
     schema: [],
   },
-  create: context => {
+  create: function (context) {
     return {
-      Identifier(node) {
+      Identifier: function (node) {
         if (node.name === 'anpan') {
           context.report({
-            node,
+            node: node,
             messageId: 'no-anpan',
             data: {
-              message: 'あんぱんおいしい😋',
+              message: 'あんぱん😋',
             },
           })
         }
@@ -23,5 +23,4 @@ const rule: TSESLint.RuleModule<'no-anpan', []> = {
     }
   },
 }
-
 module.exports = rule

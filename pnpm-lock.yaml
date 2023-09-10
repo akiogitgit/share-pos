@@ -84,6 +84,9 @@ devDependencies:
   eslint-plugin-import:
     specifier: ^2.26.0
     version: 2.26.0(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.6.0)(eslint@8.17.0)
+  eslint-plugin-local-rules:
+    specifier: ^2.0.0
+    version: 2.0.0
   eslint-plugin-react-hooks:
     specifier: ^4.5.0
     version: 4.5.0(eslint@8.17.0)
@@ -1693,6 +1696,10 @@ packages:
       object.entries: 1.1.6
       object.fromentries: 2.0.6
       semver: 6.3.1
+    dev: true
+
+  /eslint-plugin-local-rules@2.0.0:
+    resolution: {integrity: sha512-sWueme0kUcP0JC1+6OBDQ9edBDVFJR92WJHSRbhiRExlenMEuUisdaVBPR+ItFBFXo2Pdw6FD2UfGZWkz8e93g==}
     dev: true
 
   /eslint-plugin-react-hooks@4.5.0(eslint@8.17.0):
