@@ -1,5 +1,10 @@
+// import { TSESLint } from '@typescript-eslint/experimental-utils'
 'use strict'
 
+// 一応型が効く
+/**
+ * @type {import("@typescript-eslint/experimental-utils").TSESLint.RuleModule}
+ */
 module.exports = {
   meta: {
     type: 'suggestion', // type (string) indicates the type of rule, which is one of "problem", "suggestion", or "layout":
