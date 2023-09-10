@@ -7,6 +7,8 @@
     "next/core-web-vitals",
     "plugin:import/recommended",
     "plugin:react-hooks/recommended",
+    // "plugin:eslint-plugin-myrule/no-hoge",
+    // "plugin:myrule",
     "prettier"
   ],
   "overrides": [
@@ -44,6 +46,8 @@
   ],
   "ignorePatterns": ["*.config.js"],
   "rules": {
+    "no-hoge": 2,
+    "sample-rule": 2,
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-empty-function": "error",
     "unused-imports/no-unused-imports": "error",
