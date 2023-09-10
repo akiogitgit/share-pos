@@ -46,8 +46,9 @@
   ],
   "ignorePatterns": ["*.config.js"],
   "rules": {
-    "no-hoge": 2,
     "sample-rule": 2,
+    "no-hoge": 2,
+    "taboo-vars": [2, ["fuga", "anpan"]],
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-empty-function": "error",
     "unused-imports/no-unused-imports": "error",
