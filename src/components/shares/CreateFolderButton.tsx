@@ -22,12 +22,18 @@ const schema = z.object({
     .min(1, { message: '入力は必須です' })
     .max(15, { message: '15文字以下で入力して下さい' }),
 })
+let hoge = 1
+
+const anpan = 2
+
+const fuga = 3
 
 type FormData = z.infer<typeof schema>
 
 export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
   const open = useBoolean(false)
   const { createFolder } = useCreateFolder()
+  const hoge = 1
 
   const {
     register,
