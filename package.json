@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "fmt": "pnpm dprint fmt",
     "type-check": "tsc --noEmit",
     "co": "git-cz"
   },
