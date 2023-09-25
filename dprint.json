@@ -1,0 +1,22 @@
+{
+  "incremental": true,
+  "lineWidth": 80,
+  "indentWidth": 2,
+  "typescript": {
+    "quoteStyle": "alwaysSingle",
+    "semiColons": "asi",
+    "arrowFunction.useParentheses": "force",
+    "binaryExpression.linePerExpression": false,
+    "useBraces": "always"
+  },
+  "json": {},
+  "excludes": [
+    "**/node_modules",
+    "**/*-lock.json",
+    "**/.next"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.87.1.wasm",
+    "https://plugins.dprint.dev/json-0.17.4.wasm"
+  ]
+}
