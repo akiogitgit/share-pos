@@ -5,9 +5,10 @@
   "typescript": {
     "quoteStyle": "alwaysSingle",
     "semiColons": "asi",
-    "arrowFunction.useParentheses": "force",
-    "binaryExpression.linePerExpression": false,
-    "useBraces": "always"
+    "arrowFunction.useParentheses": "preferNone",
+    "importDeclaration.sortNamedImports": "maintain",
+    "module.sortImportDeclarations": "maintain",
+    "ignoreFileCommentText": "dprint-ignore"
   },
   "json": {},
   "excludes": [
