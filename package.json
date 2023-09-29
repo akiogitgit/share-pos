@@ -29,6 +29,7 @@
     "zod": "^3.21.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.2.2",
     "@types/crypto-js": "^4.1.1",
     "@types/node": "17.0.42",
     "@types/react": "18.0.12",
