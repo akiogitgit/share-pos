@@ -49,48 +49,50 @@ export const PostItem: FC<Props> = ({ post, folderId = '' }) => {
 
       {/* 編集中ならtextarea それ以外は コメント表示 */}
       <div className='mt-3'>
-        {isEditing.v ? (
-          <div className='mx-1'>
-            <PostForm
-              onSubmit={async params => {
-                await updatePost(params)
-                isEditing.setFalse()
-              }}
-              formParamsProps={post}
-              submitButtonText='更新'
-            />
-            <Button
-              color='secondary'
-              fullWidth
-              className='mt-2'
-              onClick={isEditing.setFalse}
-            >
-              キャンセル
-            </Button>
-          </div>
-        ) : (
-          <>
-            <PostItemComment comment={post.comment} />
-
-            <div className='mt-2'>
-              <PostLinkCard post={post} />
+        {isEditing.v
+          ? (
+            <div className='mx-1'>
+              <PostForm
+                onSubmit={async params => {
+                  await updatePost(params)
+                  isEditing.setFalse()
+                }}
+                formParamsProps={post}
+                submitButtonText='更新'
+              />
+              <Button
+                color='secondary'
+                fullWidth
+                className='mt-2'
+                onClick={isEditing.setFalse}
+              >
+                キャンセル
+              </Button>
             </div>
+          )
+          : (
+            <>
+              <PostItemComment comment={post.comment} />
 
-            {/* 返信 */}
-            <div className='flex h-6 mt-2 items-center justify-between'>
-              {post.replyComments.length ? (
-                <Link href=''>
-                  <p className='cursor-pointer text-primary-dark'>
-                    {post.replyComments?.length}件の返信
-                  </p>
-                </Link>
-              ) : (
-                <p />
-              )}
-              <p className='text-sm'>{calcHowManyDaysAgo(post.createdAt)}</p>
-            </div>
-          </>
-        )}
+              <div className='mt-2'>
+                <PostLinkCard post={post} />
+              </div>
+
+              {/* 返信 */}
+              <div className='flex h-6 mt-2 items-center justify-between'>
+                {post.replyComments.length
+                  ? (
+                    <Link href=''>
+                      <p className='cursor-pointer text-primary-dark'>
+                        {post.replyComments?.length}件の返信
+                      </p>
+                    </Link>
+                  )
+                  : <p />}
+                <p className='text-sm'>{calcHowManyDaysAgo(post.createdAt)}</p>
+              </div>
+            </>
+          )}
       </div>
     </article>
   )

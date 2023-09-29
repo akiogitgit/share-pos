@@ -25,18 +25,18 @@ export function useResizeObserver<T extends HTMLElement = any>() {
     () =>
       browser
         ? new ResizeObserver((entries: any) => {
-            const entry = entries[0]
+          const entry = entries[0]
 
-            if (entry) {
-              cancelAnimationFrame(frameID.current)
+          if (entry) {
+            cancelAnimationFrame(frameID.current)
 
-              frameID.current = requestAnimationFrame(() => {
-                if (ref.current) {
-                  setRect(entry.contentRect)
-                }
-              })
-            }
-          })
+            frameID.current = requestAnimationFrame(() => {
+              if (ref.current) {
+                setRect(entry.contentRect)
+              }
+            })
+          }
+        })
         : null,
     [],
   )

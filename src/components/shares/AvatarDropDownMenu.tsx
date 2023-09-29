@@ -29,11 +29,9 @@ export const HeaderDropDownMenu: FC = () => {
         aria-label='メニューを開く'
         aria-pressed={open.v}
       >
-        {user ? (
-          <Avatar id={user.id} />
-        ) : (
-          <FaUserCircleIcon className='h-9 w-9' />
-        )}
+        {user
+          ? <Avatar id={user.id} />
+          : <FaUserCircleIcon className='h-9 w-9' />}
       </button>
 
       <div className='relative'>

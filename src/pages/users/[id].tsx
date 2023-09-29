@@ -48,8 +48,8 @@ const User: NextPage = () => {
                 aria-selected={selected === tab}
                 onClick={() => setSelected(tab)}
                 className={`text-xl pb-1 w-50vw sm:w-100px ${
-                  selected === tab &&
-                  'font-bold border-b-3 border-primary-dark text-primary-dark'
+                  selected === tab
+                  && 'font-bold border-b-3 border-primary-dark text-primary-dark'
                 }`}
               >
                 {tab}

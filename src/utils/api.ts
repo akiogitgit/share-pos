@@ -46,9 +46,11 @@ export const fetchApi = async <T>(
   if (method === 'GET') {
     // /example/1 -> /example/1?searchWord="あああ"
     if (!isEmptyObj(requestParams)) {
-      requestUrl += `?${Object.entries(requestParams)
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&')}`
+      requestUrl += `?${
+        Object.entries(requestParams)
+          .map(([key, value]) => `${key}=${value}`)
+          .join('&')
+      }`
       requestParams = {}
     }
   }

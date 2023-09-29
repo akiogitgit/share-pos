@@ -131,7 +131,8 @@ export const Button: FC<Props> = ({
   }, [radius])
 
   const buttonClass = `${className} ${fullWidthClass}`
-  const spanClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} `
+  const spanClass =
+    `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} `
 
   return (
     <button className={buttonClass} onClick={onClick} type={type}>

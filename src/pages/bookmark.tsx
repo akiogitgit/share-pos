@@ -72,23 +72,25 @@ const Bookmark: NextPage = () => {
         </div>
 
         {/* 選択しているフォルダの記事一覧 */}
-        {bookmarkPosts?.posts.length && folders ? (
-          <div className='mt-12 w-full sm:mt-21'>
-            <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
-              {bookmarkPosts.posts.map((post, index) => (
-                <PostItem
-                  key={index}
-                  post={post}
-                  // Postはどのフォルダに居るか知らない
-                  folderId={folders[selectedFolderIndex].id}
-                />
-              ))}
+        {bookmarkPosts?.posts.length && folders
+          ? (
+            <div className='mt-12 w-full sm:mt-21'>
+              <div className='grid gap-6 justify-center items-start sm:(gap-x-3 grid-cols-[repeat(auto-fill,minmax(291px,auto))]) '>
+                {bookmarkPosts.posts.map((post, index) => (
+                  <PostItem
+                    key={index}
+                    post={post}
+                    // Postはどのフォルダに居るか知らない
+                    folderId={folders[selectedFolderIndex].id}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          // 記事が無い
-          <div className='mt-20 text-center w-full'>記事がありません</div>
-        )}
+          )
+          : (
+            // 記事が無い
+            <div className='mt-20 text-center w-full'>記事がありません</div>
+          )}
       </div>
     </Layout>
   )
