@@ -7,8 +7,9 @@ import { useGetApi } from './useApi'
 
 export const useFollow = (id: number) => {
   // フォローされたユーザー、自分のuserProfile
-  const { data: userProfile, mutate: mutateUserProfile } =
-    useGetApi<UserProfile>(`/users/${id}`)
+  const { data: userProfile, mutate: mutateUserProfile } = useGetApi<
+    UserProfile
+  >(`/users/${id}`)
   const { data: currentUser } = useGetApi<User>('/users/me')
   const { data: currentUserProfile, mutate: mutateCurrentUserProfile } =
     useGetApi<UserProfile>(`/users/${currentUser?.id}`)
@@ -60,8 +61,9 @@ export const useFollow = (id: number) => {
 
 export const useUnFollow = (id: number) => {
   // フォローされたユーザー、自分のuserProfile
-  const { data: userProfile, mutate: mutateUserProfile } =
-    useGetApi<UserProfile>(`/users/${id}`)
+  const { data: userProfile, mutate: mutateUserProfile } = useGetApi<
+    UserProfile
+  >(`/users/${id}`)
   const { data: currentUser } = useGetApi<User>('/users/me')
   const { data: currentUserProfile, mutate: mutateCurrentUserProfile } =
     useGetApi<UserProfile>(`/users/${currentUser?.id}`)

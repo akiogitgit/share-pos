@@ -45,11 +45,12 @@ export const BookmarkFolderEditModal: FC<Props> = ({
     resolver: zodResolver(schema),
   })
 
-  const { onSubmit, errorMessage, clearErrorMessage } =
-    useFormErrorHandling<FormData>(async (e: FormData) => {
-      await onUpdateFolder?.(e.name)
-      onClose()
-    })
+  const { onSubmit, errorMessage, clearErrorMessage } = useFormErrorHandling<
+    FormData
+  >(async (e: FormData) => {
+    await onUpdateFolder?.(e.name)
+    onClose()
+  })
 
   return (
     <div>

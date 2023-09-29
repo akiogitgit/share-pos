@@ -10,8 +10,9 @@ import { useFormErrorHandling } from 'hooks/useFormErrorHandling'
 
 const SignUp: NextPage = () => {
   const { signUp } = useSignUp()
-  const { onSubmit, errorMessage, clearErrorMessage } =
-    useFormErrorHandling<SignUpRequestParams>(signUp)
+  const { onSubmit, errorMessage, clearErrorMessage } = useFormErrorHandling<
+    SignUpRequestParams
+  >(signUp)
 
   return (
     <>

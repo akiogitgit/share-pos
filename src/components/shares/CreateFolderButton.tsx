@@ -38,11 +38,12 @@ export const CreateFolderButton: FC<Props> = ({ radius = 'md' }) => {
     resolver: zodResolver(schema),
   })
 
-  const { onSubmit, errorMessage, clearErrorMessage } =
-    useFormErrorHandling<FormData>(async (e: FormData) => {
-      await createFolder(e.name)
-      onClose()
-    })
+  const { onSubmit, errorMessage, clearErrorMessage } = useFormErrorHandling<
+    FormData
+  >(async (e: FormData) => {
+    await createFolder(e.name)
+    onClose()
+  })
 
   const onClose = useCallback(() => {
     open.setFalse()

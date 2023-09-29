@@ -50,11 +50,13 @@ export const PostForm: FC<Props> = ({
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <style jsx>{`
+      <style jsx>
+        {`
         .scroll-bar-none::-webkit-scrollbar {
           display: none;
         }
-      `}</style>
+      `}
+      </style>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -115,8 +117,7 @@ export const PostForm: FC<Props> = ({
                 onClick={() =>
                   setValue('published', !getValues('published'), {
                     shouldValidate: true,
-                  })
-                }
+                  })}
               >
                 <div className='font-bold text-white top-[2px] left-[5px] absolute'>
                   公開
@@ -130,7 +131,8 @@ export const PostForm: FC<Props> = ({
                       ? 'left-40px w-46px'
                       : 'left-3px w-38px'
                   } duration-150 absolute`}
-                ></div>
+                >
+                </div>
               </button>
             </div>
           </label>

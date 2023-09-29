@@ -36,41 +36,43 @@ export const UserCard: FC<Props> = ({ user, onClickUser }) => {
           </p>
         </div>
       </Link>
-      {currentUser && currentUser.id !== user.id ? (
-        <Button
-          size='xs'
-          radius='xl'
-          variant={isFollowing.v ? 'outline' : 'filled'}
-          animate={isFollowing.v ? false : true}
-          // FollowButtonコンポーネントでいい感じに渡す
-          onClick={
-            isFollowing.v
+      {currentUser && currentUser.id !== user.id
+        ? (
+          <Button
+            size='xs'
+            radius='xl'
+            variant={isFollowing.v ? 'outline' : 'filled'}
+            animate={isFollowing.v ? false : true}
+            // FollowButtonコンポーネントでいい感じに渡す
+            onClick={isFollowing.v
               ? async () => {
-                  isFollowing.setFalse()
-                  await unFollow()
-                }
+                isFollowing.setFalse()
+                await unFollow()
+              }
               : async () => {
-                  isFollowing.setTrue()
-                  await follow()
-                }
-          }
-        >
-          <span aria-live='polite'>
-            {isFollowing.v ? 'フォロー中' : 'フォロー'}
-          </span>
-        </Button>
-      ) : (
-        ''
-      )}
+                isFollowing.setTrue()
+                await follow()
+              }}
+          >
+            <span aria-live='polite'>
+              {isFollowing.v ? 'フォロー中' : 'フォロー'}
+            </span>
+          </Button>
+        )
+        : (
+          ''
+        )}
 
       {/* 長い文字を...にする */}
-      <style jsx>{`
+      <style jsx>
+        {`
         .text-overflow {
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
         }
-      `}</style>
+      `}
+      </style>
     </div>
   )
 }

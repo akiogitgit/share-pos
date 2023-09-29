@@ -8,8 +8,9 @@ import { getStatusErrorMessage } from 'utils/getStatusErrorMessage'
 import { useGetApi } from './useApi'
 
 export const useCreateFolder = () => {
-  const { data: folders, mutate: mutateFolders } =
-    useGetApi<Folder[]>('/folders')
+  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
+    '/folders',
+  )
 
   const createFolder = useCallback(
     async (bookmarkName: string) => {
@@ -35,8 +36,9 @@ export const useCreateFolder = () => {
 }
 
 export const useUpdateFolder = () => {
-  const { data: folders, mutate: mutateFolders } =
-    useGetApi<Folder[]>('/folders')
+  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
+    '/folders',
+  )
 
   const updateFolder = useCallback(
     async (id: string, editFolderName: string) => {
@@ -71,8 +73,9 @@ export const useUpdateFolder = () => {
 
 export const useDeleteFolder = () => {
   const router = useRouter()
-  const { data: folders, mutate: mutateFolders } =
-    useGetApi<Folder[]>('/folders')
+  const { data: folders, mutate: mutateFolders } = useGetApi<Folder[]>(
+    '/folders',
+  )
 
   const deleteFolder = useCallback(
     async (id: string) => {

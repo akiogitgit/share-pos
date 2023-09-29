@@ -69,8 +69,8 @@ export const useGetInfinite = <Data = any>(
 
   // 最後に到達した
   const isEmpty = data?.[0].length === 0
-  const isReachingEnd =
-    isEmpty || (data && data?.[data?.length - 1]?.length < limit)
+  const isReachingEnd = isEmpty
+    || (data && data?.[data?.length - 1]?.length < limit)
 
   // もっと読み込む
   const fetchMore = useCallback(() => {
