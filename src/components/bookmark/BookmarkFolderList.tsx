@@ -4,10 +4,10 @@ import { FC, useCallback, useMemo } from 'react'
 import { AiFillFolder as AiFillFolderIcon } from 'react-icons/ai'
 
 import { useBoolean } from 'hooks/useBoolean'
-import { useUpdateFolder, useDeleteFolder } from 'hooks/useFolder'
+import { useDeleteFolder, useUpdateFolder } from 'hooks/useFolder'
 import { Folder } from 'types/bookmark'
 
-import { primary, accent } from '../../utils/theme'
+import { accent, primary } from '../../utils/theme'
 import { BookmarkFolderEditModal } from './BookmarkFolderEditModal'
 
 type Props = {

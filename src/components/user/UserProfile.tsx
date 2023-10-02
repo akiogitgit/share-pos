@@ -26,7 +26,7 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
   // モーダル
   const open = useBoolean(false)
   const [selected, setSelected] =
-    useState<(typeof modalTabs)[number]>('フォロー一覧')
+    useState<typeof modalTabs[number]>('フォロー一覧')
 
   const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
     `/users/${userProfile?.user.id}/followers`,

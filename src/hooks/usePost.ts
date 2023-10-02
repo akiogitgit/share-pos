@@ -4,8 +4,8 @@ import { useCallback } from 'react'
 import { PostRequestParams } from 'components/post/PostForm'
 import { useGetApi, useGetInfinite } from 'hooks/useApi'
 import { Post } from 'types/post'
-import { UserProfile, User } from 'types/user'
-import { deleteApi, HttpError, postApi, putApi } from 'utils/api'
+import { User, UserProfile } from 'types/user'
+import { HttpError, deleteApi, postApi, putApi } from 'utils/api'
 import { getStatusErrorMessage } from 'utils/getStatusErrorMessage'
 
 export const useCreatePost = () => {
