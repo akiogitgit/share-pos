@@ -40,7 +40,7 @@ export const useCookies = <
         removeCookie(key)
         return
       }
-      key.forEach((v) => {
+      key.forEach(v => {
         return removeCookie(v)
       })
     },

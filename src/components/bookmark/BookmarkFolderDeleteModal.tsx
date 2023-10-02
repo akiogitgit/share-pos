@@ -46,6 +46,7 @@ export const BookmarkFolderDeleteModal: FC<Props> = ({
         <div className='flex justify-between'>
           <button
             onClick={onClose}
+            type='button'
             className='border-r-2 border-t-2 mt-4 text-primary-dark w-full py-2 duration-150 hover:bg-black/10'
           >
             閉じる

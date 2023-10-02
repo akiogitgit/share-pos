@@ -16,7 +16,7 @@ const defaultState: ObserverRect = {
 const browser = typeof window !== 'undefined'
 
 export function useResizeObserver<T extends HTMLElement = any>() {
-  const frameID = useRef(0)
+  const frameId = useRef(0)
   const ref = useRef<T>(null)
 
   const [rect, setRect] = useState<ObserverRect>(defaultState)
@@ -28,9 +28,9 @@ export function useResizeObserver<T extends HTMLElement = any>() {
             const entry = entries[0]
 
             if (entry) {
-              cancelAnimationFrame(frameID.current)
+              cancelAnimationFrame(frameId.current)
 
-              frameID.current = requestAnimationFrame(() => {
+              frameId.current = requestAnimationFrame(() => {
                 if (ref.current) {
                   setRect(entry.contentRect)
                 }
@@ -53,8 +53,8 @@ export function useResizeObserver<T extends HTMLElement = any>() {
     return () => {
       observer.disconnect()
 
-      if (frameID.current) {
-        cancelAnimationFrame(frameID.current)
+      if (frameId.current) {
+        cancelAnimationFrame(frameId.current)
       }
     }
   }, [observer])
