@@ -15,18 +15,17 @@ export const toCamelCaseObj = (_obj: Record<any, any>) => {
   const obj = { ..._obj } as Record<string, any>
   const result: Record<string, Record<string, any> | []> = {}
 
-  Object.keys(obj).forEach((key) => {
+  for (const key in obj) {
     if (typeof obj[key] !== 'object') {
       result[toCamelCase(key)] = obj[key]
-      return
+      continue
     }
-
-    Array.isArray(obj[key])
-      ? (result[toCamelCase(key)] = obj[key].map((v: object) =>
-          toCamelCaseObj(v),
-        ))
-      : (result[toCamelCase(key)] = toCamelCaseObj(obj[key]))
-  })
+    if (Array.isArray(obj[key])) {
+      result[toCamelCase(key)] = obj[key].map((v: object) => toCamelCaseObj(v))
+      continue
+    }
+    result[toCamelCase(key)] = toCamelCaseObj(obj[key] as object)
+  }
 
   return result
 }

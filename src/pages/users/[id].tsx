@@ -10,11 +10,11 @@ import { User, UserProfile as UserProfileType } from 'types/user'
 
 const tabs = ['公開', '非公開'] as const
 
-const User: NextPage = () => {
+const UserPage: NextPage = () => {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 
-  const [selected, setSelected] = useState<(typeof tabs)[number]>('公開')
+  const [selected, setSelected] = useState<typeof tabs[number]>('公開')
 
   const { data: currentUser } = useGetApi<User>('/users/me')
   const { data: userProfile } = useGetApi<UserProfileType>(`/users/${id}`)
@@ -45,6 +45,7 @@ const User: NextPage = () => {
               <button
                 key={tab}
                 role='tab'
+                type='button'
                 aria-selected={selected === tab}
                 onClick={() => setSelected(tab)}
                 className={`text-xl pb-1 w-50vw sm:w-100px ${
@@ -74,4 +75,4 @@ const User: NextPage = () => {
   )
 }
 
-export default User
+export default UserPage

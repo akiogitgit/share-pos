@@ -8,7 +8,7 @@ import { PostItem } from 'components/post/PostItem'
 import { CreateFolderButton } from 'components/shares/CreateFolderButton'
 import { useRequireLogin } from 'hooks/login/useRequireLogin'
 import { useGetApi } from 'hooks/useApi'
-import { Folder, BookmarkPosts } from 'types/bookmark'
+import { BookmarkPosts, Folder } from 'types/bookmark'
 
 const Bookmark: NextPage = () => {
   useRequireLogin()
