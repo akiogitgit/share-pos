@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, FC } from 'react'
 
 type Props = {
   children: React.ReactNode
@@ -13,25 +13,34 @@ export const DropDownMenu: FC<Props> = ({
   onClose,
   className,
 }) => {
+  if (!open) {
+    return null
+  }
+
+  var a: any = 2
+
+  if (!a) {
+    return null
+  }
+  if (!a) {
+    return null
+  }
+
   return (
     <>
-      {open && (
-        <>
-          <div
-            className='h-screen w-screen top-0 left-0 z-1 fixed'
-            aria-hidden='true'
-            onClick={onClose}
-          />
+      <div
+        className='h-screen w-screen top-0 left-0 z-1 fixed'
+        aria-hidden='true'
+        onClick={onClose}
+      />
 
-          {/* メニュー */}
-          <ul
-            className={`z-1 absolute ${className}
+      {/* メニュー */}
+      <ul
+        className={`z-1 absolute ${className}
                         bg-white cursor-pointer rounded-sm shadow-outline w-160px overflow-hidden`}
-          >
-            {children}
-          </ul>
-        </>
-      )}
+      >
+        {children}
+      </ul>
     </>
   )
 }
