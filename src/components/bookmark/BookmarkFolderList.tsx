@@ -13,7 +13,7 @@ import { BookmarkFolderEditModal } from './BookmarkFolderEditModal'
 type Props = {
   folders: Folder[]
 }
-
+//
 export const BookmarkFolderList: FC<Props> = ({ folders }) => {
   const isModalOpened = useBoolean(false)
   const searchParams = useSearchParams()
