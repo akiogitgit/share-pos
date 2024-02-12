@@ -1,3 +1,3 @@
 {
-  "*.{ts,tsx,js,jsx}": ["eslint", "bash -c 'npx oxlint@latest'"]
+  "*.{ts,tsx,js,jsx}": ["npm run lint:fix"]
 }

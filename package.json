@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "oxlint": "npx oxlint@latest --fix",
+    "eslint": "next lint",
+    "oxlint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "type-check": "tsc --noEmit",
     "co": "git-cz"
   },
@@ -45,6 +46,7 @@
     "git-cz": "^4.9.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
+    "oxlint": "^0.0.22",
     "typescript": "4.7.3",
     "windicss-webpack-plugin": "^1.7.7"
   }
