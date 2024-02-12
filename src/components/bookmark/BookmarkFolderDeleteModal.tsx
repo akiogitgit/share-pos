@@ -31,7 +31,7 @@ export const BookmarkFolderDeleteModal: FC<Props> = ({
       <Modal
         open={open}
         onClose={onClose}
-        title={`\"${name}\" を削除しますか？`}
+        title={`"${name}" を削除しますか？`}
       >
         {errorMessage && (
           <Alert className='mx-4 mt-4' onClose={clearErrorMessage}>
