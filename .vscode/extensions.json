@@ -3,6 +3,7 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
-    "voorjaar.windicss-intellisense"
+    "voorjaar.windicss-intellisense",
+    "samverschueren.linter-xo"
   ]
 }
