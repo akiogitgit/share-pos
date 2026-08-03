@@ -1,11 +1,10 @@
-import { Cantora_One } from '@next/font/google'
 import type { AppProps } from 'next/app'
 import { CookiesProvider } from 'react-cookie'
 import { SWRConfig } from 'swr'
 // eslint-disable-next-line import/no-unresolved
 import 'windi.css'
 
-const cantoreOne = Cantora_One({ weight: '400' })
+// const cantoreOne = Cantora_One({ weight: '400' })
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,13 +12,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       <CookiesProvider>
         <Component {...pageProps} />
 
-        <style jsx global>
+        {/* <style jsx global>
           {`
             :root {
               --font-cantoreOne: ${cantoreOne.style.fontFamily};
             }
           `}
-        </style>
+        </style> */}
       </CookiesProvider>
     </SWRConfig>
   )
