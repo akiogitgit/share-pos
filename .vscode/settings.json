@@ -1,17 +1,21 @@
 {
-  "editor.tabSize": 2,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "xo.enable": true,
+  "xo.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll": "explicit"
   },
-  "editor.quickSuggestions": {
-    "strings": true
+
+  "[javascript]": {
+    "editor.defaultFormatter": "samverschueren.linter-xo"
   },
-  "[markdown]": {
-    "files.trimTrailingWhitespace": false
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "samverschueren.linter-xo"
   },
-  "windicss.sortOnSave": true,
-  "explorer.compactFolders": false, // フォルダの省略を防ぐ
-  "search.smartCase": true // 検索候補を出しやすく
+  "[typescript]": {
+    "editor.defaultFormatter": "samverschueren.linter-xo"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "samverschueren.linter-xo"
+  }
 }
