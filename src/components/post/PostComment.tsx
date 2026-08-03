@@ -11,7 +11,7 @@ export const PostItemComment: FC<Props> = ({ comment }) => {
   const { ref, height } = useElementSize()
   const open = useBoolean(false)
 
-  // コメントが3行以上
+  // コメントが3行以上の時
   const isLongComment = useMemo(() => height > 60, [height])
 
   // 「もっと見る」が見えている状態
