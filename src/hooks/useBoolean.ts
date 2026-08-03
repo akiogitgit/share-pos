@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 
 export const useBoolean = (
-  init: boolean = false,
+  init = false,
 ): {
   v: boolean
   setTrue: () => void

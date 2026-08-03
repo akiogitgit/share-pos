@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { BookmarkPosts } from 'types/bookmark'
 import { Post } from 'types/post'
-import { postApi, HttpError, deleteApi } from 'utils/api'
+import { HttpError, deleteApi, postApi } from 'utils/api'
 
 import { useGetApi } from './useApi'
 

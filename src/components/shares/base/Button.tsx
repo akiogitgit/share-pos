@@ -69,7 +69,7 @@ export const Button: FC<Props> = ({
     if (!animate) {
       switch (variant) {
         case 'filled':
-          return `hover:bg-opacity-80`
+          return 'hover:bg-opacity-80'
         case 'light':
           return `hover:bg-${color}-light`
         case 'outline':
@@ -117,7 +117,7 @@ export const Button: FC<Props> = ({
 
   const fullWidthClass = useMemo(() => (fullWidth ? 'w-full' : ''), [fullWidth])
 
-  const RadiusClass = useMemo(() => {
+  const radiusClass = useMemo(() => {
     switch (radius) {
       case 'sm':
         return 'rounded-sm'
@@ -131,7 +131,7 @@ export const Button: FC<Props> = ({
   }, [radius])
 
   const buttonClass = `${className} ${fullWidthClass}`
-  const spanClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${RadiusClass} ${fullWidthClass} `
+  const spanClass = `${defaultClass} ${colorClass} ${animateClass} ${sizeClass} ${radiusClass} ${fullWidthClass} `
 
   return (
     <button className={buttonClass} onClick={onClick} type={type}>

@@ -1,4 +1,4 @@
-import useSWR, { type KeyedMutator } from 'swr'
+import useSwr, { type KeyedMutator } from 'swr'
 
 type GlobalState = {}
 
@@ -9,7 +9,7 @@ export const useGlobalState = <
   path: Path,
   fallbackData?: Data,
 ): [Data | undefined, KeyedMutator<Data | undefined>] => {
-  const { data, mutate } = useSWR<Data | undefined>(path, null, {
+  const { data, mutate } = useSwr<Data | undefined>(path, null, {
     fallbackData,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

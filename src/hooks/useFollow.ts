@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { User, UserProfile } from 'types/user'
-import { postApi, HttpError, deleteApi } from 'utils/api'
+import { HttpError, deleteApi, postApi } from 'utils/api'
 
 import { useGetApi } from './useApi'
 

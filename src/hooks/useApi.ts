@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
-import useSWR, { type SWRResponse } from 'swr'
-import useSWRInfinite from 'swr/infinite'
+import useSwr, { type SWRResponse } from 'swr'
+import useSwrInfinite from 'swr/infinite'
 
-import { fetchApi, HttpError } from '../utils/api'
+import { HttpError, fetchApi } from '../utils/api'
 
 export const useGetApi = <Data = any>(
   url: string,
@@ -20,7 +20,7 @@ export const useGetApi = <Data = any>(
     [props?.headers, props?.params, url],
   )
 
-  return useSWR<Data, HttpError>(
+  return useSwr<Data, HttpError>(
     `${url}${JSON.stringify(props?.params)}`,
     fetcher,
     {
@@ -54,7 +54,7 @@ export const useGetInfinite = <Data = any>(
     [props?.header, props?.body],
   )
 
-  const SWRInfiniteResponse = useSWRInfinite<Data[], HttpError>(
+  const swrInfiniteResponse = useSwrInfinite<Data[], HttpError>(
     getKey,
     fetcher,
     {
@@ -65,7 +65,7 @@ export const useGetInfinite = <Data = any>(
     },
   )
 
-  const { data, size, setSize } = SWRInfiniteResponse
+  const { data, size, setSize } = swrInfiniteResponse
 
   // 最後に到達した
   const isEmpty = data?.[0].length === 0
@@ -78,7 +78,7 @@ export const useGetInfinite = <Data = any>(
   }, [setSize, size])
 
   return {
-    ...SWRInfiniteResponse,
+    ...swrInfiniteResponse,
     data: data?.flat(), // Data[][]を、Data[]に変換する
     isReachingEnd,
     fetchMore,
