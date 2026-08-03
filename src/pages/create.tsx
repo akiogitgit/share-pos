@@ -11,8 +11,9 @@ import { useCreatePost } from 'hooks/usePost'
 const Create: NextPage = () => {
   useRequireLogin()
   const { createPost } = useCreatePost()
-  const { onSubmit, errorMessage, clearErrorMessage } =
-    useFormErrorHandling<PostRequestParams>(createPost)
+  const { onSubmit, errorMessage, clearErrorMessage } = useFormErrorHandling<
+    PostRequestParams
+  >(createPost)
 
   return (
     <>

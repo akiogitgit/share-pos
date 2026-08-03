@@ -38,10 +38,8 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
   return (
     <div>
       {/* ブックマーク名一覧 */}
-      <ul
-        className='bg-primary-light flex h-50px gap-2 overflow-x-scroll scroll-bar
-                  sm:(flex-col gap-1 h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '
-      >
+      <ul className='bg-primary-light flex h-50px gap-2 overflow-x-scroll scroll-bar
+                  sm:(flex-col gap-1 h-auto min-w-190px max-w-190px max-h-[calc(100vh-250px)] overflow-x-hidden overflow-y-scroll) '>
         {/* スマホ横スクロールで左右に余分を空けている */}
         <div className='ml-2 sm:hidden' />
 
@@ -78,14 +76,14 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
           onClose={isModalOpened.setFalse}
           folder={folders[routerFolderIndex]}
           onUpdateFolder={async (folderName: string) =>
-            await updateFolder(folders[routerFolderIndex].id, folderName)
-          }
+            await updateFolder(folders[routerFolderIndex].id, folderName)}
           onDeleteFolder={async () => {
             await deleteFolder(folders[routerFolderIndex].id)
           }}
         />
       )}
-      <style jsx>{`
+      <style jsx>
+        {`
         .scroll-bar::-webkit-scrollbar {
           width: 0;
           height: 0;
@@ -103,7 +101,8 @@ export const BookmarkFolderList: FC<Props> = ({ folders }) => {
           border-radius: 100px;
           background-color: ${primary.dark};
         }
-      `}</style>
+      `}
+      </style>
     </div>
   )
 }

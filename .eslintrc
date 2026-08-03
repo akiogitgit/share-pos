@@ -6,8 +6,7 @@
     "next",
     "next/core-web-vitals",
     "plugin:import/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier"
+    "plugin:react-hooks/recommended"
   ],
   "overrides": [
     {

@@ -5,7 +5,7 @@ export const toCamelCase = (str: string) => {
     .map((segment, i) =>
       i === 0
         ? segment.toLowerCase()
-        : segment[0].toUpperCase() + segment.slice(1).toLowerCase(),
+        : segment[0].toUpperCase() + segment.slice(1).toLowerCase()
     )
     .join('')
 }
@@ -15,7 +15,7 @@ export const toCamelCaseObj = (_obj: Record<any, any>) => {
   const obj = { ..._obj } as Record<string, any>
   const result: Record<string, Record<string, any> | []> = {}
 
-  Object.keys(obj).forEach((key) => {
+  Object.keys(obj).forEach(key => {
     if (typeof obj[key] !== 'object') {
       result[toCamelCase(key)] = obj[key]
       return
@@ -23,8 +23,8 @@ export const toCamelCaseObj = (_obj: Record<any, any>) => {
 
     Array.isArray(obj[key])
       ? (result[toCamelCase(key)] = obj[key].map((v: object) =>
-          toCamelCaseObj(v),
-        ))
+        toCamelCaseObj(v)
+      ))
       : (result[toCamelCase(key)] = toCamelCaseObj(obj[key]))
   })
 

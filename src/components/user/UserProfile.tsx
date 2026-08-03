@@ -25,8 +25,9 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
 
   // モーダル
   const open = useBoolean(false)
-  const [selected, setSelected] =
-    useState<(typeof modalTabs)[number]>('フォロー一覧')
+  const [selected, setSelected] = useState<(typeof modalTabs)[number]>(
+    'フォロー一覧',
+  )
 
   const { data: followers, mutate: mutateFollowers } = useGetApi<UserInfo[]>(
     `/users/${userProfile?.user.id}/followers`,
@@ -86,31 +87,35 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
 
           <div className='transform translate-y-[-42px] sm:translate-y-0'>
             {/* aria-live付けたい */}
-            {currentUser ? (
-              isMyPage ? (
-                <Button
-                  radius='xs'
-                  variant='neumorphism'
-                  className='whitespace-nowrap'
-                >
-                  プロフィールを編集
-                </Button>
-              ) : (
-                <Button
-                  size='md'
-                  radius='xl'
-                  variant={userProfile.isFollowing ? 'outline' : 'filled'}
-                  animate={userProfile.isFollowing ? false : true}
-                  onClick={userProfile.isFollowing ? unFollow : follow}
-                >
-                  <span aria-live='polite'>
-                    {userProfile.isFollowing ? 'フォロー中' : 'フォロー'}
-                  </span>
-                </Button>
+            {currentUser
+              ? (
+                isMyPage
+                  ? (
+                    <Button
+                      radius='xs'
+                      variant='neumorphism'
+                      className='whitespace-nowrap'
+                    >
+                      プロフィールを編集
+                    </Button>
+                  )
+                  : (
+                    <Button
+                      size='md'
+                      radius='xl'
+                      variant={userProfile.isFollowing ? 'outline' : 'filled'}
+                      animate={userProfile.isFollowing ? false : true}
+                      onClick={userProfile.isFollowing ? unFollow : follow}
+                    >
+                      <span aria-live='polite'>
+                        {userProfile.isFollowing ? 'フォロー中' : 'フォロー'}
+                      </span>
+                    </Button>
+                  )
               )
-            ) : (
-              ''
-            )}
+              : (
+                ''
+              )}
           </div>
         </div>
       </section>
@@ -131,8 +136,8 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
                 role='tab'
                 aria-selected={selected === tab}
                 className={`cursor-pointer text-lg text-center pb-1 w-50vw ${
-                  tab === selected &&
-                  'border-primary-dark border-b-3 text-primary-dark'
+                  tab === selected
+                  && 'border-primary-dark border-b-3 text-primary-dark'
                 }`}
                 onClick={() => {
                   setSelected(tab)
@@ -149,29 +154,31 @@ export const UserProfile: FC<Props> = ({ userProfile, isMyPage }) => {
         }
       >
         <div className='bg-white rounded-lg flex flex-col py-6 px-4 gap-6'>
-          {selected === 'フォロワー一覧' ? (
-            followers?.length ? (
-              followers.map(user => (
+          {selected === 'フォロワー一覧'
+            ? (
+              followers?.length
+                ? (
+                  followers.map(user => (
+                    <UserCard
+                      key={`${user.id} ${user.isFollowing}`}
+                      user={user}
+                      onClickUser={open.setFalse}
+                    />
+                  ))
+                )
+                : <p className='text-center'>フォロワーはいません</p>
+            )
+            : followings?.length
+            ? (
+              followings.map(user => (
                 <UserCard
                   key={`${user.id} ${user.isFollowing}`}
                   user={user}
                   onClickUser={open.setFalse}
                 />
               ))
-            ) : (
-              <p className='text-center'>フォロワーはいません</p>
             )
-          ) : followings?.length ? (
-            followings.map(user => (
-              <UserCard
-                key={`${user.id} ${user.isFollowing}`}
-                user={user}
-                onClickUser={open.setFalse}
-              />
-            ))
-          ) : (
-            <p className='text-center'>フォローしているユーザーはいません</p>
-          )}
+            : <p className='text-center'>フォローしているユーザーはいません</p>}
         </div>
       </Modal>
     </div>

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "fmt": "pnpm dprint fmt",
     "type-check": "tsc --noEmit",
     "co": "git-cz"
   },
@@ -34,9 +35,9 @@
     "@types/react": "18.0.12",
     "@types/react-dom": "18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "dprint": "^0.41.0",
     "eslint": "8.17.0",
     "eslint-config-next": "^13.0.5",
-    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react-hooks": "^4.5.0",

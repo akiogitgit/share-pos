@@ -43,36 +43,38 @@ export const Header: FC = () => {
             tabIndex={0}
           />
 
-          {isLoggedIn ? (
-            <div className='flex gap-3 items-center'>
-              <HeaderDropDownMenu />
+          {isLoggedIn
+            ? (
+              <div className='flex gap-3 items-center'>
+                <HeaderDropDownMenu />
 
-              {pathname !== '/create' && (
-                <Link href='/create' aria-label='記事をシェアする'>
-                  <Button
-                    className='hidden sm:block'
-                    radius='md'
-                    size='lg'
-                    color='accent'
-                    compact
-                    animate
-                    rightIcon={
-                      <HiPaperAirplaneIcon className='transform rotate-90' />
-                    }
-                  >
-                    シェアする
-                  </Button>
+                {pathname !== '/create' && (
+                  <Link href='/create' aria-label='記事をシェアする'>
+                    <Button
+                      className='hidden sm:block'
+                      radius='md'
+                      size='lg'
+                      color='accent'
+                      compact
+                      animate
+                      rightIcon={
+                        <HiPaperAirplaneIcon className='transform rotate-90' />
+                      }
+                    >
+                      シェアする
+                    </Button>
+                  </Link>
+                )}
+              </div>
+            )
+            : (
+              <div className='flex gap-2 items-center'>
+                <Link href='/login'>ログイン</Link>
+                <Link href='/signup'>
+                  <Button>新規登録</Button>
                 </Link>
-              )}
-            </div>
-          ) : (
-            <div className='flex gap-2 items-center'>
-              <Link href='/login'>ログイン</Link>
-              <Link href='/signup'>
-                <Button>新規登録</Button>
-              </Link>
-            </div>
-          )}
+              </div>
+            )}
         </div>
       </nav>
     </header>

@@ -11,8 +11,9 @@ import { useLogin } from '../hooks/login/useAuth'
 
 const Login: NextPage = () => {
   const { login } = useLogin()
-  const { onSubmit, errorMessage, clearErrorMessage } =
-    useFormErrorHandling<LoginRequestParams>(login)
+  const { onSubmit, errorMessage, clearErrorMessage } = useFormErrorHandling<
+    LoginRequestParams
+  >(login)
 
   return (
     <>

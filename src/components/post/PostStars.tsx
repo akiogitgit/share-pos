@@ -37,9 +37,9 @@ export const PostStars: FC<PostStarProps> = ({ evaluation, onClick }) => {
         >
           <Star
             className='group-hover:(transform scale-125) '
-            color={
-              v <= stars ? (isHovering ? 'bg-yellow-100' : 'bg-yellow-200') : ''
-            }
+            color={v <= stars
+              ? (isHovering ? 'bg-yellow-100' : 'bg-yellow-200')
+              : ''}
           />
         </div>
       ))}
