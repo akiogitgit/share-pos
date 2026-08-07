@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@commitlint/cli':
     specifier: ^17.7.1
@@ -21,7 +25,7 @@ dependencies:
     version: 13.0.6
   crypto-js:
     specifier: ^4.1.1
-    version: 4.1.1
+    version: 4.2.0
   next:
     specifier: ^13.0.5
     version: 13.0.5(react-dom@18.2.0)(react@18.2.0)
@@ -53,7 +57,7 @@ dependencies:
 devDependencies:
   '@types/crypto-js':
     specifier: ^4.1.1
-    version: 4.1.1
+    version: 4.2.2
   '@types/node':
     specifier: 17.0.42
     version: 17.0.42
@@ -591,8 +595,8 @@ packages:
     resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
 
-  /@types/crypto-js@4.1.1:
-    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+  /@types/crypto-js@4.2.2:
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
     dev: true
 
   /@types/hoist-non-react-statics@3.3.1:
@@ -1247,8 +1251,9 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  /crypto-js@4.1.1:
-    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    deprecated: Active development of CryptoJS has been discontinued. This library is no longer maintained.
     dev: false
 
   /csstype@3.1.2:
