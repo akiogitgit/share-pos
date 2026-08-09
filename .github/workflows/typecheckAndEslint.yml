@@ -13,7 +13,7 @@ jobs:
       - name: use pnpm
         uses: pnpm/action-setup@v2.2.2
         with:
-          version: 8.2.0
+          version: 8.15.9
           run_install: false
 
       - name: Get pnpm store directory
