@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@commitlint/cli':
     specifier: ^17.7.1
@@ -12,7 +16,7 @@ dependencies:
     version: 1.7.3(react-dom@18.2.0)(react@18.2.0)
   '@hookform/resolvers':
     specifier: ^2.9.11
-    version: 2.9.11(react-hook-form@7.43.4)
+    version: 2.9.11(react-hook-form@7.87.0)
   '@n8tb1t/use-scroll-position':
     specifier: ^2.0.3
     version: 2.0.3(@types/react@18.0.12)(react@18.2.0)
@@ -36,7 +40,7 @@ dependencies:
     version: 18.2.0(react@18.2.0)
   react-hook-form:
     specifier: ^7.43.4
-    version: 7.43.4(react@18.2.0)
+    version: 7.87.0(react@18.2.0)
   react-icons:
     specifier: ^4.8.0
     version: 4.8.0(react@18.2.0)
@@ -361,12 +365,12 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@hookform/resolvers@2.9.11(react-hook-form@7.43.4):
+  /@hookform/resolvers@2.9.11(react-hook-form@7.87.0):
     resolution: {integrity: sha512-bA3aZ79UgcHj7tFV7RlgThzwSSHZgvfbt2wprldRkYBcMopdMvHyO17Wwp/twcJasNFischFfS7oz8Katz8DdQ==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.43.4(react@18.2.0)
+      react-hook-form: 7.87.0(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.9.5:
@@ -3100,11 +3104,11 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-hook-form@7.43.4(react@18.2.0):
-    resolution: {integrity: sha512-JZp05wvmuV8qr3NNDWwyhiQL05sh9E8x/2NoWtkdiyyiezmwOr5pKexlvbCEfBMa7ZYrvzk88G/uhLl47T9b7Q==}
-    engines: {node: '>=12.22.0'}
+  /react-hook-form@7.87.0(react@18.2.0):
+    resolution: {integrity: sha512-zhFzWvLxNHH+8839OnZcUxgMZw88ah2jZWDWvKWgF3Tpbnd0vKL+dlcuU3nZVWESZQjd81EW8K+wU+cYfYAc0w==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
+      react: ^16.8.0 || ^17 || ^18 || ^19
     dependencies:
       react: 18.2.0
     dev: false
